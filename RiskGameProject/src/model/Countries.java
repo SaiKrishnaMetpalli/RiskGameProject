@@ -8,7 +8,11 @@ public class Countries {
 	 * @author 14382
 	 *
 	 */
-	private String country_Id, country_Name, country_Continent_Num, x_Coordinate, y_Coordinate;
+	private String country_Id;
+	public String country_Name;
+	private String country_Continent_Num;
+	private String x_Coordinate;
+	private String y_Coordinate;
 
 	public Countries(String country_name, String country_Continent_Num, String x_Coordinate, String y_Coordinate) {
 		this.country_Name = country_name;

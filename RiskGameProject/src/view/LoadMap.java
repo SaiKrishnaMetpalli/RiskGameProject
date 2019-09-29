@@ -21,9 +21,9 @@ public class LoadMap {
 	String[] continents_Details, countries_Details, boundries_Details;
 
 	ArrayList<String> list;
-	HashMap<String, Continents> continents = new HashMap<>();
-	HashMap<String, Countries> countries = new HashMap<>();
-	HashMap<String, ArrayList> boundries = new HashMap<>();
+	HashMap<String, Continents> continents = new HashMap<String, Continents>();
+	HashMap<String, Countries> countries = new HashMap <String, Countries>();
+	HashMap<String, ArrayList<String>> boundries = new HashMap<String, ArrayList<String>>();
 
 	public static void main(String args[]) throws IOException {
 		LoadMap fr = new LoadMap();
@@ -106,7 +106,7 @@ public class LoadMap {
 			Countries c1 = countries.get(i);
 			System.out.println(c1.country_Name);
 		}
-		for (Entry<String, ArrayList> i : boundries.entrySet()) {
+		for (Entry<String, ArrayList<String>> i : boundries.entrySet()) {
 			System.out.println(i);
 		}
 	}
