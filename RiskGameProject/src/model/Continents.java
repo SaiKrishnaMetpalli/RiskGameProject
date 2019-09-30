@@ -8,36 +8,36 @@ package model;
 
 public class Continents {
 
-	private String num_Of_Countries , colour , continent_Name;
+	private String continentControlValue , continentColour , continentName;
 	
-	public Continents(String num_Of_Countries , String colour)
+	public Continents(String continentControlValue , String colour)
 	{
-		this.num_Of_Countries = num_Of_Countries;
-		this.colour = colour;
+		this.continentControlValue = continentControlValue;
+		this.continentColour = colour;
 	}
 
-	public String getNum_Of_Countries() {
-		return num_Of_Countries;
+	public String getcontinentControlValue() {
+		return continentControlValue;
 	}
 
-	public void setNum_Of_Countries(String num_Of_Countries) {
-		this.num_Of_Countries = num_Of_Countries;
+	public void setcontinentControlValue(String continentControlValue) {
+		this.continentControlValue = continentControlValue;
 	}
 
 	public String getColour() {
-		return colour;
+		return continentColour;
 	}
 
 	public void setColour(String colour) {
-		this.colour = colour;
+		this.continentColour = colour;
 	}
 
 	public String getContinent_Name() {
-		return continent_Name;
+		return continentName;
 	}
 
-	public void setContinent_Name(String continent_Name) {
-		this.continent_Name = continent_Name;
+	public void setContinent_Name(String continentName) {
+		this.continentName = continentName;
 	}
 	
 	
