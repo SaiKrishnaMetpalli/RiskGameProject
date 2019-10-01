@@ -10,10 +10,11 @@ public class Continents {
 
 	private String continentControlValue , continentColour , continentName;
 	
-	public Continents(String continentControlValue , String colour)
+	public Continents(String continentName , String continentControlValue , String colour)
 	{
 		this.continentControlValue = continentControlValue;
 		this.continentColour = colour;
+		this.continentName = continentName;
 	}
 
 	public String getcontinentControlValue() {
@@ -32,7 +33,7 @@ public class Continents {
 		this.continentColour = colour;
 	}
 
-	public String getContinent_Name() {
+	public String getContinentName() {
 		return continentName;
 	}
 

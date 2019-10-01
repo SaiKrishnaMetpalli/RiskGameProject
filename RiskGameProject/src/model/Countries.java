@@ -1,20 +1,29 @@
 package model;
 
+/**
+ * 
+ * This class contains countries information
+ *
+ */
 public class Countries {
 
-	/**
-	 * This File contains the Countries information
-	 * 
-	 * @author 14382
-	 *
-	 */
 	private String countryId;
 	private String countryName;
 	private String countryContinentNum;
 	private String xCoordinate;
 	private String yCoordinate;
 
-	public Countries(String countryId ,String countryName, String countryContinentNum, String xCoordinate, String yCoordinate) {
+	/**
+	 * Default Constructor
+	 * 
+	 * @param countryId
+	 * @param countryName
+	 * @param countryContinentNum
+	 * @param xCoordinate
+	 * @param yCoordinate
+	 */
+	public Countries(String countryId, String countryName, String countryContinentNum, String xCoordinate,
+			String yCoordinate) {
 		this.countryId = countryId;
 		this.countryName = countryName;
 		this.countryContinentNum = countryContinentNum;
