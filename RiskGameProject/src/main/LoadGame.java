@@ -1,17 +1,15 @@
 package main;
 
-import java.io.FileNotFoundException;
+import view.WelcomeScreen;
 
-import controller.FileReading;
 /**
  * This class contains the Main class 
- *
  */
 public class LoadGame {
 
-	public static void main(String argsp[]) throws FileNotFoundException
+	public static void main(String[] args)
 	{
-		FileReading fileReading = new FileReading();
-		fileReading.input();
+		WelcomeScreen ws=new WelcomeScreen();
+		ws.welcomeGameDisplay();
 	}
 }
