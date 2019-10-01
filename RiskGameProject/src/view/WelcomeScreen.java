@@ -11,7 +11,8 @@ public class WelcomeScreen {
 	 * This method is used for displaying the Welcome Screen
 	 */
 	public void welcomeGameDisplay()
-	{		
+	{
+		System.out.println();
 		System.out.println("Welcome to Risk Game");
 		System.out.println("1.New Game");
 		System.out.println("2.Exit");		

@@ -16,6 +16,7 @@ public class MapSelection {
 	 */
 	public void mapSelectionDisplay()
 	{
+		System.out.println();
 		System.out.println("Map Selection Menu");
 		System.out.println("1.File1");
 		System.out.println("2.File2");

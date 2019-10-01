@@ -15,6 +15,7 @@ public class PlayerSelection {
 	 */
 	public void playerSelectionDisplay()
 	{
+		System.out.println();
 		System.out.println("Player Selection Menu");
 		System.out.println("1.Add Player");
 		System.out.println("2.Remove Player");

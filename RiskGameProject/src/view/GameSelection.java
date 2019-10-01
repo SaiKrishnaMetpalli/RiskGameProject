@@ -15,6 +15,7 @@ public class GameSelection {
 	 */
 	public void gameSelectionDisplay()
 	{
+		System.out.println();
 		System.out.println("Game Selection Menu");
 		System.out.println("1.Map Selection");
 		System.out.println("2.Player Selection");
