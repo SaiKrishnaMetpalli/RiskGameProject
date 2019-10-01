@@ -11,5 +11,6 @@ public class LoadGame {
 	{
 		WelcomeScreen ws=new WelcomeScreen();
 		ws.welcomeGameDisplay();
+	
 	}
 }

@@ -34,6 +34,7 @@ public class MapSelection {
 				try
 				{
 					fr.input();
+					fr.writeContent();
 				}
 				catch(Exception ex)
 				{
