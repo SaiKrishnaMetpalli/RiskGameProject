@@ -26,9 +26,9 @@ public class MapSelectionController {
 		HashMap<Integer, Continents> continents = new HashMap<Integer, Continents>();
 		HashMap<Integer, Countries> countries = new HashMap<Integer, Countries>();
 		HashMap<Integer, ArrayList<Integer>> boundries = new HashMap<Integer, ArrayList<Integer>>();
-		 ArrayList<String> countryNameList = new ArrayList<String>() ;
-		 ArrayList<String> continentNameList = new ArrayList<String>();
-		 ArrayList<String> toRemove= new ArrayList<String>();
+		ArrayList<String> countryNameList = new ArrayList<String>() ;
+		ArrayList<String> continentNameList = new ArrayList<String>();
+		ArrayList<String> toRemove= new ArrayList<String>();
 	    Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the number of continents");
 		int numContinents = sc.nextInt();
