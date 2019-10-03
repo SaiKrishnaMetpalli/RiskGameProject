@@ -6,7 +6,7 @@ public class PlayerSelectionController {
 	public void playerAddRemove()
 	{
 		int choice = 0;			
-		ArrayList<String> al1 = new ArrayList<String>();
+		ArrayList<String> all = new ArrayList<String>();
 		while(choice != 5)
 		{			
 			switch(choice) {
