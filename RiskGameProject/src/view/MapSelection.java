@@ -33,8 +33,7 @@ public class MapSelection {
 				FileReading fr=new FileReading();
 				try
 				{
-					fr.input();
-					fr.writeContent();
+					fr.input();					
 				}
 				catch(Exception ex)
 				{
