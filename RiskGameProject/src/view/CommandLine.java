@@ -9,6 +9,8 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 
+import controller.PlayerSelectionController;
+
 /**
  * This class gives the command line interface for user
  * Every user input is retrieved and navigated to functionality
@@ -22,6 +24,8 @@ public class CommandLine {
 	HashMap<Integer, Continents> continents;
 	HashMap<Integer, Countries> countries;
 	HashMap<Integer, ArrayList<Integer>> boundries;
+	ArrayList<String> players;
+	PlayerSelectionController psc;
 	
 	/**
 	 * Default constructor
@@ -34,6 +38,8 @@ public class CommandLine {
 		continents = new HashMap<Integer, Continents>();
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
+		players = new ArrayList<String>();
+		psc=new PlayerSelectionController();
 	}
 	
 	/**
@@ -246,6 +252,51 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "gameplayer":
+				if(inputCommand.length>1)
+				{
+					int i=1;
+					while(i<inputCommand.length)
+					{
+						String result;
+						if(inputCommand[i].equals("-add") && (i+1<inputCommand.length))
+						{							
+							result=psc.addPlayer(players, inputCommand[i+1]);
+							if(result.equals("Success"))
+							{
+								System.out.println("\n"+inputCommand[i+1]+" player added successfully");
+								System.out.println(players);
+								addToCommands=true;
+							}
+							else
+							{
+								System.out.println("\n"+inputCommand[i+1]+" player already exists");
+								addToCommands=false;
+							}							
+						}
+						else if(inputCommand[i].equals("-remove") && (i+1<inputCommand.length))
+						{
+							result=psc.removePlayer(players, inputCommand[i+1]);
+							if(result.equals("Success"))
+							{
+								System.out.println("\n"+inputCommand[i+1]+" player removed successfully");
+								System.out.println(players);
+								addToCommands=true;
+							}
+							else
+							{
+								System.out.println("\n"+inputCommand[i+1]+" player does not exists");
+								addToCommands=false;
+							}
+						}
+						else
+						{
+							System.out.println("\ngameplayer command format is incorrect");
+							addToCommands=false;
+							break;
+						}
+						i=i+2;
+					}
+				}
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
@@ -280,8 +331,8 @@ public class CommandLine {
 	
 	/**
 	 * This method is used for adding the input commands one by one as the user is entering 
-	 * @param input boolean variable which gives true/false for adding to inputCommandsList 
-	 * @param command name of the command that is used for adding to inputCommandsList
+	 * @param input this variable gives true/false for adding to inputCommandsList 
+	 * @param command this variable has command name that is used for adding to inputCommandsList
 	 */
 	public void addInputCommandList(boolean input,String command)
 	{
@@ -296,8 +347,8 @@ public class CommandLine {
 	
 	/**
 	 * This method is used for checking if file exists or not 
-	 * @param fileName gives the filename which user entered
-	 * @return returns true if file exists else false
+	 * @param fileName this variable gives the filename which user entered
+	 * @return returns gives true/false
 	 */
 	public boolean checkFileExist(String fileName)
 	{

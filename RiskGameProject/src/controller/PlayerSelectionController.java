@@ -2,35 +2,46 @@ package controller;
 
 import java.util.ArrayList;
 
-public class PlayerSelectionController {
-	public void playerAddRemove()
+
+public class PlayerSelectionController 
+{	
+	
+	/**
+	 * This method is used for adding the players
+	 * @param players this variable contains the complete list of players
+	 * @param playerName this variable has playerName to be added to list
+	 * @return gives Success/Failure message
+	 */
+	public String addPlayer(ArrayList<String> players, String playerName)
 	{
-		int choice = 0;			
-		ArrayList<String> all = new ArrayList<String>();
-		while(choice != 5)
-		{			
-			switch(choice) {
-			case 1: // add player name
-				System.out.println("Enter the player name");
-				//String playerName = sc.nextLine();
-				//al1.add(playerName);
-				break;
-				
-			case 2: // remove player name
-				System.out.println("Enter the player name");
-				//String playerNameRem = sc.nextLine();
-				//al1.remove(playerNameRem);
-				break;
-			case 5: // exit
-				System.exit(0);
-				break;
-			
-			default:
-				System.out.println("\n==================================");
-				System.out.println("\n\t Error! Please Enter Your Choice(1 to 5)");				
-				break;
-			}
-			
+		if(!players.contains(playerName))
+		{
+			players.add(playerName);			
+			return "Success";
+		}
+		else
+		{
+			return "Failure";
 		}
 	}
+	
+	/**
+	 * This method is used for removing the players
+	 * @param players this variable contains the complete list of players
+	 * @param playerName this variable has playerName to be removed from list
+	 * @return gives Success/Failure message
+	 */
+	public String removePlayer(ArrayList<String> players, String playerName)
+	{
+		if(players.contains(playerName))
+		{
+			players.remove(playerName);
+			return "Success";
+		}
+		else
+		{
+			return "Failure";
+		}		
+	}	
+	
 }
