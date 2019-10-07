@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Scanner;
-import controller.FileReading;
 
 /**
  * This class is used for creating and uploading game map
@@ -30,15 +29,7 @@ public class MapSelection {
 			case "1":				
 			case "2":				
 			case "3":
-				FileReading fr=new FileReading();
-				try
-				{
-					fr.input();					
-				}
-				catch(Exception ex)
-				{
-					
-				}				
+								
 				break;
 			case "4":
 				System.exit(0);

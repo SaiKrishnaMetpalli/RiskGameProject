@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import model.Continents;
 import model.Countries;
-
+import model.GameMap;
 import controller.PlayerSelectionController;
 
 /**
@@ -21,11 +21,9 @@ public class CommandLine {
 	Scanner sc;
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
-	HashMap<Integer, Continents> continents;
-	HashMap<Integer, Countries> countries;
-	HashMap<Integer, ArrayList<Integer>> boundries;
+	GameMap gm;
 	ArrayList<String> players;
-	PlayerSelectionController psc;
+	PlayerSelectionController psc;	
 	
 	/**
 	 * Default constructor
@@ -35,9 +33,7 @@ public class CommandLine {
 	{
 		sc=new Scanner(System.in);
 		inputCommandsList=new ArrayList<String>();
-		continents = new HashMap<Integer, Continents>();
-		countries = new HashMap<Integer, Countries>();
-		boundries = new HashMap<Integer, ArrayList<Integer>>();
+		gm=new GameMap();
 		players = new ArrayList<String>();
 		psc=new PlayerSelectionController();
 	}
