@@ -2,6 +2,7 @@ package view;
 
 import java.util.Scanner;
 
+
 /**
  * This class is used for adding and removing players from the game 
  */
@@ -20,7 +21,8 @@ public class PlayerSelection {
 		System.out.println("1.Add Player");
 		System.out.println("2.Remove Player");
 		System.out.println("3.Command Line");
-		System.out.println("4.Exit");
+		System.out.println("4.Assign Countries");
+		System.out.println("5.Exit");
 		input=sc.nextLine();
 		switch(input)
 		{
@@ -34,7 +36,9 @@ public class PlayerSelection {
 				CommandLine cl=new CommandLine();
 				cl.commandLine();
 				break;
-			case "4":
+			case "4": 
+				
+			case "5":
 				System.exit(0);
 				break;
 			default:

@@ -7,36 +7,27 @@ package model;
  */
 public class Countries {
 
-	private String countryId;
 	private String countryName;
-	private String countryContinentNum;
+	private Integer countryContinentNum;
 	private String xCoordinate;
 	private String yCoordinate;
+	private String ownerName;
 
 	/**
 	 * Default Constructor
+	 * This method is used to initiate the variables 
 	 * 
-	 * @param countryId
-	 * @param countryName
-	 * @param countryContinentNum
-	 * @param xCoordinate
-	 * @param yCoordinate
+	 * @param countryName this variable contains country name
+	 * @param countryContinentNum this variable contains continent number
+	 * @param xCoordinate this variable contains x coordinate number
+	 * @param yCoordinate this variable contains y coordinate number
 	 */
-	public Countries(String countryId, String countryName, String countryContinentNum, String xCoordinate,
-			String yCoordinate) {
-		this.countryId = countryId;
+	public Countries(String countryName, Integer countryContinentNum, String xCoordinate, String yCoordinate) {
+
 		this.countryName = countryName;
 		this.countryContinentNum = countryContinentNum;
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
-	}
-
-	public String getCountry_Id() {
-		return countryId;
-	}
-
-	public void setCountry_Id(String countryId) {
-		this.countryId = countryId;
 	}
 
 	public String getCountryName() {
@@ -47,11 +38,11 @@ public class Countries {
 		this.countryName = countryName;
 	}
 
-	public String getCountryContinentNum() {
+	public Integer getCountryContinentNum() {
 		return countryContinentNum;
 	}
 
-	public void setCountry_Continent_Num(String countryContinentNum) {
+	public void setCountry_Continent_Num(Integer countryContinentNum) {
 		this.countryContinentNum = countryContinentNum;
 	}
 
