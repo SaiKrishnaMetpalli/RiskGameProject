@@ -6,6 +6,21 @@ import java.util.ArrayList;
 public class PlayerSelectionController 
 {	
 	
+	public String assignRandomCountries(ArrayList<String> players)
+	{
+		for(String i : players)
+		{
+			
+		}
+		
+		
+		
+		return null;
+		
+	}
+	
+	
+	
 	/**
 	 * This method is used for adding the players
 	 * @param players this variable contains the complete list of players
