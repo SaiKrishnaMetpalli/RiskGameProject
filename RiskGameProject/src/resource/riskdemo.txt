@@ -22,10 +22,26 @@ South-America 2 green
 3 Alberta 1 83 93
 4 Western-United-States 1 102 144
 5 Central-America 1 118 206
+6 Greenland 1 195 48
+7 Ontario 1 135 100
+8 Quebec 1 200 106
+9 Eastern-United-States 1 157 149
+10 Venezuela 2 184 251
+11 Peru 2 187 308
+12 Brazil 2 223 285
+13 Argentina 2 199 339
 
 [borders]
-1 2 3 38 45
+1 2 3
 2 1 3 7 6
 3 1 2 7 4
 4 3 7 5 9
 5 4 9 10
+6 2 7 8
+7 2 3 4 6 8 9
+8 6 7 9
+9 4 5 7 8
+10 5 11 12
+11 10 12 13
+12 10 11 13
+13 11 12

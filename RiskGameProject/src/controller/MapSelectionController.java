@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import model.Continents;
@@ -25,6 +26,11 @@ public class MapSelectionController {
 	boolean flag = false;
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
 	String[] continentsDetails, countriesDetails, boundriesDetails;
+	
+	//These two variables are used for map connected and traversal
+	private boolean[] marked;
+	private int count;
+	private HashMap<Integer, ArrayList<Integer>> map;
 
 	/**
 	 * This method will read the uploaded file
@@ -49,7 +55,7 @@ public class MapSelectionController {
 
 				while (textScanner.hasNext()) {
 					String continent = textScanner.nextLine();
-					if (continents.equals("[continents]")) {
+					if (continent.equals("[continents]")) {
 						break;
 					}
 
@@ -288,5 +294,60 @@ public class MapSelectionController {
 
 		bw.close();
 	}
+	
+	/**
+	 * This method is used for checking map connectivity
+	 * @param boundries this variable contains the adjacency list of countries
+	 * @return it returns true if map is connected; otherwise false
+	 */
+	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries)
+	{
+		map=boundries;
+		marked=new boolean[boundries.size()];
+		count=0;
+		Map.Entry<Integer, ArrayList<Integer>> entry=boundries.entrySet().iterator().next();
+		mapTraversal(entry.getKey());
+		if(count==boundries.size())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+	}
+	
+	/**
+	 * This method is used for traversing the map
+	 * @param vertex this variable contains one of the vertex of map
+	 */
+	public void mapTraversal(int vertex)
+	{
+		count++;
+		marked[vertex-1]=true;
+		for(int i:getNeighbours(vertex))
+		{
+			if(!marked[i-1])
+			{
+				mapTraversal(i);
+			}
+		}
+		
+	}
+	
+	/**
+	 * This method gives you the neighbors of a vertex
+	 * @param v this variable contains vertex of the map
+	 * @return this returns array list of neighbors if present; otherwise null
+	 */
+	public ArrayList<Integer> getNeighbours(int v)
+	{
+		if(v>map.size())
+		{
+			return null;
+		}
+		return new ArrayList<Integer>(map.get(v));
+	}
+
 
 }

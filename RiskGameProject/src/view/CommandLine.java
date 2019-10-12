@@ -9,6 +9,7 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 import model.GameMap;
+import controller.MapSelectionController;
 import controller.PlayerSelectionController;
 
 /**
@@ -23,7 +24,8 @@ public class CommandLine {
 	ArrayList<String> inputCommandsList;
 	GameMap gm;
 	ArrayList<String> players;
-	PlayerSelectionController psc;	
+	PlayerSelectionController psc;
+	MapSelectionController msc;
 	
 	/**
 	 * Default constructor
@@ -36,6 +38,7 @@ public class CommandLine {
 		gm=new GameMap();
 		players = new ArrayList<String>();
 		psc=new PlayerSelectionController();
+		msc=new MapSelectionController();
 	}
 	
 	/**
@@ -199,7 +202,23 @@ public class CommandLine {
 				{
 					if(checkFileExist(inputCommand[1]))
 					{
-						
+						try 
+						{
+							String result=msc.gameMapReading(gm.continents,gm.countries,gm.boundries,inputCommand[1]);
+							if(result.equals("Success"))
+							{
+								System.out.println("File uploaded successfully");								
+							}
+							else
+							{
+								System.out.println("File not uploaded. There are format issues in file. Please upload again");
+							}
+							
+						}
+						catch(Exception ex)
+						{
+							System.out.println("Error Occurred. Please try again");
+						}
 					}
 					else
 					{
@@ -216,6 +235,24 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "validatemap":
+				if(gm.boundries.size()>0)
+				{
+					boolean result=msc.isConnectedMap(gm.boundries);
+					if(result)
+					{
+						System.out.println("Map is connected");
+					}
+					else
+					{
+						System.out.println("Map is not connected");
+					}
+				}
+				else
+				{
+					System.out.println("\nMap has not been loaded. Please load the map and validate");
+					addToCommands=false;
+				}
+				
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
@@ -224,7 +261,26 @@ public class CommandLine {
 				{					
 					if(checkFileExist(inputCommand[1]))
 					{
-						addToCommands=true;
+						try 
+						{
+							String result=msc.gameMapReading(gm.continents,gm.countries,gm.boundries,inputCommand[1]);
+							if(result.equals("Success"))
+							{
+								System.out.println("File uploaded successfully");								
+								addToCommands=true;
+							}
+							else
+							{
+								System.out.println("File not uploaded. There are format issues in file. Please upload again");
+								addToCommands=false;
+							}
+							
+						}
+						catch(Exception ex)
+						{
+							System.out.println("Error Occurred. Please try again");
+							addToCommands=false;
+						}						
 					}
 					else
 					{
@@ -234,7 +290,7 @@ public class CommandLine {
 				}
 				else
 				{
-					System.out.println("\neditmap command format is incorrect");
+					System.out.println("\nloadmap command format is incorrect");
 					addToCommands=false;
 				}
 				if(addToCommands)
