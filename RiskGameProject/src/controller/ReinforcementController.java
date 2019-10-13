@@ -9,10 +9,10 @@ public class ReinforcementController {
 		int countryReward=0;
 		int continentReward=0;
 		int cardReward=0;
-		countryReward = (int) Math.floor(Player.occupiedCountries/3);
-		if(player.getCountires == continent.getCountires) { // if has same elements in both object 
-			continentReward = Integer.ParseInt(Continents.continentControlValue);
-			}
+//		countryReward = (int) Math.floor(Player.occupiedCountries/3);
+//		if(player.getCountires == continent.getCountires) { // if has same elements in both object 
+//			continentReward = Integer.ParseInt(Continents.continentControlValue);
+//			}
 		return countryReward+continentReward;
 	}
 }
