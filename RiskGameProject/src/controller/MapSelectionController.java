@@ -246,22 +246,26 @@ public class MapSelectionController {
 
 	/**
 	 * method for write text file from data structure
-	 * 
+	 * uses buffer reader and writer to write text file
+	 * stores the file in the resource folder
+	 * @param takes the data structure and file name
 	 * @throws IOException as creating file
 	 */
-	public void writeContent(HashMap<String, Continents> continents, HashMap<Integer, Countries> countries,
-			HashMap<String, ArrayList<String>> boundries) throws IOException {
+	public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 
-		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + "CreatedMap.txt";
+		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + mapFile;
 		File mapfile = new File(createPath);
 		FileWriter fw = new FileWriter(mapfile, true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		mapfile.createNewFile();
-
+		bw.write("name "+mapFile +" Map");
+		bw.write("\n");
+		bw.write("[files]");
 		bw.write("\n");
 		bw.write("[continents]");
 		bw.newLine();
-		for (String i : continents.keySet()) {
+		for (Integer i : continents.keySet()) {
 			Continents c = continents.get(i);
 			bw.write(i + " " + c.getcontinentControlValue() + " " + c.getColour());
 			bw.newLine();
@@ -280,11 +284,11 @@ public class MapSelectionController {
 		bw.write("\n");
 		bw.write("[borders]");
 		bw.newLine();
-		for (String s : boundries.keySet()) {
-			ArrayList<String> tempal = new ArrayList<String>();
+		for (Integer s : boundries.keySet()) {
+			ArrayList<Integer> tempal = new ArrayList<Integer>();
 			String adjacency = "";
 			tempal = boundries.get(s);
-			for (String s1 : tempal) {
+			for (Integer s1 : tempal) {
 				adjacency += s1 + " ";
 			}
 			bw.write(s + " " + adjacency.trim());
