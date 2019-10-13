@@ -9,6 +9,7 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 import model.GameMap;
+import model.Player;
 import controller.MapSelectionController;
 import controller.PlayerSelectionController;
 
@@ -19,6 +20,7 @@ import controller.PlayerSelectionController;
 public class CommandLine {
 	
 	String input;
+	String result;
 	Scanner sc;
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
@@ -26,6 +28,7 @@ public class CommandLine {
 	ArrayList<String> players;
 	PlayerSelectionController psc;
 	MapSelectionController msc;
+	HashMap<String , Player> listOfPlayers;
 	
 	/**
 	 * Default constructor
@@ -39,6 +42,7 @@ public class CommandLine {
 		players = new ArrayList<String>();
 		psc=new PlayerSelectionController();
 		msc=new MapSelectionController();
+		listOfPlayers = new HashMap<String, Player>();
 	}
 	
 	/**
@@ -255,7 +259,7 @@ public class CommandLine {
 				
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
-				break;
+				break;				
 			case "loadmap":
 				if(inputCommand.length>1)
 				{					
@@ -263,7 +267,7 @@ public class CommandLine {
 					{
 						try 
 						{
-							String result=msc.gameMapReading(gm.continents,gm.countries,gm.boundries,inputCommand[1]);
+							result=msc.gameMapReading(gm.continents,gm.countries,gm.boundries,inputCommand[1]);
 							if(result.equals("Success"))
 							{
 								System.out.println("File uploaded successfully");								
@@ -308,8 +312,7 @@ public class CommandLine {
 				{
 					int i=1;
 					while(i<inputCommand.length)
-					{
-						String result;
+					{						
 						if(inputCommand[i].equals("-add") && (i+1<inputCommand.length))
 						{							
 							result=psc.addPlayer(players, inputCommand[i+1]);
@@ -349,6 +352,12 @@ public class CommandLine {
 						i=i+2;
 					}
 				}
+				addInputCommandList(addToCommands,inputCommand[0]);
+				commandLine();
+				break;
+			case "Populatecountries" :
+				listOfPlayers.clear();
+				result=psc.assignRandomCountries(players,gm.countries,listOfPlayers);
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
