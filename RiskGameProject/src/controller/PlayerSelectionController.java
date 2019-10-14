@@ -58,17 +58,13 @@ public class PlayerSelectionController {
 			
 		}
 		
-		for(String i : playerDetails.keySet())
-		{
-			Player p = playerDetails.get(i); 
-			System.out.println(i + p.getOwnedCountriesList());
-		}
-		
-		for(Integer j : countries.keySet())
-		{
-			Countries c = countries.get(j);
-			System.out.println(j + c.getOwnerName());
-		}
+		/*
+		 * for(String i : playerDetails.keySet()) { Player p = playerDetails.get(i);
+		 * System.out.println(i + p.getOwnedCountriesList()); }
+		 * 
+		 * for(Integer j : countries.keySet()) { Countries c = countries.get(j);
+		 * System.out.println(j + c.getOwnerName()); }
+		 */
 		return "Success";
 	}
 	/**
