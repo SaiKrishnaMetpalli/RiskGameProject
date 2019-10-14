@@ -180,6 +180,8 @@ public class MapSelectionController {
 			}
 		return "Continent Not Exist";
 				}
+		return "";
+	}
 
 	/**
 
