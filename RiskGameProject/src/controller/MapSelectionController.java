@@ -138,130 +138,111 @@ public class MapSelectionController {
 		
 	}
 
+	static int coid = 0, cid = 0;
+
 	/**
-	 * creates a map from user input.
+	 * This method is used for adding the continents value
+	 * 
+	 * @param continentName         this variable contains name of the continent
+	 * @param continentControlValue this variable contains value of the control
+	 *                              value
 	 */
-	public void createMap() {
-		// TODO Auto-generated method stub
-		String continentName, continentControlValue;
-		HashMap<Integer, Continents> continents = new HashMap<Integer, Continents>();
-		HashMap<Integer, Countries> countries = new HashMap<Integer, Countries>();
-		HashMap<Integer, ArrayList<Integer>> boundries = new HashMap<Integer, ArrayList<Integer>>();
-		ArrayList<String> countryNameList = new ArrayList<String>();
-		ArrayList<String> continentNameList = new ArrayList<String>();
-		ArrayList<String> toRemove = new ArrayList<String>();
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number of continents");
-		int numContinents = sc.nextInt();
-
-		if (numContinents >= 7) {
-			System.out.println("Please enter correct value");
+	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
+			String continentControlValue) {
+		Continents co = new Continents(continentName, continentControlValue, null);
+		if (!co.getContinentName().equals(continentName)) {
+			continents.put(coid++, co);
+			return "Success";
+		} else {
+			return "Continent already exists";
 		}
-		sc.nextLine();
-
-		for (int i = 0; i < numContinents; i++) {
-			String ci = Integer.toString(i);
-			System.out.println("Enter the name of continent");
-			continentName = sc.nextLine();
-			System.out.println("Enter the continent control value");
-			continentControlValue = sc.nextLine();
-			Continents c = new Continents(continentName, continentControlValue, "white");
-			continentNameList.add(continentName);
-			continents.put(i, c);
-			System.out.println("Enter the number of countries under " + continentName + " continent");
-			int numCountries = sc.nextInt();
-			if (numCountries >= 42) {
-				System.out.println("Please enter correct value");
-			}
-
-			sc.nextLine();
-			for (int j = 0; j < numCountries; j++) {
-				String cp = Integer.toString(j);
-				System.out.println("Enter the names of countries");
-				String countryName = sc.nextLine();
-				countryNameList.add(countryName);
-				Countries co = new Countries(countryName, Integer.parseInt(ci), "0", "0");
-				countries.put(j, co);
-			}
-
-		}
-		System.out.println("Continent names are");
-		for (String continent : continentNameList) {
-			System.out.println(continent + " ");
-		}
-		System.out.println("");
-		System.out.println("Country names are ");
-		for (String country : countryNameList) {
-
-			System.out.println(country + " ");
-		}
-
-		System.out.println("Select a country to add neighbouring countries");
-		// Scanner sc = new Scanner(System.in);
-		int counter = sc.nextInt();
-		while (counter < countryNameList.size()) {
-			String countryName = countryNameList.toArray(new String[countryNameList.size()])[counter];
-
-			System.out.println(" Assign neighbor for Country-->" + countryName);
-			sc.nextLine();
-			System.out.println("Assign neighnouring countries seperated by commas ");
-
-			String neighbourCountries[] = sc.nextLine().split(",");
-			ArrayList<Integer> neighbournodes = new ArrayList<Integer>();
-
-			for (String neighbor : neighbourCountries) {
-				if (neighbor.equals(countryName)) {
-					System.out.println("Country Can not be neighbor to itself Please enter correct value");
-					countryNameList.add(countryName);
-					if (!toRemove.contains(countryName)) {
-						toRemove.add(countryName);
+	}
+	/**
+	 * This method is used for adding the countries value
+	 * 
+	 * @param countryName         this variable contains name of the country
+	 * @param continentName       this variable contains name of the continent
+	 */
+	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+			String countryName, String continentName) {		
+		for (int i : continents.keySet()) {
+			String s = continents.get(i).getContinentName();
+			if (s.equals(continentName)) {
+				for (int j : countries.keySet()) {
+					String c = countries.get(j).getCountryName();
+					if (!c.equals(countryName)) {
+						Countries ca = new Countries(countryName, i, "0", "0");
+						countries.put(cid++, ca);
+						return "Success";
 					}
-				} else if (!countryNameList.contains(neighbor)) {
-					System.out.println(
-							"One of the country you have entered is not part of CountryList Please enter correct value");
-					countryNameList.add(countryName);
-					if (!toRemove.contains(countryName)) {
-						toRemove.add(countryName);
+					else {
+						return "Country already exists";
 					}
-				} else {
-					for (int i : countries.keySet()) {
-						Countries obj = countries.get(i);
-						{
-							if (obj.getCountryName().equals(neighbor))
-								;
-
-							neighbournodes.add(i);
-						}
-
-					}
-					boundries.put(counter + 1, neighbournodes);
 				}
-
-			}
-
+			} 
+			else {
+				return "Continent Not Exists Add The Continent First";
+			}			
 		}
+		return "";
+	}
+	/**
+	 * This method is used for adding the neighbor countries value
+	 * 
+	 * @param countryName         this variable contains name of the country
+	 * @param neighbourCountryName this variable contains value of the adjacent countries
+	 */
+	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
+			String countryName, String neighbourCountryName) {
 
+		for (int i : countries.keySet()) {
+			String s = countries.get(i).getCountryName();
+			if (countryName.equals(s)) {
+				for (int l : countries.keySet()) {
+					String m = countries.get(l).getCountryName();
+					if (neighbourCountryName.equals(m))
 
+					{
+						if (!boundries.containsKey(i)) {
+							ArrayList<Integer> li = new ArrayList<Integer>();
+							// li.add(0);
+							boundries.put(i, li);
+							return "Success";
+						} else {
+							boundries.get(i).add(l);
+							return "Success";
+						}
+					}
+				}
+				return "Country not exists";
+			}
+			return "Failure";
+		}
+		return "";
 	}
 
 	/**
 	 * method for write text file from data structure
-	 * 
+	 * uses buffer reader and writer to write text file
+	 * stores the file in the resource folder
+	 * @param takes the data structure and file name
 	 * @throws IOException as creating file
 	 */
-	public void writeContent(HashMap<String, Continents> continents, HashMap<Integer, Countries> countries,
-			HashMap<String, ArrayList<String>> boundries) throws IOException {
+	public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 
-		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + "CreatedMap.txt";
+		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + mapFile;
 		File mapfile = new File(createPath);
 		FileWriter fw = new FileWriter(mapfile, true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		mapfile.createNewFile();
-
+		bw.write("name "+mapFile +" Map");
+		bw.write("\n");
+		bw.write("[files]");
 		bw.write("\n");
 		bw.write("[continents]");
 		bw.newLine();
-		for (String i : continents.keySet()) {
+		for (Integer i : continents.keySet()) {
 			Continents c = continents.get(i);
 			bw.write(i + " " + c.getcontinentControlValue() + " " + c.getColour());
 			bw.newLine();
@@ -280,11 +261,11 @@ public class MapSelectionController {
 		bw.write("\n");
 		bw.write("[borders]");
 		bw.newLine();
-		for (String s : boundries.keySet()) {
-			ArrayList<String> tempal = new ArrayList<String>();
+		for (Integer s : boundries.keySet()) {
+			ArrayList<Integer> tempal = new ArrayList<Integer>();
 			String adjacency = "";
 			tempal = boundries.get(s);
-			for (String s1 : tempal) {
+			for (Integer s1 : tempal) {
 				adjacency += s1 + " ";
 			}
 			bw.write(s + " " + adjacency.trim());
