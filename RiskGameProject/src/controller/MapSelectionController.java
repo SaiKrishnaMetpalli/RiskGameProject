@@ -149,14 +149,40 @@ public class MapSelectionController {
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
-		Continents co = new Continents(continentName, continentControlValue, null);
-		if (!co.getContinentName().equals(continentName)) {
-			continents.put(coid++, co);
-			return "Success";
-		} else {
-			return "Continent already exists";
+		for (int i : continents.keySet()) {
+			String c = continents.get(i).getContinentName();			
+			if (!c.equals(continentName)) {
+				Continents co = new Continents(continentName, continentControlValue, "0");
+				continents.put(coid++, co);
+				return "Success";
+			} else {
+				return "Continent already exists";
+			}
 		}
+		return "";
 	}
+
+	/**
+	 * This method is used for removing the continents value
+	 * 
+	 * @param continentName this variable contains name of the continent
+	 */
+	public String removeContinent(HashMap<Integer, Continents> continents, HashMap<Integer, Continents> countries,String continentName) {
+		for (int i : continents.keySet()) {
+			String c = continents.get(i).getContinentName();
+			if(c.equals(continentName)) {
+				continents.remove(i);
+				for(int j : countries.keySet()) {
+		
+				
+			return "Success";
+		}
+			}
+		return "Continent Not Exist";
+				}
+
+	/**
+
 	/**
 	 * This method is used for adding the countries value
 	 * 
