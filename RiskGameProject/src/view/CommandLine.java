@@ -483,6 +483,48 @@ public class CommandLine {
 	}
 	
 	/**
+	* This method is used for displaying the map without player
+	*/
+	private void viewMapWithPlayer() {
+	String countryName="";
+	String continentName="";
+	String neighbours;
+	String playerName="";
+	ArrayList<Integer> neighboursNum;
+	System.out.format("%-30s|%-30s|%-30s|%-30s", "Country Name","ContinentName","Player Name","Neighbor Countries");
+	System.out.println();
+	for(int i=0;i<120;i++)
+	System.out.print("_");
+	System.out.println();
+	for(int i:gm.countries.keySet())
+	{
+	neighbours="";
+	Countries cou=gm.countries.get(i);
+	countryName=cou.getCountryName();
+	playerName=cou.getOwnerName();
+	for(int j:gm.continents.keySet())
+	{
+	if(cou.getCountryContinentNum()==j)
+	{
+	Continents con=gm.continents.get(j);
+	continentName=con.getContinentName();
+	break;
+	}
+	}
+	neighboursNum=gm.boundries.get(i);
+	for(int l:neighboursNum)
+	{
+	Countries couNeigh=gm.countries.get(l);
+	neighbours+=couNeigh.getCountryName()+",";
+	}
+	neighbours=neighbours.substring(0,neighbours.length()-1);
+	System.out.format("%-30s|%-30s|%-30s|%-30s",
+	countryName,continentName,playerName,neighbours);
+	System.out.println();
+	}
+	}
+	
+	/**
 	 * This method is used for adding the input commands one by one as the user is entering 
 	 * @param input this variable gives true/false for adding to inputCommandsList 
 	 * @param command this variable has command name that is used for adding to inputCommandsList
