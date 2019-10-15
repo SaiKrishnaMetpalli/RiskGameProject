@@ -66,19 +66,36 @@ public class CommandLine {
 						while(i<inputCommand.length)
 						{
 							if(inputCommand[i].equals("-add") && (i+2<inputCommand.length))
-							{							
-								System.out.println(inputCommand[i+1]);
-								System.out.println(inputCommand[i+2]);
-								i=i+3;
-								addToCommands=true;
-								//Call the method where we can add the continent and control value
+							{								
+								result=msc.addContinent(gm.continents, inputCommand[i+1], inputCommand[i+2]);
+								if(result.contains("success"))
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+result);
+									addToCommands=true;
+								}
+								else
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+inputCommand[i+2]+" "+result);
+									addToCommands=false;
+								}
+								i=i+3;								
+								
 							}
 							else if(inputCommand[i].equals("-remove") && (i+1<inputCommand.length))
 							{
 								System.out.println(inputCommand[i+1]);
-								i=i+2;
-								addToCommands=true;
-								//Call the method where we can remove the continent
+								result=msc.removeContinent(gm.continents, gm.boundries, gm.countries, inputCommand[i+1]);
+								if(result.contains("success"))
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+result);
+									addToCommands=true;
+								}
+								else
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+result);
+									addToCommands=false;
+								}
+								i=i+2;								
 							}
 							else
 							{
@@ -111,19 +128,34 @@ public class CommandLine {
 						while(i<inputCommand.length)
 						{
 							if(inputCommand[i].equals("-add") && (i+2<inputCommand.length))
-							{							
-								System.out.println(inputCommand[i+1]);
-								System.out.println(inputCommand[i+2]);
+							{	
+								result=msc.addCountry(gm.continents, gm.countries, inputCommand[i+1], inputCommand[i+2]);
+								if(result.contains("success"))
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+result);
+									addToCommands=true;
+								}
+								else
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+inputCommand[i+2]+" "+result);
+									addToCommands=false;
+								}
 								i=i+3;
-								//Call the method where we can add the country
-								addToCommands=true;
 							}
 							else if(inputCommand[i].equals("-remove") && (i+1<inputCommand.length))
 							{
-								System.out.println(inputCommand[i+1]);
-								i=i+2;
-								//Call the method where we can remove the country
-								addToCommands=true;
+								result=msc.removeCountry(gm.countries, gm.boundries, inputCommand[i+1]);
+								if(result.contains("success"))
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+result);
+									addToCommands=true;
+								}
+								else
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+result);
+									addToCommands=false;
+								}
+								i=i+2;								
 							}
 							else
 							{
@@ -155,19 +187,34 @@ public class CommandLine {
 						while(i<inputCommand.length)
 						{
 							if(inputCommand[i].equals("-add") && (i+2<inputCommand.length))
-							{							
-								System.out.println(inputCommand[i+1]);
-								System.out.println(inputCommand[i+2]);
-								i=i+3;
-								//Call the method where we can add the neighbors
-								addToCommands=true;
+							{								
+								result=msc.addNeighbour(gm.countries, gm.boundries, inputCommand[i+1], inputCommand[i+2]);
+								if(result.contains("success"))
+								{
+									System.out.println("\n "+inputCommand[i+2]+" "+result);
+									addToCommands=true;
+								}
+								else
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+inputCommand[i+2]+" "+result);
+									addToCommands=false;
+								}
+								i=i+3;								
 							}
-							else if(inputCommand[i].equals("-remove") && (i+1<inputCommand.length))
+							else if(inputCommand[i].equals("-remove") && (i+2<inputCommand.length))
 							{
-								System.out.println(inputCommand[i+1]);
-								i=i+2;
-								//Call the method where we can remove the neighbors
-								addToCommands=true;
+								result=msc.removeNeighbour(gm.countries, gm.boundries, inputCommand[i+1], inputCommand[i+2]);
+								if(result.contains("success"))
+								{
+									System.out.println("\n "+inputCommand[i+2]+" "+result);
+									addToCommands=true;
+								}
+								else
+								{
+									System.out.println("\n "+inputCommand[i+1]+" "+inputCommand[i+2]+" "+result);
+									addToCommands=false;
+								}
+								i=i+3;
 							}
 							else
 							{

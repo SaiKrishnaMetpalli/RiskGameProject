@@ -143,192 +143,311 @@ public class MapSelectionController {
 	/**
 	 * This method is used for adding the continents value
 	 * 
-	 * @param continents  
-	 * @param continentName         this variable contains name of the continent
-	 * @param continentControlValue this variable contains value of the control
-	 *                              value
+	 * @param continents this variable contains the continents list  
+	 * @param continentName this variable contains name of the continent to be added
+	 * @param continentControlValue this variable contains value of the control value to be added
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
 		for (int i : continents.keySet()) {
 			String c = continents.get(i).getContinentName();
-			if (!c.equals(continentName)) {
-				Continents co = new Continents(continentName, continentControlValue, "0");
-				continents.put(coid++, co);
-				return "Success! Continent Added";
+			if (c.equals(continentName)) {
+				return "Continent already exists";
 			} 
 		}
-		return "Continent already exists";
+		Continents co = new Continents(continentName, continentControlValue, "0");
+		continents.put(++coid, co);
+		return "Continent added successfully";		
 	}
 
 	/**
 	 * This method is used for removing the continents value
 	 * 
-	 * @param continentName this variable contains name of the continent
-	 * @param continents
-	 * @param countries
-	 * @param boundries
+	 * @param continentName this variable contains name of the continent tobe removed
+	 * @param continents this variable contains the continents list
+	 * @param countries this variable contains the countries list
+	 * @param boundries this variable contains the boundries list
 	 */
 	public String removeContinent(HashMap<Integer, Continents> continents,
 			HashMap<Integer, ArrayList<Integer>> boundries, HashMap<Integer, Countries> countries,
 			String continentName) {
+		int removeState=0;
 		for (int i : continents.keySet()) {
 			String c = continents.get(i).getContinentName();
 			if (c.equals(continentName)) {
 				continents.remove(i);
+				removeState=1;
 				for (int j : countries.keySet()) {
 					Countries key = countries.get(j);
 					if (key.getCountryContinentNum() == i) {
 						countries.remove(i);
+						removeState=2;
 						for (int n : boundries.keySet()) {
 							ArrayList<Integer> blist = boundries.get(n);
 							if (n == j) {
 								boundries.remove(n);
-								return "Continent Removed";
+								removeState=3;
 							}
-							for (int k : blist) {
-								if (k == j) {
-									blist.remove(k);
-									return "Continent Removed";
+							else
+							{
+								for (int k : blist) {
+									if (k == j) {
+										blist.remove(Integer.valueOf(k));									
+									}
 								}
-							}
+							}							
 						}
 					}
-				}
+				}				
 			}
 		}
-		return "Continent Not Exist";
+		if(removeState==1)
+		{
+			return "Continent removed successfully";
+		}
+		else if(removeState==2)
+		{
+			return "Continents and countries under continent removed successfully";
+		}
+		else if(removeState==3)
+		{
+			return "Continents and countries under continent and neighbours under country removed successfully";
+		}
+		else
+		{
+			return "Continent does not exist";
+		}
+			
 	}
 
 	/**
 	 * 
 	 * /** This method is used for adding the countries value
 	 * 
-	 * @param countryName   this variable contains name of the country
-	 * @param continentName this variable contains name of the continent
-	 * @param continents
-	 * @param countries
+	 * @param countryName this variable contains name of the country to be added
+	 * @param continentName this variable contains name of the continent to which country is added
+	 * @param continents this variable contains the continents list
+	 * @param countries this variable contains the countries list
 	 */
 	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			String countryName, String continentName) {
+		boolean conFlag=false,couFlag=false;;
+		int continentNum=0;
 		for (int i : continents.keySet()) {
 			String s = continents.get(i).getContinentName();
 			if (s.equals(continentName)) {
+				continentNum=i;
+				conFlag=true;
+				break;				
+			}
+		}
+		if(conFlag)
+		{
+			if(countries.size()>0)
+			{
 				for (int j : countries.keySet()) {
 					String c = countries.get(j).getCountryName();
-					if (!c.equals(countryName)) {
-						Countries ca = new Countries(countryName, i, "0", "0");
-						countries.put(cid++, ca);
-						return "Success";
-					} else {
+					if (c.equals(countryName)) {					
 						return "Country already exists";
+					}
+					else
+					{
+						couFlag=true;
 					}
 				}
 			}
+			else
+			{
+				Countries ca = new Countries(countryName, continentNum, "0", "0");
+				countries.put(++cid, ca);
+				return "Country added successfully";
+			}
+			
 		}
-		return "Continent Not Exists Add The Continent First";
+		else
+		{
+			return "Continent does not exists. Please add the Continent first";
+		}
+		if(couFlag)
+		{
+			Countries ca = new Countries(countryName, continentNum, "0", "0");
+			countries.put(++cid, ca);
+			return "Country added successfully";
+		}
+		return "Failure";
 	}
 
 	/**
 	 * This method is used for removing country value
 	 * 
-	 * @param countries
-	 * @param boundries
-	 * @param countryName this variable contains country to be removed
+	 * @param countries this variable contains the continents list
+	 * @param boundries this variable contains the boundries list
+	 * @param countryName this variable contains the country to be removed
 	 */
 	public String removeCountry(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName) {
+		int removeState=0;
 		for (int j : countries.keySet()) {
 			String c = countries.get(j).getCountryName();
 			if (c.equals(countryName)) {
 				countries.remove(j);
-				for (int n : boundries.keySet()) {
-					ArrayList<Integer> blist = boundries.get(n);
+				removeState=1;
+				for (int n : boundries.keySet()) {					
 					if (n == j) {
 						boundries.remove(n);
-						return "Country Removed";
+						removeState=2;
 					}
-					for (int k : blist) {
-						if (k == j) {
-							blist.remove(k);
-							return "Country Removed";
+					else
+					{
+						ArrayList<Integer> blist = boundries.get(n);
+						for (int k : blist) {
+							if (k == j) {
+								blist.remove(Integer.valueOf(k));							
+							}
 						}
-					}
+					}					
 				}
+				
 			}
 		}
-		return "Country not exists Add the Country First";
+		if(removeState==1)
+		{
+			return "Country removed successfully";
+		}
+		else if(removeState==2)
+		{
+			return "Country and it's neighbours are removed successfully";
+		}
+		else
+		{
+			return "Country does not exists. Please add the Country first";
+		}		
 	}
 
 	/**
 	 * This method is used for adding the neighbor countries value
 	 * 
-	 * @param countryName          this variable contains name of the country
-	 * @param neighbourCountryName this variable contains value of the adjacent
-	 *                             countries
-	 * @param countries
-	 * @param boundries
+	 * @param countryName this variable contains name of the country
+	 * @param neighbourCountryName this variable contains the name of neighbouring country
+	 * @param countries this variable contains the countries list
+	 * @param boundries this variable contains the boundries list
 	 */
 	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
-
+		boolean couFlag=false,neighFlag=false;
+		int couNum=0,neighNum=0;
 		for (int i : countries.keySet()) {
 			String s = countries.get(i).getCountryName();
 			if (countryName.equals(s)) {
-				for (int l : countries.keySet()) {
-					String m = countries.get(l).getCountryName();
-					if (neighbourCountryName.equals(m)) {
-						if (!boundries.containsKey(i)) {
-							ArrayList<Integer> li = new ArrayList<Integer>();
-							boundries.put(i, li);
-							return "Neighbour Added";
-						} else {
-							boundries.get(i).add(l);
-							return "Neighbour Added";
-						}
-					} else {
-						return "Neighbour Country Not Exists";
-					}
-				}
-				return "Country Not Exists";
+				couNum=i;
+				couFlag=true;
+				break;
 			}
 		}
-		return "Neighbour Country Already Exists";
+		if(couFlag)
+		{
+			for (int l : countries.keySet()) {
+				String m = countries.get(l).getCountryName();
+				if (neighbourCountryName.equals(m)) {
+					neighNum=l;
+					neighFlag=true;
+					break;
+				}
+			}
+			if(neighFlag)
+			{
+				if(boundries.size()>0)
+				{
+					if(boundries.containsKey(couNum))
+					{
+						if(boundries.get(couNum).contains(neighNum))
+						{
+							return "Neighbour country is already present in neighbour list";
+						}
+						else
+						{
+							boundries.get(couNum).add(neighNum);
+						}
+					}
+					else
+					{
+						ArrayList<Integer> li = new ArrayList<Integer>();
+						li.add(neighNum);
+						boundries.put(couNum, li);
+					}
+				}
+				else
+				{
+					ArrayList<Integer> li = new ArrayList<Integer>();
+					li.add(neighNum);
+					boundries.put(couNum, li);
+				}				
+				return "Neighbour country is added successfully";
+			}
+			else
+			{
+				return "Neighbour country does not exists. Please add the country and then neighbour";
+			}
+		}
+		else
+		{
+			return "Country does not exists. Please add the country and then neighbour";
+		}
 	}
 
 	/**
 	 * This method is used for removing country value
 	 * 
-	 * @param boundries
-	 * @param countries            
-	 * @param neighbourCountryName this variable contains the country to be removed
-	 * @param countryName          this variable is the name of the country which contains neighbor country name
+	 * @param boundries this variable contains the boundries list
+	 * @param countries this variable contains the countries list            
+	 * @param neighbourCountryName this variable contains the country to be removed from neighbour
+	 * @param countryName this variable is the name of the country which contains neighbor country name
 	 */
 	public String removeNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
-
+		
+		boolean couFlag=false,neighFlag=false;
+		int couNum=0,neighNum=0;
 		for (int i : countries.keySet()) {
 			String s = countries.get(i).getCountryName();
 			if (countryName.equals(s)) {
-				for (int j : countries.keySet()) {
-					String m = countries.get(j).getCountryName();
-					if (m.equals(neighbourCountryName)) {
-						for (int k : boundries.keySet()) {
-							ArrayList<Integer> blist = boundries.get(k);
-							for (int n : blist) {
-								if (n == k) {
-									blist.remove(n);
-									return "Success Neighbour Country";
-								}
-							}
-
-						}
-					}
+				couNum=i;
+				couFlag=true;
+				break;
+			}
+		}
+		if(couFlag)
+		{
+			for (int l : countries.keySet()) {
+				String m = countries.get(l).getCountryName();
+				if (neighbourCountryName.equals(m)) {
+					neighNum=l;
+					neighFlag=true;
+					break;
 				}
 			}
-			return "Country not exists";
+			if(neighFlag)
+			{				
+				if(boundries.get(couNum).contains(neighNum))
+				{
+					boundries.get(couNum).remove(Integer.valueOf(neighNum));
+					return "Neighbour country is removed successfully";
+				}
+				else
+				{
+					return "Neighbour country is not present in neighbours list";
+				}								
+			}
+			else
+			{
+				return "Neighbour country does not exists";
+			}
 		}
-		return "Neighbour Country not exists";
+		else
+		{
+			return "Country does not exists";
+		}
+
 	}
 	
 	/**
