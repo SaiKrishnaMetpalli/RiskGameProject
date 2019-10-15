@@ -184,12 +184,12 @@ public class MapSelectionController {
 							ArrayList<Integer> blist = boundries.get(n);
 							if (n == j) {
 								boundries.remove(n);
-								return "Continent Removed";
+								return "Success! Continent Removed";
 							}
 							for (int k : blist) {
 								if (k == j) {
 									blist.remove(k);
-									return "Continent Removed";
+									return "Success! Continent Removed";
 								}
 							}
 						}
@@ -197,7 +197,7 @@ public class MapSelectionController {
 				}
 			}
 		}
-		return "Continent Not Exist";
+		return "Failure! Continent Not Exist";
 	}
 
 	/**
@@ -219,14 +219,14 @@ public class MapSelectionController {
 					if (!c.equals(countryName)) {
 						Countries ca = new Countries(countryName, i, "0", "0");
 						countries.put(cid++, ca);
-						return "Success";
+						return "Success! Country Added";
 					} else {
-						return "Country already exists";
+						return "Failure! Country already exists";
 					}
 				}
 			}
 		}
-		return "Continent Not Exists Add The Continent First";
+		return "Failure! Continent Not Exists";
 	}
 
 	/**
@@ -246,18 +246,18 @@ public class MapSelectionController {
 					ArrayList<Integer> blist = boundries.get(n);
 					if (n == j) {
 						boundries.remove(n);
-						return "Country Removed";
+						return "Success! Country Removed";
 					}
 					for (int k : blist) {
 						if (k == j) {
 							blist.remove(k);
-							return "Country Removed";
+							return "Success! Country Removed";
 						}
 					}
 				}
 			}
 		}
-		return "Country not exists Add the Country First";
+		return "Failure! Country not exists";
 	}
 
 	/**
@@ -281,19 +281,19 @@ public class MapSelectionController {
 						if (!boundries.containsKey(i)) {
 							ArrayList<Integer> li = new ArrayList<Integer>();
 							boundries.put(i, li);
-							return "Neighbour Added";
+							return "Success! Neighbour Added";
 						} else {
 							boundries.get(i).add(l);
-							return "Neighbour Added";
+							return "Success! Neighbour Added";
 						}
 					} else {
-						return "Neighbour Country Not Exists";
+						return "Failure! Neighbour Country Not Exists";
 					}
 				}
-				return "Country Not Exists";
+				return "Failure! Country Not Exists";
 			}
 		}
-		return "Neighbour Country Already Exists";
+		return "Failure! Neighbour Country Already Exists";
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class MapSelectionController {
 							for (int n : blist) {
 								if (n == k) {
 									blist.remove(n);
-									return "Success Neighbour Country";
+									return "Success! Neighbour Country Removed";
 								}
 							}
 
@@ -326,9 +326,9 @@ public class MapSelectionController {
 					}
 				}
 			}
-			return "Country not exists";
+			return "Failure! Country not exists";
 		}
-		return "Neighbour Country not exists";
+		return "Failure! Neighbour Country not exists";
 	}
 	
 	/**
