@@ -1,4 +1,7 @@
 package model;
+
+import java.util.ArrayList;
+
 /**
  * This File contains the Continents information
  * 
@@ -9,6 +12,7 @@ package model;
 public class Continents {
 
 	private String continentControlValue , continentColour , continentName;
+	private ArrayList<String> countryList;
 	
 	public Continents(String continentName , String continentControlValue , String colour)
 	{
@@ -36,7 +40,7 @@ public class Continents {
 	public String getContinentName() {
 		return continentName;
 	}
-
+	
 	public void setContinent_Name(String continentName) {
 		this.continentName = continentName;
 	}

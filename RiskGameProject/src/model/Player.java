@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Player {
 	
 	private ArrayList<String> ownedCountriesList;
-	private ArrayList<String> ownedArmiesList;
+	private ArrayList<Integer> ownedArmiesList;
 	
 	/**
 	 * @Default Constructor
@@ -17,7 +17,7 @@ public class Player {
 	public Player()
 	{
 		ownedCountriesList=new ArrayList<String>();
-		ownedArmiesList=new ArrayList<String>();
+		ownedArmiesList=new ArrayList<Integer>();
 	}
 
 	public ArrayList<String> getOwnedCountriesList() {
@@ -28,11 +28,11 @@ public class Player {
 		this.ownedCountriesList = ownedCountriesList;
 	}
 
-	public ArrayList<String> getOwnedArmiesList() {
+	public ArrayList<Integer> getOwnedArmiesList() {
 		return ownedArmiesList;
 	}
 
-	public void setOwnedArmiesList(ArrayList<String> ownedArmiesList) {
+	public void setOwnedArmiesList(ArrayList<Integer> ownedArmiesList) {
 		this.ownedArmiesList = ownedArmiesList;
 	}
 }
