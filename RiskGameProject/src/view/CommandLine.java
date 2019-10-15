@@ -192,13 +192,59 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "showmap":
-				if(inputCommand.length>2)
+				if((gm.countries.size()>0) && (gm.continents.size()>0) && (gm.boundries.size()>0))
 				{
-					System.out.println("showmap");
+					if(listOfPlayers.size()>0)
+					{
+						//viewMapWithPlayer();
+					}
+					else
+					{
+						//viewMapWithoutPlayer();
+					}					
+					addToCommands=true;
 				}
+				else
+				{
+					System.out.println("\nUnable to view the map as map is not loaded");
+					addToCommands=false;
+				}
+				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
 			case "savemap":
+				if(inputCommand.length>1)
+				{
+					if((gm.countries.size()>0) && (gm.continents.size()>0) && (gm.boundries.size()>0))
+					{
+						if(!checkFileExist(inputCommand[1]))
+						{
+							try
+							{
+								msc.writeGameMapFile(gm.continents, gm.countries, gm.boundries, inputCommand[1]);
+								System.out.println("\nMap file saved successfully");
+								addToCommands=true;
+							}
+							catch(Exception ex)
+							{
+								System.out.println("\nSome error has occurred. Please try again");
+								addToCommands=false;
+							}
+							
+						}
+						else
+						{
+							System.out.println("\nFile already exists");
+							addToCommands=false;
+						}						
+					}					
+					else
+					{
+						System.out.println("\nMap has not been loaded. Please load the file and save");
+						addToCommands=false;
+					}
+				}
+				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
 			case "editmap":
@@ -211,17 +257,17 @@ public class CommandLine {
 							String result=msc.gameMapReading(gm.continents,gm.countries,gm.boundries,inputCommand[1]);
 							if(result.equals("Success"))
 							{
-								System.out.println("File uploaded successfully");								
+								System.out.println("\nFile uploaded successfully");								
 							}
 							else
 							{
-								System.out.println("File not uploaded. There are format issues in file. Please upload again");
+								System.out.println("\nFile not uploaded. There are format issues in file. Please upload again");
 							}
 							
 						}
 						catch(Exception ex)
 						{
-							System.out.println("Error Occurred. Please try again");
+							System.out.println("\nError Occurred. Please try again");
 						}
 					}
 					else
@@ -244,11 +290,11 @@ public class CommandLine {
 					boolean result=msc.isConnectedMap(gm.boundries);
 					if(result)
 					{
-						System.out.println("Map is connected");
+						System.out.println("\nMap is connected");
 					}
 					else
 					{
-						System.out.println("Map is not connected");
+						System.out.println("\nMap is not connected");
 					}
 				}
 				else
@@ -270,19 +316,19 @@ public class CommandLine {
 							result=msc.gameMapReading(gm.continents,gm.countries,gm.boundries,inputCommand[1]);
 							if(result.equals("Success"))
 							{
-								System.out.println("File uploaded successfully");								
+								System.out.println("\nFile uploaded successfully");								
 								addToCommands=true;
 							}
 							else
 							{
-								System.out.println("File not uploaded. There are format issues in file. Please upload again");
+								System.out.println("\nFile not uploaded. There are format issues in file. Please upload again");
 								addToCommands=false;
 							}
 							
 						}
 						catch(Exception ex)
 						{
-							System.out.println("Error Occurred. Please try again");
+							System.out.println("\nError Occurred. Please try again");
 							addToCommands=false;
 						}						
 					}
@@ -296,14 +342,7 @@ public class CommandLine {
 				{
 					System.out.println("\nloadmap command format is incorrect");
 					addToCommands=false;
-				}
-				if(addToCommands)
-				{
-					if(!inputCommandsList.contains(inputCommand[0]))
-					{
-						inputCommandsList.add(inputCommand[0]);
-					}					
-				}
+				}				
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
@@ -355,9 +394,21 @@ public class CommandLine {
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
-			case "Populatecountries" :
-				listOfPlayers.clear();
-				result=psc.assignRandomCountries(players,gm.countries,listOfPlayers);
+			case "populatecountries" :
+				if((gm.countries.size()>0) && (gm.continents.size()>0) && (gm.boundries.size()>0) && (players.size()>0))
+				{
+					listOfPlayers.clear();
+					result=psc.assignRandomCountries(players,gm.countries,listOfPlayers);
+					if(result.equals("Success"))
+					{
+						System.out.println("Players assigned to countries");
+					}
+				}
+				else
+				{
+					System.out.println("\nCannot populate countires to player if map is not loaded or players are not added");
+					System.out.println("\nPlease try again by loading map and creating players");
+				}
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
