@@ -9,8 +9,6 @@ import model.Player;
 
 /**
  * This class intend to calculate the no. of bonus armies in reinforcement phase
- * 
- * @author sakib
  *
  */
 
@@ -45,7 +43,6 @@ public class ReinforcementController {
 	 * @param countryName takes country name string
 	 * @return continent objects for country name
 	 */
-
 	private Continents getContinentByCountryName(HashMap<Integer, Continents> continents,
 			HashMap<Integer, Countries> countries, String countryName) {
 
@@ -63,7 +60,6 @@ public class ReinforcementController {
 	 * @param countries
 	 * @return hashmap where key is continent and value is country list
 	 */
-
 	public HashMap<String, ArrayList<String>> getContinentsCountryList(HashMap<Integer, Continents> continents,
 			HashMap<Integer, Countries> countries) {
 
@@ -97,7 +93,6 @@ public class ReinforcementController {
 	 * @param countryName
 	 * @return returns total armies obtained as integer
 	 */
-
 	public int calculateReinforceArmy(Player player, HashMap<Integer, Continents> continents,
 			HashMap<Integer, Countries> countries, String countryName) {
 		int countryReward = 0;
@@ -136,7 +131,6 @@ public class ReinforcementController {
 	 * @param continents
 	 * @return different messages for view
 	 */
-
 	public String findPlayerNameFromCountry(HashMap<Integer, Countries> countries, String countryName) {
 		String player = "";
 		for (int i : countries.keySet()) {
@@ -161,15 +155,12 @@ public class ReinforcementController {
 		int availableReinforcedArmies = calculateReinforceArmy(playerMap.get(player), continents, countries,
 				countryName);
 		 //Check Player owns the country
-		Player p = playerMap.get(player);
-		int index = p.getOwnedCountriesList().indexOf(countryName);
-		ArrayList<Integer> existingArmiesList = p.getOwnedArmiesList();
-		int existingArmy = existingArmiesList.get(index);
+		Player p = playerMap.get(player);		
+		int existingArmy = p.getOwnedCountriesArmiesList().get(countryName);
 		if (numOfArmiesToPlace <= availableReinforcedArmies) {
 			existingArmy += availableReinforcedArmies;
-			existingArmiesList.set(index, existingArmy);
-			p.setOwnedArmiesList(existingArmiesList);
-			return "Army placed successfully";
+			p.getOwnedCountriesArmiesList().put(countryName, existingArmy);			
+			return "Reinforcement armies placed successfully";
 		} else
 			return "Not enough reinoforcement armies available";
 

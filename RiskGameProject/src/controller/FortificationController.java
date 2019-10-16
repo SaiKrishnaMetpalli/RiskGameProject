@@ -10,23 +10,22 @@ import controller.ReinforcementController;
 /**
  * FOllowing class will perform the activity in fortification phase
  * 
- * @author sakib
  * 
  */
 public class FortificationController {
 	
-/**
- * creates an Adjacency Matrix for the boundaries hashmap
- * @param boundaries
- * @return
- */
+	/**
+	 * creates an Adjacency Matrix for the boundaries hashmap
+	 * @param boundaries
+	 * @return
+	 */
 	public boolean[][] getAdjacencyMatrix(HashMap<Integer, ArrayList<Integer>> boundaries) {
 		boolean[][] matrix = new boolean[boundaries.size()][boundaries.size()];
 		ArrayList<Integer> list;
 		int neighborIndex;
 
 		for (int k = 0; k < matrix.length; k++) {
-			list = boundaries.get(k);
+			list = boundaries.get(k+1);
 			for (int i = 0; i < list.size(); i++) {
 				neighborIndex = list.get(i) - 1;
 				matrix[k][neighborIndex] = true;
@@ -34,13 +33,13 @@ public class FortificationController {
 		}
 		return matrix;
 	}
+	
 	/**
 	 * To find the key of country hashmap 
 	 * @param countries
 	 * @param countryName
 	 * @return
 	 */
-
 	public int getCountryNumberByName(HashMap<Integer, Countries> countries, String countryName) {
 		for (int i : countries.keySet()) {
 			Countries cou = countries.get(i);
@@ -62,7 +61,6 @@ public class FortificationController {
 	 * @param boundaries
 	 * @return appropiate messages for view
 	 */
-
 	public String fortify(HashMap<String, Player> player, String fromCountry, String toCountry, int armyToPlace,
 			HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundaries) {
 		ReinforcementController rc = new ReinforcementController();
@@ -76,25 +74,24 @@ public class FortificationController {
 				boolean[][] matrix = getAdjacencyMatrix(boundaries);
 
 				if (matrix[fromCIdx][toCIdx]) {
-					ArrayList<Integer> existingArmiesList = pOb.getOwnedArmiesList();
-					int existingArmy = existingArmiesList.get(fromCIdx);
+//					ArrayList<Integer> existingArmiesList = pOb.getOwnedArmiesList();
+					int existingArmy = pOb.getOwnedCountriesArmiesList().get(fromCountry);
 					if (armyToPlace < existingArmy) {
-						int destinationArmy = existingArmiesList.get(toCIdx);
+						int destinationArmy = pOb.getOwnedCountriesArmiesList().get(toCountry);
 						existingArmy -= armyToPlace;
 						destinationArmy += armyToPlace;
-						existingArmiesList.set(fromCIdx, existingArmy);
-						existingArmiesList.set(toCIdx, destinationArmy);
-						pOb.setOwnedArmiesList(existingArmiesList);
+						pOb.getOwnedCountriesArmiesList().put(fromCountry, existingArmy);
+						pOb.getOwnedCountriesArmiesList().put(toCountry, destinationArmy);						
 						return "Foritified successfully";
-					}else return "All armies cannot be fortified";
+					}else 
+						return "All armies cannot be fortified";
 
-				}
+				}else
+					return "Player does not own the path";
 
 			} else
-				return "Trageted country is not owned by player";
+				return "Targeted country is not owned by player";
 		} else
-			return "Player doesn't own this country";
-
-		return null;
+			return "Player doesn't own this country";		
 	}
 }

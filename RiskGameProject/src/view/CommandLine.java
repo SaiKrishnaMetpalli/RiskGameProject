@@ -10,8 +10,10 @@ import model.Continents;
 import model.Countries;
 import model.GameMap;
 import model.Player;
+import controller.FortificationController;
 import controller.MapSelectionController;
 import controller.PlayerSelectionController;
+import controller.ReinforcementController;
 import util.CONSTANTS;
 
 /**
@@ -31,6 +33,8 @@ public class CommandLine {
 	MapSelectionController msc;
 	HashMap<String , Player> listOfPlayers;
 	CONSTANTS cons;
+	ReinforcementController ric;
+	FortificationController fc;
 	
 	/**
 	 * Default constructor
@@ -46,6 +50,8 @@ public class CommandLine {
 		msc=new MapSelectionController();
 		listOfPlayers = new HashMap<String, Player>();
 		cons=new CONSTANTS();
+		ric=new ReinforcementController();
+		fc=new FortificationController();
 	}
 	
 	/**
@@ -265,7 +271,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "savemap":
-				if(inputCommand.length>1)
+				if(inputCommand.length==2)
 				{
 					if((gm.countries.size()>0) && (gm.continents.size()>0) && (gm.boundries.size()>0))
 					{
@@ -300,7 +306,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "editmap":
-				if(inputCommand.length>1)
+				if(inputCommand.length==2)
 				{
 					if(checkFileExist(inputCommand[1]))
 					{
@@ -359,7 +365,7 @@ public class CommandLine {
 				commandLine();
 				break;				
 			case "loadmap":
-				if(inputCommand.length>1)
+				if(inputCommand.length==2)
 				{					
 					if(checkFileExist(inputCommand[1]))
 					{
@@ -465,7 +471,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "placearmy":
-				if(inputCommand.length>1)
+				if(inputCommand.length==2)
 				{
 					if(listOfPlayers.size()>0)
 					{
@@ -512,10 +518,77 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "reinforce":
+				if(inputCommand.length==3)
+				{
+					boolean flag=checkArmiesPlaced();
+					if(!flag)
+					{
+						result=ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]), 
+								gm.countries, listOfPlayers, gm.continents);
+						if(result.contains("success"))
+						{
+							System.out.println("\n "+result);
+							addToCommands=true;
+						}
+						else
+						{
+							System.out.println("\n "+result);
+							addToCommands=false;
+						}
+					}
+					else
+					{
+						System.out.println("\nReinforcement cannot be performed as armies are not assigned to player");
+						addToCommands=false;
+					}
+				}
+				else
+				{
+					System.out.println("\nreinforce command format is incorrect");
+					addToCommands=false;
+				}
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
-			case "fortify":
+			case "fortify":				
+				if((inputCommand.length==4) || (inputCommand.length==2))
+				{
+					boolean flag=checkArmiesPlaced();
+					if((!flag) && (!inputCommandsList.contains("fortify")))
+					{
+						if(inputCommand.length==4)
+						{
+							result=fc.fortify(listOfPlayers, inputCommand[1], inputCommand[2], Integer.parseInt(inputCommand[3]), 
+									gm.countries, gm.boundries);
+							if(result.contains("success"))
+							{
+								System.out.println("\n "+result);
+								addToCommands=true;
+							}
+							else
+							{
+								System.out.println("\n "+result);
+								addToCommands=false;
+							}							
+						}
+						else
+						{
+							System.out.println("Fortification none completed");
+							addToCommands=true;
+						}						
+					}
+					else
+					{
+						System.out.println("\nFortification cannot be performed as armies are not assigned to player");
+						addToCommands=false;
+					}
+					
+				}
+				else
+				{
+					System.out.println("\nfortify command format is incorrect");
+					addToCommands=false;
+				}
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
