@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import model.Continents;
@@ -179,28 +181,33 @@ public class MapSelectionController {
 			HashMap<Integer, ArrayList<Integer>> boundries, HashMap<Integer, Countries> countries,
 			String continentName) {
 		int removeState=0;
-		for (int i : continents.keySet()) {
-			String c = continents.get(i).getContinentName();
+		Iterator<Map.Entry<Integer, Continents>> iteratorContinents=continents.entrySet().iterator();
+		Iterator<Map.Entry<Integer, Countries>> iteratorCountries=countries.entrySet().iterator();
+		Iterator<Map.Entry<Integer, ArrayList<Integer>>> iteratorBoundries=boundries.entrySet().iterator();
+		while (iteratorContinents.hasNext()) {
+			Map.Entry<Integer, Continents> entryContinents=iteratorContinents.next();
+			String c = entryContinents.getValue().getContinentName();
 			if (c.equals(continentName)) {
-				continents.remove(i);
-				removeState=1;
-				for (int j : countries.keySet()) {
-					Countries key = countries.get(j);
-					if (key.getCountryContinentNum() == i) {
-						countries.remove(i);
+				iteratorContinents.remove();
+				removeState=1;				
+				while(iteratorCountries.hasNext()) {
+					Map.Entry<Integer, Countries> entryCountries=iteratorCountries.next();
+					Countries key = entryCountries.getValue();
+					if (key.getCountryContinentNum() == entryContinents.getKey()) {						
+						iteratorCountries.remove();
 						removeState=2;
-						for (int n : boundries.keySet()) {
-							ArrayList<Integer> blist = boundries.get(n);
-							if (n == j) {
-								boundries.remove(n);
+						while (iteratorBoundries.hasNext()) {
+							Map.Entry<Integer, ArrayList<Integer>> entryBoundries=iteratorBoundries.next();
+							ArrayList<Integer> blist = entryBoundries.getValue();
+							if (entryBoundries.getKey() == entryCountries.getKey()) {
+								iteratorBoundries.remove();
 								removeState=3;
 							}
 							else
-							{
-								for (int k : blist) {
-									if (k == j) {
-										blist.remove(Integer.valueOf(k));									
-									}
+							{								
+								if(blist.contains(entryCountries.getKey()))
+								{
+									blist.remove(Integer.valueOf(entryCountries.getKey()));
 								}
 							}							
 						}
@@ -236,8 +243,8 @@ public class MapSelectionController {
 	 * @param continents this variable contains the continents list
 	 * @param countries this variable contains the countries list
 	 */
-	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
-			String countryName, String continentName) {
+	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries, 
+			HashMap<Integer,ArrayList<Integer>> boundries, String countryName, String continentName) {
 		boolean conFlag=false,couFlag=false;;
 		int continentNum=0;
 		if(countries.size()>0)
@@ -275,6 +282,7 @@ public class MapSelectionController {
 			{
 				Countries ca = new Countries(countryName, continentNum, "0", "0");
 				countries.put(++cid, ca);
+				boundries.put(cid, new ArrayList<Integer>());
 				return "Country added successfully";
 			}
 			
@@ -287,6 +295,7 @@ public class MapSelectionController {
 		{
 			Countries ca = new Countries(countryName, continentNum, "0", "0");
 			countries.put(++cid, ca);
+			boundries.put(cid, new ArrayList<Integer>());
 			return "Country added successfully";
 		}
 		return "Failure";
@@ -301,30 +310,34 @@ public class MapSelectionController {
 	 */
 	public String removeCountry(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName) {
-		int removeState=0;
-		for (int j : countries.keySet()) {
-			String c = countries.get(j).getCountryName();
-			if (c.equals(countryName)) {
-				countries.remove(j);
+		int removeState=0;		
+		Iterator<Map.Entry<Integer, Countries>> iteratorCountries=countries.entrySet().iterator();
+		Iterator<Map.Entry<Integer, ArrayList<Integer>>> iteratorBoundries=boundries.entrySet().iterator();
+		
+		while(iteratorCountries.hasNext()) {
+			Map.Entry<Integer, Countries> entryCountries=iteratorCountries.next();
+			Countries key = entryCountries.getValue();
+			if (key.getCountryName().equals(countryName)) {						
+				iteratorCountries.remove();
 				removeState=1;
-				for (int n : boundries.keySet()) {					
-					if (n == j) {
-						boundries.remove(n);
+				while (iteratorBoundries.hasNext()) {
+					Map.Entry<Integer, ArrayList<Integer>> entryBoundries=iteratorBoundries.next();
+					ArrayList<Integer> blist = entryBoundries.getValue();
+					if (entryBoundries.getKey() == entryCountries.getKey()) {
+						iteratorBoundries.remove();
 						removeState=2;
 					}
 					else
-					{
-						ArrayList<Integer> blist = boundries.get(n);
-						for (int k : blist) {
-							if (k == j) {
-								blist.remove(Integer.valueOf(k));							
-							}
+					{								
+						if(blist.contains(entryCountries.getKey()))
+						{
+							blist.remove(Integer.valueOf(entryCountries.getKey()));
 						}
-					}					
+					}							
 				}
-				
 			}
-		}
+		}			
+		
 		if(removeState==1)
 		{
 			return "Country removed successfully";

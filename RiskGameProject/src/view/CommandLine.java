@@ -138,7 +138,7 @@ public class CommandLine {
 						{
 							if(inputCommand[i].equals("-add") && (i+2<inputCommand.length))
 							{	
-								result=msc.addCountry(gm.continents, gm.countries, inputCommand[i+1], inputCommand[i+2]);
+								result=msc.addCountry(gm.continents, gm.countries,gm.boundries, inputCommand[i+1], inputCommand[i+2]);
 								if(result.contains("success"))
 								{
 									System.out.println("\n "+inputCommand[i+1]+" "+result);
@@ -640,7 +640,10 @@ public class CommandLine {
 				Countries couNeigh=gm.countries.get(l);
 				neighbours+=couNeigh.getCountryName()+",";
 			}
-			neighbours=neighbours.substring(0,neighbours.length()-1);
+			if(neighbours.length()>0)
+			{
+				neighbours=neighbours.substring(0,neighbours.length()-1);
+			}			
 			System.out.format("%-30s|%-30s|%-30s", countryName,continentName,neighbours);
 			System.out.println();
 		}
