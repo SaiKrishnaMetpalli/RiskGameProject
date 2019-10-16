@@ -2,10 +2,12 @@ package util;
 
 import java.util.HashMap;
 
+/**
+ * Class is used to provide Constant Variable used in project
+ *
+ */
 public class CONSTANTS {
 
-	public static final String FILE_PATH = "C:\\\\Users\\\\14382\\\\riskdemo.txt";
-	public static final String FILE_NAME = "riskdemo.txt";
 	public static final HashMap<Integer,Integer> NO_PLAYER_ARMIES=new HashMap<Integer, Integer>();
 	static
 	{		
