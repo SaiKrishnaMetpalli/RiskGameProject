@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import controller.MapFormatValidation;
@@ -20,19 +22,29 @@ import model.Countries;
  */
 public class TestMapOperations {
 
-	MapSelectionController msc = new MapSelectionController();
-	MapFormatValidation mfv = new MapFormatValidation();
-	HashMap<Integer, Continents> continents = new HashMap<Integer, Continents>();
-	HashMap<Integer, Countries> countries = new HashMap<Integer, Countries>();
-	HashMap<Integer, ArrayList<Integer>> boundries = new HashMap<Integer, ArrayList<Integer>>();
-	String fileName = "riskdemo.txt";
-	boolean flag = false;
-	
+	MapSelectionController msc;
+	MapFormatValidation mfv;
+	HashMap<Integer, Continents> continents;
+	HashMap<Integer, Countries> countries;
+	HashMap<Integer, ArrayList<Integer>> boundries;
+	String fileName;
+	boolean flag;
+
+	@Before
+	public void setUp() {
+		msc = new MapSelectionController();
+		mfv = new MapFormatValidation();
+		continents = new HashMap<Integer, Continents>();
+		countries = new HashMap<Integer, Countries>();
+		boundries = new HashMap<Integer, ArrayList<Integer>>();
+		fileName = "world.map";
+		flag = false;
+	}
+
 	@Test
 	public void fileLoadTest() throws FileNotFoundException {
 
 		String result = msc.gameMapReading(continents, countries, boundries, fileName);
-		System.out.println(result);
 		assertEquals("Success", result);
 	}
 
@@ -40,7 +52,7 @@ public class TestMapOperations {
 	public void isConnectedMapTest() throws FileNotFoundException {
 		msc.gameMapReading(continents, countries, boundries, fileName);
 		flag = msc.isConnectedMap(boundries);
-		assertEquals(false, flag);
+		assertTrue(flag);
 	}
 
 	@Test

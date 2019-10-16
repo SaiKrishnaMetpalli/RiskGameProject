@@ -36,11 +36,11 @@ public class MapSelectionController {
 	/**
 	 * This method will read the uploaded file
 	 * 
-	 * @param continents
-	 * @param countries
-	 * @param boundries
-	 * @param fileName
-	 * @return
+	 * @param continents contains the information about continents
+	 * @param countries contains the information about countries
+	 * @param boundries contains the adjency list of countries
+	 * @param fileName it is map file which is read
+	 * @return success if map is loaded successfully else failure
 	 * @throws FileNotFoundException
 	 */
 	
@@ -170,7 +170,7 @@ public class MapSelectionController {
 	/**
 	 * This method is used for removing the continents value
 	 * 
-	 * @param continentName this variable contains name of the continent tobe removed
+	 * @param continentName this variable contains name of the continent to be removed
 	 * @param continents this variable contains the continents list
 	 * @param countries this variable contains the countries list
 	 * @param boundries this variable contains the boundries list
@@ -343,7 +343,7 @@ public class MapSelectionController {
 	 * This method is used for adding the neighbor countries value
 	 * 
 	 * @param countryName this variable contains name of the country
-	 * @param neighbourCountryName this variable contains the name of neighbouring country
+	 * @param neighbourCountryName this variable contains the name of neighboring country
 	 * @param countries this variable contains the countries list
 	 * @param boundries this variable contains the boundries list
 	 */
@@ -413,7 +413,7 @@ public class MapSelectionController {
 	/**
 	 * This method is used for removing country value
 	 * 
-	 * @param boundries this variable contains the boundries list
+	 * @param boundries this variable contains the boundaries list
 	 * @param countries this variable contains the countries list            
 	 * @param neighbourCountryName this variable contains the country to be removed from neighbour
 	 * @param countryName this variable is the name of the country which contains neighbor country name
@@ -466,10 +466,9 @@ public class MapSelectionController {
 	}
 	
 	/**
-	 * method for write text file from data structure
-	 * uses buffer reader and writer to write text file
+	 * method for write text file from data structure uses buffer reader and writer to write text file
 	 * stores the file in the resource folder
-	 * @param takes the data structure and file name
+	 * @param takes the data structure from and file name
 	 * @throws IOException as creating file
 	 */
 		public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
@@ -522,7 +521,7 @@ public class MapSelectionController {
 	
 	/**
 	 * This method is used for checking map connectivity
-	 * @param boundries this variable contains the adjacency list of countries
+	 * @param boundries This variable contains the adjacency list of countries
 	 * @return it returns true if map is connected; otherwise false
 	 */
 	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries)

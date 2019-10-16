@@ -5,8 +5,6 @@ import java.util.ArrayList;
 /**
  * This File contains the Continents information
  * 
- * @author 14382
- *
  */
 
 public class Continents {
