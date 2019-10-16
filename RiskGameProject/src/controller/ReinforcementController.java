@@ -148,21 +148,6 @@ public class ReinforcementController {
 		}
 		return player;
 	}
-	/**
-	 * is used by placeReinforceArmy method to calculate available reinforcement armies
-	 * @param player
-	 * @param countryName
-	 * @param playerMap
-	 * @return number of existing army
-	 */
-
-	public int getExistingArmy(String player, String countryName, HashMap<String, Player> playerMap) {
-		Player p = playerMap.get(player);
-		int index = p.getOwnedCountriesList().indexOf(countryName);
-		ArrayList<Integer> existingArmiesList = p.getOwnedArmiesList();
-		int existingArmy = existingArmiesList.get(index);
-		return existingArmy;
-	}
 
 	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
 			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents) {
@@ -182,7 +167,7 @@ public class ReinforcementController {
 		int existingArmy = existingArmiesList.get(index);
 		if (numOfArmiesToPlace <= availableReinforcedArmies) {
 			existingArmy += availableReinforcedArmies;
-			existingArmiesList.add(index, existingArmy);
+			existingArmiesList.set(index, existingArmy);
 			p.setOwnedArmiesList(existingArmiesList);
 			return "Army placed successfully";
 		} else

@@ -15,30 +15,33 @@ import controller.ReinforcementController;
  */
 public class FortificationController {
 	
-//	public HashMap<String, Integer> countryNameNumMap(HashMap<Integer, Countries> countries){
-//		HashMap <String, Integer> map = new HashMap <String, Integer>();
-//		for(int i : countries.keySet()) {
-//			countries.get(key)
-//			
-//		}
-//	}
-//	public boolean[][] getAdjacencyMatrix(HashMap<Integer, ArrayList<Integer>> boundaries) {
-//		boolean[][] matrix = new boolean[boundaries.size()][boundaries.size()];
-//		ArrayList<Integer> list;
-//		for (int k = 0; k < boundaries.size(); k++) {
-//			list = boundaries.get(k);
-//			for (int i : boundaries.keySet()) {
-//				
-//				if (true) {
-//
-//				}
-//				matrix[k][i] = true;
-//			}
-//		}
-//		return matrix;
-//	}
+/**
+ * creates an Adjacency Matrix for the boundaries hashmap
+ * @param boundaries
+ * @return
+ */
+	public boolean[][] getAdjacencyMatrix(HashMap<Integer, ArrayList<Integer>> boundaries) {
+		boolean[][] matrix = new boolean[boundaries.size()][boundaries.size()];
+		ArrayList<Integer> list;
+		int neighborIndex;
 
-	public int getCountryIndexByName(HashMap<Integer, Countries> countries, String countryName) {
+		for (int k = 0; k < matrix.length; k++) {
+			list = boundaries.get(k);
+			for (int i = 0; i < list.size(); i++) {
+				neighborIndex = list.get(i) - 1;
+				matrix[k][neighborIndex] = true;
+			}
+		}
+		return matrix;
+	}
+	/**
+	 * To find the key of country hashmap 
+	 * @param countries
+	 * @param countryName
+	 * @return
+	 */
+
+	public int getCountryNumberByName(HashMap<Integer, Countries> countries, String countryName) {
 		for (int i : countries.keySet()) {
 			Countries cou = countries.get(i);
 			if (cou.getCountryName().equals(countryName)) {
@@ -47,6 +50,18 @@ public class FortificationController {
 		}
 		return 0;
 	}
+	
+	/**
+	 * performs the fortify action
+	 * uses getCountryNumberByName and getAdjacencyMatrix methods
+	 * @param player
+	 * @param fromCountry
+	 * @param toCountry
+	 * @param armyToPlace
+	 * @param countries
+	 * @param boundaries
+	 * @return appropiate messages for view
+	 */
 
 	public String fortify(HashMap<String, Player> player, String fromCountry, String toCountry, int armyToPlace,
 			HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundaries) {
@@ -56,20 +71,22 @@ public class FortificationController {
 
 		if (pOb.getOwnedCountriesList().contains(fromCountry)) {
 			if (pOb.getOwnedCountriesList().contains(toCountry)) {
-				int fromCIdx = getCountryIndexByName(countries, fromCountry);
-				int toCIdx = getCountryIndexByName(countries, toCountry);
+				int fromCIdx = getCountryNumberByName(countries, fromCountry) - 1;
+				int toCIdx = getCountryNumberByName(countries, toCountry) - 1;
+				boolean[][] matrix = getAdjacencyMatrix(boundaries);
 
-				if (boundaries.get(fromCIdx).contains(toCIdx)) {
+				if (matrix[fromCIdx][toCIdx]) {
 					ArrayList<Integer> existingArmiesList = pOb.getOwnedArmiesList();
 					int existingArmy = existingArmiesList.get(fromCIdx);
 					if (armyToPlace < existingArmy) {
 						int destinationArmy = existingArmiesList.get(toCIdx);
 						existingArmy -= armyToPlace;
 						destinationArmy += armyToPlace;
-						existingArmiesList.add(fromCIdx, existingArmy);
-						existingArmiesList.add(toCIdx, destinationArmy);
+						existingArmiesList.set(fromCIdx, existingArmy);
+						existingArmiesList.set(toCIdx, destinationArmy);
 						pOb.setOwnedArmiesList(existingArmiesList);
-					}
+						return "Foritified successfully";
+					}else return "All armies cannot be fortified";
 
 				}
 
