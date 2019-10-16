@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import model.Continents;
 import model.Countries;
@@ -15,7 +16,7 @@ import model.Player;
 
 public class ReinforcementController {
 
-	//Player player;
+	// Player player;
 
 	/**
 	 * This method will return country object for a specific country name
@@ -36,9 +37,9 @@ public class ReinforcementController {
 
 	/**
 	 * takes Continent value from countries hashmap from that value find continent
-	 * object from continents hashmap
-	 * Uses getCountryByNam method
-	 * This method is used in calculateReinforceArmy
+	 * object from continents hashmap Uses getCountryByNam method This method is
+	 * used in calculateReinforceArmy
+	 * 
 	 * @param continents  takes hashmap of continents populated from map file
 	 * @param countries   takes hashmap of countries populated from map file
 	 * @param countryName takes country name string
@@ -52,10 +53,12 @@ public class ReinforcementController {
 		int n = c1.getCountryContinentNum();
 		return continents.get(n);
 	}
-	
+
 	/**
-	 * creates a new hashmap of continents with its country list
-	 * This method is used in calculateReinforceArmy for verifying if a player owns all the countries in continent
+	 * creates a new hashmap of continents with its country list This method is used
+	 * in calculateReinforceArmy for verifying if a player owns all the countries in
+	 * continent
+	 * 
 	 * @param continents
 	 * @param countries
 	 * @return hashmap where key is continent and value is country list
@@ -85,8 +88,9 @@ public class ReinforcementController {
 	}
 
 	/**
-	 * calculates the reinforcement armies according to Risk rules
-	 * uses getContinentByCountryName and getContinentsCountryList methods
+	 * calculates the reinforcement armies according to Risk rules uses
+	 * getContinentByCountryName and getContinentsCountryList methods
+	 * 
 	 * @param player
 	 * @param continents
 	 * @param countries
@@ -102,11 +106,13 @@ public class ReinforcementController {
 		int total = 0;
 		// calculation of reward from owned country list
 		countryReward = (int) Math.floor(player.getOwnedCountriesList().size() / 3);
-		
+
 		// reward for occupying all countries in continent
 		HashMap<String, ArrayList<String>> listmap = getContinentsCountryList(continents, countries);
 		Continents cont = getContinentByCountryName(continents, countries, countryName);
 		ArrayList<String> continentsCountryList = listmap.get(cont.getContinentName());
+		Collections.sort(continentsCountryList);
+		Collections.sort(player.getOwnedCountriesList());
 		if (player.getOwnedCountriesList().equals(continentsCountryList)) {
 			continentReward = Integer.parseInt(cont.getcontinentControlValue());
 		}
@@ -118,20 +124,21 @@ public class ReinforcementController {
 			return 3; // minimum 3 army should be given
 		}
 	}
-/**
- * Method to be called from command to place army
- * uses calculateReinforceArmy method
- * @param countryName
- * @param numOfArmiesToPlace
- * @param countries
- * @param playerMap
- * @param continents
- * @return different messages for view
- */
-	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
-			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents) {
-		String player = "";
 
+	/**
+	 * Method to be called from command to place army uses calculateReinforceArmy
+	 * method
+	 * 
+	 * @param countryName
+	 * @param numOfArmiesToPlace
+	 * @param countries
+	 * @param playerMap
+	 * @param continents
+	 * @return different messages for view
+	 */
+
+	public String findPlayerNameFromCountry(HashMap<Integer, Countries> countries, String countryName) {
+		String player = "";
 		for (int i : countries.keySet()) {
 			Countries cou = countries.get(i);
 			if (cou.getCountryName().equals(countryName)) {
@@ -139,13 +146,36 @@ public class ReinforcementController {
 				break;
 			}
 		}
+		return player;
+	}
+	/**
+	 * is used by placeReinforceArmy method to calculate available reinforcement armies
+	 * @param player
+	 * @param countryName
+	 * @param playerMap
+	 * @return number of existing army
+	 */
+
+	public int getExistingArmy(String player, String countryName, HashMap<String, Player> playerMap) {
+		Player p = playerMap.get(player);
+		int index = p.getOwnedCountriesList().indexOf(countryName);
+		ArrayList<Integer> existingArmiesList = p.getOwnedArmiesList();
+		int existingArmy = existingArmiesList.get(index);
+		return existingArmy;
+	}
+
+	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
+			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents) {
+
+		String player = findPlayerNameFromCountry(countries, countryName);
+		
 		if (player.equals("")) {
 			return "Player Doesn't own the Country";
 		}
 
 		int availableReinforcedArmies = calculateReinforceArmy(playerMap.get(player), continents, countries,
 				countryName);
-		// Check Player owns the country
+		 //Check Player owns the country
 		Player p = playerMap.get(player);
 		int index = p.getOwnedCountriesList().indexOf(countryName);
 		ArrayList<Integer> existingArmiesList = p.getOwnedArmiesList();
