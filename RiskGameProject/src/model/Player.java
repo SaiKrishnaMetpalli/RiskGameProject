@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This model contains the properties of the players
@@ -9,6 +10,7 @@ public class Player {
 	
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
+	private HashMap<String,Integer> ownedCountriesArmiesList;
 	
 	/**
 	 * @Default Constructor
@@ -18,6 +20,15 @@ public class Player {
 	{
 		ownedCountriesList=new ArrayList<String>();
 		ownedArmiesList=new ArrayList<Integer>();
+		ownedCountriesArmiesList=new HashMap<String, Integer>();
+	}
+
+	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
+		return ownedCountriesArmiesList;
+	}
+
+	public void setOwnedCountriesArmiesList(HashMap<String, Integer> ownedCountriesArmiesList) {
+		this.ownedCountriesArmiesList = ownedCountriesArmiesList;
 	}
 
 	public ArrayList<String> getOwnedCountriesList() {

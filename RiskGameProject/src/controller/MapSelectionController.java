@@ -31,6 +31,7 @@ public class MapSelectionController {
 	private boolean[] marked;
 	private int count;
 	private HashMap<Integer, ArrayList<Integer>> map;
+	private int coid = 0, cid = 0;
 
 	/**
 	 * This method will read the uploaded file
@@ -136,9 +137,7 @@ public class MapSelectionController {
 			return "Failure";
 		}
 		
-	}
-
-	static int coid = 0, cid = 0;
+	}	
 
 	/**
 	 * This method is used for adding the continents value
@@ -149,6 +148,14 @@ public class MapSelectionController {
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
+		if(continents.size()>0)
+		{
+			coid=continents.size();
+		}
+		else
+		{
+			coid=0;
+		}
 		for (int i : continents.keySet()) {
 			String c = continents.get(i).getContinentName();
 			if (c.equals(continentName)) {
@@ -233,6 +240,14 @@ public class MapSelectionController {
 			String countryName, String continentName) {
 		boolean conFlag=false,couFlag=false;;
 		int continentNum=0;
+		if(countries.size()>0)
+		{
+			cid=countries.size();
+		}
+		else
+		{
+			cid=0;
+		}
 		for (int i : continents.keySet()) {
 			String s = continents.get(i).getContinentName();
 			if (s.equals(continentName)) {

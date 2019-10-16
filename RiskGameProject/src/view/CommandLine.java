@@ -12,6 +12,7 @@ import model.GameMap;
 import model.Player;
 import controller.MapSelectionController;
 import controller.PlayerSelectionController;
+import util.CONSTANTS;
 
 /**
  * This class gives the command line interface for user
@@ -29,6 +30,7 @@ public class CommandLine {
 	PlayerSelectionController psc;
 	MapSelectionController msc;
 	HashMap<String , Player> listOfPlayers;
+	CONSTANTS cons;
 	
 	/**
 	 * Default constructor
@@ -43,6 +45,7 @@ public class CommandLine {
 		psc=new PlayerSelectionController();
 		msc=new MapSelectionController();
 		listOfPlayers = new HashMap<String, Player>();
+		cons=new CONSTANTS();
 	}
 	
 	/**
@@ -191,6 +194,7 @@ public class CommandLine {
 								result=msc.addNeighbour(gm.countries, gm.boundries, inputCommand[i+1], inputCommand[i+2]);
 								if(result.contains("success"))
 								{
+									String result2=msc.addNeighbour(gm.countries, gm.boundries, inputCommand[i+2], inputCommand[i+1]);
 									System.out.println("\n "+inputCommand[i+2]+" "+result);
 									addToCommands=true;
 								}
@@ -206,6 +210,7 @@ public class CommandLine {
 								result=msc.removeNeighbour(gm.countries, gm.boundries, inputCommand[i+1], inputCommand[i+2]);
 								if(result.contains("success"))
 								{
+									String result2=msc.removeNeighbour(gm.countries, gm.boundries, inputCommand[i+2], inputCommand[i+1]);
 									System.out.println("\n "+inputCommand[i+2]+" "+result);
 									addToCommands=true;
 								}
@@ -405,7 +410,7 @@ public class CommandLine {
 							if(result.equals("Success"))
 							{
 								System.out.println("\n"+inputCommand[i+1]+" player added successfully");
-								System.out.println(players);
+								//System.out.println(players);
 								addToCommands=true;
 							}
 							else
@@ -420,7 +425,7 @@ public class CommandLine {
 							if(result.equals("Success"))
 							{
 								System.out.println("\n"+inputCommand[i+1]+" player removed successfully");
-								System.out.println(players);
+								//System.out.println(players);
 								addToCommands=true;
 							}
 							else
@@ -460,10 +465,49 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "placearmy":
+				if(inputCommand.length>1)
+				{
+					if(listOfPlayers.size()>0)
+					{
+						result=psc.placeArmy(gm.countries, listOfPlayers, inputCommand[1], cons.NO_PLAYER_ARMIES.get(players.size()));						
+						System.out.println("\n"+" "+result);
+						addToCommands=true;						
+						
+					}
+					else
+					{
+						System.out.println("\nCannot place army as players are not assigned to countries");
+						addToCommands=false;
+					}
+				}
+				else
+				{
+					System.out.println("\nplacearmy command format is incorrect");
+					addToCommands=false;
+				}				
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
 			case "placeall":
+				if(listOfPlayers.size()>0)
+				{
+					boolean flag=checkArmiesPlaced();
+					if(flag)
+					{
+						result=psc.placeAll(gm.countries, listOfPlayers, cons.NO_PLAYER_ARMIES.get(players.size()));
+						System.out.println("\nArmies are placed successfully");
+					}
+					else
+					{
+						System.out.println("\nArmies are already placed for the player");
+					}
+					addToCommands=true;
+				}
+				else
+				{
+					System.out.println("\nCannot place army as players are not assigned to countries");
+					addToCommands=false;
+				}
 				addInputCommandList(addToCommands,inputCommand[0]);
 				commandLine();
 				break;
@@ -598,6 +642,33 @@ public class CommandLine {
 		File mapFile=new File(mapFilePath);
 		boolean mapExists=mapFile.exists();
 		return mapExists;
+	}
+	
+	/**
+	 * This method is used for checking if place all command need to perform or not 
+	 * @return true if complete armies are not place; otherwise false
+	 */
+	public boolean checkArmiesPlaced()
+	{
+		boolean flag=false;
+		int playerArmiesCount=0;
+		int totalArmiesCount=cons.NO_PLAYER_ARMIES.get(players.size());
+		for(String str:listOfPlayers.keySet())
+		{
+			Player p=listOfPlayers.get(str);
+			playerArmiesCount=psc.totalArmyCountPlayer(p);
+			if(playerArmiesCount<totalArmiesCount)
+			{
+				flag=true;
+				break;
+			}
+			else
+			{
+				flag=false;
+			}
+			
+		}
+		return flag;
 	}
 
 }
