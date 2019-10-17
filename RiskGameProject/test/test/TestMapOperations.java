@@ -89,10 +89,10 @@ public class TestMapOperations {
 	@Test
 	public void addNeighbourTest() throws FileNotFoundException {
 		fileLoadTest();
-		String result = msc.addNeighbour(countries, boundries, "Argentina", "Peru");
+		String result = msc.addNeighbour(countries, boundries, "Ontario", "Peru");
 		String re = msc.addNeighbour(countries, boundries, "Argentina", "Peruu");
-		assertEquals("Neighbour country does not exists. Please add the country and then neighbour",result);
-		assertEquals("Neighbour country is already present in neighbour list",result);
+		assertEquals("Neighbour country is added successfully",result);
+		assertEquals("Neighbour country does not exists. Please add the country and then neighbour",re);
 		
 		
 	}
