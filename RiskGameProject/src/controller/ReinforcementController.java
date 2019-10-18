@@ -19,7 +19,7 @@ public class ReinforcementController {
 	/**
 	 * This method will return country object for a specific country name
 	 * 
-	 * @param countries takes hashmap of countries populated from map file
+	 * @param countries   takes hashmap of countries populated from map file
 	 * @param countryName takes country name string
 	 * @return country object
 	 */
@@ -147,19 +147,19 @@ public class ReinforcementController {
 			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents) {
 
 		String player = findPlayerNameFromCountry(countries, countryName);
-		
+
 		if (player.equals("")) {
 			return "Player Doesn't own the Country";
 		}
 
 		int availableReinforcedArmies = calculateReinforceArmy(playerMap.get(player), continents, countries,
 				countryName);
-		 //Check Player owns the country
-		Player p = playerMap.get(player);		
+		// Check Player owns the country
+		Player p = playerMap.get(player);
 		int existingArmy = p.getOwnedCountriesArmiesList().get(countryName);
 		if (numOfArmiesToPlace <= availableReinforcedArmies) {
 			existingArmy += availableReinforcedArmies;
-			p.getOwnedCountriesArmiesList().put(countryName, existingArmy);			
+			p.getOwnedCountriesArmiesList().put(countryName, existingArmy);
 			return "Reinforcement armies placed successfully";
 		} else
 			return "Not enough reinoforcement armies available";

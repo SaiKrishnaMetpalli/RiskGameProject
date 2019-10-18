@@ -27,8 +27,8 @@ public class MapSelectionController {
 	boolean flag = false;
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
 	String[] continentsDetails, countriesDetails, boundriesDetails;
-	
-	//These two variables are used for map connected and traversal
+
+	// These two variables are used for map connected and traversal
 	private boolean[] marked;
 	private int count;
 	private HashMap<Integer, ArrayList<Integer>> map;
@@ -38,13 +38,13 @@ public class MapSelectionController {
 	 * This method will read the uploaded file
 	 * 
 	 * @param continents contains the information about continents
-	 * @param countries contains the information about countries
-	 * @param boundries contains the adjency list of countries
-	 * @param fileName it is map file which is read
+	 * @param countries  contains the information about countries
+	 * @param boundries  contains the adjency list of countries
+	 * @param fileName   it is map file which is read
 	 * @return success if map is loaded successfully else failure
 	 * @throws FileNotFoundException
 	 */
-	
+
 	public String gameMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
 		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
@@ -137,161 +137,141 @@ public class MapSelectionController {
 
 			return "Failure";
 		}
-		
-	}	
+
+	}
 
 	/**
 	 * This method is used for adding the continents value
 	 * 
-	 * @param continents this variable contains the continents list  
-	 * @param continentName this variable contains name of the continent to be added
-	 * @param continentControlValue this variable contains value of the control value to be added
+	 * @param continents            this variable contains the continents list
+	 * @param continentName         this variable contains name of the continent to
+	 *                              be added
+	 * @param continentControlValue this variable contains value of the control
+	 *                              value to be added
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
-		if(continents.size()>0)
-		{
-			coid=continents.size();
-		}
-		else
-		{
-			coid=0;
+		if (continents.size() > 0) {
+			coid = continents.size();
+		} else {
+			coid = 0;
 		}
 		for (int i : continents.keySet()) {
 			String c = continents.get(i).getContinentName();
 			if (c.equals(continentName)) {
 				return "Continent already exists";
-			} 
+			}
 		}
 		Continents co = new Continents(continentName, continentControlValue, "0");
 		continents.put(++coid, co);
-		return "Continent added successfully";		
+		return "Continent added successfully";
 	}
 
 	/**
 	 * This method is used for removing the continents value
 	 * 
-	 * @param continentName this variable contains name of the continent to be removed
-	 * @param continents this variable contains the continents list
-	 * @param countries this variable contains the countries list
-	 * @param boundries this variable contains the boundries list
+	 * @param continentName this variable contains name of the continent to be
+	 *                      removed
+	 * @param continents    this variable contains the continents list
+	 * @param countries     this variable contains the countries list
+	 * @param boundries     this variable contains the boundries list
 	 */
 	public String removeContinent(HashMap<Integer, Continents> continents,
 			HashMap<Integer, ArrayList<Integer>> boundries, HashMap<Integer, Countries> countries,
 			String continentName) {
-		int removeState=0;
-		Iterator<Map.Entry<Integer, Continents>> iteratorContinents=continents.entrySet().iterator();
-		Iterator<Map.Entry<Integer, Countries>> iteratorCountries=countries.entrySet().iterator();
-		Iterator<Map.Entry<Integer, ArrayList<Integer>>> iteratorBoundries=boundries.entrySet().iterator();
+		int removeState = 0;
+		Iterator<Map.Entry<Integer, Continents>> iteratorContinents = continents.entrySet().iterator();
+		Iterator<Map.Entry<Integer, Countries>> iteratorCountries = countries.entrySet().iterator();
+		Iterator<Map.Entry<Integer, ArrayList<Integer>>> iteratorBoundries = boundries.entrySet().iterator();
 		while (iteratorContinents.hasNext()) {
-			Map.Entry<Integer, Continents> entryContinents=iteratorContinents.next();
+			Map.Entry<Integer, Continents> entryContinents = iteratorContinents.next();
 			String c = entryContinents.getValue().getContinentName();
 			if (c.equals(continentName)) {
 				iteratorContinents.remove();
-				removeState=1;				
-				while(iteratorCountries.hasNext()) {
-					Map.Entry<Integer, Countries> entryCountries=iteratorCountries.next();
+				removeState = 1;
+				while (iteratorCountries.hasNext()) {
+					Map.Entry<Integer, Countries> entryCountries = iteratorCountries.next();
 					Countries key = entryCountries.getValue();
-					if (key.getCountryContinentNum() == entryContinents.getKey()) {						
+					if (key.getCountryContinentNum() == entryContinents.getKey()) {
 						iteratorCountries.remove();
-						removeState=2;
+						removeState = 2;
 						while (iteratorBoundries.hasNext()) {
-							Map.Entry<Integer, ArrayList<Integer>> entryBoundries=iteratorBoundries.next();
+							Map.Entry<Integer, ArrayList<Integer>> entryBoundries = iteratorBoundries.next();
 							ArrayList<Integer> blist = entryBoundries.getValue();
 							if (entryBoundries.getKey() == entryCountries.getKey()) {
 								iteratorBoundries.remove();
-								removeState=3;
-							}
-							else
-							{								
-								if(blist.contains(entryCountries.getKey()))
-								{
+								removeState = 3;
+							} else {
+								if (blist.contains(entryCountries.getKey())) {
 									blist.remove(Integer.valueOf(entryCountries.getKey()));
 								}
-							}							
+							}
 						}
 					}
-				}				
+				}
 			}
 		}
-		if(removeState==1)
-		{
+		if (removeState == 1) {
 			return "Continent removed successfully";
-		}
-		else if(removeState==2)
-		{
+		} else if (removeState == 2) {
 			return "Continents and countries under continent removed successfully";
-		}
-		else if(removeState==3)
-		{
+		} else if (removeState == 3) {
 			return "Continents and countries under continent and neighbours under country removed successfully";
-		}
-		else
-		{
+		} else {
 			return "Continent does not exist";
 		}
-			
+
 	}
 
 	/**
 	 * 
 	 * /** This method is used for adding the countries value
 	 * 
-	 * @param countryName this variable contains name of the country to be added
-	 * @param continentName this variable contains name of the continent to which country is added
-	 * @param continents this variable contains the continents list
-	 * @param countries this variable contains the countries list
+	 * @param countryName   this variable contains name of the country to be added
+	 * @param continentName this variable contains name of the continent to which
+	 *                      country is added
+	 * @param continents    this variable contains the continents list
+	 * @param countries     this variable contains the countries list
 	 */
-	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries, 
-			HashMap<Integer,ArrayList<Integer>> boundries, String countryName, String continentName) {
-		boolean conFlag=false,couFlag=false;;
-		int continentNum=0;
-		if(countries.size()>0)
-		{
-			cid=countries.size();
-		}
-		else
-		{
-			cid=0;
+	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+			HashMap<Integer, ArrayList<Integer>> boundries, String countryName, String continentName) {
+		boolean conFlag = false, couFlag = false;
+		;
+		int continentNum = 0;
+		if (countries.size() > 0) {
+			cid = countries.size();
+		} else {
+			cid = 0;
 		}
 		for (int i : continents.keySet()) {
 			String s = continents.get(i).getContinentName();
 			if (s.equals(continentName)) {
-				continentNum=i;
-				conFlag=true;
-				break;				
+				continentNum = i;
+				conFlag = true;
+				break;
 			}
 		}
-		if(conFlag)
-		{
-			if(countries.size()>0)
-			{
+		if (conFlag) {
+			if (countries.size() > 0) {
 				for (int j : countries.keySet()) {
 					String c = countries.get(j).getCountryName();
-					if (c.equals(countryName)) {					
+					if (c.equals(countryName)) {
 						return "Country already exists";
-					}
-					else
-					{
-						couFlag=true;
+					} else {
+						couFlag = true;
 					}
 				}
-			}
-			else
-			{
+			} else {
 				Countries ca = new Countries(countryName, continentNum, "0", "0");
 				countries.put(++cid, ca);
 				boundries.put(cid, new ArrayList<Integer>());
 				return "Country added successfully";
 			}
-			
-		}
-		else
-		{
+
+		} else {
 			return "Continent does not exists. Please add the Continent first";
 		}
-		if(couFlag)
-		{
+		if (couFlag) {
 			Countries ca = new Countries(countryName, continentNum, "0", "0");
 			countries.put(++cid, ca);
 			boundries.put(cid, new ArrayList<Integer>());
@@ -303,121 +283,99 @@ public class MapSelectionController {
 	/**
 	 * This method is used for removing country value
 	 * 
-	 * @param countries this variable contains the continents list
-	 * @param boundries this variable contains the boundries list
+	 * @param countries   this variable contains the continents list
+	 * @param boundries   this variable contains the boundries list
 	 * @param countryName this variable contains the country to be removed
 	 */
 	public String removeCountry(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName) {
-		int removeState=0;		
-		Iterator<Map.Entry<Integer, Countries>> iteratorCountries=countries.entrySet().iterator();
-		Iterator<Map.Entry<Integer, ArrayList<Integer>>> iteratorBoundries=boundries.entrySet().iterator();
-		
-		while(iteratorCountries.hasNext()) {
-			Map.Entry<Integer, Countries> entryCountries=iteratorCountries.next();
+		int removeState = 0;
+		Iterator<Map.Entry<Integer, Countries>> iteratorCountries = countries.entrySet().iterator();
+		Iterator<Map.Entry<Integer, ArrayList<Integer>>> iteratorBoundries = boundries.entrySet().iterator();
+
+		while (iteratorCountries.hasNext()) {
+			Map.Entry<Integer, Countries> entryCountries = iteratorCountries.next();
 			Countries key = entryCountries.getValue();
-			if (key.getCountryName().equals(countryName)) {						
+			if (key.getCountryName().equals(countryName)) {
 				iteratorCountries.remove();
-				removeState=1;
+				removeState = 1;
 				while (iteratorBoundries.hasNext()) {
-					Map.Entry<Integer, ArrayList<Integer>> entryBoundries=iteratorBoundries.next();
+					Map.Entry<Integer, ArrayList<Integer>> entryBoundries = iteratorBoundries.next();
 					ArrayList<Integer> blist = entryBoundries.getValue();
 					if (entryBoundries.getKey() == entryCountries.getKey()) {
 						iteratorBoundries.remove();
-						removeState=2;
-					}
-					else
-					{								
-						if(blist.contains(entryCountries.getKey()))
-						{
+						removeState = 2;
+					} else {
+						if (blist.contains(entryCountries.getKey())) {
 							blist.remove(Integer.valueOf(entryCountries.getKey()));
 						}
-					}							
+					}
 				}
 			}
-		}			
-		
-		if(removeState==1)
-		{
+		}
+
+		if (removeState == 1) {
 			return "Country removed successfully";
-		}
-		else if(removeState==2)
-		{
+		} else if (removeState == 2) {
 			return "Country and it's neighbours are removed successfully";
-		}
-		else
-		{
+		} else {
 			return "Country does not exists. Please add the Country first";
-		}		
+		}
 	}
 
 	/**
 	 * This method is used for adding the neighbor countries value
 	 * 
-	 * @param countryName this variable contains name of the country
-	 * @param neighbourCountryName this variable contains the name of neighboring country
-	 * @param countries this variable contains the countries list
-	 * @param boundries this variable contains the boundries list
+	 * @param countryName          this variable contains name of the country
+	 * @param neighbourCountryName this variable contains the name of neighboring
+	 *                             country
+	 * @param countries            this variable contains the countries list
+	 * @param boundries            this variable contains the boundries list
 	 */
 	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
-		boolean couFlag=false,neighFlag=false;
-		int couNum=0,neighNum=0;
+		boolean couFlag = false, neighFlag = false;
+		int couNum = 0, neighNum = 0;
 		for (int i : countries.keySet()) {
 			String s = countries.get(i).getCountryName();
 			if (countryName.equals(s)) {
-				couNum=i;
-				couFlag=true;
+				couNum = i;
+				couFlag = true;
 				break;
 			}
 		}
-		if(couFlag)
-		{
+		if (couFlag) {
 			for (int l : countries.keySet()) {
 				String m = countries.get(l).getCountryName();
 				if (neighbourCountryName.equals(m)) {
-					neighNum=l;
-					neighFlag=true;
+					neighNum = l;
+					neighFlag = true;
 					break;
 				}
 			}
-			if(neighFlag)
-			{
-				if(boundries.size()>0)
-				{
-					if(boundries.containsKey(couNum))
-					{
-						if(boundries.get(couNum).contains(neighNum))
-						{
+			if (neighFlag) {
+				if (boundries.size() > 0) {
+					if (boundries.containsKey(couNum)) {
+						if (boundries.get(couNum).contains(neighNum)) {
 							return "Neighbour country is already present in neighbour list";
-						}
-						else
-						{
+						} else {
 							boundries.get(couNum).add(neighNum);
 						}
-					}
-					else
-					{
+					} else {
 						ArrayList<Integer> li = new ArrayList<Integer>();
 						li.add(neighNum);
 						boundries.put(couNum, li);
 					}
-				}
-				else
-				{
+				} else {
 					ArrayList<Integer> li = new ArrayList<Integer>();
 					li.add(neighNum);
 					boundries.put(couNum, li);
-				}				
+				}
 				return "Neighbour country is added successfully";
-			}
-			else
-			{
+			} else {
 				return "Neighbour country does not exists. Please add the country and then neighbour";
 			}
-		}
-		else
-		{
+		} else {
 			return "Country does not exists. Please add the country and then neighbour";
 		}
 	}
@@ -425,75 +383,71 @@ public class MapSelectionController {
 	/**
 	 * This method is used for removing country value
 	 * 
-	 * @param boundries this variable contains the boundaries list
-	 * @param countries this variable contains the countries list            
-	 * @param neighbourCountryName this variable contains the country to be removed from neighbour
-	 * @param countryName this variable is the name of the country which contains neighbor country name
+	 * @param boundries            this variable contains the boundaries list
+	 * @param countries            this variable contains the countries list
+	 * @param neighbourCountryName this variable contains the country to be removed
+	 *                             from neighbour
+	 * @param countryName          this variable is the name of the country which
+	 *                             contains neighbor country name
 	 */
 	public String removeNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
-		
-		boolean couFlag=false,neighFlag=false;
-		int couNum=0,neighNum=0;
+
+		boolean couFlag = false, neighFlag = false;
+		int couNum = 0, neighNum = 0;
 		for (int i : countries.keySet()) {
 			String s = countries.get(i).getCountryName();
 			if (countryName.equals(s)) {
-				couNum=i;
-				couFlag=true;
+				couNum = i;
+				couFlag = true;
 				break;
 			}
 		}
-		if(couFlag)
-		{
+		if (couFlag) {
 			for (int l : countries.keySet()) {
 				String m = countries.get(l).getCountryName();
 				if (neighbourCountryName.equals(m)) {
-					neighNum=l;
-					neighFlag=true;
+					neighNum = l;
+					neighFlag = true;
 					break;
 				}
 			}
-			if(neighFlag)
-			{				
-				if(boundries.get(couNum).contains(neighNum))
-				{
+			if (neighFlag) {
+				if (boundries.get(couNum).contains(neighNum)) {
 					boundries.get(couNum).remove(Integer.valueOf(neighNum));
 					return "Neighbour country is removed successfully";
-				}
-				else
-				{
+				} else {
 					return "Neighbour country is not present in neighbours list";
-				}								
-			}
-			else
-			{
+				}
+			} else {
 				return "Neighbour country does not exists";
 			}
-		}
-		else
-		{
+		} else {
 			return "Country does not exists";
 		}
 
 	}
-	
+
 	/**
-	 * method for write text file from data structure uses buffer reader and writer to write text file
-	 * stores the file in the resource folder
+	 * method for write text file from data structure uses buffer reader and writer
+	 * to write text file stores the file in the resource folder
+	 * 
 	 * @param takes the data structure from and file name
 	 * @throws IOException as creating file
 	 */
-		public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+	public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 
 		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + mapFile;
 		File mapfile = new File(createPath);
-		FileWriter fw = new FileWriter(mapfile, true);
+		FileWriter fw = new FileWriter(mapfile, false);
 		BufferedWriter bw = new BufferedWriter(fw);
 		mapfile.createNewFile();
-		bw.write("name "+mapFile +" Map");
+		bw.write("name " + mapFile + " Map");
+		bw.write("\n");
 		bw.write("\n");
 		bw.write("[files]");
+		bw.write("\n");
 		bw.write("\n");
 		bw.write("[continents]");
 		bw.newLine();
@@ -530,60 +484,69 @@ public class MapSelectionController {
 
 		bw.close();
 	}
-	
+
 	/**
 	 * This method is used for checking map connectivity
+	 * 
 	 * @param boundries This variable contains the adjacency list of countries
 	 * @return it returns true if map is connected; otherwise false
 	 */
-	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries)
-	{
-		map=boundries;
-		marked=new boolean[boundries.size()];
-		count=0;
-		Map.Entry<Integer, ArrayList<Integer>> entry=boundries.entrySet().iterator().next();
+	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries) {
+		map = boundries;
+		marked = new boolean[boundries.size()];
+		count = 0;
+		Map.Entry<Integer, ArrayList<Integer>> entry = boundries.entrySet().iterator().next();
 		mapTraversal(entry.getKey());
-		if(count==boundries.size())
-		{
+		if (count == boundries.size()) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
-		}		
+		}
 	}
-	
+
 	/**
 	 * This method is used for traversing the map
+	 * 
 	 * @param vertex this variable contains one of the vertex of map
 	 */
-	public void mapTraversal(int vertex)
-	{
+	public void mapTraversal(int vertex) {
 		count++;
-		marked[vertex-1]=true;
-		for(int i:getNeighbours(vertex))
-		{
-			if(!marked[i-1])
-			{
+		marked[vertex - 1] = true;
+		for (int i : getNeighbours(vertex)) {
+			if (!marked[i - 1]) {
 				mapTraversal(i);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * This method gives you the neighbors of a vertex
+	 * 
 	 * @param v this variable contains vertex of the map
 	 * @return this returns array list of neighbors if present; otherwise null
 	 */
-	public ArrayList<Integer> getNeighbours(int v)
-	{
-		if(v>map.size())
-		{
+	public ArrayList<Integer> getNeighbours(int v) {
+		if (v > map.size()) {
 			return null;
 		}
 		return new ArrayList<Integer>(map.get(v));
 	}
 
+	/**
+	 * This method creates empty file
+	 * 
+	 * @param fileName this variable contains the filename to be created
+	 */
+	public void createEmptyFile(String fileName) {
+		try {
+			String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
+			File mapFile = new File(createPath);
+			mapFile.createNewFile();
+		} catch (Exception ex) {
+
+		}
+
+	}
 
 }

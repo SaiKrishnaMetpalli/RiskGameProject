@@ -7,20 +7,18 @@ import java.util.HashMap;
  * This model contains the properties of the players
  */
 public class Player {
-	
+
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
-	private HashMap<String,Integer> ownedCountriesArmiesList;
-	
+	private HashMap<String, Integer> ownedCountriesArmiesList;
+
 	/**
-	 * @Default Constructor
-	 * This method initiates the variables
+	 * @Default Constructor This method initiates the variables
 	 */
-	public Player()
-	{
-		ownedCountriesList=new ArrayList<String>();
-		ownedArmiesList=new ArrayList<Integer>();
-		ownedCountriesArmiesList=new HashMap<String, Integer>();
+	public Player() {
+		ownedCountriesList = new ArrayList<String>();
+		ownedArmiesList = new ArrayList<Integer>();
+		ownedCountriesArmiesList = new HashMap<String, Integer>();
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {

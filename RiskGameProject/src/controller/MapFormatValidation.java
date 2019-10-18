@@ -15,7 +15,7 @@ public class MapFormatValidation {
 	 * 
 	 * @param file it is the file which is checked for validation
 	 * @return flag which is true if map format is valid otherwise false
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public boolean validateFile(File file) throws FileNotFoundException {
 
@@ -42,24 +42,21 @@ public class MapFormatValidation {
 					String validateCountries = validateScanner.nextLine();
 					if (validateCountries.equals("[countries]")) { // countries found
 						validateLength = validateScanner.nextLine();
-						while(!validateLength.equals(""))
-						{
+						while (!validateLength.equals("")) {
 							String[] lineLength = validateLength.split(" ");
-							if(lineLength.length == 5)
-							{
+							if (lineLength.length == 5) {
 								validateLength = validateScanner.nextLine();
 								continue;
-								
-							}
-							else
+
+							} else
 								flag = false;
-								return flag;
+							return flag;
 						}
 						while (validateScanner.hasNext()) {
 							String validateBorders = validateScanner.nextLine();
 
 							if (validateBorders.equals("[borders]")) { // borders found
-								
+
 								flag = true;
 								return flag;
 							}
@@ -70,7 +67,7 @@ public class MapFormatValidation {
 				}
 			} else
 				flag = false;
-					
+
 		}
 
 		validateScanner.close();

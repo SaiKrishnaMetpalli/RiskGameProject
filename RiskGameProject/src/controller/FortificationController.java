@@ -13,9 +13,10 @@ import controller.ReinforcementController;
  * 
  */
 public class FortificationController {
-	
+
 	/**
 	 * creates an Adjacency Matrix for the boundaries hashmap
+	 * 
 	 * @param boundaries
 	 * @return
 	 */
@@ -25,7 +26,7 @@ public class FortificationController {
 		int neighborIndex;
 
 		for (int k = 0; k < matrix.length; k++) {
-			list = boundaries.get(k+1);
+			list = boundaries.get(k + 1);
 			for (int i = 0; i < list.size(); i++) {
 				neighborIndex = list.get(i) - 1;
 				matrix[k][neighborIndex] = true;
@@ -33,9 +34,10 @@ public class FortificationController {
 		}
 		return matrix;
 	}
-	
+
 	/**
-	 * To find the key of country hashmap 
+	 * To find the key of country hashmap
+	 * 
 	 * @param countries
 	 * @param countryName
 	 * @return
@@ -49,10 +51,11 @@ public class FortificationController {
 		}
 		return 0;
 	}
-	
+
 	/**
-	 * performs the fortify action
-	 * uses getCountryNumberByName and getAdjacencyMatrix methods
+	 * performs the fortify action uses getCountryNumberByName and
+	 * getAdjacencyMatrix methods
+	 * 
 	 * @param player
 	 * @param fromCountry
 	 * @param toCountry
@@ -81,17 +84,17 @@ public class FortificationController {
 						existingArmy -= armyToPlace;
 						destinationArmy += armyToPlace;
 						pOb.getOwnedCountriesArmiesList().put(fromCountry, existingArmy);
-						pOb.getOwnedCountriesArmiesList().put(toCountry, destinationArmy);						
+						pOb.getOwnedCountriesArmiesList().put(toCountry, destinationArmy);
 						return "Foritified successfully";
-					}else 
+					} else
 						return "PLayer should leave at least one country";
 
-				}else
+				} else
 					return "Player does not own the path";
 
 			} else
 				return "Targeted country is not owned by player";
 		} else
-			return "Player doesn't own this country";		
+			return "Player doesn't own this country";
 	}
 }

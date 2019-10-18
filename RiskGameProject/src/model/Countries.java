@@ -12,16 +12,15 @@ public class Countries {
 	private String xCoordinate;
 	private String yCoordinate;
 	private String ownerName;
-	//private int currentArmyPlaced;
+	// private int currentArmyPlaced;
 
 	/**
-	 * Default Constructor
-	 * This method is used to initiate the variables 
+	 * Default Constructor This method is used to initiate the variables
 	 * 
-	 * @param countryName this variable contains country name
+	 * @param countryName         this variable contains country name
 	 * @param countryContinentNum this variable contains continent number
-	 * @param xCoordinate this variable contains x coordinate number
-	 * @param yCoordinate this variable contains y coordinate number
+	 * @param xCoordinate         this variable contains x coordinate number
+	 * @param yCoordinate         this variable contains y coordinate number
 	 */
 	public Countries(String countryName, Integer countryContinentNum, String xCoordinate, String yCoordinate) {
 
@@ -78,7 +77,5 @@ public class Countries {
 //	public void setCurrentArmyPlaced(int currentArmyPlaced) {
 //		this.currentArmyPlaced = currentArmyPlaced;
 //	}
-
-	
 
 }

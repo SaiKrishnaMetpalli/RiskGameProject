@@ -9,11 +9,10 @@ import java.util.ArrayList;
 
 public class Continents {
 
-	private String continentControlValue , continentColour , continentName;
+	private String continentControlValue, continentColour, continentName;
 	private ArrayList<String> countryList;
-	
-	public Continents(String continentName , String continentControlValue , String colour)
-	{
+
+	public Continents(String continentName, String continentControlValue, String colour) {
 		this.continentControlValue = continentControlValue;
 		this.continentColour = colour;
 		this.continentName = continentName;
@@ -38,11 +37,9 @@ public class Continents {
 	public String getContinentName() {
 		return continentName;
 	}
-	
+
 	public void setContinent_Name(String continentName) {
 		this.continentName = continentName;
 	}
-	
-	
-	
+
 }
