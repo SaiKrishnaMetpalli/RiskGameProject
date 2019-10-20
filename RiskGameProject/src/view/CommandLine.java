@@ -33,6 +33,7 @@ public class CommandLine {
 	MapSelectionController msc;
 	HashMap<String, Player> listOfPlayers;
 	CONSTANTS cons;
+	String currentPlayerTurn;
 	ReinforcementController ric;
 	FortificationController fc;
 
@@ -202,17 +203,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "showmap":
-				if ((gm.countries.size() > 0) && (gm.continents.size() > 0) && (gm.boundries.size() > 0)) {
-					if (listOfPlayers.size() > 0) {
-						viewMapWithPlayer();
-					} else {
-						viewMapWithoutPlayer();
-					}
-					addToCommands = true;
-				} else {
-					System.out.println("\nUnable to view the map as map is not loaded");
-					addToCommands = false;
-				}
+				viewMap();
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
@@ -369,15 +360,23 @@ public class CommandLine {
 			case "populatecountries":
 				if ((gm.countries.size() > 0) && (gm.continents.size() > 0) && (gm.boundries.size() > 0)
 						&& (players.size() > 0)) {
-					listOfPlayers.clear();
-					result = psc.assignRandomCountries(players, gm.countries, listOfPlayers);
-					if (result.equals("Success")) {
-						System.out.println("Players assigned to countries");
+					if (players.size() == 1) {
+						System.out.println("\nPlayers should be more than 1 to play the game");
+						addToCommands = false;
+					} else {
+						listOfPlayers.clear();
+						result = psc.assignRandomCountries(players, gm.countries, listOfPlayers);
+						if (result.equals("Success")) {
+							currentPlayerTurn = players.get(0);
+							System.out.println("Players assigned to countries");
+							addToCommands = true;
+						}
 					}
 				} else {
 					System.out.println(
 							"\nCannot populate countires to player if map is not loaded or players are not added");
 					System.out.println("\nPlease try again by loading map and creating players");
+					addToCommands = false;
 				}
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
@@ -385,11 +384,24 @@ public class CommandLine {
 			case "placearmy":
 				if (inputCommand.length == 2) {
 					if (listOfPlayers.size() > 0) {
-						result = psc.placeArmy(gm.countries, listOfPlayers, inputCommand[1],
-								cons.NO_PLAYER_ARMIES.get(players.size()));
-						System.out.println("\n" + " " + result);
-						addToCommands = true;
-
+						String playerName = "";
+						playerName = ric.findPlayerNameFromCountry(gm.countries, inputCommand[1]);
+						if (playerName.equals(currentPlayerTurn)) {
+							result = psc.placeArmy(gm.countries, listOfPlayers, inputCommand[1],
+									cons.NO_PLAYER_ARMIES.get(players.size()));
+							if ((players.indexOf(playerName)) + 1 < players.size()) {
+								currentPlayerTurn = players.get((players.indexOf(playerName)) + 1);
+							} else {
+								currentPlayerTurn = players.get(0);
+							}
+							System.out.println("\n" + " " + result);
+							System.out.println("Current player turn: " + currentPlayerTurn);
+							addToCommands = true;
+						} else {
+							System.out.println("\nCannot place army for the country, it is not the turn of player");
+							System.out.println("Current player turn: " + currentPlayerTurn);
+							addToCommands = false;
+						}
 					} else {
 						System.out.println("\nCannot place army as players are not assigned to countries");
 						addToCommands = false;
@@ -420,20 +432,26 @@ public class CommandLine {
 				break;
 			case "reinforce":
 				if (inputCommand.length == 3) {
-					boolean flag = checkArmiesPlaced();
-					if (!flag) {
-						result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
-								gm.countries, listOfPlayers, gm.continents);
-						if (result.contains("success")) {
-							System.out.println("\n " + result);
-							addToCommands = true;
+					if (Integer.parseInt(inputCommand[2]) < 1) {
+						System.out.println("\nReinforcement cannot be performed as armies should be greater than 0");
+						addToCommands = false;
+					} else {
+						boolean flag = checkArmiesPlaced();
+						if (!flag) {
+							result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
+									gm.countries, listOfPlayers, gm.continents);
+							if (result.contains("success")) {
+								System.out.println("\n " + result);
+								addToCommands = true;
+							} else {
+								System.out.println("\n " + result);
+								addToCommands = false;
+							}
 						} else {
-							System.out.println("\n " + result);
+							System.out.println(
+									"\nReinforcement cannot be performed as armies are not assigned to player");
 							addToCommands = false;
 						}
-					} else {
-						System.out.println("\nReinforcement cannot be performed as armies are not assigned to player");
-						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nreinforce command format is incorrect");
@@ -461,7 +479,8 @@ public class CommandLine {
 							addToCommands = true;
 						}
 					} else {
-						System.out.println("\nFortification cannot be performed as armies are not assigned to player");
+						System.out.println(
+								"\nFortification cannot be performed, only one fortification is allowed per turn");
 						addToCommands = false;
 					}
 
@@ -486,79 +505,87 @@ public class CommandLine {
 	}
 
 	/**
-	 * This method is used for displaying the map without player
+	 * This method is used for displaying the map
 	 */
-	private void viewMapWithoutPlayer() {
+	private void viewMap() {
 		String countryName = "";
 		String continentName = "";
 		String neighbours;
 		String playerName = "";
+		int armies = 0;
+		boolean headerDisplay = true;
 		ArrayList<Integer> neighboursNum;
-		System.out.format("%-30s|%-30s|%-30s", "Country Name", "ContinentName", "Neighbor Countries");
-		System.out.println();
-		for (int i = 0; i < 90; i++)
-			System.out.print("_");
-		System.out.println();
-		for (int i : gm.countries.keySet()) {
-			neighbours = "";
-			Countries cou = gm.countries.get(i);
-			countryName = cou.getCountryName();
-			playerName = cou.getOwnerName();
-			for (int j : gm.continents.keySet()) {
-				if (cou.getCountryContinentNum() == j) {
-					Continents con = gm.continents.get(j);
-					continentName = con.getContinentName();
-					break;
-				}
-			}
-			neighboursNum = gm.boundries.get(i);
-			for (int l : neighboursNum) {
-				Countries couNeigh = gm.countries.get(l);
-				neighbours += couNeigh.getCountryName() + ",";
-			}
-			if (neighbours.length() > 0) {
-				neighbours = neighbours.substring(0, neighbours.length() - 1);
-			}
-			System.out.format("%-30s|%-30s|%-30s", countryName, continentName, neighbours);
-			System.out.println();
-		}
-	}
 
-	/**
-	 * This method is used for displaying the map without player
-	 */
-	private void viewMapWithPlayer() {
-		String countryName = "";
-		String continentName = "";
-		String neighbours;
-		String playerName = "";
-		ArrayList<Integer> neighboursNum;
-		System.out.format("%-30s|%-30s|%-30s|%-30s", "Country Name", "ContinentName", "Player Name",
-				"Neighbor Countries");
-		System.out.println();
-		for (int i = 0; i < 120; i++)
-			System.out.print("_");
-		System.out.println();
-		for (int i : gm.countries.keySet()) {
-			neighbours = "";
-			Countries cou = gm.countries.get(i);
-			countryName = cou.getCountryName();
-			playerName = cou.getOwnerName();
-			for (int j : gm.continents.keySet()) {
-				if (cou.getCountryContinentNum() == j) {
-					Continents con = gm.continents.get(j);
-					continentName = con.getContinentName();
-					break;
+		if (gm.continents.size() > 0) {
+			if (gm.countries.size() > 0) {
+				for (int i : gm.countries.keySet()) {
+					neighbours = "";
+					Countries objCou = gm.countries.get(i);
+					countryName = objCou.getCountryName();
+					playerName = objCou.getOwnerName();
+					for (int j : gm.continents.keySet()) {
+						if (objCou.getCountryContinentNum() == j) {
+							Continents objCont = gm.continents.get(j);
+							continentName = objCont.getContinentName();
+							break;
+						}
+					}
+					neighboursNum = gm.boundries.get(i);
+					for (int l : neighboursNum) {
+						Countries couNeigh = gm.countries.get(l);
+						neighbours += couNeigh.getCountryName() + ",";
+					}
+					if (neighbours.length() > 0) {
+						neighbours = neighbours.substring(0, neighbours.length() - 1);
+					}
+					if (listOfPlayers.size() > 0) {
+						armies = (listOfPlayers.get(playerName)).getOwnedCountriesArmiesList().get(countryName);
+						if (headerDisplay) {
+							headerDisplay = false;
+							System.out.format("%-30s|%-30s|%-30s|%-30s|%-30s", "Country Name", "Continent Name",
+									"Player Name", "Armies", "Neighbor Countries");
+							System.out.println();
+							for (int dashes = 0; dashes < 150; dashes++)
+								System.out.print("_");
+							System.out.println();
+						}
+						System.out.format("%-30s|%-30s|%-30s|%-30s|%-30s", countryName, continentName, playerName,
+								armies, neighbours);
+						System.out.println();
+					} else {
+						if (headerDisplay) {
+							headerDisplay = false;
+							System.out.format("%-30s|%-30s|%-30s", "Country Name", "Continent Name",
+									"Neighbor Countries");
+							System.out.println();
+							for (int dashes = 0; dashes < 90; dashes++)
+								System.out.print("_");
+							System.out.println();
+						}
+						System.out.format("%-30s|%-30s|%-30s", countryName, continentName, neighbours);
+						System.out.println();
+					}
+				}
+			} else {
+				for (int cont : gm.continents.keySet()) {
+					if (headerDisplay) {
+						headerDisplay = false;
+						System.out.format("%-30s", "ContinentName");
+						System.out.println();
+						for (int dashes = 0; dashes < 30; dashes++)
+							System.out.print("_");
+						System.out.println();
+					}
+					Continents objCont = gm.continents.get(cont);
+					continentName = objCont.getContinentName();
+					System.out.format("%-30s", continentName);
+					System.out.println();
 				}
 			}
-			neighboursNum = gm.boundries.get(i);
-			for (int l : neighboursNum) {
-				Countries couNeigh = gm.countries.get(l);
-				neighbours += couNeigh.getCountryName() + ",";
-			}
-			neighbours = neighbours.substring(0, neighbours.length() - 1);
-			System.out.format("%-30s|%-30s|%-30s|%-30s", countryName, continentName, playerName, neighbours);
-			System.out.println();
+			addToCommands = true;
+		} else {
+			System.out.println("\nUnable to view the map as map is not loaded");
+			addToCommands = false;
 		}
 	}
 

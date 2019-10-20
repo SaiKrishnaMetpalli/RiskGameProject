@@ -14,6 +14,9 @@ import model.GameMap;
 import model.Player;
 import util.CONSTANTS;
 
+/**
+ * This class is used for testing the reinforcement methods 
+ */
 public class TestReinforcement {
 
 	ReinforcementController ric;
@@ -27,6 +30,10 @@ public class TestReinforcement {
 	String countryName = "Quebec";
 	String player;
 
+	/**
+	 * This method is used for initial setting up scenarios for each test case method
+	 * @throws FileNotFoundException
+	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
 		msc = new MapSelectionController();
@@ -42,12 +49,18 @@ public class TestReinforcement {
 		player = ric.findPlayerNameFromCountry(gm.countries, countryName);
 	}
 
+	/**
+	 * This method is used for testing reinforcement armies calculation 
+	 */
 	@Test
 	public void testReinforcementCalculation() {
 		assertEquals(ric.calculateReinforceArmy(playerDetails.get(player), gm.continents, gm.countries, countryName),
 				4);
 	}
 
+	/**
+	 * This method is used for testing reinforcement army placement success scenarios
+	 */
 	@Test
 	public void testplaceReinforceArmySucess() {
 		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.continents, gm.countries,
@@ -57,6 +70,9 @@ public class TestReinforcement {
 				"Reinforcement armies placed successfully");
 	}
 
+	/**
+	 * This method is used for testing reinforcement army placement failure scenarios
+	 */
 	@Test
 	public void testplaceReinforceArmyFail() {
 		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.continents, gm.countries,

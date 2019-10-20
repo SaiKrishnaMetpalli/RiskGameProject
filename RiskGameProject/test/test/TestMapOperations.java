@@ -18,7 +18,7 @@ import model.Continents;
 import model.Countries;
 
 /**
- * This class performs basic map testing operations.
+ * This class is used for testing map methods
  */
 public class TestMapOperations {
 
@@ -30,6 +30,9 @@ public class TestMapOperations {
 	String fileName;
 	boolean flag;
 
+	/**
+	 * This method is used for initial setting up scenarios for each test case method
+	 */
 	@Before
 	public void setUp() {
 		msc = new MapSelectionController();
@@ -41,6 +44,10 @@ public class TestMapOperations {
 		flag = false;
 	}
 
+	/**
+	 * This method is used for testing the game map load
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void fileLoadTest() throws FileNotFoundException {
 
@@ -48,6 +55,10 @@ public class TestMapOperations {
 		assertEquals("Success", result);
 	}
 
+	/**
+	 * This method is used for checking whether map is connected or not
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void isConnectedMapTest() throws FileNotFoundException {
 		msc.gameMapReading(continents, countries, boundries, fileName);
@@ -55,6 +66,10 @@ public class TestMapOperations {
 		assertTrue(flag);
 	}
 
+	/**
+	 * This method is used for testing the file formats of map
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void validateFileFormatTest() throws FileNotFoundException {
 		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
@@ -64,17 +79,23 @@ public class TestMapOperations {
 		assertEquals(true, flag);
 	}
 	
+	/**
+	 * This method is used for testing the add continent scenarios
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void addContinentTest() throws FileNotFoundException{
 		fileLoadTest();
 		String result = msc.addContinent(continents, "Asiaa", "7");
 		String re = msc.addContinent(continents, "Europe", "5");
 		assertEquals("Continent added successfully",result);
-		assertEquals("Continent already exists",re);
-		
-		
+		assertEquals("Continent already exists",re);		
 	}
 	
+	/**
+	 * This method is used for testing the add country scenarios
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void addCountryTest() throws FileNotFoundException{
 		fileLoadTest();
@@ -86,6 +107,10 @@ public class TestMapOperations {
 		
 	}
 
+	/**
+	 * This method is used for testing the add neighbour scenarios
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void addNeighbourTest() throws FileNotFoundException {
 		fileLoadTest();
@@ -97,6 +122,10 @@ public class TestMapOperations {
 		
 	}
 	
+	/**
+	 * This method is used for testing the remove continent scenarios
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void removeContinentTest() throws FileNotFoundException { 
 		fileLoadTest();
@@ -106,6 +135,10 @@ public class TestMapOperations {
 		assertEquals("Continent does not exist",result);
 	}
 	
+	/**
+	 * This method is used for testing the remove country scenarios
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void removeCountryTest() throws FileNotFoundException {
 		fileLoadTest();
@@ -115,6 +148,10 @@ public class TestMapOperations {
 		assertEquals("Country does not exists. Please add the Country first",re);
 	}
 	
+	/**
+	 * This method is used for testing the remove neighbour scenarios
+	 * @throws FileNotFoundException
+	 */
     @Test
     public void removeNeighbourTest() throws FileNotFoundException {
     	fileLoadTest();

@@ -87,7 +87,7 @@ public class FortificationController {
 						pOb.getOwnedCountriesArmiesList().put(toCountry, destinationArmy);
 						return "Foritified successfully";
 					} else
-						return "PLayer should leave at least one country";
+						return "Player should leave at least one army for the country";
 
 				} else
 					return "Player does not own the path";

@@ -17,6 +17,9 @@ import model.GameMap;
 import model.Player;
 import util.CONSTANTS;
 
+/**
+ * This class is used for testing fortification methods 
+ */
 public class TestFortification {
 	
 	FortificationController fc;
@@ -33,6 +36,10 @@ public class TestFortification {
 	int armyToPlace;
 	Player pOb;
 
+	/**
+	 * This method is used for initial setting up scenarios for each test case method
+	 * @throws FileNotFoundException
+	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
 		msc = new MapSelectionController();
@@ -49,11 +56,19 @@ public class TestFortification {
 		playerOwnedCountries=pOb.getOwnedCountriesList();
 		
 	}
+	
+	/**
+	 * This method is used for testing player does not own targeted country
+	 */
 	@Test
 	public void testPlayerDontOwnCountry() {
 		assertEquals(fc.fortify(playerDetails, "Quebec", "Alberta ", 5,
 				gm.countries, gm.boundries),"Targeted country is not owned by player");
 	}
+	
+	/**
+	 * This method is used for testing player does not own the path
+	 */
 	@Test
 	public void testPlayerDontOwnPath() {
 		fromCountry=playerOwnedCountries.get(0);
