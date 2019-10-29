@@ -7,7 +7,8 @@ import model.Continents;
 import model.Countries;
 
 /**
- * This class contains the common methods which can be used in multiple controllers
+ * This class contains the common methods which can be used in multiple
+ * controllers
  */
 public class CommonController {
 
@@ -27,7 +28,7 @@ public class CommonController {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * takes Continent value from countries hashmap from that value find continent
 	 * object from continents hashmap Uses getCountryByNam method This method is
@@ -45,7 +46,7 @@ public class CommonController {
 		int n = c1.getCountryContinentNum();
 		return continents.get(n);
 	}
-	
+
 	/**
 	 * creates a new hashmap of continents with its country list This method is used
 	 * in calculateReinforceArmy for verifying if a player owns all the countries in
@@ -100,7 +101,7 @@ public class CommonController {
 		}
 		return player;
 	}
-	
+
 	/**
 	 * To find the key of country hashmap
 	 * 
@@ -117,5 +118,5 @@ public class CommonController {
 		}
 		return 0;
 	}
-	
+
 }
