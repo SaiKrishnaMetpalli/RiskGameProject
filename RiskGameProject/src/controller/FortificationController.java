@@ -5,15 +5,24 @@ import java.util.HashMap;
 
 import model.Countries;
 import model.Player;
-import controller.ReinforcementController;
 
 /**
- * FOllowing class will perform the activity in fortification phase
+ * Following class will perform the activity in fortification phase
  * 
  * 
  */
 public class FortificationController {
 
+	CommonController cc;
+	
+	/**
+	 * @Default Constructor
+	 * Initiates object for CommonController 
+	 */
+	public FortificationController() {
+		cc=new CommonController();
+	}
+	
 	/**
 	 * creates an Adjacency Matrix for the boundaries hashmap
 	 * 
@@ -34,24 +43,7 @@ public class FortificationController {
 		}
 		return matrix;
 	}
-
-	/**
-	 * To find the key of country hashmap
-	 * 
-	 * @param countries
-	 * @param countryName
-	 * @return
-	 */
-	public int getCountryNumberByName(HashMap<Integer, Countries> countries, String countryName) {
-		for (int i : countries.keySet()) {
-			Countries cou = countries.get(i);
-			if (cou.getCountryName().equals(countryName)) {
-				return i;
-			}
-		}
-		return 0;
-	}
-
+	
 	/**
 	 * performs the fortify action uses getCountryNumberByName and
 	 * getAdjacencyMatrix methods
@@ -66,14 +58,14 @@ public class FortificationController {
 	 */
 	public String fortify(HashMap<String, Player> player, String fromCountry, String toCountry, int armyToPlace,
 			HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundaries) {
-		ReinforcementController rc = new ReinforcementController();
-		String pName = rc.findPlayerNameFromCountry(countries, fromCountry);
+		
+		String pName = cc.findPlayerNameFromCountry(countries, fromCountry);
 		Player pOb = player.get(pName);
 
 		if (pOb.getOwnedCountriesList().contains(fromCountry)) {
 			if (pOb.getOwnedCountriesList().contains(toCountry)) {
-				int fromCIdx = getCountryNumberByName(countries, fromCountry) - 1;
-				int toCIdx = getCountryNumberByName(countries, toCountry) - 1;
+				int fromCIdx = cc.getCountryNumberByName(countries, fromCountry) - 1;
+				int toCIdx = cc.getCountryNumberByName(countries, toCountry) - 1;
 				boolean[][] matrix = getAdjacencyMatrix(boundaries);
 
 				if (matrix[fromCIdx][toCIdx]) {

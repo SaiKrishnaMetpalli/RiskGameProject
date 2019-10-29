@@ -10,6 +10,7 @@ import model.Continents;
 import model.Countries;
 import model.GameMap;
 import model.Player;
+import controller.CommonController;
 import controller.FortificationController;
 import controller.MapSelectionController;
 import controller.PlayerSelectionController;
@@ -25,17 +26,21 @@ public class CommandLine {
 	String input;
 	String result;
 	Scanner sc;
+
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
-	GameMap gm;
+
 	ArrayList<String> players;
-	PlayerSelectionController psc;
-	MapSelectionController msc;
 	HashMap<String, Player> listOfPlayers;
 	CONSTANTS cons;
-	String currentPlayerTurn;
+
+	GameMap gm;
+	Player p;
+	PlayerSelectionController psc;
+	MapSelectionController msc;
 	ReinforcementController ric;
 	FortificationController fc;
+	CommonController cc;
 
 	/**
 	 * Default constructor To create the variable objects
@@ -43,14 +48,18 @@ public class CommandLine {
 	public CommandLine() {
 		sc = new Scanner(System.in);
 		inputCommandsList = new ArrayList<String>();
-		gm = new GameMap();
+
 		players = new ArrayList<String>();
-		psc = new PlayerSelectionController();
-		msc = new MapSelectionController();
 		listOfPlayers = new HashMap<String, Player>();
 		cons = new CONSTANTS();
+
+		gm = new GameMap();
+		p = new Player();
+		psc = new PlayerSelectionController();
+		msc = new MapSelectionController();
 		ric = new ReinforcementController();
 		fc = new FortificationController();
+		cc = new CommonController();
 	}
 
 	/**
@@ -64,141 +73,163 @@ public class CommandLine {
 		if (inputCommand.length > 0) {
 			switch (inputCommand[0]) {
 			case "editcontinent":
-				if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
-					if (inputCommand.length > 1) {
-						int i = 1;
-						while (i < inputCommand.length) {
-							if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-								result = msc.addContinent(gm.getContinents(), inputCommand[i + 1], inputCommand[i + 2]);
-								if (result.contains("success")) {
-									System.out.println("\n " + inputCommand[i + 1] + " " + result);
-									addToCommands = true;
-								} else {
-									System.out.println(
-											"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
-									addToCommands = false;
-								}
-								i = i + 3;
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
+						if (inputCommand.length > 1) {
+							int i = 1;
+							while (i < inputCommand.length) {
+								if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
+									result = msc.addContinent(gm.getContinents(), inputCommand[i + 1],
+											inputCommand[i + 2]);
+									if (result.contains("success")) {
+										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										addToCommands = true;
+									} else {
+										System.out.println(
+												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+										addToCommands = false;
+									}
+									i = i + 3;
 
-							} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
-								System.out.println(inputCommand[i + 1]);
-								result = msc.removeContinent(gm.getContinents(), gm.getBoundries(), gm.getCountries(),
-										inputCommand[i + 1]);
-								if (result.contains("success")) {
-									System.out.println("\n " + inputCommand[i + 1] + " " + result);
-									addToCommands = true;
+								} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
+									System.out.println(inputCommand[i + 1]);
+									result = msc.removeContinent(gm.getContinents(), gm.getBoundries(),
+											gm.getCountries(), inputCommand[i + 1]);
+									if (result.contains("success")) {
+										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										addToCommands = true;
+									} else {
+										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										addToCommands = false;
+									}
+									i = i + 2;
 								} else {
-									System.out.println("\n " + inputCommand[i + 1] + " " + result);
+									System.out.println("\neditcontinent command format is incorrect");
 									addToCommands = false;
+									break;
 								}
-								i = i + 2;
-							} else {
-								System.out.println("\neditcontinent command format is incorrect");
-								addToCommands = false;
-								break;
 							}
+						} else {
+							System.out.println("\neditcontinent command format is incorrect");
+							addToCommands = false;
 						}
 					} else {
-						System.out.println("\neditcontinent command format is incorrect");
+						System.out
+								.println("\neditcontinent command cannot be loaded before loadmap or editmap command");
 						addToCommands = false;
 					}
+
 				} else {
-					System.out.println("\neditcontinent command cannot be loaded before loadmap or editmap command");
+					System.out.println("\neditcontinent command cannot be peformed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "editcountry":
-				if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
-					if (inputCommand.length > 1) {
-						int i = 1;
-						while (i < inputCommand.length) {
-							if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-								result = msc.addCountry(gm.getContinents(), gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
-										inputCommand[i + 2]);
-								if (result.contains("success")) {
-									System.out.println("\n " + inputCommand[i + 1] + " " + result);
-									addToCommands = true;
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
+						if (inputCommand.length > 1) {
+							int i = 1;
+							while (i < inputCommand.length) {
+								if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
+									result = msc.addCountry(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
+											inputCommand[i + 1], inputCommand[i + 2]);
+									if (result.contains("success")) {
+										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										addToCommands = true;
+									} else {
+										System.out.println(
+												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+										addToCommands = false;
+									}
+									i = i + 3;
+								} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
+									result = msc.removeCountry(gm.getCountries(), gm.getBoundries(),
+											inputCommand[i + 1]);
+									if (result.contains("success")) {
+										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										addToCommands = true;
+									} else {
+										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										addToCommands = false;
+									}
+									i = i + 2;
 								} else {
-									System.out.println(
-											"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+									System.out.println("\neditcountry command format is incorrect");
 									addToCommands = false;
 								}
-								i = i + 3;
-							} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
-								result = msc.removeCountry(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1]);
-								if (result.contains("success")) {
-									System.out.println("\n " + inputCommand[i + 1] + " " + result);
-									addToCommands = true;
-								} else {
-									System.out.println("\n " + inputCommand[i + 1] + " " + result);
-									addToCommands = false;
-								}
-								i = i + 2;
-							} else {
-								System.out.println("\neditcountry command format is incorrect");
-								addToCommands = false;
 							}
+						} else {
+							System.out.println("\neditcountry command format is incorrect");
+							addToCommands = false;
 						}
 					} else {
-						System.out.println("\neditcountry command format is incorrect");
+						System.out.println("\neditcountry command cannot be loaded before loadmap or editmap command");
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\neditcountry command cannot be loaded before loadmap or editmap command");
+					System.out.println("\neditcountry command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "editneighbor":
-				if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
-					if (inputCommand.length > 1) {
-						int i = 1;
-						while (i < inputCommand.length) {
-							if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-								result = msc.addNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
-										inputCommand[i + 2]);
-								if (result.contains("success")) {
-									String result2 = msc.addNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 2],
-											inputCommand[i + 1]);
-									System.out.println("\n " + inputCommand[i + 2] + " " + result);
-									addToCommands = true;
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
+						if (inputCommand.length > 1) {
+							int i = 1;
+							while (i < inputCommand.length) {
+								if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
+									result = msc.addNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
+											inputCommand[i + 2]);
+									if (result.contains("success")) {
+										String result2 = msc.addNeighbour(gm.getCountries(), gm.getBoundries(),
+												inputCommand[i + 2], inputCommand[i + 1]);
+										System.out.println("\n " + inputCommand[i + 2] + " " + result);
+										addToCommands = true;
+									} else {
+										System.out.println(
+												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+										addToCommands = false;
+									}
+									i = i + 3;
+								} else if (inputCommand[i].equals("-remove") && (i + 2 < inputCommand.length)) {
+									result = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(),
+											inputCommand[i + 1], inputCommand[i + 2]);
+									if (result.contains("success")) {
+										String result2 = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(),
+												inputCommand[i + 2], inputCommand[i + 1]);
+										System.out.println("\n " + inputCommand[i + 2] + " " + result);
+										addToCommands = true;
+									} else {
+										System.out.println(
+												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+										addToCommands = false;
+									}
+									i = i + 3;
 								} else {
-									System.out.println(
-											"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+									System.out.println("\neditneighbor command format is incorrect");
 									addToCommands = false;
+									break;
 								}
-								i = i + 3;
-							} else if (inputCommand[i].equals("-remove") && (i + 2 < inputCommand.length)) {
-								result = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
-										inputCommand[i + 2]);
-								if (result.contains("success")) {
-									String result2 = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(),
-											inputCommand[i + 2], inputCommand[i + 1]);
-									System.out.println("\n " + inputCommand[i + 2] + " " + result);
-									addToCommands = true;
-								} else {
-									System.out.println(
-											"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
-									addToCommands = false;
-								}
-								i = i + 3;
-							} else {
-								System.out.println("\neditneighbor command format is incorrect");
-								addToCommands = false;
-								break;
 							}
+						} else {
+							System.out.println("\neditneighbor command format is incorrect");
+							addToCommands = false;
 						}
 					} else {
-						System.out.println("\neditneighbor command format is incorrect");
+						System.out.println("\neditneighbor command cannot be loaded before loadmap or editmap command");
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\neditneighbor command cannot be loaded before loadmap or editmap command");
+					System.out.println("\neditneighbor command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
@@ -208,71 +239,91 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "savemap":
-				if (inputCommand.length == 2) {
-					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0) && (gm.getBoundries().size() > 0)) {
-						boolean result = msc.isConnectedMap(gm.getBoundries());
-						if (result) {
-							try {
-								msc.writeGameMapFile(gm.getContinents(), gm.getCountries(), gm.getBoundries(), inputCommand[1]);
-								System.out.println("\nMap file saved successfully");
-								addToCommands = true;
-							} catch (Exception ex) {
-								System.out.println("\nSome error has occurred. Please try again");
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommand.length == 2) {
+						if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
+								&& (gm.getBoundries().size() > 0)) {
+							boolean result = msc.isConnectedMap(gm.getBoundries());
+							if (result) {
+								try {
+									msc.writeGameMapFile(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
+											inputCommand[1]);
+									System.out.println("\nMap file saved successfully");
+									addToCommands = true;
+								} catch (Exception ex) {
+									System.out.println("\nSome error has occurred. Please try again");
+									addToCommands = false;
+								}
+							} else {
+								System.out.println("\nFile cannot be saved as map is not connected");
 								addToCommands = false;
 							}
 						} else {
-							System.out.println("\nFile cannot be saved as map is not connected");
+							System.out.println("\nMap has not been loaded. Please load the file and save");
 							addToCommands = false;
 						}
-					} else {
-						System.out.println("\nMap has not been loaded. Please load the file and save");
-						addToCommands = false;
 					}
+				} else {
+					System.out.println("\nsavemap command cannot be performed in " + gm.getGameState() + " phase");
+					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "editmap":
-				if (inputCommand.length == 2) {
-					if (checkFileExist(inputCommand[1])) {
-						try {
-							gm.getContinents().clear();
-							gm.getCountries().clear();
-							gm.getBoundries().clear();
-							String result = msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
-									inputCommand[1]);
-							if (result.equals("Success")) {
-								System.out.println("\nFile uploaded successfully");
-							} else {
-								System.out.println(
-										"\nFile not uploaded. There are format issues in file. Please upload again");
-							}
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommand.length == 2) {
+						if (checkFileExist(inputCommand[1])) {
+							try {
+								gm.getContinents().clear();
+								gm.getCountries().clear();
+								gm.getBoundries().clear();
+								String result = msc.gameMapReading(gm.getContinents(), gm.getCountries(),
+										gm.getBoundries(), inputCommand[1]);
+								if (result.equals("Success")) {
+									System.out.println("\nFile uploaded successfully");
+								} else {
+									System.out.println(
+											"\nFile not uploaded. There are format issues in file. Please upload again");
+								}
 
-						} catch (Exception ex) {
-							System.out.println("\nError Occurred. Please try again");
+							} catch (Exception ex) {
+								System.out.println("\nError Occurred. Please try again");
+							}
+						} else {
+							System.out
+									.println("\n" + inputCommand[1] + " file does not exist. Please create a new map");
+							msc.createEmptyFile(inputCommand[1]);
 						}
+						addToCommands = true;
 					} else {
-						System.out.println("\n" + inputCommand[1] + " file does not exist. Please create a new map");
-						msc.createEmptyFile(inputCommand[1]);
+						System.out.println("\neditmap command format is incorrect");
+						addToCommands = false;
 					}
-					addToCommands = true;
 				} else {
-					System.out.println("\neditmap command format is incorrect");
+					System.out.println("\neditmap command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "validatemap":
-				if (gm.getBoundries().size() > 0) {
-					boolean result = msc.isConnectedMap(gm.getBoundries());
-					if (result) {
-						System.out.println("\nMap is connected");
+				if (gm.getGameState().equals("STARTUP")) {
+					if (gm.getBoundries().size() > 0) {
+						boolean result = msc.isConnectedMap(gm.getBoundries());
+						if (result) {
+							System.out.println("\nMap is connected");
+						} else {
+							System.out.println("\nMap is not connected");
+						}
 					} else {
-						System.out.println("\nMap is not connected");
+						System.out.println("\nMap has not been loaded. Please load the map and validate");
+						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nMap has not been loaded. Please load the map and validate");
+					System.out.println("\nvalidatemap command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -280,77 +331,87 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "loadmap":
-				if (inputCommand.length == 2) {
-					if (checkFileExist(inputCommand[1])) {
-						try {
-							gm.getContinents().clear();
-							gm.getCountries().clear();
-							gm.getBoundries().clear();
-							result = msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), inputCommand[1]);
-							if (result.equals("Success")) {
-								System.out.println("\nFile uploaded successfully");
-								boolean result2 = msc.isConnectedMap(gm.getBoundries());
-								if (result2) {
-									System.out.println("\nMap is connected");
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommand.length == 2) {
+						if (checkFileExist(inputCommand[1])) {
+							try {
+								gm.getContinents().clear();
+								gm.getCountries().clear();
+								gm.getBoundries().clear();
+								result = msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
+										inputCommand[1]);
+								if (result.equals("Success")) {
+									System.out.println("\nFile uploaded successfully");
+									boolean result2 = msc.isConnectedMap(gm.getBoundries());
+									if (result2) {
+										System.out.println("\nMap is connected");
+									} else {
+										System.out.println("\nMap is not connected");
+									}
+									addToCommands = true;
 								} else {
-									System.out.println("\nMap is not connected");
+									System.out.println(
+											"\nFile not uploaded. There are format issues in file. Please upload again");
+									addToCommands = false;
 								}
-								addToCommands = true;
-							} else {
-								System.out.println(
-										"\nFile not uploaded. There are format issues in file. Please upload again");
+
+							} catch (Exception ex) {
+								System.out.println("\nError Occurred. Please try again");
 								addToCommands = false;
 							}
-
-						} catch (Exception ex) {
-							System.out.println("\nError Occurred. Please try again");
+						} else {
+							System.out.println("\n" + inputCommand[1] + " file does not exist");
 							addToCommands = false;
 						}
 					} else {
-						System.out.println("\n" + inputCommand[1] + " file does not exist");
+						System.out.println("\nloadmap command format is incorrect");
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nloadmap command format is incorrect");
+					System.out.println("\nloadmap command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "gameplayer":
-				if (inputCommandsList.contains("loadmap")) {
-					if (inputCommand.length > 1) {
-						int i = 1;
-						while (i < inputCommand.length) {
-							if (inputCommand[i].equals("-add") && (i + 1 < inputCommand.length)) {
-								result = psc.addPlayer(players, inputCommand[i + 1]);
-								if (result.equals("Success")) {
-									System.out.println("\n" + inputCommand[i + 1] + " player added successfully");
-									// System.out.println(players);
-									addToCommands = true;
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommandsList.contains("loadmap")) {
+						if (inputCommand.length > 1) {
+							int i = 1;
+							while (i < inputCommand.length) {
+								if (inputCommand[i].equals("-add") && (i + 1 < inputCommand.length)) {
+									result = psc.addPlayer(players, inputCommand[i + 1]);
+									if (result.equals("Success")) {
+										System.out.println("\n" + inputCommand[i + 1] + " player added successfully");
+										addToCommands = true;
+									} else {
+										System.out.println("\n" + inputCommand[i + 1] + " player already exists");
+										addToCommands = false;
+									}
+								} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
+									result = psc.removePlayer(players, inputCommand[i + 1]);
+									if (result.equals("Success")) {
+										System.out.println("\n" + inputCommand[i + 1] + " player removed successfully");
+										addToCommands = true;
+									} else {
+										System.out.println("\n" + inputCommand[i + 1] + " player does not exists");
+										addToCommands = false;
+									}
 								} else {
-									System.out.println("\n" + inputCommand[i + 1] + " player already exists");
+									System.out.println("\ngameplayer command format is incorrect");
 									addToCommands = false;
 								}
-							} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
-								result = psc.removePlayer(players, inputCommand[i + 1]);
-								if (result.equals("Success")) {
-									System.out.println("\n" + inputCommand[i + 1] + " player removed successfully");
-									// System.out.println(players);
-									addToCommands = true;
-								} else {
-									System.out.println("\n" + inputCommand[i + 1] + " player does not exists");
-									addToCommands = false;
-								}
-							} else {
-								System.out.println("\ngameplayer command format is incorrect");
-								addToCommands = false;
+								i = i + 2;
 							}
-							i = i + 2;
 						}
+					} else {
+						System.out.println("\ngameplayer command cannot be performed as map is not loaded");
+						addToCommands = false;
 					}
 				} else {
-					System.out.println("\ngameplayer command cannot be performed as map is not loaded");
+					System.out.println("\ngameplayer command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -358,136 +419,175 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "populatecountries":
-				if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0) && (gm.getBoundries().size() > 0)
-						&& (players.size() > 0)) {
-					if (players.size() == 1) {
-						System.out.println("\nPlayers should be more than 1 to play the game");
-						addToCommands = false;
-					} else {
-						listOfPlayers.clear();
-						result = psc.assignRandomCountries(players, gm.getCountries(), listOfPlayers);
-						if (result.equals("Success")) {
-							currentPlayerTurn = players.get(0);
-							System.out.println("Players assigned to countries");
-							addToCommands = true;
+				if (gm.getGameState().equals("STARTUP")) {
+					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
+							&& (gm.getBoundries().size() > 0) && (players.size() > 0)) {
+						if (players.size() == 1) {
+							System.out.println("\nPlayers should be more than 1 to play the game");
+							addToCommands = false;
+						} else {
+							listOfPlayers.clear();
+							result = psc.assignRandomCountries(players, gm.getCountries(), listOfPlayers);
+							if (result.equals("Success")) {
+								p.setCurrentPlayerTurn(players.get(0));
+								System.out.println("Players assigned to countries");
+								addToCommands = true;
+							}
 						}
+					} else {
+						System.out.println(
+								"\nCannot populate countires to player if map is not loaded or players are not added");
+						System.out.println("\nPlease try again by loading map and creating players");
+						addToCommands = false;
 					}
 				} else {
 					System.out.println(
-							"\nCannot populate countires to player if map is not loaded or players are not added");
-					System.out.println("\nPlease try again by loading map and creating players");
+							"\npopulatecountries command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "placearmy":
-				if (inputCommand.length == 2) {
-					if (listOfPlayers.size() > 0) {
-						String playerName = "";
-						playerName = ric.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]);
-						if (playerName.equals(currentPlayerTurn)) {
-							result = psc.placeArmy(gm.getCountries(), listOfPlayers, inputCommand[1],
-									cons.NO_PLAYER_ARMIES.get(players.size()));
-							if ((players.indexOf(playerName)) + 1 < players.size()) {
-								currentPlayerTurn = players.get((players.indexOf(playerName)) + 1);
+				if (gm.getGameState().equals("STARTUP")) {
+					if (inputCommand.length == 2) {
+						if (listOfPlayers.size() > 0) {
+							if (checkPlayersTurn(inputCommand[1])) {
+								result = psc.placeArmy(gm.getCountries(), listOfPlayers, inputCommand[1],
+										cons.NO_PLAYER_ARMIES.get(players.size()));
+								if ((players.indexOf(p.getCurrentPlayerTurn())) + 1 < players.size()) {
+									p.setCurrentPlayerTurn(
+											players.get((players.indexOf(p.getCurrentPlayerTurn())) + 1));
+								} else {
+									p.setCurrentPlayerTurn(players.get(0));
+								}
+								System.out.println("\n" + " " + result);
+								addToCommands = true;
 							} else {
-								currentPlayerTurn = players.get(0);
+								System.out.println("\nCannot place army for the country, it is not the turn of player");
+								addToCommands = false;
 							}
-							System.out.println("\n" + " " + result);
-							System.out.println("Current player turn: " + currentPlayerTurn);
-							addToCommands = true;
 						} else {
-							System.out.println("\nCannot place army for the country, it is not the turn of player");
-							System.out.println("Current player turn: " + currentPlayerTurn);
+							System.out.println("\nCannot place army as players are not assigned to countries");
 							addToCommands = false;
 						}
+					} else {
+						System.out.println("\nplacearmy command format is incorrect");
+						addToCommands = false;
+					}
+				} else {
+					System.out.println("\nplacearmy command cannot be performed in " + gm.getGameState() + " phase");
+					addToCommands = false;
+				}
+
+				addInputCommandList(addToCommands, inputCommand[0]);
+				commandLine();
+				break;
+			case "placeall":
+				if (gm.getGameState().equals("STARTUP")) {
+					if (listOfPlayers.size() > 0) {
+						if (checkArmiesPlaced()) {
+							result = psc.placeAll(gm.getCountries(), listOfPlayers,
+									cons.NO_PLAYER_ARMIES.get(players.size()));
+							System.out.println("\nArmies are placed successfully");
+							gm.setGameState("REINFORCE");
+						} else {
+							System.out.println("\nArmies are already placed for the player");
+						}
+						p.setCurrentPlayerTurn(players.get(0));
+						addToCommands = true;
 					} else {
 						System.out.println("\nCannot place army as players are not assigned to countries");
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nplacearmy command format is incorrect");
+					System.out.println("\nplaceall command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
-				addInputCommandList(addToCommands, inputCommand[0]);
-				commandLine();
-				break;
-			case "placeall":
-				if (listOfPlayers.size() > 0) {
-					boolean flag = checkArmiesPlaced();
-					if (flag) {
-						result = psc.placeAll(gm.getCountries(), listOfPlayers, cons.NO_PLAYER_ARMIES.get(players.size()));
-						System.out.println("\nArmies are placed successfully");
-					} else {
-						System.out.println("\nArmies are already placed for the player");
-					}
-					addToCommands = true;
-				} else {
-					System.out.println("\nCannot place army as players are not assigned to countries");
-					addToCommands = false;
-				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "reinforce":
-				if (inputCommand.length == 3) {
-					if (Integer.parseInt(inputCommand[2]) < 1) {
-						System.out.println("\nReinforcement cannot be performed as armies should be greater than 0");
-						addToCommands = false;
-					} else {
-						boolean flag = checkArmiesPlaced();
-						if (!flag) {
-							result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
-									gm.getCountries(), listOfPlayers, gm.getContinents());
-							if (result.contains("success")) {
-								System.out.println("\n " + result);
-								addToCommands = true;
-							} else {
-								System.out.println("\n " + result);
+				if (gm.getGameState().equals("REINFORCE")) {
+					if (inputCommand.length == 3) {
+						if (checkPlayersTurn(inputCommand[1])) {
+							if (Integer.parseInt(inputCommand[2]) < 1) {
+								System.out.println(
+										"\nReinforcement cannot be performed as armies should be greater than 0");
 								addToCommands = false;
+							} else {
+								if (!checkArmiesPlaced()) {
+									result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
+											gm.getCountries(), listOfPlayers, gm.getContinents());
+									if (result.contains("success")) {
+										addToCommands = true;
+									} else {
+										addToCommands = false;
+									}
+									System.out.println("\n " + result);
+								} else {
+									System.out.println(
+											"\nReinforcement cannot be performed as armies are not assigned to player");
+									addToCommands = false;
+								}
 							}
 						} else {
-							System.out.println(
-									"\nReinforcement cannot be performed as armies are not assigned to player");
+							System.out.println("\nCannot reinforce army for the country, it is not the turn of player");
 							addToCommands = false;
 						}
+					} else {
+						System.out.println("\nreinforce command format is incorrect");
+						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nreinforce command format is incorrect");
+					System.out.println("\nreinforce command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "fortify":
-				if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
-					boolean flag = checkArmiesPlaced();
-					if ((!flag) && (!inputCommandsList.contains("fortify"))) {
-						if (inputCommand.length == 4) {
-							result = fc.fortify(listOfPlayers, inputCommand[1], inputCommand[2],
-									Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
-							if (result.contains("success")) {
-								System.out.println("\n " + result);
-								addToCommands = true;
+				if (gm.getGameState().equals("FORTIFY")) {
+					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
+						if ((!checkArmiesPlaced()) && (!inputCommandsList.contains("fortify"))) {
+							if (inputCommand.length == 4) {
+								if (checkPlayersTurn(inputCommand[1])) {
+									result = fc.fortify(listOfPlayers, inputCommand[1], inputCommand[2],
+											Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
+									if (result.contains("success")) {
+										addToCommands = true;
+										gm.setGameState("REINFORCE");
+									} else {
+										addToCommands = false;
+									}
+									System.out.println("\n " + result);
+								} else {
+									System.out.println(
+											"\nCannot fortify army for the country, it is not the turn of player");
+									addToCommands = false;
+								}
 							} else {
-								System.out.println("\n " + result);
-								addToCommands = false;
+								System.out.println("Fortification none completed");
+								addToCommands = true;
 							}
 						} else {
-							System.out.println("Fortification none completed");
-							addToCommands = true;
+							System.out.println(
+									"\nFortification cannot be performed, only one fortification is allowed per turn");
+							addToCommands = false;
 						}
+
 					} else {
-						System.out.println(
-								"\nFortification cannot be performed, only one fortification is allowed per turn");
+						System.out.println("\nfortify command format is incorrect");
 						addToCommands = false;
 					}
-
 				} else {
-					System.out.println("\nfortify command format is incorrect");
+					System.out.println("\nfortify command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
@@ -640,6 +740,22 @@ public class CommandLine {
 
 		}
 		return flag;
+	}
+
+	/**
+	 * This method is used for checking the player's turn or not
+	 * 
+	 * @param countryName this variable contains the name of the country
+	 * @return this returns true when matches with current player; Otherwise false
+	 */
+	public boolean checkPlayersTurn(String countryName) {
+		String playerName = "";
+		playerName = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
+		if (playerName.equals(p.getCurrentPlayerTurn())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

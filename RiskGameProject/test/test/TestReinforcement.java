@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
+
+import controller.CommonController;
 import controller.MapSelectionController;
 import controller.PlayerSelectionController;
 import controller.ReinforcementController;
@@ -22,6 +24,7 @@ public class TestReinforcement {
 	ReinforcementController ric;
 	MapSelectionController msc;
 	PlayerSelectionController psc;
+	CommonController cc;
 	CONSTANTS con;
 	GameMap gm;
 	HashMap<String, Player> playerDetails;
@@ -39,6 +42,7 @@ public class TestReinforcement {
 		msc = new MapSelectionController();
 		psc = new PlayerSelectionController();
 		ric = new ReinforcementController();
+		cc=new CommonController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
 		playerDetails = new HashMap<String, Player>();
@@ -46,7 +50,7 @@ public class TestReinforcement {
 		msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), fileName);
 		psc.assignRandomCountries(listOfPlayers, gm.getCountries(), playerDetails);
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
-		player = ric.findPlayerNameFromCountry(gm.getCountries(), countryName);
+		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
 	}
 
 	/**

@@ -11,7 +11,8 @@ public class Player {
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
-
+	private String currentPlayerTurn;
+	
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
@@ -19,6 +20,7 @@ public class Player {
 		ownedCountriesList = new ArrayList<String>();
 		ownedArmiesList = new ArrayList<Integer>();
 		ownedCountriesArmiesList = new HashMap<String, Integer>();
+		currentPlayerTurn="";
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
@@ -43,5 +45,13 @@ public class Player {
 
 	public void setOwnedArmiesList(ArrayList<Integer> ownedArmiesList) {
 		this.ownedArmiesList = ownedArmiesList;
+	}
+	
+	public String getCurrentPlayerTurn() {
+		return currentPlayerTurn;
+	}
+
+	public void setCurrentPlayerTurn(String currentPlayerTurn) {
+		this.currentPlayerTurn = currentPlayerTurn;
 	}
 }

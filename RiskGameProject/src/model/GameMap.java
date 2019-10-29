@@ -10,14 +10,24 @@ public class GameMap {
 	private HashMap<Integer, Continents> continents;
 	private HashMap<Integer, Countries> countries;
 	private HashMap<Integer, ArrayList<Integer>> boundries;
+	private String gameState;
 
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
 	public GameMap() {
+		gameState="STARTUP";
 		continents = new HashMap<Integer, Continents>();
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
+	}
+
+	public String getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(String gameState) {
+		this.gameState = gameState;
 	}
 
 	public HashMap<Integer, Continents> getContinents() {
