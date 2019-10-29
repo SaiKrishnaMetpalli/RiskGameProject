@@ -49,9 +49,9 @@ public class TestFortification {
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
 		playerDetails = new HashMap<String, Player>();
 		fileName = "risk.map";
-		msc.gameMapReading(gm.continents, gm.countries, gm.boundries, fileName);
-		psc.assignRandomCountries(listOfPlayers, gm.countries, playerDetails);
-		psc.placeAll(gm.countries, playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
+		msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), fileName);
+		psc.assignRandomCountries(listOfPlayers, gm.getCountries(), playerDetails);
+		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		pOb = playerDetails.get("sakib");
 		playerOwnedCountries=pOb.getOwnedCountriesList();
 		
@@ -63,7 +63,7 @@ public class TestFortification {
 	@Test
 	public void testPlayerDontOwnCountry() {
 		assertEquals(fc.fortify(playerDetails, "Quebec", "Alberta ", 5,
-				gm.countries, gm.boundries),"Targeted country is not owned by player");
+				gm.getCountries(), gm.getBoundries()),"Targeted country is not owned by player");
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class TestFortification {
 		toCountry=playerOwnedCountries.get(2);
 		armyToPlace=pOb.getOwnedCountriesArmiesList().get(fromCountry)-1;
 		assertEquals(fc.fortify(playerDetails, fromCountry, toCountry, armyToPlace,
-				gm.countries, gm.boundries),"Player does not own the path");
+				gm.getCountries(), gm.getBoundries()),"Player does not own the path");
 	}
 
 }

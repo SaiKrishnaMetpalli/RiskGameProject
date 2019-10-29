@@ -69,7 +69,7 @@ public class CommandLine {
 						int i = 1;
 						while (i < inputCommand.length) {
 							if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-								result = msc.addContinent(gm.continents, inputCommand[i + 1], inputCommand[i + 2]);
+								result = msc.addContinent(gm.getContinents(), inputCommand[i + 1], inputCommand[i + 2]);
 								if (result.contains("success")) {
 									System.out.println("\n " + inputCommand[i + 1] + " " + result);
 									addToCommands = true;
@@ -82,7 +82,7 @@ public class CommandLine {
 
 							} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
 								System.out.println(inputCommand[i + 1]);
-								result = msc.removeContinent(gm.continents, gm.boundries, gm.countries,
+								result = msc.removeContinent(gm.getContinents(), gm.getBoundries(), gm.getCountries(),
 										inputCommand[i + 1]);
 								if (result.contains("success")) {
 									System.out.println("\n " + inputCommand[i + 1] + " " + result);
@@ -115,7 +115,7 @@ public class CommandLine {
 						int i = 1;
 						while (i < inputCommand.length) {
 							if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-								result = msc.addCountry(gm.continents, gm.countries, gm.boundries, inputCommand[i + 1],
+								result = msc.addCountry(gm.getContinents(), gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
 										inputCommand[i + 2]);
 								if (result.contains("success")) {
 									System.out.println("\n " + inputCommand[i + 1] + " " + result);
@@ -127,7 +127,7 @@ public class CommandLine {
 								}
 								i = i + 3;
 							} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
-								result = msc.removeCountry(gm.countries, gm.boundries, inputCommand[i + 1]);
+								result = msc.removeCountry(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1]);
 								if (result.contains("success")) {
 									System.out.println("\n " + inputCommand[i + 1] + " " + result);
 									addToCommands = true;
@@ -158,10 +158,10 @@ public class CommandLine {
 						int i = 1;
 						while (i < inputCommand.length) {
 							if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-								result = msc.addNeighbour(gm.countries, gm.boundries, inputCommand[i + 1],
+								result = msc.addNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
 										inputCommand[i + 2]);
 								if (result.contains("success")) {
-									String result2 = msc.addNeighbour(gm.countries, gm.boundries, inputCommand[i + 2],
+									String result2 = msc.addNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 2],
 											inputCommand[i + 1]);
 									System.out.println("\n " + inputCommand[i + 2] + " " + result);
 									addToCommands = true;
@@ -172,10 +172,10 @@ public class CommandLine {
 								}
 								i = i + 3;
 							} else if (inputCommand[i].equals("-remove") && (i + 2 < inputCommand.length)) {
-								result = msc.removeNeighbour(gm.countries, gm.boundries, inputCommand[i + 1],
+								result = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(), inputCommand[i + 1],
 										inputCommand[i + 2]);
 								if (result.contains("success")) {
-									String result2 = msc.removeNeighbour(gm.countries, gm.boundries,
+									String result2 = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(),
 											inputCommand[i + 2], inputCommand[i + 1]);
 									System.out.println("\n " + inputCommand[i + 2] + " " + result);
 									addToCommands = true;
@@ -209,11 +209,11 @@ public class CommandLine {
 				break;
 			case "savemap":
 				if (inputCommand.length == 2) {
-					if ((gm.countries.size() > 0) && (gm.continents.size() > 0) && (gm.boundries.size() > 0)) {
-						boolean result = msc.isConnectedMap(gm.boundries);
+					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0) && (gm.getBoundries().size() > 0)) {
+						boolean result = msc.isConnectedMap(gm.getBoundries());
 						if (result) {
 							try {
-								msc.writeGameMapFile(gm.continents, gm.countries, gm.boundries, inputCommand[1]);
+								msc.writeGameMapFile(gm.getContinents(), gm.getCountries(), gm.getBoundries(), inputCommand[1]);
 								System.out.println("\nMap file saved successfully");
 								addToCommands = true;
 							} catch (Exception ex) {
@@ -236,10 +236,10 @@ public class CommandLine {
 				if (inputCommand.length == 2) {
 					if (checkFileExist(inputCommand[1])) {
 						try {
-							gm.continents.clear();
-							gm.countries.clear();
-							gm.boundries.clear();
-							String result = msc.gameMapReading(gm.continents, gm.countries, gm.boundries,
+							gm.getContinents().clear();
+							gm.getCountries().clear();
+							gm.getBoundries().clear();
+							String result = msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
 									inputCommand[1]);
 							if (result.equals("Success")) {
 								System.out.println("\nFile uploaded successfully");
@@ -264,8 +264,8 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "validatemap":
-				if (gm.boundries.size() > 0) {
-					boolean result = msc.isConnectedMap(gm.boundries);
+				if (gm.getBoundries().size() > 0) {
+					boolean result = msc.isConnectedMap(gm.getBoundries());
 					if (result) {
 						System.out.println("\nMap is connected");
 					} else {
@@ -283,13 +283,13 @@ public class CommandLine {
 				if (inputCommand.length == 2) {
 					if (checkFileExist(inputCommand[1])) {
 						try {
-							gm.continents.clear();
-							gm.countries.clear();
-							gm.boundries.clear();
-							result = msc.gameMapReading(gm.continents, gm.countries, gm.boundries, inputCommand[1]);
+							gm.getContinents().clear();
+							gm.getCountries().clear();
+							gm.getBoundries().clear();
+							result = msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), inputCommand[1]);
 							if (result.equals("Success")) {
 								System.out.println("\nFile uploaded successfully");
-								boolean result2 = msc.isConnectedMap(gm.boundries);
+								boolean result2 = msc.isConnectedMap(gm.getBoundries());
 								if (result2) {
 									System.out.println("\nMap is connected");
 								} else {
@@ -358,14 +358,14 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "populatecountries":
-				if ((gm.countries.size() > 0) && (gm.continents.size() > 0) && (gm.boundries.size() > 0)
+				if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0) && (gm.getBoundries().size() > 0)
 						&& (players.size() > 0)) {
 					if (players.size() == 1) {
 						System.out.println("\nPlayers should be more than 1 to play the game");
 						addToCommands = false;
 					} else {
 						listOfPlayers.clear();
-						result = psc.assignRandomCountries(players, gm.countries, listOfPlayers);
+						result = psc.assignRandomCountries(players, gm.getCountries(), listOfPlayers);
 						if (result.equals("Success")) {
 							currentPlayerTurn = players.get(0);
 							System.out.println("Players assigned to countries");
@@ -385,9 +385,9 @@ public class CommandLine {
 				if (inputCommand.length == 2) {
 					if (listOfPlayers.size() > 0) {
 						String playerName = "";
-						playerName = ric.findPlayerNameFromCountry(gm.countries, inputCommand[1]);
+						playerName = ric.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]);
 						if (playerName.equals(currentPlayerTurn)) {
-							result = psc.placeArmy(gm.countries, listOfPlayers, inputCommand[1],
+							result = psc.placeArmy(gm.getCountries(), listOfPlayers, inputCommand[1],
 									cons.NO_PLAYER_ARMIES.get(players.size()));
 							if ((players.indexOf(playerName)) + 1 < players.size()) {
 								currentPlayerTurn = players.get((players.indexOf(playerName)) + 1);
@@ -417,7 +417,7 @@ public class CommandLine {
 				if (listOfPlayers.size() > 0) {
 					boolean flag = checkArmiesPlaced();
 					if (flag) {
-						result = psc.placeAll(gm.countries, listOfPlayers, cons.NO_PLAYER_ARMIES.get(players.size()));
+						result = psc.placeAll(gm.getCountries(), listOfPlayers, cons.NO_PLAYER_ARMIES.get(players.size()));
 						System.out.println("\nArmies are placed successfully");
 					} else {
 						System.out.println("\nArmies are already placed for the player");
@@ -439,7 +439,7 @@ public class CommandLine {
 						boolean flag = checkArmiesPlaced();
 						if (!flag) {
 							result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
-									gm.countries, listOfPlayers, gm.continents);
+									gm.getCountries(), listOfPlayers, gm.getContinents());
 							if (result.contains("success")) {
 								System.out.println("\n " + result);
 								addToCommands = true;
@@ -466,7 +466,7 @@ public class CommandLine {
 					if ((!flag) && (!inputCommandsList.contains("fortify"))) {
 						if (inputCommand.length == 4) {
 							result = fc.fortify(listOfPlayers, inputCommand[1], inputCommand[2],
-									Integer.parseInt(inputCommand[3]), gm.countries, gm.boundries);
+									Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
 							if (result.contains("success")) {
 								System.out.println("\n " + result);
 								addToCommands = true;
@@ -516,23 +516,23 @@ public class CommandLine {
 		boolean headerDisplay = true;
 		ArrayList<Integer> neighboursNum;
 
-		if (gm.continents.size() > 0) {
-			if (gm.countries.size() > 0) {
-				for (int i : gm.countries.keySet()) {
+		if (gm.getContinents().size() > 0) {
+			if (gm.getCountries().size() > 0) {
+				for (int i : gm.getCountries().keySet()) {
 					neighbours = "";
-					Countries objCou = gm.countries.get(i);
+					Countries objCou = gm.getCountries().get(i);
 					countryName = objCou.getCountryName();
 					playerName = objCou.getOwnerName();
-					for (int j : gm.continents.keySet()) {
+					for (int j : gm.getContinents().keySet()) {
 						if (objCou.getCountryContinentNum() == j) {
-							Continents objCont = gm.continents.get(j);
+							Continents objCont = gm.getContinents().get(j);
 							continentName = objCont.getContinentName();
 							break;
 						}
 					}
-					neighboursNum = gm.boundries.get(i);
+					neighboursNum = gm.getBoundries().get(i);
 					for (int l : neighboursNum) {
-						Countries couNeigh = gm.countries.get(l);
+						Countries couNeigh = gm.getCountries().get(l);
 						neighbours += couNeigh.getCountryName() + ",";
 					}
 					if (neighbours.length() > 0) {
@@ -567,7 +567,7 @@ public class CommandLine {
 					}
 				}
 			} else {
-				for (int cont : gm.continents.keySet()) {
+				for (int cont : gm.getContinents().keySet()) {
 					if (headerDisplay) {
 						headerDisplay = false;
 						System.out.format("%-30s", "ContinentName");
@@ -576,7 +576,7 @@ public class CommandLine {
 							System.out.print("_");
 						System.out.println();
 					}
-					Continents objCont = gm.continents.get(cont);
+					Continents objCont = gm.getContinents().get(cont);
 					continentName = objCont.getContinentName();
 					System.out.format("%-30s", continentName);
 					System.out.println();

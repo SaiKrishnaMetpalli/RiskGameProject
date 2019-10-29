@@ -43,10 +43,10 @@ public class TestReinforcement {
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
 		playerDetails = new HashMap<String, Player>();
 		fileName = "risk.map";
-		msc.gameMapReading(gm.continents, gm.countries, gm.boundries, fileName);
-		psc.assignRandomCountries(listOfPlayers, gm.countries, playerDetails);
-		psc.placeAll(gm.countries, playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
-		player = ric.findPlayerNameFromCountry(gm.countries, countryName);
+		msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), fileName);
+		psc.assignRandomCountries(listOfPlayers, gm.getCountries(), playerDetails);
+		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
+		player = ric.findPlayerNameFromCountry(gm.getCountries(), countryName);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testReinforcementCalculation() {
-		assertEquals(ric.calculateReinforceArmy(playerDetails.get(player), gm.continents, gm.countries, countryName),
+		assertEquals(ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(), countryName),
 				4);
 	}
 
@@ -63,10 +63,10 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testplaceReinforceArmySucess() {
-		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.continents, gm.countries,
+		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
 				countryName);
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.countries, playerDetails, gm.continents),
+				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents()),
 				"Reinforcement armies placed successfully");
 	}
 
@@ -75,10 +75,10 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testplaceReinforceArmyFail() {
-		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.continents, gm.countries,
+		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
 				countryName) + 5;
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.countries, playerDetails, gm.continents),
+				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents()),
 				"Not enough reinoforcement armies available");
 	}
 
