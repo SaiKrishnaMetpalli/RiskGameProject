@@ -83,5 +83,8 @@ public class AttackController {
 
 		return "Attacker ready to attack the Country";
 	}
+	public String defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
+		return defenderCountry;
 
+	}
 }
