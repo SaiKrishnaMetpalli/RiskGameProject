@@ -575,7 +575,13 @@ public class CommandLine {
 					System.out.println("\nattack command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
-				
+			
+			case "defend":
+				if(gm.getGameState().equals("ATTACK")) {
+					if((inputCommand.length == 2)) {
+				        
+					}
+				}
 			case "fortify":
 				if (gm.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
