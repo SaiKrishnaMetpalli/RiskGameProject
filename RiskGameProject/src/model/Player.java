@@ -18,6 +18,7 @@ public class Player {
 	private String defenderCountry;
 	private ArrayList<Integer> attackerDice;
 	private ArrayList<Integer> defenderDice;
+	private String diceRolled;
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
@@ -108,6 +109,14 @@ public class Player {
 
 	public void setDefenderDice(ArrayList<Integer> defenderDice) {
 		this.defenderDice = defenderDice;
+	}
+
+	public String getDiceRolled() {
+		return diceRolled;
+	}
+
+	public void setDiceRolled(String diceRolled) {
+		this.diceRolled = diceRolled;
 	}
 	
 	
