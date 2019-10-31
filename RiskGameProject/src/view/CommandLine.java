@@ -10,6 +10,7 @@ import model.Continents;
 import model.Countries;
 import model.GameMap;
 import model.Player;
+import controller.AttackController;
 import controller.CommonController;
 import controller.FortificationController;
 import controller.MapSelectionController;
@@ -41,6 +42,7 @@ public class CommandLine {
 	ReinforcementController ric;
 	FortificationController fc;
 	CommonController cc;
+	AttackController ac;
 
 	/**
 	 * Default constructor To create the variable objects
@@ -60,6 +62,7 @@ public class CommandLine {
 		ric = new ReinforcementController();
 		fc = new FortificationController();
 		cc = new CommonController();
+		ac = new AttackController();
 	}
 
 	/**
@@ -550,32 +553,43 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "attack":
+				
 				if (gm.getGameState().equals("ATTACK")) {
 					if (inputCommand.length == 3) {
 						if (checkPlayersTurn(inputCommand[1])) {
 							p.setAttackerName(p.getCurrentPlayerTurn());
-							p.setAttackerCountry(inputCommand[1]);
-							p.setDefenderCountry(inputCommand[2]);
-							p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries() , inputCommand[2]));
-							
-							
-							
-							
+							p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
+							if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
+									gm.getBoundries())) {
+
+								if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]), listOfPlayers.get(p.getAttackerName()),
+										gm.getCountries())) {
+
+									String attacked = ac.attackPhase(inputCommand[1], inputCommand[2], Integer.parseInt(inputCommand[3]),
+											p);
+									System.out.println(attacked);
+
+								} else {
+									System.out.println("Number of Dice Played is invalid");
+								}
+							} else {
+								System.out.println("Defender Country is not a neighbouring country");
+							}
+
 						} else {
 							System.out.println("\nCannot attack ,it is not the turn of player");
 							addToCommands = false;
 						}
-					
-						}else {
-							System.out.println("\nattack command format is incorrect");
-							addToCommands = false;
-						}
+
+					} else {
+						System.out.println("\nattack command format is incorrect");
+						addToCommands = false;
 					}
-				else {
+				} else {
 					System.out.println("\nattack command cannot be performed in " + gm.getGameState() + " phase");
 					addToCommands = false;
 				}
-				
+
 			case "fortify":
 				if (gm.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
