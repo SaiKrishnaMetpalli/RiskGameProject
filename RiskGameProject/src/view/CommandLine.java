@@ -549,6 +549,33 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			case "attack":
+				if (gm.getGameState().equals("ATTACK")) {
+					if (inputCommand.length == 3) {
+						if (checkPlayersTurn(inputCommand[1])) {
+							p.setAttackerName(p.getCurrentPlayerTurn());
+							p.setAttackerCountry(inputCommand[1]);
+							p.setDefenderCountry(inputCommand[2]);
+							p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries() , inputCommand[2]));
+							
+							
+							
+							
+						} else {
+							System.out.println("\nCannot attack ,it is not the turn of player");
+							addToCommands = false;
+						}
+					
+						}else {
+							System.out.println("\nattack command format is incorrect");
+							addToCommands = false;
+						}
+					}
+				else {
+					System.out.println("\nattack command cannot be performed in " + gm.getGameState() + " phase");
+					addToCommands = false;
+				}
+				
 			case "fortify":
 				if (gm.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {

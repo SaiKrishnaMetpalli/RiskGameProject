@@ -25,6 +25,8 @@ public class Player {
 		ownedCountriesList = new ArrayList<String>();
 		ownedArmiesList = new ArrayList<Integer>();
 		ownedCountriesArmiesList = new HashMap<String, Integer>();
+		attackerDice = new ArrayList<Integer>();
+		defenderDice = new ArrayList<Integer>();
 		currentPlayerTurn="";
 	}
 
