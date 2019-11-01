@@ -14,6 +14,9 @@ import model.Player;
 public class FortificationController {
 
 	CommonController cc;
+	ArrayList<Integer> ownedCountriesNumberList;
+	boolean ownedPath;
+	boolean marked[];
 	
 	/**
 	 * @Default Constructor
@@ -21,28 +24,32 @@ public class FortificationController {
 	 */
 	public FortificationController() {
 		cc=new CommonController();
+		ownedCountriesNumberList=new ArrayList<Integer>();
+		ownedPath=false;
+	}
+			
+	public void ownedCountriesNumList(HashMap<Integer, Countries> countries,ArrayList<String> ownedCountries) {
+		for(String s:ownedCountries) {
+			ownedCountriesNumberList.add(cc.getCountryNumberByName(countries, s));
+		}
+		marked=new boolean[countries.size()];
 	}
 	
-	/**
-	 * creates an Adjacency Matrix for the boundaries hashmap
-	 * 
-	 * @param boundaries
-	 * @return
-	 */
-	public boolean[][] getAdjacencyMatrix(HashMap<Integer, ArrayList<Integer>> boundaries) {
-		boolean[][] matrix = new boolean[boundaries.size()][boundaries.size()];
-		ArrayList<Integer> list;
-		int neighborIndex;
-
-		for (int k = 0; k < matrix.length; k++) {
-			list = boundaries.get(k + 1);
-			for (int i = 0; i < list.size(); i++) {
-				neighborIndex = list.get(i) - 1;
-				matrix[k][neighborIndex] = true;
+	public void checkOwnPath(HashMap<Integer, ArrayList<Integer>> boundaries, int fromCountry, int toCountry) {
+		ArrayList<Integer> neighbors=boundaries.get(fromCountry);
+		for(int i=0;i<neighbors.size();i++) {
+			if(ownedCountriesNumberList.contains(neighbors.get(i))) {				
+				if(neighbors.get(i)==toCountry) {
+					ownedPath=true;
+					break;
+				} else if(!marked[neighbors.get(i)-1]){
+					marked[neighbors.get(i)-1]=true;
+					checkOwnPath(boundaries,neighbors.get(i),toCountry);
+				}
 			}
-		}
-		return matrix;
+		}		
 	}
+	
 	
 	/**
 	 * performs the fortify action uses getCountryNumberByName and
@@ -64,11 +71,13 @@ public class FortificationController {
 
 		if (pOb.getOwnedCountriesList().contains(fromCountry)) {
 			if (pOb.getOwnedCountriesList().contains(toCountry)) {
-				int fromCIdx = cc.getCountryNumberByName(countries, fromCountry) - 1;
-				int toCIdx = cc.getCountryNumberByName(countries, toCountry) - 1;
-				boolean[][] matrix = getAdjacencyMatrix(boundaries);
+				int fromCountryNum = cc.getCountryNumberByName(countries, fromCountry);
+				int toCountryNum = cc.getCountryNumberByName(countries, toCountry);
+				ownedCountriesNumList(countries, pOb.getOwnedCountriesList());
+				marked[fromCountryNum-1]=true;
+				checkOwnPath(boundaries, fromCountryNum, toCountryNum);
 
-				if (matrix[fromCIdx][toCIdx]) {
+				if (ownedPath) {
 //					ArrayList<Integer> existingArmiesList = pOb.getOwnedArmiesList();
 					int existingArmy = pOb.getOwnedCountriesArmiesList().get(fromCountry);
 					if (armyToPlace < existingArmy) {
