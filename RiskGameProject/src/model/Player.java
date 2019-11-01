@@ -11,6 +11,7 @@ public class Player {
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
+	private String gameState;
 	private String currentPlayerTurn;
 	private String attackerName;
 	private String defenderName;
@@ -26,6 +27,7 @@ public class Player {
 		ownedCountriesList = new ArrayList<String>();
 		ownedArmiesList = new ArrayList<Integer>();
 		ownedCountriesArmiesList = new HashMap<String, Integer>();
+		gameState="STARTUP";
 		attackerDice = new ArrayList<Integer>();
 		defenderDice = new ArrayList<Integer>();
 		currentPlayerTurn="";
@@ -55,6 +57,14 @@ public class Player {
 		this.ownedArmiesList = ownedArmiesList;
 	}
 	
+	public String getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(String gameState) {
+		this.gameState = gameState;
+	}
+
 	public String getCurrentPlayerTurn() {
 		return currentPlayerTurn;
 	}

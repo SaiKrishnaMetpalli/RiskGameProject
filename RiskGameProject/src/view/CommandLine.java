@@ -76,7 +76,7 @@ public class CommandLine {
 		if (inputCommand.length > 0) {
 			switch (inputCommand[0]) {
 			case "editcontinent":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
 						if (inputCommand.length > 1) {
 							int i = 1;
@@ -123,7 +123,7 @@ public class CommandLine {
 					}
 
 				} else {
-					System.out.println("\neditcontinent command cannot be peformed in " + gm.getGameState() + " phase");
+					System.out.println("\neditcontinent command cannot be peformed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -131,7 +131,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "editcountry":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
 						if (inputCommand.length > 1) {
 							int i = 1;
@@ -173,7 +173,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\neditcountry command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\neditcountry command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -181,7 +181,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "editneighbor":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
 						if (inputCommand.length > 1) {
 							int i = 1;
@@ -229,7 +229,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\neditneighbor command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\neditneighbor command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -242,7 +242,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "savemap":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
 						if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
 								&& (gm.getBoundries().size() > 0)) {
@@ -267,7 +267,7 @@ public class CommandLine {
 						}
 					}
 				} else {
-					System.out.println("\nsavemap command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nsavemap command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -275,7 +275,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "editmap":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
 						if (checkFileExist(inputCommand[1])) {
 							try {
@@ -305,7 +305,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\neditmap command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\neditmap command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -313,7 +313,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "validatemap":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (gm.getBoundries().size() > 0) {
 						boolean result = msc.isConnectedMap(gm.getBoundries());
 						if (result) {
@@ -326,7 +326,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nvalidatemap command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nvalidatemap command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -334,7 +334,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "loadmap":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
 						if (checkFileExist(inputCommand[1])) {
 							try {
@@ -371,7 +371,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nloadmap command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nloadmap command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -379,7 +379,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "gameplayer":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap")) {
 						if (inputCommand.length > 1) {
 							int i = 1;
@@ -414,7 +414,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\ngameplayer command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\ngameplayer command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -422,7 +422,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "populatecountries":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
 							&& (gm.getBoundries().size() > 0) && (players.size() > 0)) {
 						if (players.size() == 1) {
@@ -445,7 +445,7 @@ public class CommandLine {
 					}
 				} else {
 					System.out.println(
-							"\npopulatecountries command cannot be performed in " + gm.getGameState() + " phase");
+							"\npopulatecountries command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -453,7 +453,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "placearmy":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
 						if (listOfPlayers.size() > 0) {
 							if (checkPlayersTurn(inputCommand[1])) {
@@ -480,7 +480,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nplacearmy command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nplacearmy command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -488,13 +488,13 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "placeall":
-				if (gm.getGameState().equals("STARTUP")) {
+				if (p.getGameState().equals("STARTUP")) {
 					if (listOfPlayers.size() > 0) {
 						if (checkArmiesPlaced()) {
 							result = psc.placeAll(gm.getCountries(), listOfPlayers,
 									cons.NO_PLAYER_ARMIES.get(players.size()));
 							System.out.println("\nArmies are placed successfully");
-							gm.setGameState("REINFORCE");
+							p.setGameState("REINFORCE");
 						} else {
 							System.out.println("\nArmies are already placed for the player");
 						}
@@ -505,7 +505,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nplaceall command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nplaceall command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -513,7 +513,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "reinforce":
-				if (gm.getGameState().equals("REINFORCE")) {
+				if (p.getGameState().equals("REINFORCE")) {
 					if (inputCommand.length == 3) {
 						if (checkPlayersTurn(inputCommand[1])) {
 							if (Integer.parseInt(inputCommand[2]) < 1) {
@@ -545,7 +545,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nreinforce command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nreinforce command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
@@ -553,7 +553,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "attack":				
-				if (gm.getGameState().equals("ATTACK")) {
+				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommand.length == 3) {
 						if (checkPlayersTurn(inputCommand[1])) {
 							p.setAttackerName(p.getCurrentPlayerTurn());
@@ -585,11 +585,11 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nattack command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}			
 			case "defend":
-				if(gm.getGameState().equals("ATTACK")) {
+				if(p.getGameState().equals("ATTACK")) {
 					if((inputCommand.length == 2)) {
 						 if(Integer.parseInt(inputCommand[1]) > 0  && Integer.parseInt(inputCommand[1]) <=2) {
 					        	
@@ -605,11 +605,11 @@ public class CommandLine {
 						}
 					}
 					else {
-						System.out.println("\ndefend command cannot be performed in " + gm.getGameState() + " phase");
+						System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
 						addToCommands = false;
 				}
 			case "fortify":
-				if (gm.getGameState().equals("FORTIFY")) {
+				if (p.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
 						if ((!checkArmiesPlaced()) && (!inputCommandsList.contains("fortify"))) {
 							if (inputCommand.length == 4) {
@@ -618,7 +618,7 @@ public class CommandLine {
 											Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
 									if (result.contains("success")) {
 										addToCommands = true;
-										gm.setGameState("REINFORCE");
+										p.setGameState("REINFORCE");
 									} else {
 										addToCommands = false;
 									}
@@ -643,7 +643,7 @@ public class CommandLine {
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\nfortify command cannot be performed in " + gm.getGameState() + " phase");
+					System.out.println("\nfortify command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
