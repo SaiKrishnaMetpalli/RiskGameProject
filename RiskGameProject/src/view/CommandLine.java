@@ -592,7 +592,11 @@ public class CommandLine {
 				if(p.getGameState().equals("ATTACK")) {
 					if((inputCommand.length == 2)) {
 						 if(Integer.parseInt(inputCommand[1]) > 0  && Integer.parseInt(inputCommand[1]) <=2) {
-					        	
+							 if(ac.validateDefenderNumdice(p.getDefenderCountry(), Integer.parseInt(inputCommand[1]), listOfPlayers.get(p.getDefenderCountry()),
+									 gm.getCountries())) {
+								 String defend = ac.defendPhaseDiceRoll(p.getDefenderCountry(),Integer.parseInt(inputCommand[1]), p);
+								 System.out.println(defend);
+							 }
 					        }
 					        else {
 					        	System.out.println(" Value of numdice is not valid");

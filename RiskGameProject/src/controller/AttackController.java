@@ -116,7 +116,18 @@ public class AttackController {
 	}
 		
 	public String defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
-		return defenderCountry;
+		
+		p.setDefenderCountry(defenderCountry);
+		
+		while (numberOnDice > 0) {
+			double random = Math.random();
+			random = random * 6 + 1;
+			int diceRoll = (int) random;
 
+			p.getDefenderDice().add(diceRoll);
+
+			numberOnDice--;
+		}
+		return "Defender ready to defend";
 	}
 }
