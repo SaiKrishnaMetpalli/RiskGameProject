@@ -612,6 +612,28 @@ public class CommandLine {
 						System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
 						addToCommands = false;
 				}
+				
+			case "attackmove":
+				if(p.getGameState().equals("ATTACK")) {
+					if(inputCommand.length == 2) {
+						if(Integer.parseInt(inputCommand[1]) > 0) {
+							
+						}
+						else {
+				        	System.out.println(" Value of numdice is not valid");
+				        	addToCommands = false;
+				        }
+					}
+					else {
+						System.out.println("\ndefend command format is incorrect");
+						addToCommands = false;
+					}
+				}
+				else {
+					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
+					addToCommands = false;
+				}
+				
 			case "fortify":
 				if (p.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
