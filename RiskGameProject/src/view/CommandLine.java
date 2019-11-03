@@ -552,20 +552,21 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-			case "attack":				
-				if (p.getGameState().equals("ATTACK")) {
-					if (inputCommand.length == 3) {
+			case "attack":
+				if (inputCommand.length == 3) {
+					if (p.getGameState().equals("ATTACK")) {
 						if (checkPlayersTurn(inputCommand[1])) {
-							p.setAttackerName(p.getCurrentPlayerTurn());
-							p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 							if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
 									gm.getBoundries())) {
 
-								if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]), listOfPlayers.get(p.getAttackerName()),
-										gm.getCountries())) {
+								p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
+								p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 
-									String attacked = ac.attackPhase(inputCommand[1], inputCommand[2], Integer.parseInt(inputCommand[3]),
-											p);
+								if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
+										listOfPlayers.get(p.getAttackerName()), gm.getCountries())) {
+
+									String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
+											Integer.parseInt(inputCommand[3]), p);
 									System.out.println(attacked);
 
 								} else {
@@ -576,18 +577,45 @@ public class CommandLine {
 							}
 
 						} else {
-							System.out.println("\nCannot attack ,it is not the turn of player");
+							System.out.println(
+									"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
 							addToCommands = false;
 						}
-
 					} else {
-						System.out.println("\nattack command format is incorrect");
+						System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
 						addToCommands = false;
 					}
+				} else if (inputCommand.length == 2) {
+					if (inputCommand[2].equals("-allout")) {
+						if (p.getGameState().equals("ATTACK")) {
+							if (checkPlayersTurn(inputCommand[1])) {
+								if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
+										gm.getBoundries())) {
+
+									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
+									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
+
+									String allOutAttacked = ac.allOutAttackedPhase(inputCommand[1], inputCommand[2],
+											listOfPlayers.get(p.getAttackerName()), gm.getCountries(), p,listOfPlayers.get(p.getDefenderName()));
+
+								} else {
+									System.out.println("Defender Country is not a neighbouring country");
+								}
+							} else {
+								System.out.println(
+										"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
+								addToCommands = false;
+							}
+						}
+					} else if (inputCommand[2].equals("-noattack")) {
+						if (p.getGameState().equals("ATTACK")) {
+
+						}
+					}
 				} else {
-					System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
+					System.out.println("\nattack command format is incorrect");
 					addToCommands = false;
-				}			
+				}		
 			case "defend":
 				if(p.getGameState().equals("ATTACK")) {
 					if((inputCommand.length == 2)) {
@@ -617,6 +645,21 @@ public class CommandLine {
 				if(p.getGameState().equals("ATTACK")) {
 					if(inputCommand.length == 2) {
 						if(Integer.parseInt(inputCommand[1]) > 0) {
+							
+							if(ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()) ,Integer.parseInt(inputCommand[1])))
+							{
+								if()
+								{
+									String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]) ,listOfPlayers ,p);
+									System.out.println(armyMoved);
+								}
+								
+							}
+							else
+							{
+								System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
+					        	addToCommands = false;
+							}
 							
 						}
 						else {
