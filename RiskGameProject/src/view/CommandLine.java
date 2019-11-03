@@ -641,7 +641,38 @@ public class CommandLine {
 						addToCommands = false;
 				}
 				
-			
+			case "attackmove":
+				if(p.getGameState().equals("ATTACK")) {
+					if(inputCommand.length == 2) {
+						if(Integer.parseInt(inputCommand[1]) > 0) {
+							
+							if(ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()) ,Integer.parseInt(inputCommand[1])))
+							{
+									String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]) ,listOfPlayers ,p);
+									System.out.println(armyMoved);
+							}
+							else
+							{
+								System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
+					        	addToCommands = false;
+							}
+							
+						}
+						else {
+				        	System.out.println(" Value of numdice is not valid");
+				        	addToCommands = false;
+				        }
+					}
+					else {
+						System.out.println("\ndefend command format is incorrect");
+						addToCommands = false;
+					}
+				}
+				else {
+					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
+					addToCommands = false;
+				}
+
 				
 			case "fortify":
 				if (p.getGameState().equals("FORTIFY")) {
