@@ -228,5 +228,55 @@ public class AttackController {
 		
 		return false;
 	}
+	
+	public String movingArmyToConqueredCountry(Integer armyToMove , HashMap<String ,Player> playerData ,Player player) {
+		
+		int movingArmy = armyToMove;
+		
+		moveArmy(movingArmy,playerData,player);
+
+		assigningCountryToAttacker(playerData , player);
+		
+		return "Army Moved to Conquered Country ";
+	}
+	
+	public boolean moveArmy(int movingArmy,HashMap<String ,Player> playerData , Player player) {
+		
+		boolean flag = false;
+		Player attackerData = playerData.get(player.getAttackerName());
+		countryArmyList = attackerData.getOwnedCountriesArmiesList();
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); //TODO : check weather army left with attacker is > 1
+		int remainingArmy = attackerArmy - movingArmy;
+		countryArmyList.replace(player.getAttackerCountry(), remainingArmy); //now army moved from attacker country
+		
+		
+		Player defenderData = playerData.get(player.getDefenderName());
+		countryArmyList=defenderData.getOwnedCountriesArmiesList();
+		int defenderArmy = countryArmyList.get(player.getDefenderCountry());
+		if(defenderArmy == 0)
+		{
+			defenderArmy = movingArmy;
+			flag = true;
+		}
+		countryArmyList.replace(player.getDefenderCountry(), defenderArmy);
+		
+		return flag;
+	}
+
+	public void assigningCountryToAttacker(HashMap<String ,Player> playerData , Player player) {
+		
+		Player defenderData = playerData.get(player.getDefenderName());
+		countryList = defenderData.getOwnedCountriesList();
+		int defenderCountryIndex = countryList.indexOf(player.getDefenderCountry());
+		countryList.remove(defenderCountryIndex);
+		defenderData.setOwnedCountriesList(countryList);
+		
+	
+		Player attackerData = playerData.get(player.getAttackerName());
+		countryList = attackerData.getOwnedCountriesList();
+		countryList.add(player.getDefenderCountry());
+		attackerData.setOwnedCountriesList(countryList);
+	}
+
 
 }
