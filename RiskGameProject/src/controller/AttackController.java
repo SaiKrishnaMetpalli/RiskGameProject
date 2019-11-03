@@ -214,4 +214,19 @@ public class AttackController {
 		return diceRoll;
 
 	}
+	
+	public boolean validateNumOfArmyMoves(Integer diceRolled, Integer moveArmy) {
+
+		int diceRolledForWin = diceRolled;
+		int armyToMove = moveArmy;
+		
+		if(armyToMove > diceRolledForWin || armyToMove == diceRolledForWin)
+		{
+			return true;
+		}
+		
+		
+		return false;
+	}
+
 }
