@@ -17,7 +17,7 @@ public class AttackController {
 	ArrayList<Integer> attackerDiceNumbersList;
 	ArrayList<Integer> defenderDiceNumbersList;
 	ArrayList<String> countryList;
-	HashMap<String,Integer> countryArmyList;
+	HashMap<String, Integer> countryArmyList;
 	int diceRolledResult = 0;
 	int numOfAttackerArmy = 0;
 	int numOfDefenderArmy = 0;
@@ -79,7 +79,6 @@ public class AttackController {
 		p.setAttackerCountry(attackerCountry);
 		p.setDefenderCountry(defenderCountry);
 
-		attackerDiceNumbersList = new ArrayList<Integer>(); // check this with SAI
 		while (numberOnDice > 0) {
 			diceRolledResult = randomNumbergenerator();
 			attackerDiceNumbersList.add(diceRolledResult);
@@ -92,12 +91,12 @@ public class AttackController {
 	}
 
 	public String allOutAttackedPhase(String attackerCountry, String defenderCountry, Player attackerPlayerData,
-			HashMap<Integer, Countries> countryList, Player p, Player defenderPlayerData) {
+			HashMap<Integer, Countries> countryList, Player player, Player defenderPlayerData) {
 
-		attackerDiceNumbersList = new ArrayList<Integer>(); // check this with SAI
+		// check this with SAI
 
-		attackerPlayerData.setAttackerCountry(attackerCountry);
-		attackerPlayerData.setDefenderCountry(defenderCountry);
+		player.setAttackerCountry(attackerCountry);
+		player.setDefenderCountry(defenderCountry);
 
 		String defenderPlayerName = cc.findPlayerNameFromCountry(countryList, defenderCountry);
 		defenderArmiesMap = defenderPlayerData.getOwnedCountriesArmiesList();
@@ -105,7 +104,7 @@ public class AttackController {
 		String attackerPlayerName = cc.findPlayerNameFromCountry(countryList, attackerCountry);
 		attackerArmiesMap = attackerPlayerData.getOwnedCountriesArmiesList();
 
-		int numOfAttackerArmy = attackerArmiesMap.get(attackerPlayerName);
+		int numOfAttackerArmy = attackerArmiesMap.get(attackerCountry);
 
 		int numOfDiceCanRoll = 0;
 		while (numOfAttackerArmy >= 1) {
@@ -122,6 +121,7 @@ public class AttackController {
 			}
 
 			int diceToRoll = numOfDiceCanRoll;
+			attackerDiceNumbersList = new ArrayList<Integer>();
 
 			while (diceToRoll != 0) {
 				diceRolledResult = randomNumbergenerator();
@@ -129,10 +129,11 @@ public class AttackController {
 				diceToRoll--;
 			}
 			Collections.sort(attackerDiceNumbersList);
-			p.setAttackerDice(attackerDiceNumbersList);
+			player.setAttackerDice(attackerDiceNumbersList);
 
-			numOfAttackerArmy = allOutDefend(defenderPlayerName, p.getDefenderCountry(), numOfAttackerArmy, countryList,
-					defenderPlayerData, p, attackerPlayerData , p.getAttackerName() ,p.getAttackerCountry());
+			numOfAttackerArmy = allOutDefend(defenderPlayerName, player.getDefenderCountry(), numOfAttackerArmy,
+					countryList, defenderPlayerData, player, attackerPlayerData, player.getAttackerName(),
+					player.getAttackerCountry());
 
 			// Defend method();
 			int defend = 0; // to be removed
@@ -148,12 +149,13 @@ public class AttackController {
 	}
 
 	public int allOutDefend(String defenderPlayerName, String defenderCountry, Integer attackerArmy,
-			HashMap<Integer, Countries> countryList, Player defenderPlayerData, Player p, Player attackerPlayerData , String attackerPlayerName, String attackerCountryname) {
+			HashMap<Integer, Countries> countryList, Player defenderPlayerData, Player player,
+			Player attackerPlayerData, String attackerPlayerName, String attackerCountryname) {
 
 		defenderDiceNumbersList = new ArrayList<Integer>();
 
-		numOfDefenderArmy = defenderArmiesMap.get(defenderPlayerName);
-		
+		numOfDefenderArmy = defenderArmiesMap.get(defenderCountry);
+
 		int maxDefenderDiceToRoll = 0;
 
 		if (numOfDefenderArmy == 0) {
@@ -172,39 +174,46 @@ public class AttackController {
 
 		}
 		Collections.sort(defenderDiceNumbersList);
-		p.setDefenderDice(defenderDiceNumbersList);
+		player.setDefenderDice(defenderDiceNumbersList);
 
-		comparingDiceToWin(p, defenderPlayerName, defenderArmiesMap, attackerArmiesMap, attackerPlayerName , attackerPlayerData ,attackerCountryname);
+		comparingDiceToWin(player, defenderPlayerName, defenderArmiesMap, attackerArmiesMap, attackerPlayerName,
+				attackerPlayerData, defenderPlayerData, attackerCountryname, defenderCountry);
 
 		return diceRolledResult;
 
 	}
 
 	public void comparingDiceToWin(Player p, String defenderPlayeName, HashMap<String, Integer> defenderArmiesMap,
-			HashMap<String, Integer> attackerArmiesMap, String attackerPlayerName , Player attackerPlayerData ,String attackerCountryName) {
-		int attackerNum = p.getAttackerDice().get(0);
-		int defenderNum = p.getDefenderDice().get(0);
+			HashMap<String, Integer> attackerArmiesMap, String attackerPlayerName, Player attackerPlayerData,
+			Player defenderPlayerData, String attackerCountryName, String defenderCountryName) {
 
-		numOfDefenderArmy = defenderArmiesMap.get(defenderPlayeName);
-		numOfAttackerArmy = attackerArmiesMap.get(attackerPlayerName);
+		int defenderDiceRolled = p.getDefenderDice().size();
+		while (defenderDiceRolled != 0) {
+			int attackerNum = p.getAttackerDice().get(0);
+			int defenderNum = p.getDefenderDice().get(0);
 
-		String defenderCountryName = p.getDefenderName();
-		
-		if (defenderNum == attackerNum || defenderNum > attackerNum) {
-			
-			int attackerArmyLeft = attackerPlayerData.getOwnedCountriesArmiesList().get(attackerCountryName);
-			attackerArmyLeft--;
-			attackerPlayerData.getOwnedCountriesArmiesList().put(attackerCountryName, attackerArmyLeft);
-			
-		}else
-		{
-			int defenderArmyLeft = attackerPlayerData.getOwnedCountriesArmiesList().get(defenderCountryName);
-			defenderArmyLeft--;
-			attackerPlayerData.getOwnedCountriesArmiesList().put(defenderCountryName, defenderArmyLeft);
+			numOfDefenderArmy = defenderArmiesMap.get(defenderCountryName);
+			numOfAttackerArmy = attackerArmiesMap.get(attackerCountryName);
+
+			String defenderName = p.getDefenderName();
+
+			if (defenderNum == attackerNum || defenderNum > attackerNum) {
+
+				int attackerArmyLeft = attackerPlayerData.getOwnedCountriesArmiesList().get(attackerCountryName);
+				attackerArmyLeft--;
+				attackerPlayerData.getOwnedCountriesArmiesList().put(attackerCountryName, attackerArmyLeft);
+
+			} else {
+				int defenderArmyLeft = defenderPlayerData.getOwnedCountriesArmiesList().get(defenderCountryName);
+				defenderArmyLeft--;
+				defenderPlayerData.getOwnedCountriesArmiesList().put(defenderCountryName, defenderArmyLeft);
+			}
+
+			p.getAttackerDice().remove(0);
+			p.getDefenderDice().remove(0);
+			defenderDiceRolled--;
 		}
-		
-		
-		
+
 	}
 
 	public int randomNumbergenerator() {
@@ -214,78 +223,74 @@ public class AttackController {
 		return diceRoll;
 
 	}
-	
+
 	public boolean validateNumOfArmyMoves(Integer diceRolled, Integer moveArmy) {
 
 		int diceRolledForWin = diceRolled;
 		int armyToMove = moveArmy;
-		
-		if(armyToMove > diceRolledForWin || armyToMove == diceRolledForWin)
-		{
+
+		if (armyToMove > diceRolledForWin || armyToMove == diceRolledForWin) {
 			return true;
 		}
-		
-		
+
 		return false;
 	}
-	
-	public String movingArmyToConqueredCountry(Integer armyToMove , HashMap<String ,Player> playerData ,Player player) {
-		
-		int movingArmy = armyToMove;
-		
-		moveArmy(movingArmy,playerData,player);
 
-		assigningCountryToAttacker(playerData , player);
-		
+	public String movingArmyToConqueredCountry(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
+
+		int movingArmy = armyToMove;
+
+		moveArmy(movingArmy, playerData, player);
+
+		assigningCountryToAttacker(playerData, player);
+
 		return "Army Moved to Conquered Country ";
 	}
-	
-	public boolean moveArmy(int movingArmy,HashMap<String ,Player> playerData , Player player) {
-		
+
+	public boolean moveArmy(int movingArmy, HashMap<String, Player> playerData, Player player) {
+
 		boolean flag = false;
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryArmyList = attackerData.getOwnedCountriesArmiesList();
-		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); //TODO : check weather army left with attacker is > 1
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); // TODO : check weather army left with
+																				// attacker is > 1
 		int remainingArmy = attackerArmy - movingArmy;
-		countryArmyList.replace(player.getAttackerCountry(), remainingArmy); //now army moved from attacker country
-		
-		
+		countryArmyList.replace(player.getAttackerCountry(), remainingArmy); // now army moved from attacker country
+
 		Player defenderData = playerData.get(player.getDefenderName());
-		countryArmyList=defenderData.getOwnedCountriesArmiesList();
+		countryArmyList = defenderData.getOwnedCountriesArmiesList();
 		int defenderArmy = countryArmyList.get(player.getDefenderCountry());
-		if(defenderArmy == 0)
-		{
+		if (defenderArmy == 0) {
 			defenderArmy = movingArmy;
 			flag = true;
 		}
 		countryArmyList.replace(player.getDefenderCountry(), defenderArmy);
-		
+
 		return flag;
 	}
 
-	public void assigningCountryToAttacker(HashMap<String ,Player> playerData , Player player) {
-		
+	public void assigningCountryToAttacker(HashMap<String, Player> playerData, Player player) {
+
 		Player defenderData = playerData.get(player.getDefenderName());
 		countryList = defenderData.getOwnedCountriesList();
 		int defenderCountryIndex = countryList.indexOf(player.getDefenderCountry());
 		countryList.remove(defenderCountryIndex);
 		defenderData.setOwnedCountriesList(countryList);
-		
-	
+																			//change country owner name
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryList = attackerData.getOwnedCountriesList();
 		countryList.add(player.getDefenderCountry());
 		attackerData.setOwnedCountriesList(countryList);
-	}
+	}																		// change country owner
 
 	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player playerData,
 			HashMap<Integer, Countries> countryList) {
 
 		String playerName = cc.findPlayerNameFromCountry(countryList, defenderCountry);
-		defenderArmiesMap= playerData.getOwnedCountriesArmiesList();
-		int numArmy =defenderArmiesMap.get(playerName);
+		defenderArmiesMap = playerData.getOwnedCountriesArmiesList();
+		int numArmy = defenderArmiesMap.get(playerName);
 		if (numArmy > 1 && numberOnDice <= 2 && numberOnDice > 0) {
-			if (numArmy == 2) 
+			if (numArmy == 2)
 				if (numberOnDice == 1) {
 					return true;
 				}
@@ -302,15 +307,15 @@ public class AttackController {
 				return true;
 			}
 		} else {
-			
+
 			return false;
 		}
 
 		return false;
 	}
-		
+
 	public String defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
-		
+
 		while (numberOnDice > 0) {
 			double random = Math.random();
 			random = random * 6 + 1;

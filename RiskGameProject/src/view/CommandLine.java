@@ -553,7 +553,7 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "attack":
-				if (inputCommand.length == 3) {
+				if (inputCommand.length == 4) {
 					if (p.getGameState().equals("ATTACK")) {
 						if (checkPlayersTurn(inputCommand[1])) {
 							if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
@@ -585,7 +585,7 @@ public class CommandLine {
 						System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
 						addToCommands = false;
 					}
-				} else if (inputCommand.length == 2) {
+				} else if (inputCommand.length == 4) {
 					if (inputCommand[2].equals("-allout")) {
 						if (p.getGameState().equals("ATTACK")) {
 							if (checkPlayersTurn(inputCommand[1])) {
@@ -593,10 +593,10 @@ public class CommandLine {
 										gm.getBoundries())) {
 
 									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
-									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
+									p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 
 									String allOutAttacked = ac.allOutAttackedPhase(inputCommand[1], inputCommand[2],
-											listOfPlayers.get(p.getAttackerName()), gm.getCountries(), p,listOfPlayers.get(p.getDefenderName()));
+											listOfPlayers.get(p.getAttackerName()), gm.getCountries(), p ,listOfPlayers.get(p.getDefenderName()));
 
 								} else {
 									System.out.println("Defender Country is not a neighbouring country");
