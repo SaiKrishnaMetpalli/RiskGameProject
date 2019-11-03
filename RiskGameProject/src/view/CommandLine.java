@@ -648,8 +648,11 @@ public class CommandLine {
 							
 							if(ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()) ,Integer.parseInt(inputCommand[1])))
 							{
+								
+								if(ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]) ,listOfPlayers ,p)) {
 									String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]) ,listOfPlayers ,p);
 									System.out.println(armyMoved);
+								}
 							}
 							else
 							{
