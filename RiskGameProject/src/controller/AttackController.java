@@ -278,5 +278,48 @@ public class AttackController {
 		attackerData.setOwnedCountriesList(countryList);
 	}
 
+	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player playerData,
+			HashMap<Integer, Countries> countryList) {
 
+		String playerName = cc.findPlayerNameFromCountry(countryList, defenderCountry);
+		defenderArmiesMap= playerData.getOwnedCountriesArmiesList();
+		int numArmy =defenderArmiesMap.get(playerName);
+		if (numArmy > 1 && numberOnDice <= 2 && numberOnDice > 0) {
+			if (numArmy == 2) 
+				if (numberOnDice == 1) {
+					return true;
+				}
+		} else if (numArmy == 3) {
+			if (numberOnDice > 0 && numberOnDice <= 2) {
+				return true;
+			}
+		} else if (numArmy == 4) {
+			if (numberOnDice > 0 && numberOnDice <= 3) {
+				return true;
+			}
+		} else if (numArmy > 3) {
+			if (numberOnDice > 0 && numberOnDice <= 2) {
+				return true;
+			}
+		} else {
+			
+			return false;
+		}
+
+		return false;
+	}
+		
+	public String defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
+		
+		while (numberOnDice > 0) {
+			double random = Math.random();
+			random = random * 6 + 1;
+			int diceRoll = (int) random;
+
+			p.getDefenderDice().add(diceRoll);
+
+			numberOnDice--;
+		}
+		return "Defender ready to defend";
+	}
 }
