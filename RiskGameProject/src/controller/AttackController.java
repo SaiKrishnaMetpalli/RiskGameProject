@@ -268,7 +268,21 @@ public class AttackController {
 
 		return flag;
 	}
-
+	
+	public boolean armyLeftWithAttacker(Integer armyToMove , HashMap<String ,Player> playerData ,Player player) {
+		int movedArmy = armyToMove;
+		
+		Player attackerData = playerData.get(player.getAttackerName());
+		countryArmyList = attackerData.getOwnedCountriesArmiesList();
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); //TODO : check weather army left with attacker is > 1
+		int remainingArmy = attackerArmy - movedArmy;
+		
+		if(remainingArmy >= 1) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void assigningCountryToAttacker(HashMap<String, Player> playerData, Player player) {
 
 		Player defenderData = playerData.get(player.getDefenderName());
