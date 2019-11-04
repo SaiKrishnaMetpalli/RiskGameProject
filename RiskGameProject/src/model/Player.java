@@ -173,4 +173,11 @@ public class Player extends Observable {
 	public void setAvailableReinforceArmies(int availableArmies) {
 		this.availableArmies = availableArmies;
 	}
+	public ArrayList<String> getCurrentCardList() {
+		return currentCardList;
+	}
+
+	public void setCurrentCardList(ArrayList<String> currentCardList) {
+		this.currentCardList = currentCardList;
+	}
 }
