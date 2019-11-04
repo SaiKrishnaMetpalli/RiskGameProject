@@ -6,13 +6,14 @@ import java.util.HashMap;
 /**
  * This model contains the properties of the players
  */
-public class Player {
+public class Player extends Observable {
 
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
 	private String gameState;
 	private String currentPlayerTurn;
+	private String actionsPerformed;
 	private String attackerName;
 	private String defenderName;
 	private String attackerCountry;
@@ -63,6 +64,7 @@ public class Player {
 
 	public void setGameState(String gameState) {
 		this.gameState = gameState;
+		notifyToObserver();
 	}
 
 	public String getCurrentPlayerTurn() {
@@ -71,6 +73,16 @@ public class Player {
 
 	public void setCurrentPlayerTurn(String currentPlayerTurn) {
 		this.currentPlayerTurn = currentPlayerTurn;
+		notifyToObserver();
+	}
+	
+	public String getActionsPerformed() {
+		return actionsPerformed;
+	}
+
+	public void setActionsPerformed(String actionsPerformed) {
+		this.actionsPerformed = actionsPerformed;
+		notifyToObserver();
 	}
 
 	public String getAttackerName() {
@@ -129,5 +141,7 @@ public class Player {
 		this.diceRolled = diceRolled;
 	}
 	
-	
+	public void notifyToObserver() {
+		notifyObservers(this);
+	}
 }
