@@ -65,27 +65,27 @@ public class ReinforcementController {
 
 	
 	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
-			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents) {
+			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents, int availableReinforcedArmies) {
 
 		String player = cc.findPlayerNameFromCountry(countries, countryName);
 
 		if (player.equals("")) {
 			return "Player Doesn't own the Country";
 		}
-
-		int availableReinforcedArmies = calculateReinforceArmy(playerMap.get(player), continents, countries,
-				countryName);
+		
 		// Check Player owns the country
 		Player p = playerMap.get(player);
 		int existingArmy = p.getOwnedCountriesArmiesList().get(countryName);
 		if (numOfArmiesToPlace <= availableReinforcedArmies) {
 			existingArmy += availableReinforcedArmies;
 			p.getOwnedCountriesArmiesList().put(countryName, existingArmy);
+			
 			return "Reinforcement armies placed successfully";
 		} else
 			return "Not enough reinforcement armies available";
 
 	}
+	
 	public int exchangeCard(int num1, int num2, int num3, ArrayList<String> currentCardList, Player player) {
 		String card1 = currentCardList.get(num1 - 1);
 		String card2 = currentCardList.get(num2 - 1);
