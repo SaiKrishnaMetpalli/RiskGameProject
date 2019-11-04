@@ -1,8 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+
 import model.Continents;
 import model.Countries;
 import model.Player;
@@ -83,6 +86,19 @@ public class ReinforcementController {
 		} else
 			return "Not enough reinforcement armies available";
 
+	}
+	public int exchangeCard(int num1, int num2, int num3, ArrayList<String> currentCardList, Player player) {
+		String card1 = currentCardList.get(num1 - 1);
+		String card2 = currentCardList.get(num2 - 1);
+		String card3 = currentCardList.get(num3 - 1);
+		HashSet<String> cardset = new HashSet<String>();
+		cardset.addAll(Arrays.asList(card1,card2,card3));
+		if ((card1.equals(card2) && card2.equals(card3))|| (cardset.size() == 3)) {
+			player.setCardBonusArmy(player.getCardBonusArmy() + 5);
+			return player.getCardBonusArmy();
+		} else {
+			return 0;
+		}
 	}
 
 }
