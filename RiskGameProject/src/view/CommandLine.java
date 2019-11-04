@@ -512,6 +512,40 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			case "exchangecards":
+				if (p.getGameState().equals("REINFORCE")) {
+					if (inputCommand.length == 4) {
+						if ((Integer.parseInt(inputCommand[1]) > 0) && (Integer.parseInt(inputCommand[2]) > 0)
+								&& (Integer.parseInt(inputCommand[3]) > 0)) {
+							p.setCardReward(ric.exchangeCard(Integer.parseInt(inputCommand[1]),
+									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]),
+									listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList(),
+									listOfPlayers.get(p.getCurrentPlayerTurn())));
+							addToCommands = true;
+						}
+					} else if (inputCommand.length == 2) {
+						if (listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size() >= 5) {
+							System.out.println("\nCannot perform none operation because your cards are "
+									+ listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size());
+							addToCommands = false;
+						} else {
+							addToCommands = true;
+							p.setCardReward(0);
+						}
+
+					} else {
+						System.out.println("\nexchangecard command format is incorrect");
+						addToCommands = false;
+					}
+				} else {
+					System.out.println("\nexchangecard command cannot be performed in " + p.getGameState() + " phase");
+					addToCommands = false;
+				}
+
+				addInputCommandList(addToCommands, inputCommand[0]);
+				commandLine();
+				break;
+				
 			case "reinforce":
 				if (p.getGameState().equals("REINFORCE")) {
 					if (inputCommand.length == 3) {
