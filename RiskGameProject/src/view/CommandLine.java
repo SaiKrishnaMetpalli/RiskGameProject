@@ -554,39 +554,7 @@ public class CommandLine {
 				break;
 			case "attack":
 				if (inputCommand.length == 4) {
-					if (p.getGameState().equals("ATTACK")) {
-						if (checkPlayersTurn(inputCommand[1])) {
-							if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
-									gm.getBoundries())) {
-
-								p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
-								p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
-
-								if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
-										listOfPlayers.get(p.getAttackerName()), gm.getCountries())) {
-
-									String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
-											Integer.parseInt(inputCommand[3]), p);
-									System.out.println(attacked);
-
-								} else {
-									System.out.println("Number of Dice Played is invalid");
-								}
-							} else {
-								System.out.println("Defender Country is not a neighbouring country");
-							}
-
-						} else {
-							System.out.println(
-									"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
-							addToCommands = false;
-						}
-					} else {
-						System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
-						addToCommands = false;
-					}
-				} else if (inputCommand.length == 4) {
-					if (inputCommand[2].equals("-allout")) {
+					if (inputCommand[3].equals("-allout")) {
 						if (p.getGameState().equals("ATTACK")) {
 							if (checkPlayersTurn(inputCommand[1])) {
 								if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
@@ -596,7 +564,8 @@ public class CommandLine {
 									p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 
 									String allOutAttacked = ac.allOutAttackedPhase(inputCommand[1], inputCommand[2],
-											listOfPlayers.get(p.getAttackerName()), gm.getCountries(), p ,listOfPlayers.get(p.getDefenderName()));
+											listOfPlayers.get(p.getAttackerName()), gm.getCountries(), p,
+											listOfPlayers.get(p.getDefenderName()));
 
 								} else {
 									System.out.println("Defender Country is not a neighbouring country");
@@ -606,77 +575,114 @@ public class CommandLine {
 										"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
 								addToCommands = false;
 							}
+						} else {
+							System.out
+									.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
+							addToCommands = false;
 						}
-					} else if (inputCommand[2].equals("-noattack")) {
+					} else {
 						if (p.getGameState().equals("ATTACK")) {
+							if (checkPlayersTurn(inputCommand[1])) {
+								if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
+										gm.getBoundries())) {
 
-						}
-					}
-				} else {
-					System.out.println("\nattack command format is incorrect");
-					addToCommands = false;
-				}		
-			case "defend":
-				if(p.getGameState().equals("ATTACK")) {
-					if((inputCommand.length == 2)) {
-						 if(Integer.parseInt(inputCommand[1]) > 0  && Integer.parseInt(inputCommand[1]) <=2) {
-							 if(ac.validateDefenderNumdice(p.getDefenderCountry(), Integer.parseInt(inputCommand[1]), listOfPlayers.get(p.getDefenderCountry()),
-									 gm.getCountries())) {
-								 String defend = ac.defendPhaseDiceRoll(p.getDefenderCountry(),Integer.parseInt(inputCommand[1]), p);
-								 System.out.println(defend);
-							 }
-					        }
-					        else {
-					        	System.out.println(" Value of numdice is not valid");
-					        	addToCommands = false;
-					        }
-						}
-						else {
-							System.out.println("\ndefend command format is incorrect");
+									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
+									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
+
+									if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
+											listOfPlayers.get(p.getAttackerName()), gm.getCountries())) {
+
+										String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
+												Integer.parseInt(inputCommand[3]), p);
+										System.out.println(attacked);
+
+									} else {
+										System.out.println("Number of Dice Played is invalid");
+									}
+								} else {
+									System.out.println("Defender Country is not a neighbouring country");
+								}
+
+							} else {
+								System.out.println(
+										"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
+								addToCommands = false;
+							}
+						} else {
+							System.out
+									.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
 							addToCommands = false;
 						}
 					}
-					else {
-						System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
-						addToCommands = false;
-				}
-				
-			case "attackmove":
-				if(p.getGameState().equals("ATTACK")) {
-					if(inputCommand.length == 2) {
-						if(Integer.parseInt(inputCommand[1]) > 0) {
-							
-							if(ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()) ,Integer.parseInt(inputCommand[1])))
-							{
-								
-								if(ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]) ,listOfPlayers ,p)) {
-									String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]) ,listOfPlayers ,p);
-									System.out.println(armyMoved);
-								}
-							}
-							else
-							{
-								System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
-					        	addToCommands = false;
-							}
-							
+				} else if (inputCommand.length == 2) {
+					if (inputCommand[1].equals("-noattack")) { // check whether whole command is attack -noattack
+						if (p.getGameState().equals("ATTACK")) {
+
+						} else {
+							System.out
+									.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
+							addToCommands = false;
 						}
-						else {
-				        	System.out.println(" Value of numdice is not valid");
-				        	addToCommands = false;
-				        }
+
+					} else {
+						System.out.println("\nAttack command format is incorrect");
+						addToCommands = false;
 					}
-					else {
+				}
+			case "defend":
+				if (p.getGameState().equals("ATTACK")) {
+					if ((inputCommand.length == 2)) {
+						if (Integer.parseInt(inputCommand[1]) > 0 && Integer.parseInt(inputCommand[1]) <= 2) {
+							if (ac.validateDefenderNumdice(p.getDefenderCountry(), Integer.parseInt(inputCommand[1]),
+									listOfPlayers.get(p.getDefenderCountry()), gm.getCountries())) {
+								String defend = ac.defendPhaseDiceRoll(p.getDefenderCountry(),
+										Integer.parseInt(inputCommand[1]), p);
+								System.out.println(defend);
+							}
+						} else {
+							System.out.println(" Value of numdice is not valid");
+							addToCommands = false;
+						}
+					} else {
 						System.out.println("\ndefend command format is incorrect");
 						addToCommands = false;
 					}
-				}
-				else {
+				} else {
 					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
 
-				
+			case "attackmove":
+				if (p.getGameState().equals("ATTACK")) {
+					if (inputCommand.length == 2) {
+						if (Integer.parseInt(inputCommand[1]) > 0) {
+
+							if (ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()),
+									Integer.parseInt(inputCommand[1]))) {
+
+								if (ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]), listOfPlayers, p)) {
+									String armyMoved = ac.movingArmyToConqueredCountry(
+											Integer.parseInt(inputCommand[1]), listOfPlayers, p);
+									System.out.println(armyMoved);
+								}
+							} else {
+								System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
+								addToCommands = false;
+							}
+
+						} else {
+							System.out.println(" Value of numdice is not valid");
+							addToCommands = false;
+						}
+					} else {
+						System.out.println("\ndefend command format is incorrect");
+						addToCommands = false;
+					}
+				} else {
+					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
+					addToCommands = false;
+				}
+
 			case "fortify":
 				if (p.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {

@@ -18,9 +18,11 @@ public class AttackController {
 	ArrayList<Integer> defenderDiceNumbersList;
 	ArrayList<String> countryList;
 	HashMap<String, Integer> countryArmyList;
+	ArrayList<Integer> armiesLeftAfterAttack;
 	int diceRolledResult = 0;
 	int numOfAttackerArmy = 0;
 	int numOfDefenderArmy = 0;
+	int attackerArmyLeft = 0;
 
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
 			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries) {
@@ -114,9 +116,7 @@ public class AttackController {
 				numOfDiceCanRoll = 1;
 			} else if (numOfAttackerArmy == 3) {
 				numOfDiceCanRoll = 2;
-			} else if (numOfAttackerArmy == 4) {
-				numOfDiceCanRoll = 3;
-			} else if (numOfAttackerArmy > 4) {
+			} else if (numOfAttackerArmy > 3) {
 				numOfDiceCanRoll = 3;
 			}
 
@@ -125,27 +125,24 @@ public class AttackController {
 
 			while (diceToRoll != 0) {
 				diceRolledResult = randomNumbergenerator();
-				attackerDiceNumbersList.add(diceRolledResult); // check that the list is getting cleared in attack phase
+				attackerDiceNumbersList.add(diceRolledResult);
 				diceToRoll--;
 			}
 			Collections.sort(attackerDiceNumbersList);
 			player.setAttackerDice(attackerDiceNumbersList);
 
 			numOfAttackerArmy = allOutDefend(defenderPlayerName, player.getDefenderCountry(), numOfAttackerArmy,
-					countryList, defenderPlayerData, player, attackerPlayerData, player.getAttackerName(),
+					countryList, defenderPlayerData, player, attackerPlayerData, attackerPlayerName,
 					player.getAttackerCountry());
 
-			// Defend method();
-			int defend = 0; // to be removed
-			numOfAttackerArmy = defend; /* = returned from Defend Method */
-			// to be corrected as num of army would come from defender action's ----
-			// defender sends army left after defeat -------
-
-			// max army results from defend case weather to decrement or not
-
+			if (attackerArmiesMap.get(player.getAttackerCountry()) == 0) {
+				return "Attacker Lost His Armies ";
+			}
+			if (defenderArmiesMap.get(player.getDefenderCountry()) == 0) {
+				return "Defender Lost his Armies ";
+			}
 		}
-
-		return "Attacker attacking with full force";
+		return "Attacking wiht full force";
 	}
 
 	public int allOutDefend(String defenderPlayerName, String defenderCountry, Integer attackerArmy,
@@ -176,14 +173,14 @@ public class AttackController {
 		Collections.sort(defenderDiceNumbersList);
 		player.setDefenderDice(defenderDiceNumbersList);
 
-		comparingDiceToWin(player, defenderPlayerName, defenderArmiesMap, attackerArmiesMap, attackerPlayerName,
-				attackerPlayerData, defenderPlayerData, attackerCountryname, defenderCountry);
+		attackerArmyLeft = comparingDiceToWin(player, defenderPlayerName, defenderArmiesMap, attackerArmiesMap,
+				attackerPlayerName, attackerPlayerData, defenderPlayerData, attackerCountryname, defenderCountry);
 
-		return diceRolledResult;
+		return attackerArmyLeft;
 
 	}
 
-	public void comparingDiceToWin(Player p, String defenderPlayeName, HashMap<String, Integer> defenderArmiesMap,
+	public int comparingDiceToWin(Player p, String defenderPlayeName, HashMap<String, Integer> defenderArmiesMap,
 			HashMap<String, Integer> attackerArmiesMap, String attackerPlayerName, Player attackerPlayerData,
 			Player defenderPlayerData, String attackerCountryName, String defenderCountryName) {
 
@@ -194,8 +191,6 @@ public class AttackController {
 
 			numOfDefenderArmy = defenderArmiesMap.get(defenderCountryName);
 			numOfAttackerArmy = attackerArmiesMap.get(attackerCountryName);
-
-			String defenderName = p.getDefenderName();
 
 			if (defenderNum == attackerNum || defenderNum > attackerNum) {
 
@@ -213,7 +208,7 @@ public class AttackController {
 			p.getDefenderDice().remove(0);
 			defenderDiceRolled--;
 		}
-
+		return numOfAttackerArmy;
 	}
 
 	public int randomNumbergenerator() {
@@ -268,21 +263,22 @@ public class AttackController {
 
 		return flag;
 	}
-	
-	public boolean armyLeftWithAttacker(Integer armyToMove , HashMap<String ,Player> playerData ,Player player) {
+
+	public boolean armyLeftWithAttacker(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
 		int movedArmy = armyToMove;
-		
+
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryArmyList = attackerData.getOwnedCountriesArmiesList();
-		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); //TODO : check weather army left with attacker is > 1
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); // TODO : check weather army left with
+																				// attacker is > 1
 		int remainingArmy = attackerArmy - movedArmy;
-		
-		if(remainingArmy >= 1) {
+
+		if (remainingArmy >= 1) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void assigningCountryToAttacker(HashMap<String, Player> playerData, Player player) {
 
 		Player defenderData = playerData.get(player.getDefenderName());
@@ -290,12 +286,12 @@ public class AttackController {
 		int defenderCountryIndex = countryList.indexOf(player.getDefenderCountry());
 		countryList.remove(defenderCountryIndex);
 		defenderData.setOwnedCountriesList(countryList);
-																			//change country owner name
+		// change country owner name
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryList = attackerData.getOwnedCountriesList();
 		countryList.add(player.getDefenderCountry());
 		attackerData.setOwnedCountriesList(countryList);
-	}																		// change country owner
+	} // change country owner
 
 	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player playerData,
 			HashMap<Integer, Countries> countryList) {
