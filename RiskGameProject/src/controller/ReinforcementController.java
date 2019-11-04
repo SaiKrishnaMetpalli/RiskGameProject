@@ -38,10 +38,9 @@ public class ReinforcementController {
 	 * @return returns total armies obtained as integer
 	 */
 	public int calculateReinforceArmy(Player player, HashMap<Integer, Continents> continents,
-			HashMap<Integer, Countries> countries, String countryName) {
+			HashMap<Integer, Countries> countries, String countryName, int cardReward) {
 		int countryReward = 0;
 		int continentReward = 0;
-		int cardReward = 0; // for future work
 		int total = 0;
 		// calculation of reward from owned country list
 		countryReward = (int) Math.floor(player.getOwnedCountriesList().size() / 3);
@@ -56,7 +55,7 @@ public class ReinforcementController {
 			continentReward = Integer.parseInt(cont.getcontinentControlValue());
 		}
 		// calculate total reward
-		total = countryReward + continentReward;
+		total = countryReward + continentReward + cardReward;
 		if (total >= 3) {
 			return total;
 		} else {
