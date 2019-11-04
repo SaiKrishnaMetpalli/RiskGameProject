@@ -545,7 +545,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-				
+
 			case "reinforce":
 				if (p.getGameState().equals("REINFORCE")) {
 					if (inputCommand.length == 3) {
@@ -576,10 +576,12 @@ public class CommandLine {
 											addToCommands = false;
 										}
 
-									}else {
-										System.out.println("\nCannot perform reinforcement as there are "+
-												listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size()+
-												" cards which need to be exchanged");
+									} else {
+										System.out
+												.println("\nCannot perform reinforcement as there are "
+														+ listOfPlayers.get(p.getCurrentPlayerTurn())
+																.getCurrentCardList().size()
+														+ " cards which need to be exchanged");
 										addToCommands = false;
 									}
 								} else {
@@ -604,7 +606,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-				
+
 			case "attack":
 				if (inputCommand.length == 4) {
 					if (inputCommand[3].equals("-allout")) {
@@ -646,7 +648,8 @@ public class CommandLine {
 											listOfPlayers.get(p.getAttackerName()), gm.getCountries())) {
 
 										String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
-												Integer.parseInt(inputCommand[3]), p);
+												Integer.parseInt(inputCommand[3]), p,
+												listOfPlayers.get(p.getAttackerName()));
 										System.out.println(attacked);
 
 									} else {

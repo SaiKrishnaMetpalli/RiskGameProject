@@ -3,8 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Scanner;
-
 import model.Countries;
 import model.Player;
 
@@ -76,10 +74,10 @@ public class AttackController {
 		return false;
 	}
 
-	public String attackPhase(String attackerCountry, String defenderCountry, Integer numberOnDice, Player p) {
+	public String attackPhase(String attackerCountry, String defenderCountry, Integer numberOnDice, Player player , Player attackerPlayerData) {
 
-		p.setAttackerCountry(attackerCountry);
-		p.setDefenderCountry(defenderCountry);
+		player.setAttackerCountry(attackerCountry);
+		player.setDefenderCountry(defenderCountry);
 
 		while (numberOnDice > 0) {
 			diceRolledResult = randomNumbergenerator();
@@ -87,9 +85,9 @@ public class AttackController {
 			numberOnDice--;
 		}
 		Collections.sort(attackerDiceNumbersList);
-		p.setAttackerDice(attackerDiceNumbersList);
+		player.setAttackerDice(attackerDiceNumbersList);
 
-		return "Attacker ready to attack the Country";
+		return "Attacker Ready and placed his army on field ";
 	}
 
 	public String allOutAttackedPhase(String attackerCountry, String defenderCountry, Player attackerPlayerData,
