@@ -556,14 +556,32 @@ public class CommandLine {
 								addToCommands = false;
 							} else {
 								if (!checkArmiesPlaced()) {
-									result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
-											gm.getCountries(), listOfPlayers, gm.getContinents());
-									if (result.contains("success")) {
-										addToCommands = true;
-									} else {
+									if (listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size() < 5) {
+										p.setAvailableReinforceArmies(ric.calculateReinforceArmy(
+												listOfPlayers.get(p.getCurrentPlayerTurn()), gm.getContinents(),
+												gm.getCountries(), inputCommand[1], p.getCardReward()));
+										result = ric.placeReinforceArmy(inputCommand[1],
+												Integer.parseInt(inputCommand[2]), gm.getCountries(), listOfPlayers,
+												gm.getContinents(), p.getAvailableReinforceArmies());
+										System.out.println("\n " + result);
+										if (result.contains("success")) {
+											if (p.getAvailableReinforceArmies() == 0) {
+												p.setGameState("ATTACK");
+											} else {
+												System.out.println("\nPlease place the remaining "
+														+ p.getAvailableReinforceArmies() + " reinforcement armies");
+											}
+											addToCommands = true;
+										} else {
+											addToCommands = false;
+										}
+
+									}else {
+										System.out.println("\nCannot perform reinforcement as there are "+
+												listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size()+
+												" cards which need to be exchanged");
 										addToCommands = false;
 									}
-									System.out.println("\n " + result);
 								} else {
 									System.out.println(
 											"\nReinforcement cannot be performed as armies are not assigned to player");
@@ -586,6 +604,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+				
 			case "attack":
 				if (inputCommand.length == 4) {
 					if (inputCommand[3].equals("-allout")) {
