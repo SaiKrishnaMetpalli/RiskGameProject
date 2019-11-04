@@ -21,6 +21,10 @@ public class Player extends Observable {
 	private ArrayList<Integer> attackerDice;
 	private ArrayList<Integer> defenderDice;
 	private String diceRolled;
+	private int cardBonusArmy;
+	private int cardReward;
+	private int availableArmies;
+	private ArrayList<String> currentCardList;
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
@@ -32,6 +36,10 @@ public class Player extends Observable {
 		attackerDice = new ArrayList<Integer>();
 		defenderDice = new ArrayList<Integer>();
 		currentPlayerTurn="";
+		cardBonusArmy=0;
+		cardReward=0;
+		availableArmies=0;
+		currentCardList=new ArrayList<String>();
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
