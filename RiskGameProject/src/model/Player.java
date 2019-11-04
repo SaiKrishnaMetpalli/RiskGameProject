@@ -166,4 +166,11 @@ public class Player extends Observable {
 	public void setCardReward(int cardReward) {
 		this.cardReward = cardReward;
 	}
+	public int getAvailableReinforceArmies() {
+		return availableArmies;
+	}
+
+	public void setAvailableReinforceArmies(int availableArmies) {
+		this.availableArmies = availableArmies;
+	}
 }
