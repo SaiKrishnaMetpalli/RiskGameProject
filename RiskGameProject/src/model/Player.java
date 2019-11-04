@@ -159,4 +159,11 @@ public class Player extends Observable {
 	public void setCardBonusArmy(int cardBonusArmy) {
 		this.cardBonusArmy = cardBonusArmy;
 	}
+	public int getCardReward() {
+		return cardReward;
+	}
+
+	public void setCardReward(int cardReward) {
+		this.cardReward = cardReward;
+	}
 }
