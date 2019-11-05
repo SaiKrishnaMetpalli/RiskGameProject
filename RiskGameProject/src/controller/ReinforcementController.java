@@ -20,7 +20,6 @@ public class ReinforcementController {
 	CommonController cc;
 	
 	/**
-	 * @Default Constructor
 	 * Initiates object for CommonController
 	 */
 	public ReinforcementController() {
@@ -31,10 +30,11 @@ public class ReinforcementController {
 	 * calculates the reinforcement armies according to Risk rules uses
 	 * getContinentByCountryName and getContinentsCountryList methods
 	 * 
-	 * @param player
-	 * @param continents
-	 * @param countries
-	 * @param countryName
+	 * @param player player object containing all player information
+	 * @param continents hashmap containing continent objects
+	 * @param countries hashmap containing countries objects
+	 * @param countryName the country for which we need the continents and country object information
+	 * @param cardReward the reward army obtained after card exchange
 	 * @return returns total armies obtained as integer
 	 */
 	public int calculateReinforceArmy(Player player, HashMap<Integer, Continents> continents,
@@ -62,8 +62,17 @@ public class ReinforcementController {
 			return 3; // minimum 3 army should be given
 		}
 	}
-
 	
+	/**
+	 * this method will be called when the place reinforcement army command will be given
+	 * @param countryName where the army will be placed
+	 * @param numOfArmiesToPlace the armies to be placed will be mentioned in command line 
+	 * @param countries countries hashmap containing countries objects
+	 * @param playerMap player hashmap containing player objects
+	 * @param continents continents hashmap containing continent objects
+	 * @param availableReinforcedArmies the value received from calculate reinforce army method
+	 * @return success or failure messages for each situation 
+	 */
 	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
 			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents, int availableReinforcedArmies) {
 
@@ -77,7 +86,7 @@ public class ReinforcementController {
 		Player p = playerMap.get(player);
 		int existingArmy = p.getOwnedCountriesArmiesList().get(countryName);
 		if (numOfArmiesToPlace <= availableReinforcedArmies) {
-			existingArmy += availableReinforcedArmies;
+			existingArmy += numOfArmiesToPlace;
 			p.getOwnedCountriesArmiesList().put(countryName, existingArmy);
 			
 			return "Reinforcement armies placed successfully";
@@ -86,6 +95,15 @@ public class ReinforcementController {
 
 	}
 	
+	/**
+	 * This method will calculate rewarded armies to be obtained after exchanging cards 
+	 * @param num1 1st number selected from card exchange view
+	 * @param num2 2nd number selected from card exchange view
+	 * @param num3 3rd number selected from card exchange view
+	 * @param currentCardList is the list of cards in players possession 
+	 * @param player player object containing all player information
+	 * @return the method will return number of reward army the player will get after exchanging the cards
+	 */
 	public int exchangeCard(int num1, int num2, int num3, ArrayList<String> currentCardList, Player player) {
 		String card1 = currentCardList.get(num1 - 1);
 		String card2 = currentCardList.get(num2 - 1);
