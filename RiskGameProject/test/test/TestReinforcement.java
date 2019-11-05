@@ -89,7 +89,7 @@ public class TestReinforcement {
 	}
 	
 	/**
-	 * tests for the exchangeCard method three unique card
+	 * tests for the exchangeCard method three unique card and 3 same card
 	 */
 	@Test
 	public void testExchangeCardSuccess() {
@@ -101,7 +101,13 @@ public class TestReinforcement {
 		
 	}
 	
-
-
+	/**
+	 * tests for the exchangeCard method when there is no valid card set
+	 */
+	@Test
+	public void testExchangeCardNoArmy() {
+		currentCardList.addAll(Arrays.asList("a","b","a"));
+		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),0);	
+	}
 
 }
