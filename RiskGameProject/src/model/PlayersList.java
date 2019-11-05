@@ -19,7 +19,7 @@ public class PlayersList extends Observable {
 	}
 	
 	public void notifyToObserver() {
-		notifyObservers(this);
+		notifyObservers(this,this);
 	}
 	
 }

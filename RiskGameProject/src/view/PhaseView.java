@@ -5,7 +5,7 @@ import model.Player;
 
 public class PhaseView implements Observer {
 
-	public void update(Observable obs) {
+	public void update(Observable obs,Object x) {
 		showMessage((Player) obs);
 	}
 

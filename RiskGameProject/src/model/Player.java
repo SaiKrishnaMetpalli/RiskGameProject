@@ -150,7 +150,7 @@ public class Player extends Observable {
 	}
 	
 	public void notifyToObserver() {
-		notifyObservers(this);
+		notifyObservers(this,this);
 	}
 	public int getCardBonusArmy() {
 		return cardBonusArmy;

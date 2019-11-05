@@ -30,9 +30,9 @@ public class Observable {
 	 * This method notifies the observer that state has changed
 	 * @param observable this variable contains the observable object state
 	 */
-	public void notifyObservers(Observable observable) {
+	public void notifyObservers(Observable observable,Object x) {
 		for (Observer observer : observers) {
-			observer.update(observable);
+			observer.update(observable,x);
 		}
 	}
 }

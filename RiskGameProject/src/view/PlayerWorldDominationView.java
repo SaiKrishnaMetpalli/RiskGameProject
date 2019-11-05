@@ -4,7 +4,7 @@ import model.Observable;
 
 public class PlayerWorldDominationView implements Observer {
 
-	public void update(Observable obs) {
+	public void update(Observable obs,Object x) {
 		
 	}
 }
