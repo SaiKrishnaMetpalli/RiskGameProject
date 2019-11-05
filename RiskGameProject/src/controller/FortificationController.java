@@ -61,7 +61,7 @@ public class FortificationController {
 	 * @param armyToPlace
 	 * @param countries
 	 * @param boundaries
-	 * @return appropiate messages for view
+	 * @return appropriate messages for view
 	 */
 	public String fortify(HashMap<String, Player> player, String fromCountry, String toCountry, int armyToPlace,
 			HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundaries) {

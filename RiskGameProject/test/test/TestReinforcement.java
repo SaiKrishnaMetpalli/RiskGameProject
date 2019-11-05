@@ -36,7 +36,7 @@ public class TestReinforcement {
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case method
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the map file is not find an exception is thrown 
 	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
