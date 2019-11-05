@@ -10,6 +10,7 @@ import model.Continents;
 import model.Countries;
 import model.GameMap;
 import model.Player;
+import model.PlayersList;
 import controller.AttackController;
 import controller.CommonController;
 import controller.FortificationController;
@@ -31,12 +32,12 @@ public class CommandLine {
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
 
-	ArrayList<String> players;
-	HashMap<String, Player> listOfPlayers;
+	ArrayList<String> players;	
 	CONSTANTS cons;
 
 	GameMap gm;
 	Player p;
+	PlayersList pl;
 	PlayerSelectionController psc;
 	MapSelectionController msc;
 	ReinforcementController ric;
@@ -51,12 +52,12 @@ public class CommandLine {
 		sc = new Scanner(System.in);
 		inputCommandsList = new ArrayList<String>();
 
-		players = new ArrayList<String>();
-		listOfPlayers = new HashMap<String, Player>();
+		players = new ArrayList<String>();		
 		cons = new CONSTANTS();
 
 		gm = new GameMap();
 		p = new Player();
+		pl=new PlayersList();
 		psc = new PlayerSelectionController();
 		msc = new MapSelectionController();
 		ric = new ReinforcementController();
@@ -429,8 +430,8 @@ public class CommandLine {
 							System.out.println("\nPlayers should be more than 1 to play the game");
 							addToCommands = false;
 						} else {
-							listOfPlayers.clear();
-							result = psc.assignRandomCountries(players, gm.getCountries(), listOfPlayers);
+							pl.getListOfPlayers().clear();
+							result = psc.assignRandomCountries(players, gm.getCountries(), pl.getListOfPlayers());
 							if (result.equals("Success")) {
 								p.setCurrentPlayerTurn(players.get(0));
 								System.out.println("Players assigned to countries");
@@ -455,9 +456,9 @@ public class CommandLine {
 			case "placearmy":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
-						if (listOfPlayers.size() > 0) {
+						if (pl.getListOfPlayers().size() > 0) {
 							if (checkPlayersTurn(inputCommand[1])) {
-								result = psc.placeArmy(gm.getCountries(), listOfPlayers, inputCommand[1],
+								result = psc.placeArmy(gm.getCountries(), pl.getListOfPlayers(), inputCommand[1],
 										cons.NO_PLAYER_ARMIES.get(players.size()));
 								if ((players.indexOf(p.getCurrentPlayerTurn())) + 1 < players.size()) {
 									p.setCurrentPlayerTurn(
@@ -489,9 +490,9 @@ public class CommandLine {
 				break;
 			case "placeall":
 				if (p.getGameState().equals("STARTUP")) {
-					if (listOfPlayers.size() > 0) {
+					if (pl.getListOfPlayers().size() > 0) {
 						if (checkArmiesPlaced()) {
-							result = psc.placeAll(gm.getCountries(), listOfPlayers,
+							result = psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
 									cons.NO_PLAYER_ARMIES.get(players.size()));
 							System.out.println("\nArmies are placed successfully");
 							p.setGameState("REINFORCE");
@@ -519,14 +520,14 @@ public class CommandLine {
 								&& (Integer.parseInt(inputCommand[3]) > 0)) {
 							p.setCardReward(ric.exchangeCard(Integer.parseInt(inputCommand[1]),
 									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]),
-									listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList(),
-									listOfPlayers.get(p.getCurrentPlayerTurn())));
+									pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList(),
+									pl.getListOfPlayers().get(p.getCurrentPlayerTurn())));
 							addToCommands = true;
 						}
 					} else if (inputCommand.length == 2) {
-						if (listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size() >= 5) {
+						if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() >= 5) {
 							System.out.println("\nCannot perform none operation because your cards are "
-									+ listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size());
+									+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size());
 							addToCommands = false;
 						} else {
 							addToCommands = true;
@@ -556,12 +557,12 @@ public class CommandLine {
 								addToCommands = false;
 							} else {
 								if (!checkArmiesPlaced()) {
-									if (listOfPlayers.get(p.getCurrentPlayerTurn()).getCurrentCardList().size() < 5) {
+									if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() < 5) {
 										p.setAvailableReinforceArmies(ric.calculateReinforceArmy(
-												listOfPlayers.get(p.getCurrentPlayerTurn()), gm.getContinents(),
+												pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
 												gm.getCountries(), inputCommand[1], p.getCardReward()));
 										result = ric.placeReinforceArmy(inputCommand[1],
-												Integer.parseInt(inputCommand[2]), gm.getCountries(), listOfPlayers,
+												Integer.parseInt(inputCommand[2]), gm.getCountries(), pl.getListOfPlayers(),
 												gm.getContinents(), p.getAvailableReinforceArmies());
 										System.out.println("\n " + result);
 										if (result.contains("success")) {
@@ -579,7 +580,7 @@ public class CommandLine {
 									} else {
 										System.out
 												.println("\nCannot perform reinforcement as there are "
-														+ listOfPlayers.get(p.getCurrentPlayerTurn())
+														+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
 																.getCurrentCardList().size()
 														+ " cards which need to be exchanged");
 										addToCommands = false;
@@ -619,8 +620,8 @@ public class CommandLine {
 									p.setDefenderName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 
 									String allOutAttacked = ac.allOutAttackedPhase(inputCommand[1], inputCommand[2],
-											listOfPlayers.get(p.getAttackerName()), gm.getCountries(), p,
-											listOfPlayers.get(p.getDefenderName()));
+											pl.getListOfPlayers().get(p.getAttackerName()), gm.getCountries(), p,
+											pl.getListOfPlayers().get(p.getDefenderName()));
 
 								} else {
 									System.out.println("Defender Country is not a neighbouring country");
@@ -645,11 +646,11 @@ public class CommandLine {
 									p.setAttackerName(cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 
 									if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
-											listOfPlayers.get(p.getAttackerName()), gm.getCountries())) {
+											pl.getListOfPlayers().get(p.getAttackerName()), gm.getCountries())) {
 
 										String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
 												Integer.parseInt(inputCommand[3]), p,
-												listOfPlayers.get(p.getAttackerName()));
+												pl.getListOfPlayers().get(p.getAttackerName()));
 										System.out.println(attacked);
 
 									} else {
@@ -690,7 +691,7 @@ public class CommandLine {
 					if ((inputCommand.length == 2)) {
 						if (Integer.parseInt(inputCommand[1]) > 0 && Integer.parseInt(inputCommand[1]) <= 2) {
 							if (ac.validateDefenderNumdice(p.getDefenderCountry(), Integer.parseInt(inputCommand[1]),
-									listOfPlayers.get(p.getDefenderCountry()), gm.getCountries())) {
+									pl.getListOfPlayers().get(p.getDefenderCountry()), gm.getCountries())) {
 								String defend = ac.defendPhaseDiceRoll(p.getDefenderCountry(),
 										Integer.parseInt(inputCommand[1]), p);
 								System.out.println(defend);
@@ -716,9 +717,9 @@ public class CommandLine {
 							if (ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()),
 									Integer.parseInt(inputCommand[1]))) {
 
-								if (ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]), listOfPlayers, p)) {
+								if (ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]), pl.getListOfPlayers(), p)) {
 									String armyMoved = ac.movingArmyToConqueredCountry(
-											Integer.parseInt(inputCommand[1]), listOfPlayers, p);
+											Integer.parseInt(inputCommand[1]), pl.getListOfPlayers(), p);
 									System.out.println(armyMoved);
 								}
 							} else {
@@ -745,7 +746,7 @@ public class CommandLine {
 						if ((!checkArmiesPlaced()) && (!inputCommandsList.contains("fortify"))) {
 							if (inputCommand.length == 4) {
 								if (checkPlayersTurn(inputCommand[1])) {
-									result = fc.fortify(listOfPlayers, inputCommand[1], inputCommand[2],
+									result = fc.fortify(pl.getListOfPlayers(), inputCommand[1], inputCommand[2],
 											Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
 									if (result.contains("success")) {
 										addToCommands = true;
@@ -828,8 +829,8 @@ public class CommandLine {
 					if (neighbours.length() > 0) {
 						neighbours = neighbours.substring(0, neighbours.length() - 1);
 					}
-					if (listOfPlayers.size() > 0) {
-						armies = (listOfPlayers.get(playerName)).getOwnedCountriesArmiesList().get(countryName);
+					if (pl.getListOfPlayers().size() > 0) {
+						armies = (pl.getListOfPlayers().get(playerName)).getOwnedCountriesArmiesList().get(countryName);
 						if (headerDisplay) {
 							headerDisplay = false;
 							System.out.format("%-30s|%-30s|%-30s|%-30s|%-30s", "Country Name", "Continent Name",
@@ -918,8 +919,8 @@ public class CommandLine {
 		boolean flag = false;
 		int playerArmiesCount = 0;
 		int totalArmiesCount = cons.NO_PLAYER_ARMIES.get(players.size());
-		for (String str : listOfPlayers.keySet()) {
-			Player p = listOfPlayers.get(str);
+		for (String str : pl.getListOfPlayers().keySet()) {
+			Player p = pl.getListOfPlayers().get(str);
 			playerArmiesCount = psc.totalArmyCountPlayer(p);
 			if (playerArmiesCount < totalArmiesCount) {
 				flag = true;
