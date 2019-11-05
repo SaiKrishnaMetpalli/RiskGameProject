@@ -80,5 +80,15 @@ public class TestAttack {
 		assertEquals("Defender ready to defend",result);
 	}
 	
-
+	/**
+	 * This method is used for testing if attacker and defender country are in same continent
+	 *  
+	 * */
+	@Test
+	public void testValidateDefenderCountry() {
+		boolean ans = true;
+	ans = ac.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries());
+	boolean val = true;
+	assertEquals(ans,val);
+	}
 }
