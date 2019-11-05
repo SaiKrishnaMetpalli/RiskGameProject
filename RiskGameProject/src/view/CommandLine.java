@@ -569,12 +569,15 @@ public class CommandLine {
 							} else {
 								if (!checkArmiesPlaced()) {
 									if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() < 5) {
-										p.setAvailableReinforceArmies(ric.calculateReinforceArmy(
-												pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
-												gm.getCountries(), inputCommand[1], p.getCardReward()));
+										if(p.getAvailableReinforceArmies()==0) {
+											p.setAvailableReinforceArmies(ric.calculateReinforceArmy(
+													pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
+													gm.getCountries(), inputCommand[1], p.getCardReward()));
+										}
+										
 										result = ric.placeReinforceArmy(inputCommand[1],
 												Integer.parseInt(inputCommand[2]), gm.getCountries(), pl.getListOfPlayers(),
-												gm.getContinents(), p.getAvailableReinforceArmies());
+												gm.getContinents(),p);
 										System.out.println("\n " + result);
 										if (result.contains("success")) {
 											if (p.getAvailableReinforceArmies() == 0) {

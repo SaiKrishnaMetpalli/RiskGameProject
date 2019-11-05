@@ -68,13 +68,13 @@ public class ReinforcementController {
 	 * @param countryName where the army will be placed
 	 * @param numOfArmiesToPlace the armies to be placed will be mentioned in command line 
 	 * @param countries countries hashmap containing countries objects
-	 * @param playerMap player hashmap containing player objects
+	 * @param playerMap player hashmap containing all the player data
 	 * @param continents continents hashmap containing continent objects
-	 * @param availableReinforcedArmies the value received from calculate reinforce army method
+	 * @param mp is the player object model for the turn
 	 * @return success or failure messages for each situation 
 	 */
 	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
-			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents, int availableReinforcedArmies) {
+			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents, Player mp) {
 
 		String player = cc.findPlayerNameFromCountry(countries, countryName);
 
@@ -85,8 +85,11 @@ public class ReinforcementController {
 		// Check Player owns the country
 		Player p = playerMap.get(player);
 		int existingArmy = p.getOwnedCountriesArmiesList().get(countryName);
+		int availableReinforcedArmies = mp.getAvailableReinforceArmies();
 		if (numOfArmiesToPlace <= availableReinforcedArmies) {
 			existingArmy += numOfArmiesToPlace;
+			availableReinforcedArmies-=numOfArmiesToPlace;
+			mp.setAvailableReinforceArmies(availableReinforcedArmies);
 			p.getOwnedCountriesArmiesList().put(countryName, existingArmy);
 			
 			return "Reinforcement armies placed successfully";

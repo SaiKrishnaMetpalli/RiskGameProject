@@ -23,8 +23,9 @@ public class Player extends Observable {
 	private String diceRolled;
 	private int cardBonusArmy;
 	private int cardReward;
-	private int availableArmies;
+	private int availableReinforceArmies;
 	private ArrayList<String> currentCardList;
+	
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
@@ -38,8 +39,8 @@ public class Player extends Observable {
 		currentPlayerTurn="";
 		cardBonusArmy=0;
 		cardReward=0;
-		availableArmies=0;
-		currentCardList=new ArrayList<String>();
+		availableReinforceArmies=0;
+		currentCardList=new ArrayList<String>();		
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
@@ -167,11 +168,11 @@ public class Player extends Observable {
 		this.cardReward = cardReward;
 	}
 	public int getAvailableReinforceArmies() {
-		return availableArmies;
+		return availableReinforceArmies;
 	}
 
 	public void setAvailableReinforceArmies(int availableArmies) {
-		this.availableArmies = availableArmies;
+		this.availableReinforceArmies = availableArmies;
 	}
 	public ArrayList<String> getCurrentCardList() {
 		return currentCardList;

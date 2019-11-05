@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import model.Player;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,7 @@ public class TestReinforcement {
 	String countryName = "Quebec";
 	String player;
 	ArrayList<String> currentCardList;
+	Player modelP;
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case method
@@ -53,6 +55,7 @@ public class TestReinforcement {
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
 		currentCardList = new ArrayList<String>();
+		modelP = new Player();
 		}
 
 	/**
@@ -69,10 +72,10 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testplaceReinforceArmySucess() {
-		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
-				countryName,5);
+		
+		modelP.setAvailableReinforceArmies(5);
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),40),
+				ric.placeReinforceArmy(countryName, 4, gm.getCountries(), playerDetails, gm.getContinents(),modelP),
 				"Reinforcement armies placed successfully");
 	}
 
@@ -83,8 +86,9 @@ public class TestReinforcement {
 	public void testplaceReinforceArmyFail() {
 		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
 				countryName,5) + 5;
+		modelP.setAvailableReinforceArmies(5);
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),5),
+				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),modelP),
 				"Not enough reinforcement armies available");
 	}
 	
