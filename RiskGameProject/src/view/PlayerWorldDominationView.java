@@ -11,7 +11,16 @@ public class PlayerWorldDominationView implements Observer {
 	}
 
 	private void showMessage(PlayersList pl, Player p) {
-		
-		
+		if(p.getGameState()!="STARTUP") {
+			for (int dashes = 0; dashes < 90; dashes++) {
+				System.out.print("_");
+			}
+			System.out.println("\nPlayer World Domination View");
+			System.out.println();
+			for (int dashes = 0; dashes < 90; dashes++) {
+				System.out.print("_");
+			}
+			System.out.println();
+		}		
 	}
 }

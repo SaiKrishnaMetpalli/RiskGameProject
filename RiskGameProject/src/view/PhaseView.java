@@ -10,13 +10,19 @@ public class PhaseView implements Observer {
 	}
 
 	private void showMessage(Player p) {
-		System.out.println("\nPhase View");
-		for (int dashes = 0; dashes < 90; dashes++) {
-			System.out.print("_");
-		}					
-		System.out.println("\nGame State: "+p.getGameState());
-		System.out.println("\nCurrent Player Name: "+p.getCurrentPlayerTurn());
-		System.out.println("\nActions Performed:");
-		System.out.println("\n"+p.getActionsPerformed());
+		if(p.getGameState()!="STARTUP") {
+			for (int dashes = 0; dashes < 90; dashes++) {
+				System.out.print("_");
+			}					
+			System.out.println("\nPhase View");
+			System.out.println();
+			for (int dashes = 0; dashes < 90; dashes++) {
+				System.out.print("_");
+			}					
+			System.out.println("\nGame State: "+p.getGameState());
+			System.out.println("\nCurrent Player Name: "+p.getCurrentPlayerTurn());
+			System.out.println("\nActions Performed:");
+			System.out.println("\n"+p.getActionsPerformed());
+		}		
 	}
 }

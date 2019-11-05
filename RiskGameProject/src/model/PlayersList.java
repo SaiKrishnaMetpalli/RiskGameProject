@@ -18,8 +18,8 @@ public class PlayersList extends Observable {
 		this.listOfPlayers = listOfPlayers;
 	}
 	
-	public void notifyToObserver() {
-		notifyObservers(this,this);
+	public void notifyToObserver(Player p) {
+		notifyObservers(this,p);
 	}
 	
 }

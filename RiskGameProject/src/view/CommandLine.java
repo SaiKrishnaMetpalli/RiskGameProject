@@ -44,6 +44,9 @@ public class CommandLine {
 	FortificationController fc;
 	CommonController cc;
 	AttackController ac;
+	PhaseView pv;
+	PlayerWorldDominationView pwdv;
+	CardExchangeView cev;
 
 	/**
 	 * Default constructor To create the variable objects
@@ -64,6 +67,12 @@ public class CommandLine {
 		fc = new FortificationController();
 		cc = new CommonController();
 		ac = new AttackController();
+		pv=new PhaseView();
+		pwdv=new PlayerWorldDominationView();
+		cev=new CardExchangeView();
+		p.attach(pv);
+		pl.attach(pwdv);
+		pl.attach(cev);
 	}
 
 	/**
@@ -349,6 +358,7 @@ public class CommandLine {
 									boolean result2 = msc.isConnectedMap(gm.getBoundries());
 									if (result2) {
 										System.out.println("\nMap is connected");
+										addGameCards();
 									} else {
 										System.out.println("\nMap is not connected");
 									}
@@ -494,12 +504,13 @@ public class CommandLine {
 						if (checkArmiesPlaced()) {
 							result = psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
 									cons.NO_PLAYER_ARMIES.get(players.size()));
-							System.out.println("\nArmies are placed successfully");
-							p.setGameState("REINFORCE");
+							System.out.println("\nArmies are placed successfully");							
 						} else {
 							System.out.println("\nArmies are already placed for the player");
 						}
 						p.setCurrentPlayerTurn(players.get(0));
+						p.setGameState("REINFORCE");
+						pl.notifyToObserver(p);
 						addToCommands = true;
 					} else {
 						System.out.println("\nCannot place army as players are not assigned to countries");
@@ -794,7 +805,7 @@ public class CommandLine {
 
 		}
 	}
-
+	
 	/**
 	 * This method is used for displaying the map
 	 */
@@ -947,6 +958,27 @@ public class CommandLine {
 		} else {
 			return false;
 		}
+	}
+	
+	private void addGameCards() {
+		gm.getTotalCardsList().clear();
+		int cardCount=(int) Math.floor((gm.getCountries().size())/3.0);
+		for(int i=0;i<cardCount;i++) {
+			gm.getTotalCardsList().add("INFANTRY");
+		}
+		for(int i=0;i<cardCount;i++) {
+			gm.getTotalCardsList().add("CAVALRY");
+		}
+		for(int i=0;i<cardCount;i++) {
+			gm.getTotalCardsList().add("ARTILLERY");
+		}
+		if((cardCount*3)!=gm.getCountries().size()) {
+			int remainingCount=(gm.getCountries().size())-(cardCount*3);
+			for(int i=0;i<remainingCount;i++) {
+				gm.getTotalCardsList().add("ARTILLERY");
+			}
+		}
+		
 	}
 
 }

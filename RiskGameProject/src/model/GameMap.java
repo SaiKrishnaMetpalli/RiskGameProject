@@ -9,7 +9,8 @@ import java.util.HashMap;
 public class GameMap {
 	private HashMap<Integer, Continents> continents;
 	private HashMap<Integer, Countries> countries;
-	private HashMap<Integer, ArrayList<Integer>> boundries;	
+	private HashMap<Integer, ArrayList<Integer>> boundries;
+	private ArrayList<String> totalCardsList;
 
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -18,6 +19,7 @@ public class GameMap {
 		continents = new HashMap<Integer, Continents>();
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
+		totalCardsList=new ArrayList<String>();
 	}
 
 	public HashMap<Integer, Continents> getContinents() {
@@ -42,5 +44,13 @@ public class GameMap {
 
 	public void setBoundries(HashMap<Integer, ArrayList<Integer>> boundries) {
 		this.boundries = boundries;
+	}
+
+	public ArrayList<String> getTotalCardsList() {
+		return totalCardsList;
+	}
+
+	public void setTotalCardsList(ArrayList<String> totalCardsList) {
+		this.totalCardsList = totalCardsList;
 	}
 }
