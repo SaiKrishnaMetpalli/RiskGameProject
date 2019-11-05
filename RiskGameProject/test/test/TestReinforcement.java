@@ -32,6 +32,7 @@ public class TestReinforcement {
 	String fileName;
 	String countryName = "Quebec";
 	String player;
+	ArrayList<String> currentCardList;
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case method
@@ -51,7 +52,8 @@ public class TestReinforcement {
 		psc.assignRandomCountries(listOfPlayers, gm.getCountries(), playerDetails);
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
-	}
+		currentCardList = new ArrayList<String>();
+		}
 
 	/**
 	 * This method is used for testing reinforcement armies calculation 
@@ -85,5 +87,15 @@ public class TestReinforcement {
 				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),5),
 				"Not enough reinforcement armies available");
 	}
+	/**
+	 * tests for the exchangeCard method three unique card
+	 */
+	@Test
+	public void testExchangeCardSuccess() {
+		currentCardList.addAll(Arrays.asList("a","b","c"));
+		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),5);
+	}
+
+
 
 }
