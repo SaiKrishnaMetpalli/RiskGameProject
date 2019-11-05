@@ -87,6 +87,7 @@ public class TestReinforcement {
 				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),5),
 				"Not enough reinforcement armies available");
 	}
+	
 	/**
 	 * tests for the exchangeCard method three unique card
 	 */
@@ -94,7 +95,12 @@ public class TestReinforcement {
 	public void testExchangeCardSuccess() {
 		currentCardList.addAll(Arrays.asList("a","b","c"));
 		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),5);
+		currentCardList.clear();
+		currentCardList.addAll(Arrays.asList("a","a","a"));
+		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),10);
+		
 	}
+	
 
 
 
