@@ -58,8 +58,8 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testReinforcementCalculation() {
-		assertEquals(ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(), countryName),
-				4);
+		assertEquals(ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(), countryName,5),
+				9);
 	}
 
 	/**
@@ -68,9 +68,9 @@ public class TestReinforcement {
 	@Test
 	public void testplaceReinforceArmySucess() {
 		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
-				countryName);
+				countryName,5);
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents()),
+				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),40),
 				"Reinforcement armies placed successfully");
 	}
 
@@ -80,10 +80,10 @@ public class TestReinforcement {
 	@Test
 	public void testplaceReinforceArmyFail() {
 		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
-				countryName) + 5;
+				countryName,5) + 5;
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents()),
-				"Not enough reinoforcement armies available");
+				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),5),
+				"Not enough reinforcement armies available");
 	}
 
 }
