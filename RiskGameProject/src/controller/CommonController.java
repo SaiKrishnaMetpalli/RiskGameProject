@@ -18,6 +18,7 @@ public class CommonController {
 	 * @param countries   takes hashmap of countries populated from map file
 	 * @param countryName takes country name string
 	 * @return country object
+	 * @author sakib
 	 */
 	public Countries getCountryByName(HashMap<Integer, Countries> countries, String countryName) {
 		for (int i : countries.keySet()) {
@@ -38,6 +39,7 @@ public class CommonController {
 	 * @param countries   takes hashmap of countries populated from map file
 	 * @param countryName takes country name string
 	 * @return continent objects for country name
+	 * @author sakib
 	 */
 	public Continents getContinentByCountryName(HashMap<Integer, Continents> continents,
 			HashMap<Integer, Countries> countries, String countryName) {
@@ -50,11 +52,8 @@ public class CommonController {
 	/**
 	 * creates a new hashmap of continents with its country list This method is used
 	 * in calculateReinforceArmy for verifying if a player owns all the countries in
-	 * continent
-	 * 
-	 * @param continents
-	 * @param countries
 	 * @return hashmap where key is continent and value is country list
+	 * @author sakib
 	 */
 	public HashMap<String, ArrayList<String>> getContinentsCountryList(HashMap<Integer, Continents> continents,
 			HashMap<Integer, Countries> countries) {
@@ -82,13 +81,8 @@ public class CommonController {
 	/**
 	 * Method to be called from command to place army uses calculateReinforceArmy
 	 * method
-	 * 
-	 * @param countryName
-	 * @param numOfArmiesToPlace
-	 * @param countries
-	 * @param playerMap
-	 * @param continents
 	 * @return different messages for view
+	 * @author sakib
 	 */
 	public String findPlayerNameFromCountry(HashMap<Integer, Countries> countries, String countryName) {
 		String player = "";
@@ -104,10 +98,8 @@ public class CommonController {
 
 	/**
 	 * To find the key of country hashmap
-	 * 
-	 * @param countries
-	 * @param countryName
 	 * @return
+	 * @author sakib 
 	 */
 	public int getCountryNumberByName(HashMap<Integer, Countries> countries, String countryName) {
 		for (int i : countries.keySet()) {

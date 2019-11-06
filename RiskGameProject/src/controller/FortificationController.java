@@ -18,15 +18,12 @@ public class FortificationController {
 	boolean ownedPath;
 	boolean marked[];
 	
-	/**
-	 * @Default Constructor
-	 * Initiates object for CommonController 
-	 */
 	public FortificationController() {
 		cc=new CommonController();
 		ownedCountriesNumberList=new ArrayList<Integer>();
 		ownedPath=false;
 	}
+	
 			
 	public void ownedCountriesNumList(HashMap<Integer, Countries> countries,ArrayList<String> ownedCountries) {
 		for(String s:ownedCountries) {
@@ -55,12 +52,12 @@ public class FortificationController {
 	 * performs the fortify action uses getCountryNumberByName and
 	 * getAdjacencyMatrix methods
 	 * 
-	 * @param player
-	 * @param fromCountry
-	 * @param toCountry
-	 * @param armyToPlace
-	 * @param countries
-	 * @param boundaries
+	 * @param player player model object containing all player information
+	 * @param fromCountry the country from where army will be moved
+	 * @param toCountry the country to where army will be moved
+	 * @param armyToPlace No. armies to place 
+	 * @param countries hashmap parsed from map for country list
+	 * @param boundaries hashmap for country list for each continent
 	 * @return appropriate messages for view
 	 * @author sakib
 	 */
