@@ -158,24 +158,6 @@ public class TestAttack {
 	}
 	
 	/**
-	 * This method is used for testing the attack alloutphase
-	 * @author garimadawar
-	 */
-	@Test
-    public void testAllOutAttackedPhase() {
-		
-	}
-	
-	/**
-	 * This method is used for testing the defend alloutphase
-	 * @author garimadawar
-	 */
-	@Test
-    public void testAllOutDefendPhase() {
-		
-	}
-	
-	/**
 	 * This method is used for testing the defend phase dice roll
 	 * @author garimadawar
 	 */
