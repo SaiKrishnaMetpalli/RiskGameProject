@@ -46,7 +46,7 @@ public class AttackController {
 
 		attackerArmiesMap = playerData.getOwnedCountriesArmiesList();
 
-		numOfAttackerArmy = attackerArmiesMap.get(playerName);
+		numOfAttackerArmy = attackerArmiesMap.get(attackerCountry);
 
 		if (numberOnDice < numOfAttackerArmy) {
 			return true;
@@ -288,7 +288,7 @@ public class AttackController {
 
 		String playerName = cc.findPlayerNameFromCountry(countryList, defenderCountry);
 		defenderArmiesMap = defenderPlayerData.getOwnedCountriesArmiesList();
-		int numArmy = defenderArmiesMap.get(playerName);
+		int numArmy = defenderArmiesMap.get(defenderCountry);
 		if (numberOnDice <= numArmy) {
 			return true;
 		} else {

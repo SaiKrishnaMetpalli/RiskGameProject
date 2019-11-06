@@ -626,7 +626,7 @@ public class CommandLine {
 			case "attack":
 				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommandsList.get(inputCommandsList.size() - 1).equals("reinforce")
-							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("attackmove")) {
+							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("attackmove") || inputCommandsList.get(inputCommandsList.size() - 1).equals("defend")) {
 						if (inputCommand.length == 4) {
 							if (inputCommand[3].equals("-allout")) {
 								if (checkPlayersTurn(inputCommand[1])) {
@@ -642,6 +642,7 @@ public class CommandLine {
 												pl.getListOfPlayers().get(p.getAttackerName()), gm.getCountries(), p,
 												pl.getListOfPlayers().get(p.getDefenderName()));
 										System.out.println("\n " + allOutAttacked);
+										
 										addToCommands = true;
 									} else {
 										System.out.println("Defender Country is not a neighbouring country");
@@ -661,7 +662,7 @@ public class CommandLine {
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
 										p.setDefenderName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
-										if (Integer.parseInt(inputCommand[1]) > 0 && Integer.parseInt(inputCommand[1]) <= 3) {
+										if (Integer.parseInt(inputCommand[3]) > 0 && Integer.parseInt(inputCommand[3]) <= 3) {
 											if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
 													pl.getListOfPlayers().get(p.getAttackerName()),
 													gm.getCountries())) {
@@ -669,7 +670,7 @@ public class CommandLine {
 												String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
 														Integer.parseInt(inputCommand[3]), p);
 												System.out.println(attacked);
-
+												addToCommands = true;
 											} else {
 												System.out.println("Number of dice played is invalid");
 												addToCommands=false;
@@ -726,10 +727,12 @@ public class CommandLine {
 									
 									String warStarted = ac.defendingTheBase(p,pl);
 									System.out.println(warStarted);
+									addToCommands = true;
 								}
 								else
 								{
 									System.out.println("Number of Dice Played is invalid");
+									addToCommands = false;
 								}
 							} else {
 								System.out.println(" Value of numdice is not valid");
@@ -903,10 +906,7 @@ public class CommandLine {
 	 */
 	public void addInputCommandList(boolean input, String command) {
 		if (input) {
-			if (!inputCommandsList.contains(command)) // checks if the command is already present or not
-			{
-				inputCommandsList.add(command);
-			}
+			inputCommandsList.add(command);			
 		}
 	}
 
