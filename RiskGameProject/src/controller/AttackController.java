@@ -8,6 +8,9 @@ import model.GameMap;
 import model.Player;
 import model.PlayersList;
 
+/**
+ * The class contains the Attacking phase code
+ */
 public class AttackController {
 
 	CommonController cc = new CommonController();
@@ -25,9 +28,14 @@ public class AttackController {
 	int numOfDefenderArmy = 0;
 	int attackerArmyLeft = 0;
 
-	/*
+	/**
 	 * Method is used to validate whether the defender country is the adjacent
 	 * neighboring country or not
+	 * @param attackerCountry 
+	 * @param defenderCountry
+	 * @param countryList
+	 * @param boundries
+	 * @return
 	 */
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
 			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries) {
@@ -44,10 +52,16 @@ public class AttackController {
 
 		return false;
 	}
+/**
+ * method is used to validate whether dice rolled is valid or not as per attacker army
+ * @param attackerCountry is the name of the attacker country
+ * @param numberOnDice is the number of dice rolled for attack
+ * @param attackerPlayerData it contains the data of the attacker
+ * @return true if dice roll is valid else false
+ */
+	public boolean validateNumDice(String attackerCountry, Integer numberOnDice, Player attackerPlayerData) {
 
-	public boolean validateNumDice(String attackerCountry, Integer numberOnDice, Player playerData) {
-
-		attackerArmiesMap = playerData.getOwnedCountriesArmiesList();
+		attackerArmiesMap = attackerPlayerData.getOwnedCountriesArmiesList();
 
 		numOfAttackerArmy = attackerArmiesMap.get(attackerCountry);
 
