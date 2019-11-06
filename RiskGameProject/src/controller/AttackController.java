@@ -25,7 +25,8 @@ public class AttackController {
 	int attackerArmyLeft = 0;
 
 	/*
-	 * Method is used to validate whether the defender country is the adjacent neighboring country or not 
+	 * Method is used to validate whether the defender country is the adjacent
+	 * neighboring country or not
 	 */
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
 			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries) {
@@ -43,10 +44,7 @@ public class AttackController {
 		return false;
 	}
 
-	public boolean validateNumDice(String attackerCountry, Integer numberOnDice, Player playerData,
-			HashMap<Integer, Countries> countryList) {
-
-		String playerName = cc.findPlayerNameFromCountry(countryList, attackerCountry);
+	public boolean validateNumDice(String attackerCountry, Integer numberOnDice, Player playerData) {
 
 		attackerArmiesMap = playerData.getOwnedCountriesArmiesList();
 
@@ -245,20 +243,20 @@ public class AttackController {
 		boolean flag = false;
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryArmyList = attackerData.getOwnedCountriesArmiesList();
-		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); // TODO : check weather army left with
-																				// attacker is > 1
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry());
+
 		int remainingArmy = attackerArmy - movingArmy;
-		countryArmyList.replace(player.getAttackerCountry(), remainingArmy); // now army moved from attacker country
+		
+		attackerData.getOwnedCountriesArmiesList().put(player.getAttackerCountry(), remainingArmy);
 
 		Player defenderData = playerData.get(player.getDefenderName());
 		countryArmyList = defenderData.getOwnedCountriesArmiesList();
 		int defenderArmy = countryArmyList.get(player.getDefenderCountry());
-		if (defenderArmy == 0) {
-			defenderArmy = movingArmy;
-			flag = true;
-		}
-		countryArmyList.replace(player.getDefenderCountry(), defenderArmy);
+		defenderArmy = movingArmy;
+		flag = true;
 
+		defenderData.getOwnedCountriesArmiesList().put(player.getDefenderCountry(), defenderArmy);
+		
 		return flag;
 	}
 
@@ -267,8 +265,8 @@ public class AttackController {
 
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryArmyList = attackerData.getOwnedCountriesArmiesList();
-		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); // TODO : check weather army left with
-																				// attacker is > 1
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); 
+		
 		int remainingArmy = attackerArmy - movedArmy;
 
 		if (remainingArmy >= 1) {
@@ -285,16 +283,15 @@ public class AttackController {
 		countryList.remove(defenderCountryIndex);
 		defenderData.setOwnedCountriesList(countryList);
 		// change country owner name
+		
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryList = attackerData.getOwnedCountriesList();
 		countryList.add(player.getDefenderCountry());
 		attackerData.setOwnedCountriesList(countryList);
 	} // change country owner
 
-	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player defenderPlayerData,
-			HashMap<Integer, Countries> countryList) {
+	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player defenderPlayerData) {
 
-		String playerName = cc.findPlayerNameFromCountry(countryList, defenderCountry);
 		defenderArmiesMap = defenderPlayerData.getOwnedCountriesArmiesList();
 		int numArmy = defenderArmiesMap.get(defenderCountry);
 		if (numberOnDice <= numArmy) {
@@ -304,7 +301,7 @@ public class AttackController {
 		}
 	}
 
-	public String defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
+	public boolean defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
 
 		defenderDiceNumbersList = new ArrayList<Integer>();
 		while (numberOnDice != 0) {
@@ -315,7 +312,7 @@ public class AttackController {
 		Collections.sort(defenderDiceNumbersList, Collections.reverseOrder());
 		p.setDefenderDice(defenderDiceNumbersList);
 
-		return "Success";
+		return true;
 	}
 
 	public String defendingTheBase(Player p, PlayersList pl) {

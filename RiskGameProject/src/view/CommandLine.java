@@ -674,8 +674,7 @@ public class CommandLine {
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 										if (Integer.parseInt(inputCommand[3]) > 0 && Integer.parseInt(inputCommand[3]) <= 3) {
 											if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
-													pl.getListOfPlayers().get(p.getAttackerName()),
-													gm.getCountries())) {
+													pl.getListOfPlayers().get(p.getAttackerName()))) {
 
 												String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
 														Integer.parseInt(inputCommand[3]), p);
@@ -733,17 +732,15 @@ public class CommandLine {
 					if (inputCommandsList.get(inputCommandsList.size() - 1).equals("attack")) {
 						if ((inputCommand.length == 2)) {
 							if (Integer.parseInt(inputCommand[1]) > 0 && Integer.parseInt(inputCommand[1]) <= 2) {
-								if (ac.validateDefenderNumdice(p.getDefenderCountry(), Integer.parseInt(inputCommand[1]),
-										pl.getListOfPlayers().get(p.getDefenderName()), gm.getCountries())) {
-									String defend = ac.defendPhaseDiceRoll(p.getDefenderCountry(),
-											Integer.parseInt(inputCommand[1]), p);
-									
-									String warStarted = ac.defendingTheBase(p,pl);
+								if (ac.validateDefenderNumdice(p.getDefenderCountry(),Integer.parseInt(inputCommand[1]),pl.getListOfPlayers().get(p.getDefenderName()))) {
+									if(ac.defendPhaseDiceRoll(p.getDefenderCountry(),
+											Integer.parseInt(inputCommand[1]), p));
+									{
+									String warStarted = ac.defendingTheBase(p, pl);
 									System.out.println(warStarted);
 									addToCommands = true;
-								}
-								else
-								{
+									}
+								} else {
 									System.out.println("Number of Dice Played is invalid");
 									addToCommands = false;
 								}
@@ -775,23 +772,15 @@ public class CommandLine {
 			case "attackmove":
 				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommand.length == 2) {
-						if (Integer.parseInt(inputCommand[1]) > 0) {
+						if (Integer.parseInt(inputCommand[1]) >= p.getDiceRolled()) {
 
-							if (ac.validateNumOfArmyMoves(p.getDiceRolled(),
-									Integer.parseInt(inputCommand[1]))) {
-
-								if (ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]), pl.getListOfPlayers(), p)) {
-									String armyMoved = ac.movingArmyToConqueredCountry(
-											Integer.parseInt(inputCommand[1]), pl.getListOfPlayers(), p);
-									System.out.println(armyMoved);
-								}
-							} else {
-								System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
-								addToCommands = false;
-							}
+							String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]),
+									pl.getListOfPlayers(), p);
+							System.out.println(armyMoved);
+							addToCommands = true;
 
 						} else {
-							System.out.println(" Value of numdice is not valid");
+							System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
 							addToCommands = false;
 						}
 					} else {
