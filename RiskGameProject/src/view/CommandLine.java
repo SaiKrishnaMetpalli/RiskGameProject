@@ -32,8 +32,9 @@ public class CommandLine {
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
 
-	ArrayList<String> players;	
+	ArrayList<String> players;
 	CONSTANTS cons;
+	String actions;
 
 	GameMap gm;
 	Player p;
@@ -50,26 +51,28 @@ public class CommandLine {
 
 	/**
 	 * Default constructor To create the variable objects
+	 * @author Sai Krishna
 	 */
 	public CommandLine() {
 		sc = new Scanner(System.in);
 		inputCommandsList = new ArrayList<String>();
 
-		players = new ArrayList<String>();		
+		players = new ArrayList<String>();
 		cons = new CONSTANTS();
+		actions="";
 
 		gm = new GameMap();
 		p = new Player();
-		pl=new PlayersList();
+		pl = new PlayersList();
 		psc = new PlayerSelectionController();
 		msc = new MapSelectionController();
 		ric = new ReinforcementController();
 		fc = new FortificationController();
 		cc = new CommonController();
 		ac = new AttackController();
-		pv=new PhaseView();
-		pwdv=new PlayerWorldDominationView();
-		cev=new CardExchangeView();
+		pv = new PhaseView();
+		pwdv = new PlayerWorldDominationView();
+		cev = new CardExchangeView();
 		p.attach(pv);
 		pl.attach(pwdv);
 		pl.attach(cev);
@@ -78,6 +81,7 @@ public class CommandLine {
 	/**
 	 * This method is used for retrieving user input commands and navigating to the
 	 * functionality
+	 * @author Sai Krishna
 	 */
 	public void commandLine() {
 		System.out.println("\nEnter the commands");
@@ -359,8 +363,8 @@ public class CommandLine {
 									if (result2) {
 										System.out.println("\nMap is connected");
 										addGameCards();
-										p.setContinentsCountryList(cc.getContinentsCountryList(gm.getContinents(), 
-												gm.getCountries()));
+										p.setContinentsCountryList(
+												cc.getContinentsCountryList(gm.getContinents(), gm.getCountries()));
 									} else {
 										System.out.println("\nMap is not connected");
 									}
@@ -472,12 +476,7 @@ public class CommandLine {
 							if (checkPlayersTurn(inputCommand[1])) {
 								result = psc.placeArmy(gm.getCountries(), pl.getListOfPlayers(), inputCommand[1],
 										cons.NO_PLAYER_ARMIES.get(players.size()));
-								if ((players.indexOf(p.getCurrentPlayerTurn())) + 1 < players.size()) {
-									p.setCurrentPlayerTurn(
-											players.get((players.indexOf(p.getCurrentPlayerTurn())) + 1));
-								} else {
-									p.setCurrentPlayerTurn(players.get(0));
-								}
+								setPlayerTurn();
 								System.out.println("\n" + " " + result);
 								addToCommands = true;
 							} else {
@@ -506,12 +505,12 @@ public class CommandLine {
 						if (checkArmiesPlaced()) {
 							result = psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
 									cons.NO_PLAYER_ARMIES.get(players.size()));
-							System.out.println("\nArmies are placed successfully");							
+							System.out.println("\nArmies are placed successfully");
 						} else {
 							System.out.println("\nArmies are already placed for the player");
 						}
 						p.setCurrentPlayerTurn(players.get(0));
-						p.setGameState("REINFORCE");						
+						p.setGameState("REINFORCE");
 						addToCommands = true;
 					} else {
 						System.out.println("\nCannot place army as players are not assigned to countries");
@@ -521,14 +520,15 @@ public class CommandLine {
 					System.out.println("\nplaceall command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
-				
+
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
-				
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
 			case "exchangecards":
+				actions=p.getActionsPerformed();
 				if (p.getGameState().equals("REINFORCE")) {
 					if (inputCommand.length == 4) {
 						if ((Integer.parseInt(inputCommand[1]) > 0) && (Integer.parseInt(inputCommand[2]) > 0)
@@ -537,27 +537,36 @@ public class CommandLine {
 									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]),
 									pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList(),
 									pl.getListOfPlayers().get(p.getCurrentPlayerTurn())));
+							System.out.println("\nCards are exchanged and the card reward is "+p.getCardReward());
+							actions+="\nCards are exchanged and the card reward is "+p.getCardReward();
 							addToCommands = true;
 						}
 					} else if (inputCommand.length == 2) {
 						if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() >= 5) {
 							System.out.println("\nCannot perform none operation because your cards are "
 									+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size());
+							actions+="\nCannot perform none operation because your cards are "
+									+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size();
 							addToCommands = false;
 						} else {
+							System.out.println("\nCards exchange none has been performed");
+							actions+="\nCards exchange none has been performed";
 							addToCommands = true;
 							p.setCardReward(0);
 						}
 
 					} else {
 						System.out.println("\nexchangecard command format is incorrect");
+						actions+="\nexchangecard command format is incorrect";
 						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nexchangecard command cannot be performed in " + p.getGameState() + " phase");
+					actions+="\nexchangecard command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
 				}
-				
+
+				p.setActionsPerformed(actions);
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
 
@@ -566,33 +575,43 @@ public class CommandLine {
 				break;
 
 			case "reinforce":
+				actions=p.getActionsPerformed();
 				if (p.getGameState().equals("REINFORCE")) {
 					if (inputCommand.length == 3) {
 						if (checkPlayersTurn(inputCommand[1])) {
 							if (Integer.parseInt(inputCommand[2]) < 1) {
 								System.out.println(
 										"\nReinforcement cannot be performed as armies should be greater than 0");
+								actions+="\nReinforcement cannot be performed as armies should be greater than 0";
 								addToCommands = false;
 							} else {
 								if (!checkArmiesPlaced()) {
-									if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() < 5) {
-										if(p.getAvailableReinforceArmies()==0) {
-											int countryReward=ric.calculateOwnedCountryReward(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()));
-											int continetReward= ric.calculateContinentReward(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
-													gm.getCountries(), inputCommand[1]);
-											p.setAvailableReinforceArmies(ric.calculateReinforceArmy(countryReward, continetReward, p.getCardReward()));
+									if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList()
+											.size() < 5) {
+										if (p.getAvailableReinforceArmies() == 0) {
+											int countryReward = ric.calculateOwnedCountryReward(
+													pl.getListOfPlayers().get(p.getCurrentPlayerTurn()));
+											int continetReward = ric.calculateContinentReward(
+													pl.getListOfPlayers().get(p.getCurrentPlayerTurn()),
+													gm.getContinents(), gm.getCountries(), inputCommand[1]);
+											p.setAvailableReinforceArmies(ric.calculateReinforceArmy(countryReward,
+													continetReward, p.getCardReward()));
 										}
-										
+
 										result = ric.placeReinforceArmy(inputCommand[1],
-												Integer.parseInt(inputCommand[2]), gm.getCountries(), pl.getListOfPlayers(),
-												gm.getContinents(),p);
-										System.out.println("\n " + result);
+												Integer.parseInt(inputCommand[2]), gm.getCountries(),
+												pl.getListOfPlayers(), gm.getContinents(), p);
+										System.out.println("\n" + result);
+										actions+="\n" + result;
 										if (result.contains("success")) {
 											if (p.getAvailableReinforceArmies() == 0) {
+												actions="";
 												p.setGameState("ATTACK");
 											} else {
 												System.out.println("\nPlease place the remaining "
 														+ p.getAvailableReinforceArmies() + " reinforcement armies");
+												actions+="\nPlease place the remaining "
+														+ p.getAvailableReinforceArmies() + " reinforcement armies";
 											}
 											addToCommands = true;
 										} else {
@@ -600,32 +619,40 @@ public class CommandLine {
 										}
 
 									} else {
-										System.out
-												.println("\nCannot perform reinforcement as there are "
-														+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
-																.getCurrentCardList().size()
-														+ " cards which need to be exchanged");
+										System.out.println("\nCannot perform reinforcement as there are "
+												+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
+														.getCurrentCardList().size()
+												+ " cards which need to be exchanged");
+										actions+="\nCannot perform reinforcement as there are "
+												+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
+												.getCurrentCardList().size()
+												+ " cards which need to be exchanged";
 										addToCommands = false;
 									}
 								} else {
 									System.out.println(
 											"\nReinforcement cannot be performed as armies are not assigned to player");
-									addToCommands = false;
+									actions+="\nReinforcement cannot be performed as armies are not assigned to player";
+									addToCommands = false;									
 								}
 							}
 						} else {
 							System.out.println("\nCannot reinforce army for the country, it is not the turn of player");
+							actions+="\nCannot reinforce army for the country, it is not the turn of player";
 							addToCommands = false;
 						}
 					} else {
 						System.out.println("\nreinforce command format is incorrect");
+						actions+="\nreinforce command format is incorrect";
 						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nreinforce command cannot be performed in " + p.getGameState() + " phase");
+					actions+="\nreinforce command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
-				}
+				}				
 				
+				p.setActionsPerformed(actions);
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
 
@@ -634,9 +661,11 @@ public class CommandLine {
 				break;
 
 			case "attack":
+				actions=p.getActionsPerformed();
 				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommandsList.get(inputCommandsList.size() - 1).equals("reinforce")
-							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("attackmove") || inputCommandsList.get(inputCommandsList.size() - 1).equals("defend")) {
+							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("attackmove")
+							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("defend")) {
 						if (inputCommand.length == 4) {
 							if (inputCommand[3].equals("-allout")) {
 								if (checkPlayersTurn(inputCommand[1])) {
@@ -652,52 +681,60 @@ public class CommandLine {
 												pl.getListOfPlayers().get(p.getAttackerName()), gm.getCountries(), p,
 												pl.getListOfPlayers().get(p.getDefenderName()));
 										System.out.println("\n " + allOutAttacked);
-										
+										actions+="\n " + allOutAttacked;
 										addToCommands = true;
 									} else {
-										System.out.println("Defender Country is not a neighbouring country");
+										System.out.println("\nDefender Country is not a neighbouring country");
+										actions+="\nDefender Country is not a neighbouring country";
 										addToCommands = false;
 									}
 								} else {
 									System.out.println(
 											"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
+									actions+="\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player";
 									addToCommands = false;
 								}
-							} else {									
+							} else {
 								if (checkPlayersTurn(inputCommand[1])) {
-									if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2],
-											gm.getCountries(), gm.getBoundries())) {
+									if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
+											gm.getBoundries())) {
 
 										p.setAttackerName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
 										p.setDefenderName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
-										if (Integer.parseInt(inputCommand[3]) > 0 && Integer.parseInt(inputCommand[3]) <= 3) {
+										if (Integer.parseInt(inputCommand[3]) > 0
+												&& Integer.parseInt(inputCommand[3]) <= 3) {
 											if (ac.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
 													pl.getListOfPlayers().get(p.getAttackerName()))) {
 
 												String attacked = ac.attackPhase(inputCommand[1], inputCommand[2],
 														Integer.parseInt(inputCommand[3]), p);
-												System.out.println(attacked);
+												System.out.println("\n"+attacked);
+												actions+="\n"+attacked;
 												addToCommands = true;
 											} else {
-												System.out.println("Number of dice played is invalid");
-												addToCommands=false;
+												System.out.println("\nNumber of dice played is invalid");
+												actions+="\nNumber of dice played is invalid";
+												addToCommands = false;
 											}
 										} else {
-											System.out.println("Number of dice played is invalid");
-											addToCommands=false;
+											System.out.println("\nNumber of dice played is invalid");
+											actions+="\nNumber of dice played is invalid";
+											addToCommands = false;
 										}
 									} else {
-										System.out.println("Defender Country is not a neighbouring country");
-										addToCommands=false;
+										System.out.println("\nDefender Country is not a neighbouring country");
+										actions+="\nDefender Country is not a neighbouring country";
+										addToCommands = false;
 									}
 
 								} else {
 									System.out.println(
 											"\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player");
+									actions+="\nCannot attack ,it is not the turn of player ,or the Country doesn't belong to this Player";
 									addToCommands = false;
-								}								
+								}
 							}
 						} else if (inputCommand.length == 2) {
 							if (inputCommand[1].equals("-noattack")) { // check whether whole command is attack
@@ -705,22 +742,27 @@ public class CommandLine {
 
 							} else {
 								System.out.println("\nAttack command format is incorrect");
+								actions+="\nAttack command format is incorrect";
 								addToCommands = false;
 							}
 						} else {
 							System.out.println("\nAttack command format is incorrect");
+							actions+="\nAttack command format is incorrect";
 							addToCommands = false;
 						}
 
 					} else {
-						System.out.println("Cannot perform attack command");
+						System.out.println("\nCannot perform attack command");
+						actions+="\nCannot perform attack command";
 						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
+					actions+="\nattack command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
 				}
-				
+
+				p.setActionsPerformed(actions);
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
 
@@ -728,116 +770,150 @@ public class CommandLine {
 				commandLine();
 				break;
 			case "defend":
+				actions=p.getActionsPerformed();
 				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommandsList.get(inputCommandsList.size() - 1).equals("attack")) {
 						if ((inputCommand.length == 2)) {
 							if (Integer.parseInt(inputCommand[1]) > 0 && Integer.parseInt(inputCommand[1]) <= 2) {
-								if (ac.validateDefenderNumdice(p.getDefenderCountry(),Integer.parseInt(inputCommand[1]),pl.getListOfPlayers().get(p.getDefenderName()))) {
-									if(ac.defendPhaseDiceRoll(p.getDefenderCountry(),
-											Integer.parseInt(inputCommand[1]), p));
+								if (ac.validateDefenderNumdice(p.getDefenderCountry(),
+										Integer.parseInt(inputCommand[1]),
+										pl.getListOfPlayers().get(p.getDefenderName()))) {
+									if (ac.defendPhaseDiceRoll(p.getDefenderCountry(),
+											Integer.parseInt(inputCommand[1]), p))
 									{
-									String warStarted = ac.defendingTheBase(p, pl);
-									System.out.println(warStarted);
-									addToCommands = true;
+										String warStarted = ac.defendingTheBase(p, pl);
+										System.out.println("\n"+warStarted);
+										actions+="\n"+warStarted;
+										addToCommands = true;
 									}
 								} else {
-									System.out.println("Number of Dice Played is invalid");
+									System.out.println("\nNumber of Dice Played is invalid");
+									actions+="\nNumber of Dice Played is invalid";
 									addToCommands = false;
 								}
 							} else {
-								System.out.println(" Value of numdice is not valid");
+								System.out.println("\nValue of numdice is not valid");
+								actions+="\nValue of numdice is not valid";
 								addToCommands = false;
 							}
 						} else {
 							System.out.println("\ndefend command format is incorrect");
+							actions+="\ndefend command format is incorrect";
 							addToCommands = false;
 						}
 
 					} else {
 						System.out.println("\ndefend command can be performed only after attack command is performed");
+						actions+="\ndefend command can be performed only after attack command is performed";
 						addToCommands = false;
 					}
 				} else {
 					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
+					actions+="\ndefend command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
 				}
-				
+
+				p.setActionsPerformed(actions);
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
 
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-				
+
 			case "attackmove":
+				actions=p.getActionsPerformed();
 				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommand.length == 2) {
 						if (Integer.parseInt(inputCommand[1]) >= p.getDiceRolled()) {
 
 							String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]),
 									pl.getListOfPlayers(), p);
-							System.out.println(armyMoved);
+							System.out.println("\n"+armyMoved);
+							actions+="\n"+armyMoved;
 							addToCommands = true;
 
 						} else {
-							System.out.println("Num of army move has to be greater or equal to dice Rolled to win");
+							System.out.println("\nNum of army move has to be greater or equal to dice Rolled to win");
+							actions+="\nNum of army move has to be greater or equal to dice Rolled to win";
 							addToCommands = false;
 						}
 					} else {
 						System.out.println("\ndefend command format is incorrect");
+						actions+="\ndefend command format is incorrect";
 						addToCommands = false;
 					}
 				} else {
 					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
+					actions+="\ndefend command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
 				}
-				
+
+				p.setActionsPerformed(actions);
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
-				
+
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-				
+
 			case "fortify":
+				actions=p.getActionsPerformed();
 				if (p.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
-						if ((!checkArmiesPlaced()) && (!inputCommandsList.get(inputCommandsList.size() - 1).equals("fortify"))) {
+						if ((!checkArmiesPlaced())
+								&& (!inputCommandsList.get(inputCommandsList.size() - 1).equals("fortify"))) {
 							if (inputCommand.length == 4) {
 								if (checkPlayersTurn(inputCommand[1])) {
 									result = fc.fortify(pl.getListOfPlayers(), inputCommand[1], inputCommand[2],
 											Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
-									System.out.println("\n " + result);
+									System.out.println("\n" + result);
+									actions+="\n" + result;
 									if (result.contains("success") || (result.contains("does not own"))) {
 										addToCommands = true;
+										if (p.getConqueredCountries().size() > 0) {
+											fc.addGameCardsToAttacker(pl.getListOfPlayers().get(p.getAttackerName()),p,gm);
+										}
+										actions="";
+										setPlayerTurn();
 										p.setGameState("REINFORCE");
 									} else {
 										addToCommands = false;
-									}									
+									}
 								} else {
 									System.out.println(
 											"\nCannot fortify army for the country, it is not the turn of player");
+									actions+="\nCannot fortify army for the country, it is not the turn of player";
 									addToCommands = false;
 								}
-							} else {
-								System.out.println("Fortification none completed");
+							} else if(inputCommand.length==2) {								
+								System.out.println("\nFortification none completed");
+								actions+="\nFortification none completed";
 								addToCommands = true;
+							} else {
+								System.out.println("\nfortify command format is incorrect");
+								actions+="\nfortify command format is incorrect";
+								addToCommands = false;
 							}
 						} else {
 							System.out.println(
 									"\nFortification cannot be performed, only one fortification is allowed per turn");
+							actions+="\nFortification cannot be performed, only one fortification is allowed per turn";
 							addToCommands = false;
 						}
 
 					} else {
 						System.out.println("\nfortify command format is incorrect");
+						actions+="\nfortify command format is incorrect";
 						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nfortify command cannot be performed in " + p.getGameState() + " phase");
+					actions+="\nfortify command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
 				}
-				
+
+				p.setActionsPerformed(actions);
 				p.notifyToObserver();
 				pl.notifyToObserver(p);
 
@@ -856,7 +932,7 @@ public class CommandLine {
 
 		}
 	}
-	
+
 	/**
 	 * This method is used for displaying the map
 	 */
@@ -952,7 +1028,7 @@ public class CommandLine {
 	 */
 	public void addInputCommandList(boolean input, String command) {
 		if (input) {
-			inputCommandsList.add(command);			
+			inputCommandsList.add(command);
 		}
 	}
 
@@ -997,6 +1073,7 @@ public class CommandLine {
 	 * 
 	 * @param countryName this variable contains the name of the country
 	 * @return this returns true when matches with current player; Otherwise false
+	 * @author Sai Krishna
 	 */
 	public boolean checkPlayersTurn(String countryName) {
 		String playerName = "";
@@ -1007,26 +1084,42 @@ public class CommandLine {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * This method is used for adding the cards for the total game
+	 * @author Sai Krishna
+	 */
 	private void addGameCards() {
 		gm.getTotalCardsList().clear();
-		int cardCount=(int) Math.floor((gm.getCountries().size())/3.0);
-		for(int i=0;i<cardCount;i++) {
+		int cardCount = (int) Math.floor((gm.getCountries().size()) / 3.0);
+		for (int i = 0; i < cardCount; i++) {
 			gm.getTotalCardsList().add("INFANTRY");
 		}
-		for(int i=0;i<cardCount;i++) {
+		for (int i = 0; i < cardCount; i++) {
 			gm.getTotalCardsList().add("CAVALRY");
 		}
-		for(int i=0;i<cardCount;i++) {
+		for (int i = 0; i < cardCount; i++) {
 			gm.getTotalCardsList().add("ARTILLERY");
 		}
-		if((cardCount*3)!=gm.getCountries().size()) {
-			int remainingCount=(gm.getCountries().size())-(cardCount*3);
-			for(int i=0;i<remainingCount;i++) {
+		if ((cardCount * 3) != gm.getCountries().size()) {
+			int remainingCount = (gm.getCountries().size()) - (cardCount * 3);
+			for (int i = 0; i < remainingCount; i++) {
 				gm.getTotalCardsList().add("ARTILLERY");
 			}
 		}
-		
+
+	}
+	
+	/**
+	 * This method is used for setting the player turn
+	 * @author Sai Krishna
+	 */
+	private void setPlayerTurn() {
+		if ((players.indexOf(p.getCurrentPlayerTurn())) + 1 < players.size()) {
+			p.setCurrentPlayerTurn(players.get((players.indexOf(p.getCurrentPlayerTurn())) + 1));
+		} else {
+			p.setCurrentPlayerTurn(players.get(0));
+		}
 	}
 
 }

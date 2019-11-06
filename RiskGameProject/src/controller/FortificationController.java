@@ -1,9 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import model.Countries;
+import model.GameMap;
 import model.Player;
 
 /**
@@ -96,4 +98,14 @@ public class FortificationController {
 		} else
 			return "Player doesn't own this country";
 	}
+	
+	public void addGameCardsToAttacker(Player attackerPlayerData, Player player,GameMap gm) {
+		for(String countryName:player.getConqueredCountries()) {
+			Collections.shuffle(gm.getTotalCardsList());
+			attackerPlayerData.getCurrentCardList().add(countryName+"-"+gm.getTotalCardsList().get(0));
+			gm.getTotalCardsList().remove(0);
+		}
+		
+	}
+	
 }
