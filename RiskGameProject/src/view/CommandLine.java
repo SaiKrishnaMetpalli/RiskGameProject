@@ -666,11 +666,12 @@ public class CommandLine {
 				if (p.getGameState().equals("ATTACK")) {
 					if (inputCommandsList.get(inputCommandsList.size() - 1).equals("reinforce")
 							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("attackmove")
-							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("defend") || p.isAllOutPerformed()) {
-						p.setAllOutPerformed(false);
+							|| inputCommandsList.get(inputCommandsList.size() - 1).equals("defend")
+							|| p.isAllOutPerformed()) {
 						if (inputCommand.length == 4) {
+							p.setAllOutPerformed(false);
 							if (inputCommand[3].equals("-allout")) {
-								if (checkPlayersTurn(inputCommand[1])) {									
+								if (checkPlayersTurn(inputCommand[1])) {
 									if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
 											gm.getBoundries())) {
 
@@ -682,12 +683,14 @@ public class CommandLine {
 										String allOutAttacked = ac.allOutAttackedPhase(inputCommand[1], inputCommand[2],
 												pl.getListOfPlayers().get(p.getAttackerName()), gm.getCountries(), p,
 												pl.getListOfPlayers().get(p.getDefenderName()));
-										System.out.println("\n" + allOutAttacked+"\n"+"The last dice rolled: "+p.getDiceRolled());
-										actions += "\n " + allOutAttacked+"\n"+"The last dice rolled: "+p.getDiceRolled();
-										if(allOutAttacked.contains("Won")) {
-											boolean checkAllCountriesOwned=ac.checkGameEnd(pl);
-											if(checkAllCountriesOwned) {
-												System.out.println("\n"+p.getAttackerName()+" won the Risk Game");
+										System.out.println("\n" + allOutAttacked + "\n" + "The last dice rolled: "
+												+ p.getDiceRolled());
+										actions += "\n " + allOutAttacked + "\n" + "The last dice rolled: "
+												+ p.getDiceRolled();
+										if (allOutAttacked.contains("Won")) {
+											boolean checkAllCountriesOwned = ac.checkGameEnd(pl);
+											if (checkAllCountriesOwned) {
+												System.out.println("\n" + p.getAttackerName() + " won the Risk Game");
 												System.out.println("\nThe game is ended");
 												System.exit(0);
 											}
@@ -747,17 +750,11 @@ public class CommandLine {
 								}
 							}
 						} else if (inputCommand.length == 2) {
-							if (inputCommand[1].equals("-noattack")) { 
-								if (inputCommandsList.get(inputCommandsList.size() - 1).equals("reinforce")
-										|| inputCommandsList.get(inputCommandsList.size() - 1).equals("attackmove")
-										|| inputCommandsList.get(inputCommandsList.size() - 1).equals("defend") || p.isAllOutPerformed())
-								{
-									System.out.println("\nAttack noAttack is performed");
-									actions = "";
-									p.setGameState("FORTIFY");
-									addToCommands=true;
-								}
-
+							if (inputCommand[1].equals("-noattack")) {								
+								System.out.println("\nAttack noAttack is performed");
+								actions = "";
+								p.setGameState("FORTIFY");
+								addToCommands = true;								
 							} else {
 								System.out.println("\nAttack command format is incorrect");
 								actions += "\nAttack command format is incorrect";
@@ -801,10 +798,10 @@ public class CommandLine {
 										String warStarted = ac.defendingTheBase(p, pl);
 										System.out.println("\n" + warStarted);
 										actions += "\n" + warStarted;
-										if(warStarted.contains("Won")) {
-											boolean checkAllCountriesOwned=ac.checkGameEnd(pl);
-											if(checkAllCountriesOwned) {
-												System.out.println("\n"+p.getAttackerName()+" won the Risk Game");
+										if (warStarted.contains("Won")) {
+											boolean checkAllCountriesOwned = ac.checkGameEnd(pl);
+											if (checkAllCountriesOwned) {
+												System.out.println("\n" + p.getAttackerName() + " won the Risk Game");
 												System.out.println("\nThe game is ended");
 												System.exit(0);
 											}
@@ -926,8 +923,8 @@ public class CommandLine {
 									addToCommands = false;
 								}
 							} else if (inputCommand.length == 2) {
-								if(inputCommand[1].equals("-none")) {
-									System.out.println("\nFortification none completed");								
+								if (inputCommand[1].equals("-none")) {
+									System.out.println("\nFortification none completed");
 									if (p.getConqueredCountries().size() > 0) {
 										fc.addGameCardsToAttacker(pl.getListOfPlayers().get(p.getAttackerName()), p,
 												gm);
@@ -940,7 +937,7 @@ public class CommandLine {
 									System.out.println("\nfortify command format is incorrect");
 									actions += "\nfortify command format is incorrect";
 									addToCommands = false;
-								}								
+								}
 							} else {
 								System.out.println("\nfortify command format is incorrect");
 								actions += "\nfortify command format is incorrect";

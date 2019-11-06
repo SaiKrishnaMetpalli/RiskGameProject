@@ -32,11 +32,12 @@ public class AttackController {
 	 * Method is used to validate whether the defender country is the adjacent
 	 * neighboring country or not
 	 * 
-	 * @param attackerCountry
-	 * @param defenderCountry
-	 * @param countryList
-	 * @param boundries
-	 * @return
+	 * @param attackerCountry is the name of the attacker country
+	 * @param defenderCountry is the name of the defender country
+	 * @param countryList     is the total country list
+	 * @param boundries       contains information about neighboring countries
+	 * @return true if defender country is the adjacent country
+	 * @author Ashish Chaudhary
 	 */
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
 			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries) {
@@ -62,6 +63,7 @@ public class AttackController {
 	 * @param numberOnDice       is the number of dice rolled for attack
 	 * @param attackerPlayerData it contains the data of the attacker
 	 * @return true if dice roll is valid else false
+	 * @author Ashish Chaudhary
 	 */
 	public boolean validateNumDice(String attackerCountry, Integer numberOnDice, Player attackerPlayerData) {
 
@@ -77,6 +79,16 @@ public class AttackController {
 
 	}
 
+	/**
+	 * Method performs attack by attacker
+	 * 
+	 * @param attackerCountry   is the name of the attacker country
+	 * @param defenderCountryis the name of the defender country
+	 * @param numberOnDice      is the number of dice used for attacking
+	 * @param player            contains the current player's turn data
+	 * @return ready after placing army
+	 * @author Ashish Chaudhary
+	 */
 	public String attackPhase(String attackerCountry, String defenderCountry, Integer numberOnDice, Player player) {
 
 		player.setAttackerCountry(attackerCountry);
@@ -315,8 +327,8 @@ public class AttackController {
 		defenderData.setOwnedCountriesList(countryList);
 		int defenderArmy = defenderData.getOwnedCountriesArmiesList().get(player.getDefenderCountry());
 		defenderData.getOwnedCountriesArmiesList().remove(player.getDefenderCountry());
-		 
-		if(defenderData.getOwnedCountriesArmiesList().size()<=0) {
+
+		if (defenderData.getOwnedCountriesArmiesList().size() <= 0) {
 			playerData.remove(player.getDefenderName());
 		}
 
@@ -408,14 +420,13 @@ public class AttackController {
 					+ defenderArmiesMap.get(p.getDefenderCountry());
 		}
 	}
-	
+
 	public boolean checkGameEnd(PlayersList attackerPlayerData) {
-		if(attackerPlayerData.getListOfPlayers().size()==1) {
+		if (attackerPlayerData.getListOfPlayers().size() == 1) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
-		
+
 	}
 }
