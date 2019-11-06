@@ -106,4 +106,9 @@ public class TestAttack {
 	public void testValidateNumOfArmyMovesSuccessTwo() {
 		assertEquals(ac.validateNumOfArmyMoves(4, 4), true);
 	}
+	
+	@Test
+	public void testValidateNumOfArmyMovesFail() {
+		assertEquals(ac.validateNumOfArmyMoves(4, 3), false);
+	}
 }
