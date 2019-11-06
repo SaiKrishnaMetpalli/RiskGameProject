@@ -157,5 +157,33 @@ public class TestAttack {
 	assertEquals(ac.validateNumDice("malasiya", 5, p), false); 
 	}
 	
+	/**
+	 * This method is used for testing the attack alloutphase
+	 * @author garimadawar
+	 */
+	@Test
+    public void testAllOutAttackedPhase() {
+		
+	}
 	
+	/**
+	 * This method is used for testing the defend alloutphase
+	 * @author garimadawar
+	 */
+	@Test
+    public void testAllOutDefendPhase() {
+		
+	}
+	
+	/**
+	 * This method is used for testing the defend phase dice roll
+	 * @author garimadawar
+	 */
+	@Test
+    public void testDefendPhaseDiceRoll() {
+		boolean ans = true;
+		ans = ac.defendPhaseDiceRoll("China", 2,playerDetails.get(player));
+		boolean val = true;
+		assertEquals(ans,val);
+	}
 }
