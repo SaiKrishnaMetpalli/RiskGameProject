@@ -31,7 +31,8 @@ public class AttackController {
 	/**
 	 * Method is used to validate whether the defender country is the adjacent
 	 * neighboring country or not
-	 * @param attackerCountry 
+	 * 
+	 * @param attackerCountry
 	 * @param defenderCountry
 	 * @param countryList
 	 * @param boundries
@@ -52,13 +53,16 @@ public class AttackController {
 
 		return false;
 	}
-/**
- * method is used to validate whether dice rolled is valid or not as per attacker army
- * @param attackerCountry is the name of the attacker country
- * @param numberOnDice is the number of dice rolled for attack
- * @param attackerPlayerData it contains the data of the attacker
- * @return true if dice roll is valid else false
- */
+
+	/**
+	 * this method is used to validate whether dice rolled is valid or not as per
+	 * attacker army
+	 * 
+	 * @param attackerCountry    is the name of the attacker country
+	 * @param numberOnDice       is the number of dice rolled for attack
+	 * @param attackerPlayerData it contains the data of the attacker
+	 * @return true if dice roll is valid else false
+	 */
 	public boolean validateNumDice(String attackerCountry, Integer numberOnDice, Player attackerPlayerData) {
 
 		attackerArmiesMap = attackerPlayerData.getOwnedCountriesArmiesList();
@@ -324,6 +328,15 @@ public class AttackController {
 		c.setOwnerName(player.getAttackerName());
 	} // change country owner
 
+	/**
+	 * This method is used to validate the defender dice.
+	 * 
+	 * @author garimadawar
+	 * @param defenderCountry    contains the name of defender country
+	 * @param numberOnDice       contains the number on dice
+	 * @param defenderPlayerData contains the information about player
+	 * 
+	 */
 	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player defenderPlayerData) {
 
 		defenderArmiesMap = defenderPlayerData.getOwnedCountriesArmiesList();
@@ -334,6 +347,16 @@ public class AttackController {
 			return false;
 		}
 	}
+
+	/**
+	 * This method is used to defend phase dice roll.
+	 * 
+	 * @author garimadawar
+	 * @param defenderCountry contains the name of defender country
+	 * @param numberOnDice    contains the number on dice
+	 * @param p               contains the information about player
+	 * 
+	 */
 
 	public boolean defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
 
@@ -349,6 +372,14 @@ public class AttackController {
 		return true;
 	}
 
+	/**
+	 * This method is used to defend the base
+	 * 
+	 * @author garimadawar
+	 * @param p  contains the information about player
+	 * @param pl contains the list of player
+	 * 
+	 */
 	public String defendingTheBase(Player p, PlayersList pl) {
 
 		Player defenderPlayerData = pl.getListOfPlayers().get(p.getDefenderName());
