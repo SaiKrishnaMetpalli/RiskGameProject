@@ -157,4 +157,5 @@ public class TestAttack {
 	assertEquals(ac.validateNumDice("malasiya", 5, p), false); 
 	}
 	
+	
 }

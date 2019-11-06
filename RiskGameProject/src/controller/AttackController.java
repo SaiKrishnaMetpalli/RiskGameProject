@@ -64,7 +64,7 @@ public class AttackController {
 		player.setDefenderCountry(defenderCountry);
 		attackerDiceNumbersList = new ArrayList<Integer>();
 		while (numberOnDice > 0) {
-			diceRolledResult = randomNumbergenerator();
+			diceRolledResult = randomNumberGenerator();
 			attackerDiceNumbersList.add(diceRolledResult);
 			numberOnDice--;
 		}
@@ -103,7 +103,7 @@ public class AttackController {
 				attackerDiceNumbersList = new ArrayList<Integer>();
 
 				while (diceToRoll != 0) {
-					diceRolledResult = randomNumbergenerator();
+					diceRolledResult = randomNumberGenerator();
 					attackerDiceNumbersList.add(diceRolledResult);
 					diceToRoll--;
 				}
@@ -158,7 +158,7 @@ public class AttackController {
 
 		while (maxDefenderDiceToRoll != 0) {
 
-			diceRolledResult = randomNumbergenerator();
+			diceRolledResult = randomNumberGenerator();
 			defenderDiceNumbersList.add(diceRolledResult); // check that the list is getting cleared in attack phase
 			maxDefenderDiceToRoll--;
 
@@ -207,7 +207,7 @@ public class AttackController {
 		return numOfAttackerArmy;
 	}
 
-	public int randomNumbergenerator() {
+	public int randomNumberGenerator() {
 		double random = Math.random();
 		random = random * 6 + 1;
 		int diceRoll = (int) random;
@@ -321,7 +321,7 @@ public class AttackController {
 
 		defenderDiceNumbersList = new ArrayList<Integer>();
 		while (numberOnDice != 0) {
-			diceRolledResult = randomNumbergenerator();
+			diceRolledResult = randomNumberGenerator();
 			defenderDiceNumbersList.add(diceRolledResult);
 			numberOnDice--;
 		}
