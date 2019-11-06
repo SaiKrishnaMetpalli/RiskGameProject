@@ -12,6 +12,7 @@ import model.Player;
 
 /**
  * This class intend to calculate the no. of bonus armies in reinforcement phase
+ * @author sakib
  *
  */
 
@@ -30,6 +31,7 @@ public class ReinforcementController {
 	 * calculates the reinforcement reward armies for total owned country
 	 * @param player player object containing all player information
 	 * @return returns country reward  armies obtained as integer
+	 * @author sakib
 	 */
 	public int calculateOwnedCountryReward(Player player) {
 		return (int) Math.floor(player.getOwnedCountriesList().size() / 3);
@@ -43,6 +45,7 @@ public class ReinforcementController {
 	 * @param countryName the country for which we need the continents and country object information
 	 * @param cardReward the reward army obtained after card exchange
 	 * @return returns reward armies for continent obtained as integer
+	 * @author sakib
 	 */
 	
 	public int calculateContinentReward(Player player, HashMap<Integer, Continents> continents,
@@ -67,6 +70,7 @@ public class ReinforcementController {
 	 * @param currentCardList is the list of cards in players possession 
 	 * @param player player object containing all player information
 	 * @return the method will return number of reward army the player will get after exchanging the cards
+	 * @author sakib
 	 */
 	public int exchangeCard(int num1, int num2, int num3, ArrayList<String> currentCardList, Player player) {
 		String card1 = currentCardList.get(num1 - 1);
@@ -84,6 +88,7 @@ public class ReinforcementController {
 	
 	/**
 	 * @return returns the total reinforce army for country reward, continent reward and card reward
+	 * @author sakib
 	 */
 	public int calculateReinforceArmy(int countryReward,int continentReward, int cardReward) {
 		int total = 0;
@@ -104,6 +109,7 @@ public class ReinforcementController {
 	 * @param continents continents hashmap containing continent objects
 	 * @param mp is the player object model for the turn
 	 * @return success or failure messages for each situation 
+	 * @author sakib
 	 */
 	public String placeReinforceArmy(String countryName, int numOfArmiesToPlace, HashMap<Integer, Countries> countries,
 			HashMap<String, Player> playerMap, HashMap<Integer, Continents> continents, Player mp) {

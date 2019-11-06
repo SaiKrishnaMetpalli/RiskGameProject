@@ -18,6 +18,7 @@ import util.CONSTANTS;
 
 /**
  * This class is used for testing the reinforcement methods 
+ * @author sakib
  */
 public class TestReinforcement {
 
@@ -38,6 +39,7 @@ public class TestReinforcement {
 	/**
 	 * This method is used for initial setting up scenarios for each test case method
 	 * @throws FileNotFoundException if the map file is not find an exception is thrown 
+	 * @author sakib
 	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
@@ -59,6 +61,7 @@ public class TestReinforcement {
 
 	/**
 	 * testing the reinforcement country reward 
+	 * @author sakib
 	 */
 	@Test
 	public void testCalculateOwnedCountryReward() {
@@ -67,6 +70,7 @@ public class TestReinforcement {
 	
 	/**
 	 * testing the reinforcement continent reward 
+	 * @author sakib
 	 */
 	@Test
 	public void testCalculateContinentReward() {
@@ -76,6 +80,7 @@ public class TestReinforcement {
 	
 	/**
 	 * This method is used for testing reinforcement armies calculation 
+	 * @author sakib
 	 */
 	@Test
 	public void testReinforcementCalculation() {
@@ -84,6 +89,7 @@ public class TestReinforcement {
 	
 	/**
 	 * This method is used for testing reinforcement armies calculation returning at least 3 armies
+	 * @author sakib
 	 */
 	@Test
 	public void testReinforcementCalculationMinimumArmy() {
@@ -92,6 +98,7 @@ public class TestReinforcement {
 
 	/**
 	 * This method is used for testing reinforcement army placement success scenarios
+	 * @author sakib
 	 */
 	@Test
 	public void testplaceReinforceArmySucess() {
@@ -104,6 +111,7 @@ public class TestReinforcement {
 
 	/**
 	 * This method is used for testing reinforcement army placement failure scenarios
+	 * @author sakib
 	 */
 	@Test
 	public void testplaceReinforceArmyFail() {
@@ -115,6 +123,7 @@ public class TestReinforcement {
 	
 	/**
 	 * tests for the exchangeCard method three unique card
+	 * @author sakib
 	 */
 	@Test
 	public void testExchangeCardSuccessForUniqeCard() {
@@ -129,6 +138,7 @@ public class TestReinforcement {
 
 	/**
 	 * tests for the exchangeCard method three same card
+	 * @author sakib
 	 */
 	@Test
 	public void testExchangeCardSuccessForSameCard() {
@@ -139,6 +149,7 @@ public class TestReinforcement {
 	
 	/**
 	 * tests for the exchangeCard method when there is no valid card set
+	 * @author sakib
 	 */
 	@Test
 	public void testExchangeCardNoArmy() {
