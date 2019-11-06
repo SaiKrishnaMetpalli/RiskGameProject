@@ -45,6 +45,7 @@ public class Player extends Observable {
 		availableReinforceArmies=0;
 		currentCardList=new ArrayList<String>();		
 		setAllOutPerformed(false);
+		conqueredCountries=new ArrayList<String>();
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import model.Countries;
+import model.GameMap;
 import model.Player;
 import model.PlayersList;
 
@@ -70,6 +71,7 @@ public class AttackController {
 		}
 		Collections.sort(attackerDiceNumbersList, Collections.reverseOrder());
 		player.setAttackerDice(attackerDiceNumbersList);
+		player.setDiceRolled(attackerDiceNumbersList.size());
 
 		return "Attacker Ready and placed his army on field ";
 	}
@@ -114,15 +116,9 @@ public class AttackController {
 						countryList, defenderPlayerData, player, attackerPlayerData, attackerPlayerName,
 						player.getAttackerCountry());
 
-				System.out
-						.println("num of attacker army left after one complete dice comaparison " + numOfAttackerArmy);
-				System.out.println("num of defender army left after one complete dice comapnrison "
-						+ defenderArmiesMap.get(player.getDefenderCountry()));
-
 				if (defenderArmiesMap.get(player.getDefenderCountry()) == 0) {
-					player.setDiceRolled(diceToRoll);
-					conqueredCountriesList.add(player.getDefenderCountry());
-					player.setConqueredCountries(conqueredCountriesList);
+					player.setDiceRolled(numOfDiceCanRoll); // numOfDiceCanRoll
+					player.getConqueredCountries().add(player.getDefenderCountry());
 					player.setAllOutPerformed(true);
 					return "Attacker Won the " + player.getDefenderCountry() + " country";
 				} else if (numOfAttackerArmy == 1) {
@@ -183,20 +179,16 @@ public class AttackController {
 			int defenderNum = p.getDefenderDice().get(0);
 
 			numOfDefenderArmy = defenderArmiesMap.get(defenderCountryName);
-			System.out.println("Num of defen army " + numOfDefenderArmy);
 			numOfAttackerArmy = attackerArmiesMap.get(attackerCountryName);
-			System.out.println("Num of ATTACK army " + numOfAttackerArmy);
 			if (defenderNum == attackerNum || defenderNum > attackerNum) {
 
 				int attackerArmyLeft = attackerPlayerData.getOwnedCountriesArmiesList().get(attackerCountryName);
 				attackerArmyLeft--;
-				System.out.println("attacker army left after attack " + attackerArmyLeft);
 				attackerPlayerData.getOwnedCountriesArmiesList().put(attackerCountryName, attackerArmyLeft);
 
 			} else {
 				int defenderArmyLeft = defenderPlayerData.getOwnedCountriesArmiesList().get(defenderCountryName);
 				defenderArmyLeft--;
-				System.out.println("Num of defen army left after attack " + defenderArmyLeft);
 				defenderPlayerData.getOwnedCountriesArmiesList().put(defenderCountryName, defenderArmyLeft);
 			}
 
@@ -204,7 +196,7 @@ public class AttackController {
 			p.getDefenderDice().remove(0);
 			defenderDiceRolled--;
 		}
-		return numOfAttackerArmy;
+		return attackerPlayerData.getOwnedCountriesArmiesList().get(p.getAttackerCountry());
 	}
 
 	public int randomNumbergenerator() {
@@ -214,11 +206,12 @@ public class AttackController {
 		return diceRoll;
 
 	}
-	
+
 	/**
 	 * This method is used for the validation of army moves.
-	 * @author Gagan Jaswal 
-	 * */
+	 * 
+	 * @author Gagan Jaswal
+	 */
 	public boolean validateNumOfArmyMoves(Integer diceRolled, Integer moveArmy) {
 
 		int diceRolledForWin = diceRolled;
@@ -230,26 +223,29 @@ public class AttackController {
 
 		return false;
 	}
-	
+
 	/**
 	 * This method is used for moving army to conquered country.
-	 * @author Gagan Jaswal 
-	 * */
-	public String movingArmyToConqueredCountry(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
+	 * 
+	 * @author Gagan Jaswal
+	 */
+	public String movingArmyToConqueredCountry(Integer armyToMove, HashMap<String, Player> playerData, Player player,
+			GameMap gm) {
 
 		int movingArmy = armyToMove;
 
 		moveArmy(movingArmy, playerData, player);
 
-		assigningCountryToAttacker(playerData, player);
+		assigningCountryToAttacker(playerData, player, gm);
 
 		return "Army Moved to Conquered Country";
 	}
-	
+
 	/**
 	 * This method is used for moving army.
-	 * @author Gagan Jaswal 
-	 * */
+	 * 
+	 * @author Gagan Jaswal
+	 */
 	public boolean moveArmy(int movingArmy, HashMap<String, Player> playerData, Player player) {
 
 		boolean flag = false;
@@ -258,7 +254,7 @@ public class AttackController {
 		int attackerArmy = countryArmyList.get(player.getAttackerCountry());
 
 		int remainingArmy = attackerArmy - movingArmy;
-		
+
 		attackerData.getOwnedCountriesArmiesList().put(player.getAttackerCountry(), remainingArmy);
 
 		Player defenderData = playerData.get(player.getDefenderName());
@@ -268,21 +264,22 @@ public class AttackController {
 		flag = true;
 
 		defenderData.getOwnedCountriesArmiesList().put(player.getDefenderCountry(), defenderArmy);
-		
+
 		return flag;
 	}
-	
+
 	/**
 	 * This method is used to calculate army left with attacker.
-	 * @author Gagan Jaswal 
-	 * */
+	 * 
+	 * @author Gagan Jaswal
+	 */
 	public boolean armyLeftWithAttacker(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
 		int movedArmy = armyToMove;
 
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryArmyList = attackerData.getOwnedCountriesArmiesList();
-		int attackerArmy = countryArmyList.get(player.getAttackerCountry()); 
-		
+		int attackerArmy = countryArmyList.get(player.getAttackerCountry());
+
 		int remainingArmy = attackerArmy - movedArmy;
 
 		if (remainingArmy >= 1) {
@@ -291,19 +288,26 @@ public class AttackController {
 		return false;
 	}
 
-	public void assigningCountryToAttacker(HashMap<String, Player> playerData, Player player) {
+	public void assigningCountryToAttacker(HashMap<String, Player> playerData, Player player, GameMap gm) {
 
 		Player defenderData = playerData.get(player.getDefenderName());
 		countryList = defenderData.getOwnedCountriesList();
 		int defenderCountryIndex = countryList.indexOf(player.getDefenderCountry());
 		countryList.remove(defenderCountryIndex);
 		defenderData.setOwnedCountriesList(countryList);
+		int defenderArmy = defenderData.getOwnedCountriesArmiesList().get(player.getDefenderCountry());
+		defenderData.getOwnedCountriesArmiesList().remove(player.getDefenderCountry());
 		// change country owner name
-		
+
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryList = attackerData.getOwnedCountriesList();
 		countryList.add(player.getDefenderCountry());
+		attackerData.getOwnedCountriesArmiesList().put(player.getDefenderCountry(), defenderArmy);
 		attackerData.setOwnedCountriesList(countryList);
+
+		int defenderCountryNum = cc.getCountryNumberByName(gm.getCountries(), player.getDefenderCountry());
+		Countries c = gm.getCountries().get(defenderCountryNum);
+		c.setOwnerName(player.getAttackerName());
 	} // change country owner
 
 	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player defenderPlayerData) {
@@ -346,11 +350,14 @@ public class AttackController {
 				defenderPlayerData, attackerCountryName, defenderCountryName);
 
 		if (defenderArmiesMap.get(p.getDefenderCountry()) == 0) {
+
+			p.getConqueredCountries().add(p.getDefenderCountry());
+
 			return "Attacker Won the " + p.getDefenderCountry() + " country";
 		} else {
-			return " attacked Performed " + " armies left with Attacker = "
-					+ attackerArmiesMap.get(p.getAttackerCountry()) + " Armies Left with Defender =  "
-					+ defenderArmiesMap.get(p.getDefenderCountry()) + " ";
+			return " Attacked Performed " + "; Armies left with Attacker = "
+					+ attackerArmiesMap.get(p.getAttackerCountry()) + " and Armies Left with Defender =  "
+					+ defenderArmiesMap.get(p.getDefenderCountry());
 		}
 	}
 }

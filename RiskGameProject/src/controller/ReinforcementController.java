@@ -132,7 +132,7 @@ public class ReinforcementController {
 			
 			return "Reinforcement armies placed successfully";
 		} else
-			return "Not enough reinforcement armies available";
+			return "Reinforcement cannot be performed; the given reinforcement armies are greater than the available reinforcemet armies";
 
 	}
 }
