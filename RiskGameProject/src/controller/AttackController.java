@@ -24,6 +24,9 @@ public class AttackController {
 	int numOfDefenderArmy = 0;
 	int attackerArmyLeft = 0;
 
+	/*
+	 * Method is used to validate whether the defender country is the adjacent neighboring country or not 
+	 */
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
 			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries) {
 

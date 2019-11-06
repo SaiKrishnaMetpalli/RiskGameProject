@@ -26,7 +26,7 @@ public class Player extends Observable {
 	private int availableReinforceArmies;
 	private ArrayList<String> currentCardList;
 	private ArrayList<String> conqueredCountries;
-	private boolean allOutPerformed;
+	private boolean allOutAttackPerformed;
 	
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -194,10 +194,10 @@ public class Player extends Observable {
 	}
 
 	public boolean isAllOutPerformed() {
-		return allOutPerformed;
+		return allOutAttackPerformed;
 	}
 
 	public void setAllOutPerformed(boolean allOutPerformed) {
-		this.allOutPerformed = allOutPerformed;
+		this.allOutAttackPerformed = allOutPerformed;
 	}
 }
