@@ -96,4 +96,9 @@ public class TestAttack {
 	boolean val = true;
 	assertEquals(ans,val);
 	}
+	
+	@Test
+	public void testValidateNumOfArmyMovesSuccessOne() {
+		assertEquals(ac.validateNumOfArmyMoves(3, 4), true);
+	}
 }
