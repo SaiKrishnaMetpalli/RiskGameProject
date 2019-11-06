@@ -65,22 +65,27 @@ public class TestAttack {
 	
 	
 	/**
-	 * This method is used for testing the attack phase method
-	 * 
+	 * This method is used for testing the attack phase method : success Case
+	 * @author garimadawar
 	 * */
 	@Test
-	public void testAttackPhase() {
-		/*
-		String result = ac.attackPhase("India", "China", 3,playerDetails.get(player),playerDetails.get(player));
-		assertEquals("Attacker ready to attack the Country",result);  //need to confirm from Ashish
-		String re = ac.attackPhase("China", "Quebec", 2, playerDetails.get(player),playerDetails.get(player));
-		assertEquals("Attacker ready to attack the Country", re);
-		*/
+	public void testAttackPhaseSuccess() {
+		String result = ac.attackPhase("India", "China", 3,playerDetails.get(player));
+		assertEquals("Attacker Ready and placed his army on field",result);  //need to confirm from Ashish
 	}
 	
 	/**
-	 * This method is used for testing the attack phase method
-	 * 
+	 * This method is used for testing the attack phase method: failure Case
+	 * @author garimadawar
+	 * */
+	@Test
+	public void testAttackPhaseFailure() {
+	      String re = ac.attackPhase("China", "Quebec", 2, playerDetails.get(player));
+	      assertEquals("Attacker Ready and placed his army on field", re);
+	}
+	/**
+	 * This method is used for testing the defend phase method
+	 * @author garimadawar
 	 * */
 	@Test
 	public void testDefendPhase() {
@@ -91,7 +96,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing if attacker and defender country are in same continent
-	 *  
+	 *  @author garimadawar
 	 * */
 	@Test
 	public void testValidateDefenderCountry() {
@@ -150,5 +155,17 @@ public class TestAttack {
 	attackerArmiesMap.put("malasiya", 4);
 	p.setOwnedCountriesArmiesList(attackerArmiesMap);
 	assertEquals(ac.validateNumDice("malasiya", 5, p), false); 
+	}
+	
+	/**
+	 * This method is used for testing the defend phase dice roll
+	 * @author garimadawar
+	 */
+	@Test
+    public void testDefendPhaseDiceRoll() {
+		boolean ans = true;
+		ans = ac.defendPhaseDiceRoll("China", 2,playerDetails.get(player));
+		boolean val = true;
+		assertEquals(ans,val);
 	}
 }
