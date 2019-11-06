@@ -359,6 +359,8 @@ public class CommandLine {
 									if (result2) {
 										System.out.println("\nMap is connected");
 										addGameCards();
+										p.setContinentsCountryList(cc.getContinentsCountryList(gm.getContinents(), 
+												gm.getCountries()));
 									} else {
 										System.out.println("\nMap is not connected");
 									}
@@ -509,8 +511,7 @@ public class CommandLine {
 							System.out.println("\nArmies are already placed for the player");
 						}
 						p.setCurrentPlayerTurn(players.get(0));
-						p.setGameState("REINFORCE");
-						pl.notifyToObserver(p);
+						p.setGameState("REINFORCE");						
 						addToCommands = true;
 					} else {
 						System.out.println("\nCannot place army as players are not assigned to countries");
@@ -520,7 +521,10 @@ public class CommandLine {
 					System.out.println("\nplaceall command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
-
+				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
+				
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
@@ -553,6 +557,9 @@ public class CommandLine {
 					System.out.println("\nexchangecard command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
+				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
 
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
@@ -618,6 +625,9 @@ public class CommandLine {
 					System.out.println("\nreinforce command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
+				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
 
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
@@ -711,6 +721,9 @@ public class CommandLine {
 					System.out.println("\nattack command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
+				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
 
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
@@ -751,6 +764,9 @@ public class CommandLine {
 					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
+				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
 
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
@@ -761,7 +777,7 @@ public class CommandLine {
 					if (inputCommand.length == 2) {
 						if (Integer.parseInt(inputCommand[1]) > 0) {
 
-							if (ac.validateNumOfArmyMoves(Integer.parseInt(p.getDiceRolled()),
+							if (ac.validateNumOfArmyMoves(p.getDiceRolled(),
 									Integer.parseInt(inputCommand[1]))) {
 
 								if (ac.armyLeftWithAttacker(Integer.parseInt(inputCommand[1]), pl.getListOfPlayers(), p)) {
@@ -787,6 +803,9 @@ public class CommandLine {
 					addToCommands = false;
 				}
 				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
+				
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
@@ -794,18 +813,18 @@ public class CommandLine {
 			case "fortify":
 				if (p.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
-						if ((!checkArmiesPlaced()) && (!inputCommandsList.contains("fortify"))) {
+						if ((!checkArmiesPlaced()) && (!inputCommandsList.get(inputCommandsList.size() - 1).equals("fortify"))) {
 							if (inputCommand.length == 4) {
 								if (checkPlayersTurn(inputCommand[1])) {
 									result = fc.fortify(pl.getListOfPlayers(), inputCommand[1], inputCommand[2],
 											Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
-									if (result.contains("success")) {
+									System.out.println("\n " + result);
+									if (result.contains("success") || (result.contains("does not own"))) {
 										addToCommands = true;
 										p.setGameState("REINFORCE");
 									} else {
 										addToCommands = false;
-									}
-									System.out.println("\n " + result);
+									}									
 								} else {
 									System.out.println(
 											"\nCannot fortify army for the country, it is not the turn of player");
@@ -829,6 +848,9 @@ public class CommandLine {
 					System.out.println("\nfortify command cannot be performed in " + p.getGameState() + " phase");
 					addToCommands = false;
 				}
+				
+				p.notifyToObserver();
+				pl.notifyToObserver(p);
 
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();

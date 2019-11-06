@@ -16,14 +16,16 @@ public class CardExchangeView implements Observer {
 		int count=1;
 		if(p.getGameState().equals("REINFORCE")) {
 			ArrayList<String> cardList=pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList();
-			for (int dashes = 0; dashes < 90; dashes++) {
-				System.out.print("_");
-			}			
-			System.out.println("\nCard Exchange View");
-			System.out.println();
-			for (int dashes = 0; dashes < 90; dashes++) {
+			for (int dashes = 0; dashes < 120; dashes++) {
 				System.out.print("_");
 			}
+			System.out.println();			
+			System.out.println("\nCard Exchange View");
+			
+			for (int dashes = 0; dashes < 120; dashes++) {
+				System.out.print("_");
+			}
+			System.out.println();
 			System.out.println();
 			if(cardList.size()>0) {
 				for(String s:cardList) {

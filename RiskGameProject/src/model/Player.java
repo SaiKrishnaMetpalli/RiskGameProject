@@ -11,6 +11,7 @@ public class Player extends Observable {
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
+	private HashMap<String,ArrayList<String>> continentsCountryList;
 	private String gameState;
 	private String currentPlayerTurn;
 	private String actionsPerformed;
@@ -70,13 +71,20 @@ public class Player extends Observable {
 		this.ownedArmiesList = ownedArmiesList;
 	}
 	
+	public HashMap<String, ArrayList<String>> getContinentsCountryList() {
+		return continentsCountryList;
+	}
+
+	public void setContinentsCountryList(HashMap<String, ArrayList<String>> continentsCountryList) {
+		this.continentsCountryList = continentsCountryList;
+	}
+
 	public String getGameState() {
 		return gameState;
 	}
 
 	public void setGameState(String gameState) {
-		this.gameState = gameState;
-		notifyToObserver();
+		this.gameState = gameState;		
 	}
 
 	public String getCurrentPlayerTurn() {
@@ -84,8 +92,7 @@ public class Player extends Observable {
 	}
 
 	public void setCurrentPlayerTurn(String currentPlayerTurn) {
-		this.currentPlayerTurn = currentPlayerTurn;
-		notifyToObserver();
+		this.currentPlayerTurn = currentPlayerTurn;		
 	}
 	
 	public String getActionsPerformed() {
@@ -93,8 +100,7 @@ public class Player extends Observable {
 	}
 
 	public void setActionsPerformed(String actionsPerformed) {
-		this.actionsPerformed = actionsPerformed;
-		notifyToObserver();
+		this.actionsPerformed = actionsPerformed;		
 	}
 
 	public String getAttackerName() {
