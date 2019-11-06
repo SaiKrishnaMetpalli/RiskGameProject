@@ -23,7 +23,7 @@ public class PhaseView implements Observer {
 			System.out.println("\nGame State: "+p.getGameState());
 			System.out.println("\nCurrent Player Name: "+p.getCurrentPlayerTurn());
 			System.out.println("\nActions Performed:");
-			System.out.println("\n"+p.getActionsPerformed());
+			System.out.println(p.getActionsPerformed());
 		}		
 	}
 }

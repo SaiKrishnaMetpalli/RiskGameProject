@@ -315,7 +315,10 @@ public class AttackController {
 		defenderData.setOwnedCountriesList(countryList);
 		int defenderArmy = defenderData.getOwnedCountriesArmiesList().get(player.getDefenderCountry());
 		defenderData.getOwnedCountriesArmiesList().remove(player.getDefenderCountry());
-		// change country owner name
+		 
+		if(defenderData.getOwnedCountriesArmiesList().size()<=0) {
+			playerData.remove(player.getDefenderName());
+		}
 
 		Player attackerData = playerData.get(player.getAttackerName());
 		countryList = attackerData.getOwnedCountriesList();
@@ -326,7 +329,7 @@ public class AttackController {
 		int defenderCountryNum = cc.getCountryNumberByName(gm.getCountries(), player.getDefenderCountry());
 		Countries c = gm.getCountries().get(defenderCountryNum);
 		c.setOwnerName(player.getAttackerName());
-	} // change country owner
+	}
 
 	/**
 	 * This method is used to validate the defender dice.
@@ -404,5 +407,15 @@ public class AttackController {
 					+ attackerArmiesMap.get(p.getAttackerCountry()) + " and Armies Left with Defender =  "
 					+ defenderArmiesMap.get(p.getDefenderCountry());
 		}
+	}
+	
+	public boolean checkGameEnd(PlayersList attackerPlayerData) {
+		if(attackerPlayerData.getListOfPlayers().size()==1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 }
