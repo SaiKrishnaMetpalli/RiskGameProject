@@ -97,16 +97,28 @@ public class TestAttack {
 	assertEquals(ans,val);
 	}
 	
+	/**
+	 * This method is used for testing that the army moved is greater than the number of dice rolled.
+	 *  
+	 * */
 	@Test
 	public void testValidateNumOfArmyMovesSuccessOne() {
 		assertEquals(ac.validateNumOfArmyMoves(3, 4), true);
 	}
 	
+	/**
+	 * This method is used for testing that the army moved is equal to the number of dice rolled.
+	 *  
+	 * */
 	@Test
 	public void testValidateNumOfArmyMovesSuccessTwo() {
 		assertEquals(ac.validateNumOfArmyMoves(4, 4), true);
 	}
 	
+	/**
+	 * This method is used for testing that the army moved is less than the number of dice rolled.
+	 *  
+	 * */
 	@Test
 	public void testValidateNumOfArmyMovesFail() {
 		assertEquals(ac.validateNumOfArmyMoves(4, 3), false);
