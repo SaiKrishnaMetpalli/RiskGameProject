@@ -69,13 +69,4 @@ public class Countries {
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
-
-//	public int getCurrentArmyPlaced() {
-//		return currentArmyPlaced;
-//	}
-//
-//	public void setCurrentArmyPlaced(int currentArmyPlaced) {
-//		this.currentArmyPlaced = currentArmyPlaced;
-//	}
-
 }
