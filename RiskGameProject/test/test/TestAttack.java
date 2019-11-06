@@ -124,6 +124,10 @@ public class TestAttack {
 		assertEquals(ac.validateNumOfArmyMoves(4, 3), false);
 	}
 	
+	/**
+	 * This method is used for testing num dice validation with success case.
+	 *  
+	 * */
 	@Test
 	public void testValidateNumDiceSuccess() {
 		HashMap<String, Integer> attackerArmiesMap = new HashMap<String, Integer>();
@@ -132,6 +136,10 @@ public class TestAttack {
 		assertEquals(ac.validateNumDice("malasiya", 3, p), true); 
 	}
 	
+	/**
+	 * This method is used for testing num dice validation with fail case.
+	 *  
+	 * */
 	@Test
 	public void testValidateNumDiceFail() {
 	HashMap<String, Integer> attackerArmiesMap = new HashMap<String, Integer>();
