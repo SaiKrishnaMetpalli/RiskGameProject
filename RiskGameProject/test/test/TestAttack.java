@@ -34,6 +34,7 @@ public class TestAttack {
 	String fileName;
 	String countryName = "Quebec";
 	String player;
+	Player p;
 	
 	
 	/**
@@ -55,6 +56,7 @@ public class TestAttack {
 		psc.assignRandomCountries(listOfPlayers, gm.getCountries(), playerDetails);
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
+		p= new Player();
 	}
 	
 	
@@ -78,8 +80,9 @@ public class TestAttack {
 	 * */
 	@Test
 	public void testDefendPhase() {
-		String result = ac.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
-		assertEquals("Defender ready to defend",result);
+		boolean ans = true;
+		boolean result = ac.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
+		assertEquals(ans,result);
 	}
 	
 	/**
