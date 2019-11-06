@@ -65,7 +65,7 @@ public class TestAttack {
 	
 	
 	/**
-	 * This method is used for testing the attack phase method
+	 * This method is used for testing the attack phase method : success Case
 	 * @author garimadawar
 	 * */
 	@Test
@@ -75,7 +75,16 @@ public class TestAttack {
 	}
 	
 	/**
-	 * This method is used for testing the attack phase method
+	 * This method is used for testing the attack phase method: failure Case
+	 * @author garimadawar
+	 * */
+	@Test
+	public void testAttackPhaseFailure() {
+	      String re = ac.attackPhase("China", "Quebec", 2, playerDetails.get(player));
+	      assertEquals("Attacker ready to attack the Country", re);
+	}
+	/**
+	 * This method is used for testing the defend phase method
 	 * @author garimadawar
 	 * */
 	@Test
