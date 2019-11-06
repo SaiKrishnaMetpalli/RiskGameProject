@@ -86,6 +86,7 @@ public class PlayerSelectionController {
 	 * @param players    this variable contains the complete list of players
 	 * @param playerName this variable has playerName to be added to list
 	 * @return gives Success/Failure message
+	 * @author Gagan Jaswal
 	 */
 	public String addPlayer(ArrayList<String> listOfPlayers, String playerName) {
 		if (!listOfPlayers.contains(playerName)) {
@@ -102,6 +103,7 @@ public class PlayerSelectionController {
 	 * @param players    this variable contains the complete list of players
 	 * @param playerName this variable has playerName to be removed from list
 	 * @return gives Success/Failure message
+	 * @author Gagan Jaswal
 	 */
 	public String removePlayer(ArrayList<String> listOfPlayers, String playerName) {
 		if (listOfPlayers.contains(playerName)) {

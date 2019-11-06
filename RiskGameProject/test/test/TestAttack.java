@@ -20,6 +20,10 @@ import model.GameMap;
 import model.Player;
 import util.CONSTANTS;
 
+/**
+ * This class is used for testing attack methods.
+ *
+ */
 public class TestAttack {
     
     AttackController ac;
