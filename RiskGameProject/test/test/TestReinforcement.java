@@ -59,12 +59,36 @@ public class TestReinforcement {
 		}
 
 	/**
+	 * testing the reinforcement country reward 
+	 */
+	@Test
+	public void testCalculateOwnedCountryReward() {
+		assertEquals(ric.calculateOwnedCountryReward(playerDetails.get(player)),4);
+	}
+	
+	/**
+	 * testing the reinforcement continent reward 
+	 */
+	@Test
+	public void testCalculateContinentReward() {
+		//playerDetails.get(player).setOwnedCountriesList(cc.getContinentsCountryList(gm.getContinents(), gm.getCountries()).get(countryName));
+		assertEquals(ric.calculateContinentReward(playerDetails.get(player), gm.getContinents(), gm.getCountries(), countryName),0);
+	}
+	
+	/**
 	 * This method is used for testing reinforcement armies calculation 
 	 */
 	@Test
 	public void testReinforcementCalculation() {
-		assertEquals(ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(), countryName,5),
-				9);
+		assertEquals(ric.calculateReinforceArmy(4,3,2),9);
+	}
+	
+	/**
+	 * This method is used for testing reinforcement armies calculation returning at least 3 armies
+	 */
+	@Test
+	public void testReinforcementCalculationMinimumArmy() {
+		assertEquals(ric.calculateReinforceArmy(1,0,0),3);
 	}
 
 	/**
@@ -84,24 +108,33 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testplaceReinforceArmyFail() {
-		int numOfArmiesToPlace = ric.calculateReinforceArmy(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
-				countryName,5) + 5;
 		modelP.setAvailableReinforceArmies(5);
 		assertEquals(
-				ric.placeReinforceArmy(countryName, numOfArmiesToPlace, gm.getCountries(), playerDetails, gm.getContinents(),modelP),
+				ric.placeReinforceArmy(countryName, 6, gm.getCountries(), playerDetails, gm.getContinents(),modelP),
 				"Not enough reinforcement armies available");
 	}
 	
 	/**
-	 * tests for the exchangeCard method three unique card and 3 same card
+	 * tests for the exchangeCard method three unique card
 	 */
 	@Test
-	public void testExchangeCardSuccess() {
+	public void testExchangeCardSuccessForUniqeCard() {
 		currentCardList.addAll(Arrays.asList("a","b","c"));
 		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),5);
 		currentCardList.clear();
-		currentCardList.addAll(Arrays.asList("a","a","a"));
+		currentCardList.addAll(Arrays.asList("e","d","f"));
 		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),10);
+		
+	}
+	
+
+	/**
+	 * tests for the exchangeCard method three same card
+	 */
+	@Test
+	public void testExchangeCardSuccessForSameCard() {
+		currentCardList.addAll(Arrays.asList("a","a","a"));
+		assertEquals(ric.exchangeCard(1,2,3, currentCardList, playerDetails.get(player)),5);
 		
 	}
 	

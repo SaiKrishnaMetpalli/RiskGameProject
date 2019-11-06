@@ -570,9 +570,10 @@ public class CommandLine {
 								if (!checkArmiesPlaced()) {
 									if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() < 5) {
 										if(p.getAvailableReinforceArmies()==0) {
-											p.setAvailableReinforceArmies(ric.calculateReinforceArmy(
-													pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
-													gm.getCountries(), inputCommand[1], p.getCardReward()));
+											int countryReward=ric.calculateOwnedCountryReward(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()));
+											int continetReward= ric.calculateContinentReward(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
+													gm.getCountries(), inputCommand[1]);
+											p.setAvailableReinforceArmies(ric.calculateReinforceArmy(countryReward, continetReward, p.getCardReward()));
 										}
 										
 										result = ric.placeReinforceArmy(inputCommand[1],
