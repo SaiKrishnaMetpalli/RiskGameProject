@@ -20,11 +20,13 @@ public class Player extends Observable {
 	private String defenderCountry;
 	private ArrayList<Integer> attackerDice;
 	private ArrayList<Integer> defenderDice;
-	private String diceRolled;
+	private int diceRolled;
 	private int cardBonusArmy;
 	private int cardReward;
 	private int availableReinforceArmies;
 	private ArrayList<String> currentCardList;
+	private ArrayList<String> conqueredCountries;
+	private boolean allOutPerformed;
 	
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -41,6 +43,7 @@ public class Player extends Observable {
 		cardReward=0;
 		availableReinforceArmies=0;
 		currentCardList=new ArrayList<String>();		
+		setAllOutPerformed(false);
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
@@ -142,11 +145,11 @@ public class Player extends Observable {
 		this.defenderDice = defenderDice;
 	}
 
-	public String getDiceRolled() {
+	public int getDiceRolled() {
 		return diceRolled;
 	}
 
-	public void setDiceRolled(String diceRolled) {
+	public void setDiceRolled(Integer diceRolled) {
 		this.diceRolled = diceRolled;
 	}
 	
@@ -180,5 +183,21 @@ public class Player extends Observable {
 
 	public void setCurrentCardList(ArrayList<String> currentCardList) {
 		this.currentCardList = currentCardList;
+	}
+
+	public ArrayList<String> getConqueredCountries() {
+		return conqueredCountries;
+	}
+
+	public void setConqueredCountries(ArrayList<String> conqueredCountries) {
+		this.conqueredCountries = conqueredCountries;
+	}
+
+	public boolean isAllOutPerformed() {
+		return allOutPerformed;
+	}
+
+	public void setAllOutPerformed(boolean allOutPerformed) {
+		this.allOutPerformed = allOutPerformed;
 	}
 }

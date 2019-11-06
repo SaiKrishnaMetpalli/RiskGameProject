@@ -18,6 +18,7 @@ public class AttackController {
 	ArrayList<String> countryList;
 	HashMap<String, Integer> countryArmyList;
 	ArrayList<Integer> armiesLeftAfterAttack;
+	ArrayList<String> conqueredCountriesList;
 	int diceRolledResult = 0;
 	int numOfAttackerArmy = 0;
 	int numOfDefenderArmy = 0;
@@ -54,7 +55,6 @@ public class AttackController {
 			return false;
 		}
 
-		
 	}
 
 	public String attackPhase(String attackerCountry, String defenderCountry, Integer numberOnDice, Player player) {
@@ -67,7 +67,7 @@ public class AttackController {
 			attackerDiceNumbersList.add(diceRolledResult);
 			numberOnDice--;
 		}
-		Collections.sort(attackerDiceNumbersList,Collections.reverseOrder());
+		Collections.sort(attackerDiceNumbersList, Collections.reverseOrder());
 		player.setAttackerDice(attackerDiceNumbersList);
 
 		return "Attacker Ready and placed his army on field ";
@@ -75,8 +75,6 @@ public class AttackController {
 
 	public String allOutAttackedPhase(String attackerCountry, String defenderCountry, Player attackerPlayerData,
 			HashMap<Integer, Countries> countryList, Player player, Player defenderPlayerData) {
-
-		// check this with SAI
 
 		player.setAttackerCountry(attackerCountry);
 		player.setDefenderCountry(defenderCountry);
@@ -90,7 +88,7 @@ public class AttackController {
 		int numOfAttackerArmy = attackerArmiesMap.get(attackerCountry);
 
 		int numOfDiceCanRoll = 0;
-		if(numOfAttackerArmy>1) {
+		if (numOfAttackerArmy > 1) {
 			while (numOfAttackerArmy > 1) {
 				if (numOfAttackerArmy == 2) {
 					numOfDiceCanRoll = 1;
@@ -108,19 +106,26 @@ public class AttackController {
 					attackerDiceNumbersList.add(diceRolledResult);
 					diceToRoll--;
 				}
-				Collections.sort(attackerDiceNumbersList,Collections.reverseOrder());
+				Collections.sort(attackerDiceNumbersList, Collections.reverseOrder());
 				player.setAttackerDice(attackerDiceNumbersList);
 
 				numOfAttackerArmy = allOutDefend(defenderPlayerName, player.getDefenderCountry(), numOfAttackerArmy,
 						countryList, defenderPlayerData, player, attackerPlayerData, attackerPlayerName,
 						player.getAttackerCountry());
-				
-				System.out.println("num of attacker army left after one complete dice comaparison " + numOfAttackerArmy);
-				System.out.println("num of defender army left after one complete dice comapnrison " + defenderArmiesMap.get(player.getDefenderCountry()));
-				
+
+				System.out
+						.println("num of attacker army left after one complete dice comaparison " + numOfAttackerArmy);
+				System.out.println("num of defender army left after one complete dice comapnrison "
+						+ defenderArmiesMap.get(player.getDefenderCountry()));
+
 				if (defenderArmiesMap.get(player.getDefenderCountry()) == 0) {
-					return "Attacker Won the "+player.getDefenderCountry()+" country";
-				} else if(numOfAttackerArmy==1) {
+					player.setDiceRolled(diceToRoll);
+					conqueredCountriesList.add(player.getDefenderCountry());
+					player.setConqueredCountries(conqueredCountriesList);
+					player.setAllOutPerformed(true);
+					return "Attacker Won the " + player.getDefenderCountry() + " country";
+				} else if (numOfAttackerArmy == 1) {
+					player.setAllOutPerformed(true);
 					return "Attacker cannot conquer defender country as he is left with 1 army in -allout mode";
 				}
 			}
@@ -140,15 +145,15 @@ public class AttackController {
 
 		int maxDefenderDiceToRoll = 0;
 
-		if(player.getAttackerDice().size()==1) {
-			maxDefenderDiceToRoll=1;
+		if (player.getAttackerDice().size() == 1) {
+			maxDefenderDiceToRoll = 1;
 		} else {
 			if (numOfDefenderArmy > 1) {
 				maxDefenderDiceToRoll = 2;
 			} else {
 				maxDefenderDiceToRoll = 1;
 			}
-		}	
+		}
 
 		while (maxDefenderDiceToRoll != 0) {
 
@@ -157,19 +162,19 @@ public class AttackController {
 			maxDefenderDiceToRoll--;
 
 		}
-		Collections.sort(defenderDiceNumbersList,Collections.reverseOrder());
+		Collections.sort(defenderDiceNumbersList, Collections.reverseOrder());
 		player.setDefenderDice(defenderDiceNumbersList);
 
-		attackerArmyLeft = comparingDiceToWin(player, defenderArmiesMap, attackerArmiesMap,
-				 attackerPlayerData, defenderPlayerData, attackerCountryname, defenderCountry);
+		attackerArmyLeft = comparingDiceToWin(player, defenderArmiesMap, attackerArmiesMap, attackerPlayerData,
+				defenderPlayerData, attackerCountryname, defenderCountry);
 
 		return attackerArmyLeft;
 
 	}
 
 	public int comparingDiceToWin(Player p, HashMap<String, Integer> defenderArmiesMap,
-			HashMap<String, Integer> attackerArmiesMap, Player attackerPlayerData,
-			Player defenderPlayerData, String attackerCountryName, String defenderCountryName) {
+			HashMap<String, Integer> attackerArmiesMap, Player attackerPlayerData, Player defenderPlayerData,
+			String attackerCountryName, String defenderCountryName) {
 
 		int defenderDiceRolled = p.getDefenderDice().size();
 		while (defenderDiceRolled != 0) {
@@ -298,13 +303,13 @@ public class AttackController {
 
 	public String defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
 
-		defenderDiceNumbersList= new ArrayList<Integer>();
+		defenderDiceNumbersList = new ArrayList<Integer>();
 		while (numberOnDice != 0) {
 			diceRolledResult = randomNumbergenerator();
 			defenderDiceNumbersList.add(diceRolledResult);
 			numberOnDice--;
 		}
-		Collections.sort(defenderDiceNumbersList,Collections.reverseOrder());
+		Collections.sort(defenderDiceNumbersList, Collections.reverseOrder());
 		p.setDefenderDice(defenderDiceNumbersList);
 
 		return "Success";
@@ -314,22 +319,22 @@ public class AttackController {
 
 		Player defenderPlayerData = pl.getListOfPlayers().get(p.getDefenderName());
 		defenderArmiesMap = defenderPlayerData.getOwnedCountriesArmiesList();
-		
+
 		Player attackerPlayerData = pl.getListOfPlayers().get(p.getAttackerName());
 		attackerArmiesMap = attackerPlayerData.getOwnedCountriesArmiesList();
-		
+
 		String attackerCountryName = p.getAttackerCountry();
 		String defenderCountryName = p.getDefenderCountry();
-		
-		int attackerArmyLeft = comparingDiceToWin(p, defenderArmiesMap, attackerArmiesMap, attackerPlayerData, defenderPlayerData, attackerCountryName, defenderCountryName);
-		
+
+		int attackerArmyLeft = comparingDiceToWin(p, defenderArmiesMap, attackerArmiesMap, attackerPlayerData,
+				defenderPlayerData, attackerCountryName, defenderCountryName);
+
 		if (defenderArmiesMap.get(p.getDefenderCountry()) == 0) {
-			return "Attacker Won the "+p.getDefenderCountry()+" country";
+			return "Attacker Won the " + p.getDefenderCountry() + " country";
+		} else {
+			return " attacked Performed " + " armies left with Attacker = "
+					+ attackerArmiesMap.get(p.getAttackerCountry()) + " Armies Left with Defender =  "
+					+ defenderArmiesMap.get(p.getDefenderCountry()) + " ";
 		}
-		else
-		{			
-			return " attacked Performed " + " armies left with Attacker = " + attackerArmiesMap.get(p.getAttackerCountry()) + 
-					" Armies Left with Defender =  " + defenderArmiesMap.get(p.getDefenderCountry()) + " " ;
-		}		
 	}
 }
