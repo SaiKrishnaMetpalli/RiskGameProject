@@ -71,7 +71,7 @@ public class TestAttack {
 	@Test
 	public void testAttackPhaseSuccess() {
 		String result = ac.attackPhase("India", "China", 3,playerDetails.get(player));
-		assertEquals("Attacker ready to attack the Country",result);  //need to confirm from Ashish
+		assertEquals("Attacker Ready and placed his army on field",result);  //need to confirm from Ashish
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class TestAttack {
 	@Test
 	public void testAttackPhaseFailure() {
 	      String re = ac.attackPhase("China", "Quebec", 2, playerDetails.get(player));
-	      assertEquals("Attacker ready to attack the Country", re);
+	      assertEquals("Attacker Ready and placed his army on field", re);
 	}
 	/**
 	 * This method is used for testing the defend phase method
@@ -156,4 +156,5 @@ public class TestAttack {
 	p.setOwnedCountriesArmiesList(attackerArmiesMap);
 	assertEquals(ac.validateNumDice("malasiya", 5, p), false); 
 	}
+	
 }

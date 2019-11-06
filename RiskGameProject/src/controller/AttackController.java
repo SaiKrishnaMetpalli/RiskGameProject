@@ -71,7 +71,7 @@ public class AttackController {
 		Collections.sort(attackerDiceNumbersList, Collections.reverseOrder());
 		player.setAttackerDice(attackerDiceNumbersList);
 
-		return "Attacker Ready and placed his army on field ";
+		return "Attacker Ready and placed his army on field";
 	}
 
 	public String allOutAttackedPhase(String attackerCountry, String defenderCountry, Player attackerPlayerData,
