@@ -214,7 +214,11 @@ public class AttackController {
 		return diceRoll;
 
 	}
-
+	
+	/**
+	 * This method is used for the validation of army moves.
+	 * @author Gagan Jaswal 
+	 * */
 	public boolean validateNumOfArmyMoves(Integer diceRolled, Integer moveArmy) {
 
 		int diceRolledForWin = diceRolled;
@@ -226,7 +230,11 @@ public class AttackController {
 
 		return false;
 	}
-
+	
+	/**
+	 * This method is used for moving army to conquered country.
+	 * @author Gagan Jaswal 
+	 * */
 	public String movingArmyToConqueredCountry(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
 
 		int movingArmy = armyToMove;
@@ -237,7 +245,11 @@ public class AttackController {
 
 		return "Army Moved to Conquered Country";
 	}
-
+	
+	/**
+	 * This method is used for moving army.
+	 * @author Gagan Jaswal 
+	 * */
 	public boolean moveArmy(int movingArmy, HashMap<String, Player> playerData, Player player) {
 
 		boolean flag = false;
@@ -259,7 +271,11 @@ public class AttackController {
 		
 		return flag;
 	}
-
+	
+	/**
+	 * This method is used to calculate army left with attacker.
+	 * @author Gagan Jaswal 
+	 * */
 	public boolean armyLeftWithAttacker(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
 		int movedArmy = armyToMove;
 

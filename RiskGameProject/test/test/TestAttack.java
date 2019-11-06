@@ -99,7 +99,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing that the army moved is greater than the number of dice rolled.
-	 *  
+	 * @author Gagan Jaswal 
 	 * */
 	@Test
 	public void testValidateNumOfArmyMovesSuccessOne() {
@@ -108,7 +108,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing that the army moved is equal to the number of dice rolled.
-	 *  
+	 *  @author Gagan Jaswal
 	 * */
 	@Test
 	public void testValidateNumOfArmyMovesSuccessTwo() {
@@ -117,7 +117,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing that the army moved is less than the number of dice rolled.
-	 *  
+	 * @author Gagan Jaswal
 	 * */
 	@Test
 	public void testValidateNumOfArmyMovesFail() {
@@ -126,7 +126,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing num dice validation with success case.
-	 *  
+	 * @author Gagan Jaswal 
 	 * */
 	@Test
 	public void testValidateNumDiceSuccess() {
@@ -138,7 +138,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing num dice validation with fail case.
-	 *  
+	 * @author Gagan Jaswal 
 	 * */
 	@Test
 	public void testValidateNumDiceFail() {
