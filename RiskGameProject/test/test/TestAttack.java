@@ -123,4 +123,20 @@ public class TestAttack {
 	public void testValidateNumOfArmyMovesFail() {
 		assertEquals(ac.validateNumOfArmyMoves(4, 3), false);
 	}
+	
+	@Test
+	public void testValidateNumDiceSuccess() {
+		HashMap<String, Integer> attackerArmiesMap = new HashMap<String, Integer>();
+		attackerArmiesMap.put("malasiya", 4);
+		p.setOwnedCountriesArmiesList(attackerArmiesMap);
+		assertEquals(ac.validateNumDice("malasiya", 3, p), true); 
+	}
+	
+	@Test
+	public void testValidateNumDiceFail() {
+	HashMap<String, Integer> attackerArmiesMap = new HashMap<String, Integer>();
+	attackerArmiesMap.put("malasiya", 4);
+	p.setOwnedCountriesArmiesList(attackerArmiesMap);
+	assertEquals(ac.validateNumDice("malasiya", 5, p), false); 
+	}
 }

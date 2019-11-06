@@ -235,7 +235,7 @@ public class AttackController {
 
 		assigningCountryToAttacker(playerData, player);
 
-		return "Army Moved to Conquered Country ";
+		return "Army Moved to Conquered Country";
 	}
 
 	public boolean moveArmy(int movingArmy, HashMap<String, Player> playerData, Player player) {
