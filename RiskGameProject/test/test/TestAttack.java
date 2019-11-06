@@ -66,21 +66,17 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing the attack phase method
-	 * 
+	 * @author garimadawar
 	 * */
 	@Test
-	public void testAttackPhase() {
-		/*
-		String result = ac.attackPhase("India", "China", 3,playerDetails.get(player),playerDetails.get(player));
+	public void testAttackPhaseSuccess() {
+		String result = ac.attackPhase("India", "China", 3,playerDetails.get(player));
 		assertEquals("Attacker ready to attack the Country",result);  //need to confirm from Ashish
-		String re = ac.attackPhase("China", "Quebec", 2, playerDetails.get(player),playerDetails.get(player));
-		assertEquals("Attacker ready to attack the Country", re);
-		*/
 	}
 	
 	/**
 	 * This method is used for testing the attack phase method
-	 * 
+	 * @author garimadawar
 	 * */
 	@Test
 	public void testDefendPhase() {
@@ -91,7 +87,7 @@ public class TestAttack {
 	
 	/**
 	 * This method is used for testing if attacker and defender country are in same continent
-	 *  
+	 *  @author garimadawar
 	 * */
 	@Test
 	public void testValidateDefenderCountry() {
