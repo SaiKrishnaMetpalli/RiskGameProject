@@ -530,7 +530,11 @@ public class CommandLine {
 				if (p.getGameState().equals("REINFORCE")) {
 					if (inputCommand.length == 4) {
 						if ((Integer.parseInt(inputCommand[1]) > 0) && (Integer.parseInt(inputCommand[2]) > 0)
-								&& (Integer.parseInt(inputCommand[3]) > 0)) {
+								&& (Integer.parseInt(inputCommand[3]) > 0)
+								&& (Math.max(
+										Math.max(Integer.parseInt(inputCommand[1]), Integer.parseInt(inputCommand[2])),
+										Integer.parseInt(inputCommand[3])) <= pl.getListOfPlayers()
+												.get(p.getCurrentPlayerTurn()).getCurrentCardList().size())) {
 							p.setCardReward(playerController.exchangeCard(Integer.parseInt(inputCommand[1]),
 									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]),
 									pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList(),
@@ -540,6 +544,10 @@ public class CommandLine {
 							playerController.removeCardPositions(Integer.parseInt(inputCommand[1]),
 									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]), pl, p);
 							addToCommands = true;
+						} else {
+							System.out.println("\nCards cannot be exchanged; the given positions are invalid");
+							actions+="\nCards cannot be exchanged; the given positions are invalid";
+							addToCommands=false;
 						}
 					} else if (inputCommand.length == 2) {
 						if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() >= 5) {
