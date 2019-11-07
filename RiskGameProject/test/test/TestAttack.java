@@ -194,8 +194,8 @@ public class TestAttack {
 	@Test
 	public void testIsValidAttackMove() {
 		p.setDefenderCountry("India");
-		assertTrue(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p));
+		assertTrue(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p , 4));
 		p.setDefenderCountry("Canada");
-		assertFalse(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p));
+		assertFalse(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p , 3));
 	}
 }

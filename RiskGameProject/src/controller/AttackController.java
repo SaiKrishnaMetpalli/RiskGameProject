@@ -498,9 +498,9 @@ public class AttackController {
 	 * @return true if army can be moved to conquered country
 	 */
 	public boolean isvalidAttackMove(int armyMove, int diceRolled, ArrayList<String> conqueredCountriesList,
-			Player player) {
-
-		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry())) {
+			Player player , int attackerArmy) {
+		
+		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry()) && armyMove < attackerArmy) {
 			return true;
 		} else
 			return false;
