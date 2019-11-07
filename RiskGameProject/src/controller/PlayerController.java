@@ -69,9 +69,16 @@ public class PlayerController {
 		HashMap<String, ArrayList<String>> listmap = cc.getContinentsCountryList(continents, countries);
 		Continents cont = cc.getContinentByCountryName(continents, countries, countryName);
 		ArrayList<String> continentsCountryList = listmap.get(cont.getContinentName());
-		Collections.sort(continentsCountryList);
-		Collections.sort(player.getOwnedCountriesList());
-		if (player.getOwnedCountriesList().equals(continentsCountryList)) {
+		
+		int count=0;
+		for(String conCountryName:continentsCountryList) {
+			for(String playerCountryName:player.getOwnedCountriesList()) {
+				if(playerCountryName.equals(conCountryName)) {
+					count++;
+				}
+			}
+		}
+		if (count==continentsCountryList.size()) {
 			continentReward = Integer.parseInt(cont.getcontinentControlValue());
 		}
 		return continentReward;
