@@ -31,7 +31,8 @@ public class TestMapOperations {
 	boolean flag;
 
 	/**
-	 * This method is used for initial setting up scenarios for each test case method
+	 * This method is used for initial setting up scenarios for each test case
+	 * method
 	 */
 	@Before
 	public void setUp() {
@@ -46,6 +47,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the game map load
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -57,6 +59,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for checking whether map is connected or not
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -68,6 +71,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the file formats of map
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -78,37 +82,39 @@ public class TestMapOperations {
 		flag = mfv.validateFile(file);
 		assertEquals(true, flag);
 	}
-	
+
 	/**
 	 * This method is used for testing the add continent scenarios
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void addContinentTest() throws FileNotFoundException{
+	public void addContinentTest() throws FileNotFoundException {
 		fileLoadTest();
 		String result = msc.addContinent(continents, "Asiaa", "7");
 		String re = msc.addContinent(continents, "Europe", "5");
-		assertEquals("Continent added successfully",result);
-		assertEquals("Continent already exists",re);		
+		assertEquals("Continent added successfully", result);
+		assertEquals("Continent already exists", re);
 	}
-	
+
 	/**
 	 * This method is used for testing the add country scenarios
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void addCountryTest() throws FileNotFoundException{
+	public void addCountryTest() throws FileNotFoundException {
 		fileLoadTest();
 		String result = msc.addCountry(continents, countries, boundries, "Inde", "Asia");
 		String re = msc.addCountry(continents, countries, boundries, "India", "Asiia");
-		assertEquals("Country added successfully",result);
-		assertEquals("Continent does not exists. Please add the Continent first",re);
-		
-		
+		assertEquals("Country added successfully", result);
+		assertEquals("Continent does not exists. Please add the Continent first", re);
+
 	}
 
 	/**
 	 * This method is used for testing the add neighbour scenarios
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -116,51 +122,51 @@ public class TestMapOperations {
 		fileLoadTest();
 		String result = msc.addNeighbour(countries, boundries, "Ontario", "Peru");
 		String re = msc.addNeighbour(countries, boundries, "Argentina", "Peruu");
-		assertEquals("Neighbour country is added successfully",result);
-		assertEquals("Neighbour country does not exists. Please add the country and then neighbour",re);
-		
-		
+		assertEquals("Neighbour country is added successfully", result);
+		assertEquals("Neighbour country does not exists. Please add the country and then neighbour", re);
+
 	}
-	
+
 	/**
 	 * This method is used for testing the remove continent scenarios
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void removeContinentTest() throws FileNotFoundException { 
+	public void removeContinentTest() throws FileNotFoundException {
 		fileLoadTest();
 		String result = msc.removeContinent(continents, boundries, countries, "Asiass");
 		String re = msc.removeContinent(continents, boundries, countries, "Europe");
-		assertEquals("Continents and countries under continent removed successfully",re);
-		assertEquals("Continent does not exist",result);
+		assertEquals("Continents and countries under continent removed successfully", re);
+		assertEquals("Continent does not exist", result);
 	}
-	
+
 	/**
 	 * This method is used for testing the remove country scenarios
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void removeCountryTest() throws FileNotFoundException {
 		fileLoadTest();
-		String result = msc.removeCountry(countries, boundries,"Egypt" );
+		String result = msc.removeCountry(countries, boundries, "Egypt");
 		String re = msc.removeCountry(countries, boundries, "Jappan");
-		assertEquals("Country and it's neighbours are removed successfully",result);
-		assertEquals("Country does not exists. Please add the Country first",re);
+		assertEquals("Country and it's neighbours are removed successfully", result);
+		assertEquals("Country does not exists. Please add the Country first", re);
 	}
-	
+
 	/**
 	 * This method is used for testing the remove neighbour scenarios
+	 * 
 	 * @throws FileNotFoundException
 	 */
-    @Test
-    public void removeNeighbourTest() throws FileNotFoundException {
-    	fileLoadTest();
-    	String result = msc.removeNeighbour(countries, boundries, "China", "Indiaaa");
-    	String re = msc.removeNeighbour(countries, boundries, "China", "India");
-    	assertEquals("Neighbour country does not exists",result);
-    	assertEquals("Neighbour country is removed successfully",re);
-    	
-    	
-    }
-}
+	@Test
+	public void removeNeighbourTest() throws FileNotFoundException {
+		fileLoadTest();
+		String result = msc.removeNeighbour(countries, boundries, "China", "Indiaaa");
+		String re = msc.removeNeighbour(countries, boundries, "China", "India");
+		assertEquals("Neighbour country does not exists", result);
+		assertEquals("Neighbour country is removed successfully", re);
 
+	}
+}

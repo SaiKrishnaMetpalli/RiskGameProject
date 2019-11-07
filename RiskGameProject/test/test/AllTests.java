@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ TestFortification.class, TestMapOperations.class, TestPlayerOperations.class, TestReinforcement.class, TestAttack.class })
+@SuiteClasses({ TestFortification.class, TestMapOperations.class, TestPlayerOperations.class, TestReinforcement.class,
+		TestAttack.class })
 public class AllTests {
 
 }

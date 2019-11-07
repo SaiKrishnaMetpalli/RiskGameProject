@@ -19,7 +19,6 @@ import util.CONSTANTS;
 /**
  * This class is used for testing the reinforcement methods
  * 
- * @author sakib
  */
 public class TestReinforcement {
 
@@ -133,7 +132,7 @@ public class TestReinforcement {
 		modelP.setAvailableReinforceArmies(5);
 		assertEquals(
 				ric.placeReinforceArmy(countryName, 6, gm.getCountries(), playerDetails, gm.getContinents(), modelP),
-				"Reinforcement cannot be performed; the given reinforcement armies are greater than the available reinforcemet armies");
+				"Not enough reinforcement armies available");
 	}
 
 	/**

@@ -487,4 +487,23 @@ public class AttackController {
 		}
 
 	}
+
+	/**
+	 * method is used to check whether attack move can be performed or not
+	 *
+	 * @param armyMove               is the number of army to move
+	 * @param diceRolled             is the last dice played to defeat country
+	 * @param conqueredCountriesList is the list of all conquered countries list
+	 * @param player                 conatins the current players's turn data
+	 * @return true if army can be moved to conquered country
+	 */
+	public boolean isvalidAttackMove(int armyMove, int diceRolled, ArrayList<String> conqueredCountriesList,
+			Player player) {
+
+		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry())) {
+			return true;
+		} else
+			return false;
+
+	}
 }
