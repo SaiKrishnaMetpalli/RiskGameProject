@@ -846,15 +846,9 @@ public class CommandLine {
 					if (inputCommand.length == 2) {
 
 						if ((p.isAllOutPerformed()
-								|| inputCommandsList.get(inputCommandsList.size() - 1).equals("defend"))
-								&& (p.getConqueredCountries().contains(p.getDefenderCountry()))) {
-							if(ac.isvalidAttackMove(Integer.parseInt(inputCommand[1]) , p.getDiceRolled() ,
-									p.getConqueredCountries() , p))
-							{
-								
-							
-							if (Integer.parseInt(inputCommand[1]) >= p.getDiceRolled()) {
-
+								|| inputCommandsList.get(inputCommandsList.size() - 1).equals("defend"))) {
+							if (ac.isvalidAttackMove(Integer.parseInt(inputCommand[1]), p.getDiceRolled(),
+									p.getConqueredCountries(), p)) {
 								String armyMoved = ac.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]),
 										pl.getListOfPlayers(), p, gm);
 								System.out.println("\n" + armyMoved);

@@ -494,7 +494,7 @@ public class AttackController {
 	 * @param armyMove               is the number of army to move
 	 * @param diceRolled             is the last dice played to defeat country
 	 * @param conqueredCountriesList is the list of all conquered countries list
-	 * @param player                 conatins the current players's turn data
+	 * @param player                 contains the current players's turn data
 	 * @return true if army can be moved to conquered country
 	 */
 	public boolean isvalidAttackMove(int armyMove, int diceRolled, ArrayList<String> conqueredCountriesList,
