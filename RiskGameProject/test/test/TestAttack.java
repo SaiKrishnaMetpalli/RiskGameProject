@@ -10,11 +10,11 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.AttackController;
 import controller.CommonController;
 import controller.MapSelectionController;
+import controller.PlayerController;
 import controller.PlayerSelectionController;
-import controller.ReinforcementController;
+
 import model.GameMap;
 import model.Player;
 import util.CONSTANTS;
@@ -25,8 +25,7 @@ import util.CONSTANTS;
  */
 public class TestAttack {
 
-	AttackController ac;
-	ReinforcementController ric;
+	PlayerController playerController;	
 	MapSelectionController msc;
 	PlayerSelectionController psc;
 	CommonController cc;
@@ -47,10 +46,9 @@ public class TestAttack {
 	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
-		ac = new AttackController();
+		playerController=new PlayerController();
 		msc = new MapSelectionController();
-		psc = new PlayerSelectionController();
-		ric = new ReinforcementController();
+		psc = new PlayerSelectionController();		
 		cc = new CommonController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
@@ -72,7 +70,7 @@ public class TestAttack {
 	 */
 	@Test
 	public void testAttackPhaseSuccess() {
-		String result = ac.attackPhase("India", "China", 3, playerDetails.get(player));
+		String result = playerController.attackPhase("India", "China", 3, playerDetails.get(player));
 		assertEquals("Attacker Ready and placed his army on field", result); // need to confirm from Ashish
 	}
 
@@ -83,7 +81,7 @@ public class TestAttack {
 	 */
 	@Test
 	public void testAttackPhaseFailure() {
-		String re = ac.attackPhase("China", "Quebec", 2, playerDetails.get(player));
+		String re = playerController.attackPhase("China", "Quebec", 2, playerDetails.get(player));
 		assertEquals("Attacker Ready and placed his army on field", re);
 	}
 
@@ -95,7 +93,7 @@ public class TestAttack {
 	@Test
 	public void testDefendPhase() {
 		boolean ans = true;
-		boolean result = ac.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
+		boolean result = playerController.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
 		assertEquals(ans, result);
 	}
 
@@ -107,9 +105,9 @@ public class TestAttack {
 	 */
 	@Test
 	public void testValidateDefenderCountry() {
-		assertTrue(ac.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries(),
+		assertTrue(playerController.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries(),
 				new ArrayList<String>(Arrays.asList("India", "Pakistan", "Bangladesh"))));
-		assertFalse(ac.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries(),
+		assertFalse(playerController.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries(),
 				new ArrayList<String>(Arrays.asList("India", "Pakistan", "China"))));
 	}
 
@@ -121,7 +119,7 @@ public class TestAttack {
 	 */
 	@Test
 	public void testValidateNumOfArmyMovesSuccessOne() {
-		assertEquals(ac.validateNumOfArmyMoves(3, 4), true);
+		assertEquals(playerController.validateNumOfArmyMoves(3, 4), true);
 	}
 
 	/**
@@ -132,7 +130,7 @@ public class TestAttack {
 	 */
 	@Test
 	public void testValidateNumOfArmyMovesSuccessTwo() {
-		assertEquals(ac.validateNumOfArmyMoves(4, 4), true);
+		assertEquals(playerController.validateNumOfArmyMoves(4, 4), true);
 	}
 
 	/**
@@ -143,7 +141,7 @@ public class TestAttack {
 	 */
 	@Test
 	public void testValidateNumOfArmyMovesFail() {
-		assertEquals(ac.validateNumOfArmyMoves(4, 3), false);
+		assertEquals(playerController.validateNumOfArmyMoves(4, 3), false);
 	}
 
 	/**
@@ -156,7 +154,7 @@ public class TestAttack {
 		HashMap<String, Integer> attackerArmiesMap = new HashMap<String, Integer>();
 		attackerArmiesMap.put("malasiya", 4);
 		p.setOwnedCountriesArmiesList(attackerArmiesMap);
-		assertEquals(ac.validateNumDice("malasiya", 3, p), true);
+		assertEquals(playerController.validateNumDice("malasiya", 3, p), true);
 	}
 
 	/**
@@ -169,7 +167,7 @@ public class TestAttack {
 		HashMap<String, Integer> attackerArmiesMap = new HashMap<String, Integer>();
 		attackerArmiesMap.put("malasiya", 4);
 		p.setOwnedCountriesArmiesList(attackerArmiesMap);
-		assertEquals(ac.validateNumDice("malasiya", 5, p), false);
+		assertEquals(playerController.validateNumDice("malasiya", 5, p), false);
 	}
 
 	/**
@@ -180,7 +178,7 @@ public class TestAttack {
 	@Test
 	public void testDefendPhaseDiceRoll() {
 		boolean ans = false;
-		ans = ac.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
+		ans = playerController.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
 		boolean val = true;
 		assertEquals(ans, val);
 	}
@@ -193,8 +191,8 @@ public class TestAttack {
 	@Test
 	public void testIsValidAttackMove() {
 		p.setDefenderCountry("India");
-		assertTrue(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 4));
+		assertTrue(playerController.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 4));
 		p.setDefenderCountry("Canada");
-		assertFalse(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 3));
+		assertFalse(playerController.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 3));
 	}
 }

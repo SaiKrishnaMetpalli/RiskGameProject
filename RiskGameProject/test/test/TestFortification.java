@@ -10,8 +10,8 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.FortificationController;
 import controller.MapSelectionController;
+import controller.PlayerController;
 import controller.PlayerSelectionController;
 import model.GameMap;
 import model.Player;
@@ -21,10 +21,10 @@ import util.CONSTANTS;
  * This class is used for testing fortification methods
  */
 public class TestFortification {
-
-	FortificationController fc;
+	
 	MapSelectionController msc;
 	PlayerSelectionController psc;
+	PlayerController playerController;
 	CONSTANTS con;
 	GameMap gm;
 	HashMap<String, Player> playerDetails;
@@ -46,7 +46,7 @@ public class TestFortification {
 	public void setUp() throws FileNotFoundException {
 		msc = new MapSelectionController();
 		psc = new PlayerSelectionController();
-		fc = new FortificationController();
+		playerController=new PlayerController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
 		playerDetails = new HashMap<String, Player>();
@@ -64,7 +64,7 @@ public class TestFortification {
 	 */
 	@Test
 	public void testPlayerDontOwnCountry() {
-		assertEquals(fc.fortify(playerDetails, "Quebec", "Alberta ", 5, gm.getCountries(), gm.getBoundries()),
+		assertEquals(playerController.fortify(playerDetails, "Quebec", "Alberta ", 5, gm.getCountries(), gm.getBoundries()),
 				"Targeted country is not owned by player");
 	}
 
@@ -77,7 +77,7 @@ public class TestFortification {
 		toCountry = playerOwnedCountries.get(2);
 		armyToPlace = pOb.getOwnedCountriesArmiesList().get(fromCountry) - 1;
 		assertEquals(
-				fc.fortify(playerDetails, fromCountry, toCountry, armyToPlace, gm.getCountries(), gm.getBoundries()),
+				playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace, gm.getCountries(), gm.getBoundries()),
 				"Player does not own the path");
 	}
 

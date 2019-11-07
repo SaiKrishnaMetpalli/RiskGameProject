@@ -11,8 +11,9 @@ import org.junit.Test;
 
 import controller.CommonController;
 import controller.MapSelectionController;
+import controller.PlayerController;
 import controller.PlayerSelectionController;
-import controller.ReinforcementController;
+
 import model.GameMap;
 import util.CONSTANTS;
 
@@ -22,7 +23,7 @@ import util.CONSTANTS;
  */
 public class TestReinforcement {
 
-	ReinforcementController ric;
+	PlayerController playerController;
 	MapSelectionController msc;
 	PlayerSelectionController psc;
 	CommonController cc;
@@ -48,7 +49,7 @@ public class TestReinforcement {
 	public void setUp() throws FileNotFoundException {
 		msc = new MapSelectionController();
 		psc = new PlayerSelectionController();
-		ric = new ReinforcementController();
+		playerController = new PlayerController();
 		cc = new CommonController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
@@ -69,7 +70,7 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testCalculateOwnedCountryReward() {
-		assertEquals(ric.calculateOwnedCountryReward(playerDetails.get(player)), 4);
+		assertEquals(playerController.calculateOwnedCountryReward(playerDetails.get(player)), 4);
 	}
 
 	/**
@@ -81,8 +82,8 @@ public class TestReinforcement {
 	public void testCalculateContinentReward() {
 		// playerDetails.get(player).setOwnedCountriesList(cc.getContinentsCountryList(gm.getContinents(),
 		// gm.getCountries()).get(countryName));
-		assertEquals(ric.calculateContinentReward(playerDetails.get(player), gm.getContinents(), gm.getCountries(),
-				countryName), 0);
+		assertEquals(playerController.calculateContinentReward(playerDetails.get(player), gm.getContinents(),
+				gm.getCountries(), countryName), 0);
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testReinforcementCalculation() {
-		assertEquals(ric.calculateReinforceArmy(4, 3, 2), 9);
+		assertEquals(playerController.calculateReinforceArmy(4, 3, 2), 9);
 	}
 
 	/**
@@ -103,7 +104,7 @@ public class TestReinforcement {
 	 */
 	@Test
 	public void testReinforcementCalculationMinimumArmy() {
-		assertEquals(ric.calculateReinforceArmy(1, 0, 0), 3);
+		assertEquals(playerController.calculateReinforceArmy(1, 0, 0), 3);
 	}
 
 	/**
@@ -116,9 +117,8 @@ public class TestReinforcement {
 	public void testplaceReinforceArmySucess() {
 
 		modelP.setAvailableReinforceArmies(5);
-		assertEquals(
-				ric.placeReinforceArmy(countryName, 4, gm.getCountries(), playerDetails, gm.getContinents(), modelP),
-				"Reinforcement armies placed successfully");
+		assertEquals(playerController.placeReinforceArmy(countryName, 4, gm.getCountries(), playerDetails,
+				gm.getContinents(), modelP), "Reinforcement armies placed successfully");
 	}
 
 	/**
@@ -131,7 +131,8 @@ public class TestReinforcement {
 	public void testplaceReinforceArmyFail() {
 		modelP.setAvailableReinforceArmies(5);
 		assertEquals(
-				ric.placeReinforceArmy(countryName, 6, gm.getCountries(), playerDetails, gm.getContinents(), modelP),
+				playerController.placeReinforceArmy(countryName, 6, gm.getCountries(), playerDetails,
+						gm.getContinents(), modelP),
 				"Reinforcement cannot be performed; the given reinforcement armies are greater than the available reinforcemet armies");
 	}
 
@@ -143,10 +144,10 @@ public class TestReinforcement {
 	@Test
 	public void testExchangeCardSuccessForUniqeCard() {
 		currentCardList.addAll(Arrays.asList("a", "b", "c"));
-		assertEquals(ric.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 5);
+		assertEquals(playerController.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 5);
 		currentCardList.clear();
 		currentCardList.addAll(Arrays.asList("e", "d", "f"));
-		assertEquals(ric.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 10);
+		assertEquals(playerController.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 10);
 
 	}
 
@@ -158,7 +159,7 @@ public class TestReinforcement {
 	@Test
 	public void testExchangeCardSuccessForSameCard() {
 		currentCardList.addAll(Arrays.asList("a", "a", "a"));
-		assertEquals(ric.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 5);
+		assertEquals(playerController.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 5);
 
 	}
 
@@ -170,7 +171,7 @@ public class TestReinforcement {
 	@Test
 	public void testExchangeCardNoArmy() {
 		currentCardList.addAll(Arrays.asList("a", "b", "a"));
-		assertEquals(ric.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 0);
+		assertEquals(playerController.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 0);
 	}
 
 }
