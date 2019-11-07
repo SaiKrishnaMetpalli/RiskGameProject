@@ -38,6 +38,8 @@ public class TestAttack {
 	String countryName = "Quebec";
 	String player;
 	Player p;
+	
+	
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case
@@ -61,6 +63,8 @@ public class TestAttack {
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
 		p = new Player();
+		p.setConqueredCountries(new ArrayList<String>(Arrays.asList("India", "Japan", "Quebec")));
+		
 	}
 
 	/**
@@ -177,9 +181,21 @@ public class TestAttack {
 	 */
 	@Test
 	public void testDefendPhaseDiceRoll() {
-		boolean ans = true;
+		boolean ans = false;
 		ans = ac.defendPhaseDiceRoll("China", 2, playerDetails.get(player));
 		boolean val = true;
 		assertEquals(ans, val);
+	}
+	/**
+	 * Method is used to test valid army move to conquered country
+	 * 
+	 * @author Ashish Chaudhary
+	 */
+	@Test
+	public void testIsValidAttackMove() {
+		p.setDefenderCountry("India");
+		assertTrue(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p));
+		p.setDefenderCountry("Canada");
+		assertFalse(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p));
 	}
 }
