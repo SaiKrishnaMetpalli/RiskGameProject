@@ -40,7 +40,7 @@ public class CommandLine {
 	Player p;
 	PlayersList pl;
 	PlayerSelectionController psc;
-	MapSelectionController msc;		
+	MapSelectionController msc;
 	CommonController cc;
 	PlayerController playerController;
 	PhaseView pv;
@@ -64,9 +64,9 @@ public class CommandLine {
 		p = new Player();
 		pl = new PlayersList();
 		psc = new PlayerSelectionController();
-		msc = new MapSelectionController();				
+		msc = new MapSelectionController();
 		cc = new CommonController();
-		playerController=new PlayerController();
+		playerController = new PlayerController();
 		pv = new PhaseView();
 		pwdv = new PlayerWorldDominationView();
 		cev = new CardExchangeView();
@@ -594,12 +594,13 @@ public class CommandLine {
 										int continetReward = playerController.calculateContinentReward(
 												pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
 												gm.getCountries(), inputCommand[1]);
-										p.setAvailableReinforceArmies(playerController.calculateReinforceArmy(countryReward,
-												continetReward, p.getCardReward()));
+										p.setAvailableReinforceArmies(playerController.calculateReinforceArmy(
+												countryReward, continetReward, p.getCardReward()));
 									}
 
-									result = playerController.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
-											gm.getCountries(), pl.getListOfPlayers(), gm.getContinents(), p);
+									result = playerController.placeReinforceArmy(inputCommand[1],
+											Integer.parseInt(inputCommand[2]), gm.getCountries(), pl.getListOfPlayers(),
+											gm.getContinents(), p);
 									System.out.println("\n" + result);
 									actions += "\n" + result;
 									if (result.contains("success")) {
@@ -665,20 +666,21 @@ public class CommandLine {
 							p.setAllOutPerformed(false);
 							if (inputCommand[3].equals("-allout")) {
 								if (checkPlayersTurn(inputCommand[1])) {
-									if (playerController.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
-											gm.getBoundries(), pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getOwnedCountriesList())) {
+									if (playerController.validateDefenderCountry(inputCommand[1], inputCommand[2],
+											gm.getCountries(), gm.getBoundries(), pl.getListOfPlayers()
+													.get(p.getCurrentPlayerTurn()).getOwnedCountriesList())) {
 
 										p.setAttackerName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
 										p.setDefenderName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 
-										String allOutAttacked = playerController.allOutAttackedPhase(inputCommand[1], inputCommand[2],
-												pl.getListOfPlayers().get(p.getAttackerName()), gm.getCountries(), p,
-												pl.getListOfPlayers().get(p.getDefenderName()));
+										String allOutAttacked = playerController.allOutAttackedPhase(inputCommand[1],
+												inputCommand[2], pl.getListOfPlayers().get(p.getAttackerName()),
+												gm.getCountries(), p, pl.getListOfPlayers().get(p.getDefenderName()));
 										System.out.println("\n" + allOutAttacked + "\n" + "The last dice rolled: "
 												+ p.getDiceRolled());
-										actions += "\n " + allOutAttacked + "\n" + "The last dice rolled: "
+										actions += "\n" + allOutAttacked + "\n" + "The last dice rolled: "
 												+ p.getDiceRolled();
 										if (allOutAttacked.contains("Won")) {
 											boolean checkAllCountriesOwned = playerController.checkGameEnd(pl);
@@ -690,7 +692,8 @@ public class CommandLine {
 										}
 										addToCommands = true;
 									} else {
-										System.out.println("\nDefender Country is not a neighbouring country or it is his own Country");
+										System.out.println(
+												"\nDefender Country is not a neighbouring country or it is his own Country");
 										actions += "\nDefender Country is not a neighbouring country or it is his own Country";
 										addToCommands = false;
 									}
@@ -702,8 +705,9 @@ public class CommandLine {
 								}
 							} else {
 								if (checkPlayersTurn(inputCommand[1])) {
-									if (playerController.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
-											gm.getBoundries(),pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getOwnedCountriesList())) {
+									if (playerController.validateDefenderCountry(inputCommand[1], inputCommand[2],
+											gm.getCountries(), gm.getBoundries(), pl.getListOfPlayers()
+													.get(p.getCurrentPlayerTurn()).getOwnedCountriesList())) {
 
 										p.setAttackerName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
@@ -711,11 +715,12 @@ public class CommandLine {
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[2]));
 										if (Integer.parseInt(inputCommand[3]) > 0
 												&& Integer.parseInt(inputCommand[3]) <= 3) {
-											if (playerController.validateNumDice(inputCommand[1], Integer.parseInt(inputCommand[3]),
+											if (playerController.validateNumDice(inputCommand[1],
+													Integer.parseInt(inputCommand[3]),
 													pl.getListOfPlayers().get(p.getAttackerName()))) {
 
-												String attacked = playerController.attackPhase(inputCommand[1], inputCommand[2],
-														Integer.parseInt(inputCommand[3]), p);
+												String attacked = playerController.attackPhase(inputCommand[1],
+														inputCommand[2], Integer.parseInt(inputCommand[3]), p);
 												System.out.println("\n" + attacked);
 												actions += "\n" + attacked;
 												addToCommands = true;
@@ -730,7 +735,8 @@ public class CommandLine {
 											addToCommands = false;
 										}
 									} else {
-										System.out.println("\nDefender Country is not a neighbouring country or it is his own Country");
+										System.out.println(
+												"\nDefender Country is not a neighbouring country or it is his own Country");
 										actions += "\nDefender Country is not a neighbouring country or it is his own Country";
 										addToCommands = false;
 									}
@@ -846,8 +852,8 @@ public class CommandLine {
 							if (playerController.isvalidAttackMove(Integer.parseInt(inputCommand[1]), p.getDiceRolled(),
 									p.getConqueredCountries(), p, pl.getListOfPlayers().get(p.getAttackerName())
 											.getOwnedCountriesArmiesList().get(p.getAttackerCountry()))) {
-								String armyMoved = playerController.movingArmyToConqueredCountry(Integer.parseInt(inputCommand[1]),
-										pl.getListOfPlayers(), p, gm);
+								String armyMoved = playerController.movingArmyToConqueredCountry(
+										Integer.parseInt(inputCommand[1]), pl.getListOfPlayers(), p, gm);
 								System.out.println("\n" + armyMoved);
 								actions += "\n" + armyMoved;
 								addToCommands = true;
@@ -894,15 +900,16 @@ public class CommandLine {
 						if (!inputCommandsList.get(inputCommandsList.size() - 1).equals("fortify")) {
 							if (inputCommand.length == 4) {
 								if (checkPlayersTurn(inputCommand[1])) {
-									result = playerController.fortify(pl.getListOfPlayers(), inputCommand[1], inputCommand[2],
-											Integer.parseInt(inputCommand[3]), gm.getCountries(), gm.getBoundries());
+									result = playerController.fortify(pl.getListOfPlayers(), inputCommand[1],
+											inputCommand[2], Integer.parseInt(inputCommand[3]), gm.getCountries(),
+											gm.getBoundries());
 									System.out.println("\n" + result);
 									actions += "\n" + result;
 									if (result.contains("success") || (result.contains("does not own"))) {
 										addToCommands = true;
 										if (p.getConqueredCountries().size() > 0) {
-											playerController.addGameCardsToAttacker(pl.getListOfPlayers().get(p.getAttackerName()), p,
-													gm);
+											playerController.addGameCardsToAttacker(
+													pl.getListOfPlayers().get(p.getAttackerName()), p, gm);
 										}
 										actions = "";
 										clearPlayerObject();
@@ -921,8 +928,8 @@ public class CommandLine {
 								if (inputCommand[1].equals("-none")) {
 									System.out.println("\nFortification none completed");
 									if (p.getConqueredCountries().size() > 0) {
-										playerController.addGameCardsToAttacker(pl.getListOfPlayers().get(p.getAttackerName()), p,
-												gm);
+										playerController.addGameCardsToAttacker(
+												pl.getListOfPlayers().get(p.getAttackerName()), p, gm);
 									}
 									actions = "";
 									clearPlayerObject();

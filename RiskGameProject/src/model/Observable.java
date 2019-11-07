@@ -10,6 +10,7 @@ public class Observable {
 
 	/**
 	 * This method is used for attaching the observer to this class
+	 * 
 	 * @param o this variable contains Observer object
 	 */
 	public void attach(Observer o) {
@@ -18,6 +19,7 @@ public class Observable {
 
 	/**
 	 * This method is used for detaching the observer to this class
+	 * 
 	 * @param o this variable contains Observer object
 	 */
 	public void detach(Observer o) {
@@ -28,11 +30,12 @@ public class Observable {
 
 	/**
 	 * This method notifies the observer that state has changed
+	 * 
 	 * @param observable this variable contains the observable object state
 	 */
-	public void notifyObservers(Observable observable,Object x) {
+	public void notifyObservers(Observable observable, Object x) {
 		for (Observer observer : observers) {
-			observer.update(observable,x);
+			observer.update(observable, x);
 		}
 	}
 }

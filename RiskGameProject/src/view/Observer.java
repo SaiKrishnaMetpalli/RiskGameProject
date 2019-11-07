@@ -11,5 +11,5 @@ public interface Observer {
 	 * @param o   the observable object.
 	 * @param arg an argument passed to the <code>notifyObservers</code> method.
 	 */
-	void update(Observable o,Object x);
+	void update(Observable o, Object x);
 }

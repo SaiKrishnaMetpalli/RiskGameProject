@@ -1,6 +1,5 @@
 package model;
 
-
 /**
  * This File contains the Continents information
  * 
@@ -8,7 +7,7 @@ package model;
 
 public class Continents {
 
-	private String continentControlValue, continentColour, continentName;	
+	private String continentControlValue, continentColour, continentName;
 
 	public Continents(String continentName, String continentControlValue, String colour) {
 		this.continentControlValue = continentControlValue;

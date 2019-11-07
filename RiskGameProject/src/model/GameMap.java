@@ -15,11 +15,11 @@ public class GameMap {
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
-	public GameMap() {		
+	public GameMap() {
 		continents = new HashMap<Integer, Continents>();
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
-		totalCardsList=new ArrayList<String>();
+		totalCardsList = new ArrayList<String>();
 	}
 
 	public HashMap<Integer, Continents> getContinents() {

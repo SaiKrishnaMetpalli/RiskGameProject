@@ -11,6 +11,7 @@ import model.PlayersList;
 
 /**
  * This class gives the information about player statistics
+ * 
  * @author Sai Krishna
  *
  */
@@ -18,19 +19,21 @@ public class PlayerWorldDominationView implements Observer {
 
 	/**
 	 * This method is implemented from the Observer class
+	 * 
 	 * @author Sai Krishna
 	 */
-	public void update(Observable obs,Object x) {
-		showMessage((PlayersList) obs,(Player) x);
+	public void update(Observable obs, Object x) {
+		showMessage((PlayersList) obs, (Player) x);
 	}
 
 	/**
 	 * This method gives the information about the player statistics
+	 * 
 	 * @param pl this variable contains all the players data
-	 * @param p this variable contains the current turn player data
+	 * @param p  this variable contains the current turn player data
 	 */
 	private void showMessage(PlayersList pl, Player p) {
-		if(p.getGameState()!="STARTUP") {
+		if (p.getGameState() != "STARTUP") {
 			for (int dashes = 0; dashes < 120; dashes++) {
 				System.out.print("_");
 			}
@@ -41,46 +44,49 @@ public class PlayerWorldDominationView implements Observer {
 			}
 			System.out.println();
 			System.out.println();
-			int totalArmies=0;
-			totalArmies=getTotalArmiesCount(pl);
-			System.out.format("%-30s|%-30s|%-30s|%-30s", "Player Name", "Total Armies",
-					"% Map Controlled", "Continents Controlled");
+			int totalArmies = 0;
+			totalArmies = getTotalArmiesCount(pl);
+			System.out.format("%-30s|%-30s|%-30s|%-30s", "Player Name", "Total Armies", "% Map Controlled",
+					"Continents Controlled");
 			System.out.println();
 			for (int dashes = 0; dashes < 120; dashes++)
 				System.out.print("_");
 			System.out.println();
-			for(String playerName:pl.getListOfPlayers().keySet()) {
-				int totalArmiesPlayer=0;
-				double percMapPlayer=0.0;
-				String continentsControlled="";
-				ArrayList<String> countiresList=pl.getListOfPlayers().get(playerName).getOwnedCountriesList();
-				HashMap<String,Integer> countiresArmiesList=pl.getListOfPlayers().get(playerName).getOwnedCountriesArmiesList();
-				for(String countryName:countiresArmiesList.keySet()) {
-					totalArmiesPlayer+=countiresArmiesList.get(countryName);
+			for (String playerName : pl.getListOfPlayers().keySet()) {
+				int totalArmiesPlayer = 0;
+				double percMapPlayer = 0.0;
+				String continentsControlled = "";
+				ArrayList<String> countiresList = pl.getListOfPlayers().get(playerName).getOwnedCountriesList();
+				HashMap<String, Integer> countiresArmiesList = pl.getListOfPlayers().get(playerName)
+						.getOwnedCountriesArmiesList();
+				for (String countryName : countiresArmiesList.keySet()) {
+					totalArmiesPlayer += countiresArmiesList.get(countryName);
 				}
-				percMapPlayer=((double) totalArmiesPlayer/(double) totalArmies)*100;
-				Collections.sort(countiresList);				
-				for(String continentName:p.getContinentsCountryList().keySet()) {
+				percMapPlayer = ((double) totalArmiesPlayer / (double) totalArmies) * 100;
+				Collections.sort(countiresList);
+				for (String continentName : p.getContinentsCountryList().keySet()) {
 					Collections.sort(p.getContinentsCountryList().get(continentName));
-					if(countiresList.equals(p.getContinentsCountryList().get(continentName))) {
-						continentsControlled+=continentName;
+					if (countiresList.equals(p.getContinentsCountryList().get(continentName))) {
+						continentsControlled += continentName;
 					}
 				}
-				if(continentsControlled.equals("")) {
-					continentsControlled="---";
+				if (continentsControlled.equals("")) {
+					continentsControlled = "---";
 				}
-				System.out.format("%-30s|%-30d|%-30.2f|%-30s", playerName,totalArmiesPlayer,percMapPlayer,continentsControlled);
+				System.out.format("%-30s|%-30d|%-30.2f|%-30s", playerName, totalArmiesPlayer, percMapPlayer,
+						continentsControlled);
 				System.out.println();
 			}
-		}		
+		}
 	}
 
 	private int getTotalArmiesCount(PlayersList pl) {
-		int totalArmies=0;
-		for(String playerName:pl.getListOfPlayers().keySet()) {			
-			HashMap<String,Integer> countiresArmiesList=pl.getListOfPlayers().get(playerName).getOwnedCountriesArmiesList();
-			for(String countryName:countiresArmiesList.keySet()) {
-				totalArmies+=countiresArmiesList.get(countryName);
+		int totalArmies = 0;
+		for (String playerName : pl.getListOfPlayers().keySet()) {
+			HashMap<String, Integer> countiresArmiesList = pl.getListOfPlayers().get(playerName)
+					.getOwnedCountriesArmiesList();
+			for (String countryName : countiresArmiesList.keySet()) {
+				totalArmies += countiresArmiesList.get(countryName);
 			}
 		}
 		return totalArmies;

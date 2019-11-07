@@ -21,7 +21,7 @@ import util.CONSTANTS;
  * This class is used for testing fortification methods
  */
 public class TestFortification {
-	
+
 	MapSelectionController msc;
 	PlayerSelectionController psc;
 	PlayerController playerController;
@@ -46,7 +46,7 @@ public class TestFortification {
 	public void setUp() throws FileNotFoundException {
 		msc = new MapSelectionController();
 		psc = new PlayerSelectionController();
-		playerController=new PlayerController();
+		playerController = new PlayerController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
 		playerDetails = new HashMap<String, Player>();
@@ -64,7 +64,8 @@ public class TestFortification {
 	 */
 	@Test
 	public void testPlayerDontOwnCountry() {
-		assertEquals(playerController.fortify(playerDetails, "Quebec", "Alberta ", 5, gm.getCountries(), gm.getBoundries()),
+		assertEquals(
+				playerController.fortify(playerDetails, "Quebec", "Alberta ", 5, gm.getCountries(), gm.getBoundries()),
 				"Targeted country is not owned by player");
 	}
 
@@ -76,9 +77,8 @@ public class TestFortification {
 		fromCountry = playerOwnedCountries.get(0);
 		toCountry = playerOwnedCountries.get(2);
 		armyToPlace = pOb.getOwnedCountriesArmiesList().get(fromCountry) - 1;
-		assertEquals(
-				playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace, gm.getCountries(), gm.getBoundries()),
-				"Player does not own the path");
+		assertEquals(playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace, gm.getCountries(),
+				gm.getBoundries()), "Player does not own the path");
 	}
 
 }

@@ -11,7 +11,7 @@ public class Player extends Observable {
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
-	private HashMap<String,ArrayList<String>> continentsCountryList;
+	private HashMap<String, ArrayList<String>> continentsCountryList;
 	private String gameState;
 	private String currentPlayerTurn;
 	private String actionsPerformed;
@@ -28,7 +28,7 @@ public class Player extends Observable {
 	private ArrayList<String> currentCardList;
 	private ArrayList<String> conqueredCountries;
 	private boolean allOutAttackPerformed;
-	
+
 	/**
 	 * @Default Constructor This method initiates the variables
 	 */
@@ -36,16 +36,16 @@ public class Player extends Observable {
 		ownedCountriesList = new ArrayList<String>();
 		ownedArmiesList = new ArrayList<Integer>();
 		ownedCountriesArmiesList = new HashMap<String, Integer>();
-		gameState="STARTUP";
+		gameState = "STARTUP";
 		attackerDice = new ArrayList<Integer>();
 		defenderDice = new ArrayList<Integer>();
-		currentPlayerTurn="";
-		cardBonusArmy=0;
-		cardReward=0;
-		availableReinforceArmies=0;
-		currentCardList=new ArrayList<String>();		
+		currentPlayerTurn = "";
+		cardBonusArmy = 0;
+		cardReward = 0;
+		availableReinforceArmies = 0;
+		currentCardList = new ArrayList<String>();
 		setAllOutPerformed(false);
-		conqueredCountries=new ArrayList<String>();
+		conqueredCountries = new ArrayList<String>();
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
@@ -71,7 +71,7 @@ public class Player extends Observable {
 	public void setOwnedArmiesList(ArrayList<Integer> ownedArmiesList) {
 		this.ownedArmiesList = ownedArmiesList;
 	}
-	
+
 	public HashMap<String, ArrayList<String>> getContinentsCountryList() {
 		return continentsCountryList;
 	}
@@ -85,7 +85,7 @@ public class Player extends Observable {
 	}
 
 	public void setGameState(String gameState) {
-		this.gameState = gameState;		
+		this.gameState = gameState;
 	}
 
 	public String getCurrentPlayerTurn() {
@@ -93,15 +93,15 @@ public class Player extends Observable {
 	}
 
 	public void setCurrentPlayerTurn(String currentPlayerTurn) {
-		this.currentPlayerTurn = currentPlayerTurn;		
+		this.currentPlayerTurn = currentPlayerTurn;
 	}
-	
+
 	public String getActionsPerformed() {
 		return actionsPerformed;
 	}
 
 	public void setActionsPerformed(String actionsPerformed) {
-		this.actionsPerformed = actionsPerformed;		
+		this.actionsPerformed = actionsPerformed;
 	}
 
 	public String getAttackerName() {
@@ -159,10 +159,11 @@ public class Player extends Observable {
 	public void setDiceRolled(Integer diceRolled) {
 		this.diceRolled = diceRolled;
 	}
-	
+
 	public void notifyToObserver() {
-		notifyObservers(this,this);
+		notifyObservers(this, this);
 	}
+
 	public int getCardBonusArmy() {
 		return cardBonusArmy;
 	}
@@ -170,6 +171,7 @@ public class Player extends Observable {
 	public void setCardBonusArmy(int cardBonusArmy) {
 		this.cardBonusArmy = cardBonusArmy;
 	}
+
 	public int getCardReward() {
 		return cardReward;
 	}
@@ -177,6 +179,7 @@ public class Player extends Observable {
 	public void setCardReward(int cardReward) {
 		this.cardReward = cardReward;
 	}
+
 	public int getAvailableReinforceArmies() {
 		return availableReinforceArmies;
 	}
@@ -184,6 +187,7 @@ public class Player extends Observable {
 	public void setAvailableReinforceArmies(int availableArmies) {
 		this.availableReinforceArmies = availableArmies;
 	}
+
 	public ArrayList<String> getCurrentCardList() {
 		return currentCardList;
 	}

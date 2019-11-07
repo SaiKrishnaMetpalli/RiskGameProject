@@ -17,6 +17,7 @@ import controller.PlayerSelectionController;
 
 import model.GameMap;
 import model.Player;
+import model.PlayersList;
 import util.CONSTANTS;
 
 /**
@@ -25,7 +26,7 @@ import util.CONSTANTS;
  */
 public class TestAttack {
 
-	PlayerController playerController;	
+	PlayerController playerController;
 	MapSelectionController msc;
 	PlayerSelectionController psc;
 	CommonController cc;
@@ -37,6 +38,8 @@ public class TestAttack {
 	String countryName = "Quebec";
 	String player;
 	Player p;
+	PlayersList pl;
+	HashMap<String, Player> playersList;
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case
@@ -46,9 +49,9 @@ public class TestAttack {
 	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
-		playerController=new PlayerController();
+		playerController = new PlayerController();
 		msc = new MapSelectionController();
-		psc = new PlayerSelectionController();		
+		psc = new PlayerSelectionController();
 		cc = new CommonController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
@@ -59,6 +62,11 @@ public class TestAttack {
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
 		p = new Player();
+		pl = new PlayersList();
+		playersList = new HashMap<String, Player>();
+		playersList.put("a", new Player());
+		playersList.put("b", new Player());
+		pl.setListOfPlayers(playersList);
 		p.setConqueredCountries(new ArrayList<String>(Arrays.asList("India", "Japan", "Quebec")));
 
 	}
@@ -101,7 +109,7 @@ public class TestAttack {
 	 * This method is used for testing if attacker and defender country are in same
 	 * continent
 	 * 
-	 * @author garima dawar
+	 * @author garimadawar
 	 */
 	@Test
 	public void testValidateDefenderCountry() {
@@ -194,5 +202,10 @@ public class TestAttack {
 		assertTrue(playerController.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 4));
 		p.setDefenderCountry("Canada");
 		assertFalse(playerController.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 3));
+	}
+
+	@Test
+	public void testCheckGameEnd() {
+		assertFalse(playerController.checkGameEnd(pl));
 	}
 }

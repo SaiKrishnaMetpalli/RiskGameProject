@@ -8,9 +8,8 @@ import java.util.HashMap;
  */
 public class CONSTANTS {
 
-	public static final HashMap<Integer,Integer> NO_PLAYER_ARMIES=new HashMap<Integer, Integer>();
-	static
-	{		
+	public static final HashMap<Integer, Integer> NO_PLAYER_ARMIES = new HashMap<Integer, Integer>();
+	static {
 		NO_PLAYER_ARMIES.put(2, 40);
 		NO_PLAYER_ARMIES.put(3, 35);
 		NO_PLAYER_ARMIES.put(4, 30);
