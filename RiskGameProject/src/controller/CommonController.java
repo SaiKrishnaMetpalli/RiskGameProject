@@ -52,6 +52,8 @@ public class CommonController {
 	/**
 	 * creates a new hashmap of continents with its country list This method is used
 	 * in calculateReinforceArmy for verifying if a player owns all the countries in
+	 * @param continents takes hashmap of countries populated from map file
+	 * @param countries takes hashmap of countries populated from map file
 	 * @return hashmap where key is continent and value is country list
 	 * @author sakib
 	 */
@@ -81,6 +83,8 @@ public class CommonController {
 	/**
 	 * Method to be called from command to place army uses calculateReinforceArmy
 	 * method
+	 * @param countryName this variable contains the country name
+	 * @param countries takes hashmap of countries populated from map file
 	 * @return different messages for view
 	 * @author sakib
 	 */
@@ -98,7 +102,9 @@ public class CommonController {
 
 	/**
 	 * To find the key of country hashmap
-	 * @return 
+	 * @param countries takes hashmap of countries populated from map file
+	 * @param countryName this variable contains the country name
+	 * @return this returns the country number if present else 0
 	 * @author sakib 
 	 */
 	public int getCountryNumberByName(HashMap<Integer, Countries> countries, String countryName) {

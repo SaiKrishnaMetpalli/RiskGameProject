@@ -6,12 +6,27 @@ import model.Observable;
 import model.Player;
 import model.PlayersList;
 
+/**
+ * This class gives the information about the cards owned by the player
+ * @author Sai Krishna
+ *
+ */
 public class CardExchangeView implements Observer {
 
+	/**
+	 * This method is implemented from the Observer class
+	 * @author Sai Krishna
+	 */
 	public void update(Observable obs,Object x) {
 		showMessage((PlayersList) obs,(Player) x);
 	}
 	
+	/**
+	 * This method displays the cards owned by the player
+	 * @param pl this variable contains all the players data
+	 * @param p this variable contains the current turn player data
+	 * @author Sai Krishna
+	 */
 	private void showMessage(PlayersList pl,Player p) {
 		int count=1;
 		if(p.getGameState().equals("REINFORCE")) {

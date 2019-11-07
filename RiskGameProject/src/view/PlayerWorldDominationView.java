@@ -9,12 +9,26 @@ import model.Observable;
 import model.Player;
 import model.PlayersList;
 
+/**
+ * This class gives the information about player statistics
+ * @author Sai Krishna
+ *
+ */
 public class PlayerWorldDominationView implements Observer {
 
+	/**
+	 * This method is implemented from the Observer class
+	 * @author Sai Krishna
+	 */
 	public void update(Observable obs,Object x) {
 		showMessage((PlayersList) obs,(Player) x);
 	}
 
+	/**
+	 * This method gives the information about the player statistics
+	 * @param pl this variable contains all the players data
+	 * @param p this variable contains the current turn player data
+	 */
 	private void showMessage(PlayersList pl, Player p) {
 		if(p.getGameState()!="STARTUP") {
 			for (int dashes = 0; dashes < 120; dashes++) {

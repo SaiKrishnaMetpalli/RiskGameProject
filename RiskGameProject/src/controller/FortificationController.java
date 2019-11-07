@@ -20,13 +20,23 @@ public class FortificationController {
 	boolean ownedPath;
 	boolean marked[];
 	
+	/**
+	 * @Default constructor
+	 * This method initiates the variables
+	 * @author Sai Krishna
+	 */
 	public FortificationController() {
 		cc=new CommonController();
 		ownedCountriesNumberList=new ArrayList<Integer>();
 		ownedPath=false;
 	}
 	
-			
+	/**
+	 * This method returns the countries numbers owned by the player		
+	 * @param countries this variable contains the list of continents
+	 * @param ownedCountries this variable contains the countries owned by the player
+	 * @author Sai Krishna
+	 */
 	public void ownedCountriesNumList(HashMap<Integer, Countries> countries,ArrayList<String> ownedCountries) {
 		for(String s:ownedCountries) {
 			ownedCountriesNumberList.add(cc.getCountryNumberByName(countries, s));
@@ -34,6 +44,13 @@ public class FortificationController {
 		marked=new boolean[countries.size()];
 	}
 	
+	/**
+	 * This method checks if the player has an path of its own
+	 * @param boundaries this variable contains the list of boundries
+	 * @param fromCountry this variable contains the source country name
+	 * @param toCountry this variables contains the destination country name
+	 * @author Sai Krishna
+	 */
 	public void checkOwnPath(HashMap<Integer, ArrayList<Integer>> boundaries, int fromCountry, int toCountry) {
 		ArrayList<Integer> neighbors=boundaries.get(fromCountry);
 		for(int i=0;i<neighbors.size();i++) {
@@ -99,6 +116,13 @@ public class FortificationController {
 			return "Player doesn't own this country";
 	}
 	
+	/**
+	 * This method is used for adding the game cards to attacker
+	 * @param attackerPlayerData this variable contains the attacker player data
+	 * @param player this variable contains the current turn of player data
+	 * @param gm this variable contains the game map data
+	 * @author Sai Krishna
+	 */
 	public void addGameCardsToAttacker(Player attackerPlayerData, Player player,GameMap gm) {
 		for(String countryName:player.getConqueredCountries()) {
 			Collections.shuffle(gm.getTotalCardsList());

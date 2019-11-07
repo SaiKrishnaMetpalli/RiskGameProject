@@ -137,6 +137,15 @@ public class ReinforcementController {
 
 	}
 
+	/**
+	 * This method removes the cards position after calculating the card reward
+	 * @param pos1 this variable contains the position of card
+	 * @param pos2 this variable contains the position of card
+	 * @param pos3 this variable contains the position of card
+	 * @param totalPlayerData this variable contains all the player data
+	 * @param playerTurnData this variable contains the current turn player data
+	 * @author Sai Krishna
+	 */
 	public void removeCardPositions(int pos1, int pos2, int pos3,PlayersList totalPlayerData,Player playerTurnData) {
 		
 		totalPlayerData.getListOfPlayers().get(playerTurnData.getCurrentPlayerTurn()).getCurrentCardList().remove(pos1-1);
