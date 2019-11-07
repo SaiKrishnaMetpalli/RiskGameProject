@@ -542,7 +542,7 @@ public class CommandLine {
 							System.out.println("\nCards are exchanged and the card reward is " + p.getCardReward());
 							actions += "\nCards are exchanged and the card reward is " + p.getCardReward();
 							ric.removeCardPositions(Integer.parseInt(inputCommand[1]),
-									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]),pl,p);
+									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]), pl, p);
 							addToCommands = true;
 						}
 					} else if (inputCommand.length == 2) {
@@ -1171,7 +1171,10 @@ public class CommandLine {
 	}
 
 	/**
-	 * This method is used for clearing the player objects at the end of player's turn
+	 * This method is used for clearing the player objects at the end of player's
+	 * turn
+	 * 
+	 * @author Sai Krishna
 	 */
 	private void clearPlayerObject() {
 		p.setActionsPerformed("");
@@ -1184,10 +1187,9 @@ public class CommandLine {
 		p.setDiceRolled(0);
 		p.setCardBonusArmy(0);
 		p.setCardReward(0);
-		p.setAvailableReinforceArmies(0);		
+		p.setAvailableReinforceArmies(0);
 		p.setConqueredCountries(new ArrayList<String>());
 		p.setAllOutPerformed(false);
 	}
-
 
 }
