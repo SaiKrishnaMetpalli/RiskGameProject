@@ -106,6 +106,19 @@ public class AttackController {
 		return "Attacker Ready and placed his army on field";
 	}
 
+	/**
+	 * method performs -all out attack phase
+	 * 
+	 * @param attackerCountry    is the name of the attacker country
+	 * @param defenderCountry    is the name of the defender country
+	 * @param attackerPlayerData it contains the data of the attacker
+	 * @param countryList        contains list of countries
+	 * @param player             contains the current Player's turn
+	 * @param defenderPlayerData it contains defender player data
+	 * @return won if attacker wins else army having less then 1 for attacker
+	 *         message
+	 * @author Ashish Chaudhary
+	 */
 	public String allOutAttackedPhase(String attackerCountry, String defenderCountry, Player attackerPlayerData,
 			HashMap<Integer, Countries> countryList, Player player, Player defenderPlayerData) {
 
@@ -162,6 +175,21 @@ public class AttackController {
 		}
 	}
 
+	/**
+	 * Method is used to defend the -all out command from attacker
+	 * 
+	 * @param defenderPlayerName  is the name of the defender
+	 * @param defenderCountry     is the name of the defender country name
+	 * @param attackerArmy        is the number of army left with the attacker
+	 * @param countryList         is the list of the countries
+	 * @param defenderPlayerData  is the data of the defender
+	 * @param player              it contains the current player's turn data
+	 * @param attackerPlayerData  it contains the attacker player data
+	 * @param attackerPlayerName  is the name of the attacker
+	 * @param attackerCountryname is the name of attacking country
+	 * @return number of attacker army left
+	 * @author Ashish Chaudhary
+	 */
 	public int allOutDefend(String defenderPlayerName, String defenderCountry, Integer attackerArmy,
 			HashMap<Integer, Countries> countryList, Player defenderPlayerData, Player player,
 			Player attackerPlayerData, String attackerPlayerName, String attackerCountryname) {
@@ -199,6 +227,21 @@ public class AttackController {
 
 	}
 
+	/**
+	 * method is used to compare the dice roll of both attacker and defender
+	 * 
+	 * @param p                   contains the current player's turn data
+	 * @param defenderArmiesMap   it contains the defender's list of countries and
+	 *                            its armies
+	 * @param attackerArmiesMap   it contains the attacker's list of countries and
+	 *                            its armies
+	 * @param attackerPlayerData  it contains the attacker's player data
+	 * @param defenderPlayerData  it contains the defender's player data
+	 * @param attackerCountryName is the name of the attacker country name
+	 * @param defenderCountryName is the name of the defender country name
+	 * @return number of attacker army left after dice rolls comparison
+	 * @author Ashish Chaudhary
+	 */
 	public int comparingDiceToWin(Player p, HashMap<String, Integer> defenderArmiesMap,
 			HashMap<String, Integer> attackerArmiesMap, Player attackerPlayerData, Player defenderPlayerData,
 			String attackerCountryName, String defenderCountryName) {
@@ -229,6 +272,12 @@ public class AttackController {
 		return attackerPlayerData.getOwnedCountriesArmiesList().get(p.getAttackerCountry());
 	}
 
+	/**
+	 * method is used to generate a random number between 0 to 6
+	 * 
+	 * @return the random number generated
+	 * @author Ashish Chaudhary
+	 */
 	public int randomNumberGenerator() {
 		double random = Math.random();
 		random = random * 6 + 1;
@@ -238,8 +287,12 @@ public class AttackController {
 	}
 
 	/**
-	 * This method is used for the validation of army moves.
+	 * Method is used to validate number of armies moving to conquered countries
 	 * 
+	 * @param diceRolled is the number of dice rolled to conquer country
+	 * @param moveArmy   is the number of armies moving to conquered country
+	 * @return true if number of army to move is greater of equal to dice rolled to
+	 *         defeat the country completly
 	 * @author Gagan Jaswal
 	 */
 	public boolean validateNumOfArmyMoves(Integer diceRolled, Integer moveArmy) {
@@ -255,9 +308,14 @@ public class AttackController {
 	}
 
 	/**
-	 * This method is used for moving army to conquered country.
+	 * Method is used to move the armies to the conquered country
 	 * 
-	 * @author Gagan Jaswal
+	 * @param armyToMove is the number of army to move to conquered country
+	 * @param playerData contain's the data of all player
+	 * @param player     contains the
+	 * @param gm         contains the GameMap data
+	 * @return army moved to the Conquered country
+	 * @author Gagan jaswal
 	 */
 	public String movingArmyToConqueredCountry(Integer armyToMove, HashMap<String, Player> playerData, Player player,
 			GameMap gm) {
@@ -272,9 +330,13 @@ public class AttackController {
 	}
 
 	/**
-	 * This method is used for moving army.
+	 * method is used to move armies to conquered country
 	 * 
-	 * @author Gagan Jaswal
+	 * @param movingArmy is the number of army to move
+	 * @param playerData contains the player's data
+	 * @param player     it contains the current player's data
+	 * @return true when all armies are moved to conquered country
+	 * @author Gagan jaswal
 	 */
 	public boolean moveArmy(int movingArmy, HashMap<String, Player> playerData, Player player) {
 
@@ -299,25 +361,13 @@ public class AttackController {
 	}
 
 	/**
-	 * This method is used to calculate army left with attacker.
+	 * Method is used to assign country to the attacker countries list
 	 * 
+	 * @param playerData contains the player data
+	 * @param player     contains the current player's turn data
+	 * @param gm         contains the full game map data
 	 * @author Gagan Jaswal
 	 */
-	public boolean armyLeftWithAttacker(Integer armyToMove, HashMap<String, Player> playerData, Player player) {
-		int movedArmy = armyToMove;
-
-		Player attackerData = playerData.get(player.getAttackerName());
-		countryArmyList = attackerData.getOwnedCountriesArmiesList();
-		int attackerArmy = countryArmyList.get(player.getAttackerCountry());
-
-		int remainingArmy = attackerArmy - movedArmy;
-
-		if (remainingArmy >= 1) {
-			return true;
-		}
-		return false;
-	}
-
 	public void assigningCountryToAttacker(HashMap<String, Player> playerData, Player player, GameMap gm) {
 
 		Player defenderData = playerData.get(player.getDefenderName());
@@ -350,6 +400,8 @@ public class AttackController {
 	 * @param defenderCountry    contains the name of defender country
 	 * @param numberOnDice       contains the number on dice
 	 * @param defenderPlayerData contains the information about player
+	 * @return true if defender dice rolled is less then or equal to number of army
+	 *         the defender have
 	 * 
 	 */
 	public boolean validateDefenderNumdice(String defenderCountry, Integer numberOnDice, Player defenderPlayerData) {
@@ -370,9 +422,8 @@ public class AttackController {
 	 * @param defenderCountry contains the name of defender country
 	 * @param numberOnDice    contains the number on dice
 	 * @param p               contains the information about player
-	 * 
+	 * @return true after storing all dice number of each dice rolled
 	 */
-
 	public boolean defendPhaseDiceRoll(String defenderCountry, Integer numberOnDice, Player p) {
 
 		defenderDiceNumbersList = new ArrayList<Integer>();
@@ -393,7 +444,7 @@ public class AttackController {
 	 * @author garimadawar
 	 * @param p  contains the information about player
 	 * @param pl contains the list of player
-	 * 
+	 * @return attacker won or number of armies left for both attacker and defender
 	 */
 	public String defendingTheBase(Player p, PlayersList pl) {
 
@@ -421,6 +472,13 @@ public class AttackController {
 		}
 	}
 
+	/**
+	 * mehtod is used to check whether the player won the game
+	 * 
+	 * @param attackerPlayerData contains the attacker's data
+	 * @return true if player conquer all countries else false
+	 * @author Ashish Chaudhary
+	 */
 	public boolean checkGameEnd(PlayersList attackerPlayerData) {
 		if (attackerPlayerData.getListOfPlayers().size() == 1) {
 			return true;
