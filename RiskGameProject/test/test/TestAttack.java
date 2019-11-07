@@ -103,7 +103,7 @@ public class TestAttack {
 	 * This method is used for testing if attacker and defender country are in same
 	 * continent
 	 * 
-	 * @author garimadawar
+	 * @author garima dawar
 	 */
 	@Test
 	public void testValidateDefenderCountry() {
