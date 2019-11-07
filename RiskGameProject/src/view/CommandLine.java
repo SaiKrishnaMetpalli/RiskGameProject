@@ -510,6 +510,7 @@ public class CommandLine {
 						} else {
 							System.out.println("\nArmies are already placed for the player");
 						}
+						p.setActionsPerformed("");
 						p.setCurrentPlayerTurn(players.get(0));
 						p.setGameState("REINFORCE");
 						addToCommands = true;
@@ -540,6 +541,8 @@ public class CommandLine {
 									pl.getListOfPlayers().get(p.getCurrentPlayerTurn())));
 							System.out.println("\nCards are exchanged and the card reward is " + p.getCardReward());
 							actions += "\nCards are exchanged and the card reward is " + p.getCardReward();
+							ric.removeCardPositions(Integer.parseInt(inputCommand[1]),
+									Integer.parseInt(inputCommand[2]), Integer.parseInt(inputCommand[3]),pl,p);
 							addToCommands = true;
 						}
 					} else if (inputCommand.length == 2) {
@@ -586,56 +589,50 @@ public class CommandLine {
 								actions += "\nReinforcement cannot be performed as armies should be greater than 0";
 								addToCommands = false;
 							} else {
-								if (!checkArmiesPlaced()) {
-									if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList()
-											.size() < 5) {
+
+								if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList()
+										.size() < 5) {
+									if (p.getAvailableReinforceArmies() == 0) {
+										int countryReward = ric.calculateOwnedCountryReward(
+												pl.getListOfPlayers().get(p.getCurrentPlayerTurn()));
+										int continetReward = ric.calculateContinentReward(
+												pl.getListOfPlayers().get(p.getCurrentPlayerTurn()), gm.getContinents(),
+												gm.getCountries(), inputCommand[1]);
+										p.setAvailableReinforceArmies(ric.calculateReinforceArmy(countryReward,
+												continetReward, p.getCardReward()));
+									}
+
+									result = ric.placeReinforceArmy(inputCommand[1], Integer.parseInt(inputCommand[2]),
+											gm.getCountries(), pl.getListOfPlayers(), gm.getContinents(), p);
+									System.out.println("\n" + result);
+									actions += "\n" + result;
+									if (result.contains("success")) {
 										if (p.getAvailableReinforceArmies() == 0) {
-											int countryReward = ric.calculateOwnedCountryReward(
-													pl.getListOfPlayers().get(p.getCurrentPlayerTurn()));
-											int continetReward = ric.calculateContinentReward(
-													pl.getListOfPlayers().get(p.getCurrentPlayerTurn()),
-													gm.getContinents(), gm.getCountries(), inputCommand[1]);
-											p.setAvailableReinforceArmies(ric.calculateReinforceArmy(countryReward,
-													continetReward, p.getCardReward()));
-										}
-
-										result = ric.placeReinforceArmy(inputCommand[1],
-												Integer.parseInt(inputCommand[2]), gm.getCountries(),
-												pl.getListOfPlayers(), gm.getContinents(), p);
-										System.out.println("\n" + result);
-										actions += "\n" + result;
-										if (result.contains("success")) {
-											if (p.getAvailableReinforceArmies() == 0) {
-												actions = "";
-												p.setGameState("ATTACK");
-											} else {
-												System.out.println("\nPlease place the remaining "
-														+ p.getAvailableReinforceArmies() + " reinforcement armies");
-												actions += "\nPlease place the remaining "
-														+ p.getAvailableReinforceArmies() + " reinforcement armies";
-											}
-											addToCommands = true;
+											actions = "";
+											p.setGameState("ATTACK");
 										} else {
-											addToCommands = false;
+											System.out.println("\nPlease place the remaining "
+													+ p.getAvailableReinforceArmies() + " reinforcement armies");
+											actions += "\nPlease place the remaining " + p.getAvailableReinforceArmies()
+													+ " reinforcement armies";
 										}
-
+										addToCommands = true;
 									} else {
-										System.out.println("\nCannot perform reinforcement as there are "
-												+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
-														.getCurrentCardList().size()
-												+ " cards which need to be exchanged");
-										actions += "\nCannot perform reinforcement as there are "
-												+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
-														.getCurrentCardList().size()
-												+ " cards which need to be exchanged";
 										addToCommands = false;
 									}
+
 								} else {
-									System.out.println(
-											"\nReinforcement cannot be performed as armies are not assigned to player");
-									actions += "\nReinforcement cannot be performed as armies are not assigned to player";
+									System.out
+											.println("\nCannot perform reinforcement as there are "
+													+ pl.getListOfPlayers().get(p.getCurrentPlayerTurn())
+															.getCurrentCardList().size()
+													+ " cards which need to be exchanged");
+									actions += "\nCannot perform reinforcement as there are " + pl.getListOfPlayers()
+											.get(p.getCurrentPlayerTurn()).getCurrentCardList().size()
+											+ " cards which need to be exchanged";
 									addToCommands = false;
 								}
+
 							}
 						} else {
 							System.out.println("\nCannot reinforce army for the country, it is not the turn of player");
@@ -750,11 +747,11 @@ public class CommandLine {
 								}
 							}
 						} else if (inputCommand.length == 2) {
-							if (inputCommand[1].equals("-noattack")) {								
+							if (inputCommand[1].equals("-noattack")) {
 								System.out.println("\nAttack noAttack is performed");
 								actions = "";
 								p.setGameState("FORTIFY");
-								addToCommands = true;								
+								addToCommands = true;
 							} else {
 								System.out.println("\nAttack command format is incorrect");
 								actions += "\nAttack command format is incorrect";
@@ -896,8 +893,7 @@ public class CommandLine {
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("FORTIFY")) {
 					if ((inputCommand.length == 4) || (inputCommand.length == 2)) {
-						if ((!checkArmiesPlaced())
-								&& (!inputCommandsList.get(inputCommandsList.size() - 1).equals("fortify"))) {
+						if (!inputCommandsList.get(inputCommandsList.size() - 1).equals("fortify")) {
 							if (inputCommand.length == 4) {
 								if (checkPlayersTurn(inputCommand[1])) {
 									result = fc.fortify(pl.getListOfPlayers(), inputCommand[1], inputCommand[2],
@@ -911,6 +907,7 @@ public class CommandLine {
 													gm);
 										}
 										actions = "";
+										clearPlayerObject();
 										setPlayerTurn();
 										p.setGameState("REINFORCE");
 									} else {
@@ -930,6 +927,7 @@ public class CommandLine {
 												gm);
 									}
 									actions = "";
+									clearPlayerObject();
 									setPlayerTurn();
 									p.setGameState("REINFORCE");
 									addToCommands = true;
@@ -1171,5 +1169,25 @@ public class CommandLine {
 			p.setCurrentPlayerTurn(players.get(0));
 		}
 	}
+
+	/**
+	 * This method is used for clearing the player objects at the end of player's turn
+	 */
+	private void clearPlayerObject() {
+		p.setActionsPerformed("");
+		p.setAttackerName("");
+		p.setDefenderName("");
+		p.setAttackerCountry("");
+		p.setDefenderCountry("");
+		p.setAttackerDice(new ArrayList<Integer>());
+		p.setDefenderDice(new ArrayList<Integer>());
+		p.setDiceRolled(0);
+		p.setCardBonusArmy(0);
+		p.setCardReward(0);
+		p.setAvailableReinforceArmies(0);		
+		p.setConqueredCountries(new ArrayList<String>());
+		p.setAllOutPerformed(false);
+	}
+
 
 }

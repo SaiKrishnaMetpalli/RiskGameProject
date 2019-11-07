@@ -9,6 +9,7 @@ import java.util.HashSet;
 import model.Continents;
 import model.Countries;
 import model.Player;
+import model.PlayersList;
 
 /**
  * This class intend to calculate the no. of bonus armies in reinforcement phase
@@ -134,5 +135,12 @@ public class ReinforcementController {
 		} else
 			return "Reinforcement cannot be performed; the given reinforcement armies are greater than the available reinforcemet armies";
 
+	}
+
+	public void removeCardPositions(int pos1, int pos2, int pos3,PlayersList totalPlayerData,Player playerTurnData) {
+		
+		totalPlayerData.getListOfPlayers().get(playerTurnData.getCurrentPlayerTurn()).getCurrentCardList().remove(pos1-1);
+		totalPlayerData.getListOfPlayers().get(playerTurnData.getCurrentPlayerTurn()).getCurrentCardList().remove(pos2-1);
+		totalPlayerData.getListOfPlayers().get(playerTurnData.getCurrentPlayerTurn()).getCurrentCardList().remove(pos3-1);
 	}
 }
