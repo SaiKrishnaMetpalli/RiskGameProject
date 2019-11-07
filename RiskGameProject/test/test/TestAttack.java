@@ -38,8 +38,6 @@ public class TestAttack {
 	String countryName = "Quebec";
 	String player;
 	Player p;
-	
-	
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case
@@ -64,7 +62,7 @@ public class TestAttack {
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
 		p = new Player();
 		p.setConqueredCountries(new ArrayList<String>(Arrays.asList("India", "Japan", "Quebec")));
-		
+
 	}
 
 	/**
@@ -109,10 +107,10 @@ public class TestAttack {
 	 */
 	@Test
 	public void testValidateDefenderCountry() {
-		boolean ans = true;
-		ans = ac.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries());
-		boolean val = true;
-		assertEquals(ans, val);
+		assertTrue(ac.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries(),
+				new ArrayList<String>(Arrays.asList("India", "Pakistan", "Bangladesh"))));
+		assertFalse(ac.validateDefenderCountry("India", "China", gm.getCountries(), gm.getBoundries(),
+				new ArrayList<String>(Arrays.asList("India", "Pakistan", "China"))));
 	}
 
 	/**
@@ -186,6 +184,7 @@ public class TestAttack {
 		boolean val = true;
 		assertEquals(ans, val);
 	}
+
 	/**
 	 * Method is used to test valid army move to conquered country
 	 * 
@@ -194,8 +193,8 @@ public class TestAttack {
 	@Test
 	public void testIsValidAttackMove() {
 		p.setDefenderCountry("India");
-		assertTrue(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p , 4));
+		assertTrue(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 4));
 		p.setDefenderCountry("Canada");
-		assertFalse(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p , 3));
+		assertFalse(ac.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 3));
 	}
 }

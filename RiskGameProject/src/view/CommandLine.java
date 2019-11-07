@@ -670,7 +670,7 @@ public class CommandLine {
 							if (inputCommand[3].equals("-allout")) {
 								if (checkPlayersTurn(inputCommand[1])) {
 									if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
-											gm.getBoundries())) {
+											gm.getBoundries(), pl.getListOfPlayers().get(p.getAttackerName()).getOwnedCountriesList())) {
 
 										p.setAttackerName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
@@ -694,8 +694,8 @@ public class CommandLine {
 										}
 										addToCommands = true;
 									} else {
-										System.out.println("\nDefender Country is not a neighbouring country");
-										actions += "\nDefender Country is not a neighbouring country";
+										System.out.println("\nDefender Country is not a neighbouring country or it is his own Country");
+										actions += "\nDefender Country is not a neighbouring country or it is his own Country";
 										addToCommands = false;
 									}
 								} else {
@@ -707,7 +707,7 @@ public class CommandLine {
 							} else {
 								if (checkPlayersTurn(inputCommand[1])) {
 									if (ac.validateDefenderCountry(inputCommand[1], inputCommand[2], gm.getCountries(),
-											gm.getBoundries())) {
+											gm.getBoundries(),pl.getListOfPlayers().get(p.getAttackerName()).getOwnedCountriesList())) {
 
 										p.setAttackerName(
 												cc.findPlayerNameFromCountry(gm.getCountries(), inputCommand[1]));
@@ -734,8 +734,8 @@ public class CommandLine {
 											addToCommands = false;
 										}
 									} else {
-										System.out.println("\nDefender Country is not a neighbouring country");
-										actions += "\nDefender Country is not a neighbouring country";
+										System.out.println("\nDefender Country is not a neighbouring country or it is his own Country");
+										actions += "\nDefender Country is not a neighbouring country or it is his own Country";
 										addToCommands = false;
 									}
 

@@ -40,7 +40,8 @@ public class AttackController {
 	 * @author Ashish Chaudhary
 	 */
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
-			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries) {
+			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries,
+			ArrayList<String> attackerOwnedCountries) {
 
 		int attackerCountryNum = cc.getCountryNumberByName(countryList, attackerCountry);
 
@@ -49,7 +50,9 @@ public class AttackController {
 		adjancyList = boundries.get(attackerCountryNum);
 
 		if (adjancyList.contains(defenderCountryNum)) {
-			return true;
+			if (!attackerOwnedCountries.contains(defenderCountry)) {
+				return true;
+			}
 		}
 
 		return false;
@@ -498,9 +501,10 @@ public class AttackController {
 	 * @return true if army can be moved to conquered country
 	 */
 	public boolean isvalidAttackMove(int armyMove, int diceRolled, ArrayList<String> conqueredCountriesList,
-			Player player , int attackerArmy) {
-		
-		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry()) && armyMove < attackerArmy) {
+			Player player, int attackerArmy) {
+
+		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry())
+				&& armyMove < attackerArmy) {
 			return true;
 		} else
 			return false;
