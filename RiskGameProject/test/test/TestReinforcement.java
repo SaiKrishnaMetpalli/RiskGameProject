@@ -132,7 +132,7 @@ public class TestReinforcement {
 		modelP.setAvailableReinforceArmies(5);
 		assertEquals(
 				ric.placeReinforceArmy(countryName, 6, gm.getCountries(), playerDetails, gm.getContinents(), modelP),
-				"Not enough reinforcement armies available");
+				"Reinforcement cannot be performed; the given reinforcement armies are greater than the available reinforcemet armies");
 	}
 
 	/**
