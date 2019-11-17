@@ -29,7 +29,7 @@ public class MapSelectionController {
 	String[] continentsDetails, countriesDetails, boundriesDetails;
 
 	// These two variables are used for map connected and traversal
-	private boolean[] marked;
+	private ArrayList<Integer> marked;
 	private int count;
 	private HashMap<Integer, ArrayList<Integer>> map;
 	private int coid = 0, cid = 0;
@@ -39,7 +39,7 @@ public class MapSelectionController {
 	 * 
 	 * @param continents contains the information about continents
 	 * @param countries  contains the information about countries
-	 * @param boundries  contains the adjency list of countries
+	 * @param boundries  contains the adjacency list of countries
 	 * @param fileName   it is map file which is read
 	 * @return success if map is loaded successfully else failure
 	 * @throws FileNotFoundException
@@ -152,7 +152,9 @@ public class MapSelectionController {
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
 		if (continents.size() > 0) {
-			coid = continents.size();
+			for (int i : continents.keySet()) {
+				coid = i;
+			}
 		} else {
 			coid = 0;
 		}
@@ -239,7 +241,9 @@ public class MapSelectionController {
 		;
 		int continentNum = 0;
 		if (countries.size() > 0) {
-			cid = countries.size();
+			for (int i : countries.keySet()) {
+				cid = i;
+			}
 		} else {
 			cid = 0;
 		}
@@ -453,7 +457,7 @@ public class MapSelectionController {
 		bw.newLine();
 		for (Integer i : continents.keySet()) {
 			Continents c = continents.get(i);
-			bw.write(i + " " + c.getcontinentControlValue() + " " + c.getColour());
+			bw.write(c.getContinentName() + " " + c.getcontinentControlValue() + " " + c.getColour());
 			bw.newLine();
 		}
 
@@ -493,7 +497,7 @@ public class MapSelectionController {
 	 */
 	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries) {
 		map = boundries;
-		marked = new boolean[boundries.size()];
+		marked = new ArrayList<Integer>();
 		count = 0;
 		Map.Entry<Integer, ArrayList<Integer>> entry = boundries.entrySet().iterator().next();
 		mapTraversal(entry.getKey());
@@ -511,9 +515,9 @@ public class MapSelectionController {
 	 */
 	public void mapTraversal(int vertex) {
 		count++;
-		marked[vertex - 1] = true;
+		marked.add(vertex);
 		for (int i : getNeighbours(vertex)) {
-			if (!marked[i - 1]) {
+			if (!(marked.contains(i))) {
 				mapTraversal(i);
 			}
 		}
@@ -527,9 +531,6 @@ public class MapSelectionController {
 	 * @return this returns array list of neighbors if present; otherwise null
 	 */
 	public ArrayList<Integer> getNeighbours(int v) {
-		if (v > map.size()) {
-			return null;
-		}
 		return new ArrayList<Integer>(map.get(v));
 	}
 
