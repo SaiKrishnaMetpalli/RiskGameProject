@@ -443,13 +443,18 @@ public class CommandLine {
 							System.out.println("\nPlayers should be more than 1 to play the game");
 							addToCommands = false;
 						} else {
-							pl.getListOfPlayers().clear();
-							result = psc.assignRandomCountries(players, gm.getCountries(), pl.getListOfPlayers());
-							if (result.equals("Success")) {
-								p.setCurrentPlayerTurn(players.get(0));
-								System.out.println("Players assigned to countries");
-								addToCommands = true;
-							}
+							if(players.size()>gm.getCountries().size()) {
+								System.out.println("\nCannot populate countries as players are more than countires size");
+								addToCommands=false;
+							} else {
+								pl.getListOfPlayers().clear();
+								result = psc.assignRandomCountries(players, gm.getCountries(), pl.getListOfPlayers());
+								if (result.equals("Success")) {
+									p.setCurrentPlayerTurn(players.get(0));
+									System.out.println("Players assigned to countries");
+									addToCommands = true;
+								}
+							}							
 						}
 					} else {
 						System.out.println(
