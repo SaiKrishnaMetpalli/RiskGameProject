@@ -28,6 +28,7 @@ public class Player extends Observable {
 	private ArrayList<String> currentCardList;
 	private ArrayList<String> conqueredCountries;
 	private boolean allOutAttackPerformed;
+	private String strategy;
 
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -210,5 +211,13 @@ public class Player extends Observable {
 
 	public void setAllOutPerformed(boolean allOutPerformed) {
 		this.allOutAttackPerformed = allOutPerformed;
+	}
+
+	public String getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(String strategy) {
+		this.strategy = strategy;
 	}
 }
