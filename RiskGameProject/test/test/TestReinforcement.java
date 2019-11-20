@@ -31,6 +31,7 @@ public class TestReinforcement {
 	GameMap gm;
 	HashMap<String, Player> playerDetails;
 	ArrayList<String> listOfPlayers;
+	HashMap<String,String> playersWithStrategies;
 	String fileName;
 	String countryName = "Quebec";
 	String player;
@@ -53,10 +54,14 @@ public class TestReinforcement {
 		cc = new CommonController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
+		playersWithStrategies=new HashMap<String, String>();
+		playersWithStrategies.put("sakib","Aggressive");
+		playersWithStrategies.put("sai","Benevolent");
+		playersWithStrategies.put("garima","Random");
 		playerDetails = new HashMap<String, Player>();
 		fileName = "risk.map";
 		msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), fileName);
-		psc.assignRandomCountries(listOfPlayers, gm.getCountries(), playerDetails);
+		psc.assignRandomCountries(listOfPlayers,playersWithStrategies, gm.getCountries(), playerDetails);
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
 		player = cc.findPlayerNameFromCountry(gm.getCountries(), countryName);
 		currentCardList = new ArrayList<String>();

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import controller.PlayerSelectionController;
 public class TestPlayerOperations {
 	PlayerSelectionController psc;
 	ArrayList<String> listofPlayers;
+	HashMap<String, String> playersWithStrategies;
 	String playerName;
 
 	/**
@@ -25,6 +27,7 @@ public class TestPlayerOperations {
 	@Before
 	public void setUp() {
 		listofPlayers = new ArrayList<String>(Arrays.asList("Sakib", "Sai", "Harman", "hsgdf"));
+		playersWithStrategies = new HashMap<String, String>();
 		psc = new PlayerSelectionController();
 		playerName = "";
 	}
@@ -34,9 +37,9 @@ public class TestPlayerOperations {
 	 */
 	@Test
 	public void addPlayerTest() {
-		String result = psc.addPlayer(listofPlayers, "gagan");
+		String result = psc.addPlayer(playersWithStrategies, listofPlayers, "gagan", "Aggressive");
 		assertEquals(result, "Success");
-		String re = psc.addPlayer(listofPlayers, "gagan");
+		String re = psc.addPlayer(playersWithStrategies, listofPlayers, "gagan", "Aggressive");
 		assertEquals(re, "Failure");
 	}
 
@@ -45,9 +48,9 @@ public class TestPlayerOperations {
 	 */
 	@Test
 	public void removePlayerTest() {
-		String result = psc.removePlayer(listofPlayers, "hsgdf");
+		String result = psc.removePlayer(playersWithStrategies,listofPlayers, "hsgdf");
 		assertEquals(result, "Success");
-		String re = psc.removePlayer(listofPlayers, "hsgdf");
+		String re = psc.removePlayer(playersWithStrategies,listofPlayers, "hsgdf");
 		assertEquals(re, "Failure");
 	}
 }

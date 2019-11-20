@@ -32,7 +32,8 @@ public class CommandLine {
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
 
-	ArrayList<String> players;
+	ArrayList<String> playersSetup;
+	HashMap<String, String> playersWithStrategies;
 	CONSTANTS cons;
 	String actions;
 
@@ -56,7 +57,8 @@ public class CommandLine {
 		sc = new Scanner(System.in);
 		inputCommandsList = new ArrayList<String>();
 
-		players = new ArrayList<String>();
+		playersSetup = new ArrayList<String>();
+		playersWithStrategies = new HashMap<String, String>();
 		cons = new CONSTANTS();
 		actions = "";
 
@@ -398,8 +400,9 @@ public class CommandLine {
 						if (inputCommand.length > 1) {
 							int i = 1;
 							while (i < inputCommand.length) {
-								if (inputCommand[i].equals("-add") && (i + 1 < inputCommand.length)) {
-									result = psc.addPlayer(players, inputCommand[i + 1]);
+								if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
+									result = psc.addPlayer(playersWithStrategies, playersSetup, inputCommand[i + 1],
+											inputCommand[i + 2]);
 									if (result.equals("Success")) {
 										System.out.println("\n" + inputCommand[i + 1] + " player added successfully");
 										addToCommands = true;
@@ -407,8 +410,9 @@ public class CommandLine {
 										System.out.println("\n" + inputCommand[i + 1] + " player already exists");
 										addToCommands = false;
 									}
+									i = i + 3;
 								} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
-									result = psc.removePlayer(players, inputCommand[i + 1]);
+									result = psc.removePlayer(playersWithStrategies, playersSetup, inputCommand[i + 1]);
 									if (result.equals("Success")) {
 										System.out.println("\n" + inputCommand[i + 1] + " player removed successfully");
 										addToCommands = true;
@@ -416,11 +420,12 @@ public class CommandLine {
 										System.out.println("\n" + inputCommand[i + 1] + " player does not exists");
 										addToCommands = false;
 									}
+									i = i + 2;
 								} else {
 									System.out.println("\ngameplayer command format is incorrect");
 									addToCommands = false;
+									break;
 								}
-								i = i + 2;
 							}
 						}
 					} else {
@@ -438,23 +443,25 @@ public class CommandLine {
 			case "populatecountries":
 				if (p.getGameState().equals("STARTUP")) {
 					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
-							&& (gm.getBoundries().size() > 0) && (players.size() > 0)) {
-						if (players.size() == 1) {
+							&& (gm.getBoundries().size() > 0) && (playersSetup.size() > 0)) {
+						if (playersSetup.size() == 1) {
 							System.out.println("\nPlayers should be more than 1 to play the game");
 							addToCommands = false;
 						} else {
-							if(players.size()>gm.getCountries().size()) {
-								System.out.println("\nCannot populate countries as players are more than countires size");
-								addToCommands=false;
+							if (playersSetup.size() > gm.getCountries().size()) {
+								System.out
+										.println("\nCannot populate countries as players are more than countires size");
+								addToCommands = false;
 							} else {
 								pl.getListOfPlayers().clear();
-								result = psc.assignRandomCountries(players, gm.getCountries(), pl.getListOfPlayers());
+								result = psc.assignRandomCountries(playersSetup, playersWithStrategies,
+										gm.getCountries(), pl.getListOfPlayers());
 								if (result.equals("Success")) {
-									p.setCurrentPlayerTurn(players.get(0));
+									p.setCurrentPlayerTurn(playersSetup.get(0));
 									System.out.println("Players assigned to countries");
 									addToCommands = true;
 								}
-							}							
+							}
 						}
 					} else {
 						System.out.println(
@@ -477,7 +484,7 @@ public class CommandLine {
 						if (pl.getListOfPlayers().size() > 0) {
 							if (checkPlayersTurn(inputCommand[1])) {
 								result = psc.placeArmy(gm.getCountries(), pl.getListOfPlayers(), inputCommand[1],
-										cons.NO_PLAYER_ARMIES.get(players.size()));
+										cons.NO_PLAYER_ARMIES.get(playersSetup.size()));
 								setPlayerTurn();
 								System.out.println("\n" + " " + result);
 								addToCommands = true;
@@ -506,13 +513,13 @@ public class CommandLine {
 					if (pl.getListOfPlayers().size() > 0) {
 						if (checkArmiesPlaced()) {
 							result = psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
-									cons.NO_PLAYER_ARMIES.get(players.size()));
+									cons.NO_PLAYER_ARMIES.get(playersSetup.size()));
 							System.out.println("\nArmies are placed successfully");
 						} else {
 							System.out.println("\nArmies are already placed for the player");
 						}
 						p.setActionsPerformed("");
-						p.setCurrentPlayerTurn(players.get(0));
+						p.setCurrentPlayerTurn(playersSetup.get(0));
 						p.setGameState("REINFORCE");
 						addToCommands = true;
 					} else {
@@ -551,8 +558,8 @@ public class CommandLine {
 							addToCommands = true;
 						} else {
 							System.out.println("\nCards cannot be exchanged; the given positions are invalid");
-							actions+="\nCards cannot be exchanged; the given positions are invalid";
-							addToCommands=false;
+							actions += "\nCards cannot be exchanged; the given positions are invalid";
+							addToCommands = false;
 						}
 					} else if (inputCommand.length == 2) {
 						if (pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getCurrentCardList().size() >= 5) {
@@ -1117,7 +1124,7 @@ public class CommandLine {
 	public boolean checkArmiesPlaced() {
 		boolean flag = false;
 		int playerArmiesCount = 0;
-		int totalArmiesCount = cons.NO_PLAYER_ARMIES.get(players.size());
+		int totalArmiesCount = cons.NO_PLAYER_ARMIES.get(playersSetup.size());
 		for (String str : pl.getListOfPlayers().keySet()) {
 			Player p = pl.getListOfPlayers().get(str);
 			playerArmiesCount = psc.totalArmyCountPlayer(p);
@@ -1181,10 +1188,10 @@ public class CommandLine {
 	 * @author Sai Krishna
 	 */
 	private void setPlayerTurn() {
-		if ((players.indexOf(p.getCurrentPlayerTurn())) + 1 < players.size()) {
-			p.setCurrentPlayerTurn(players.get((players.indexOf(p.getCurrentPlayerTurn())) + 1));
+		if ((playersSetup.indexOf(p.getCurrentPlayerTurn())) + 1 < playersSetup.size()) {
+			p.setCurrentPlayerTurn(playersSetup.get((playersSetup.indexOf(p.getCurrentPlayerTurn())) + 1));
 		} else {
-			p.setCurrentPlayerTurn(players.get(0));
+			p.setCurrentPlayerTurn(playersSetup.get(0));
 		}
 	}
 

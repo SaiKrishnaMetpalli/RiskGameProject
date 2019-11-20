@@ -12,6 +12,7 @@ public class Player extends Observable {
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
 	private HashMap<String, ArrayList<String>> continentsCountryList;
+	private String strategy;
 	private String gameState;
 	private String currentPlayerTurn;
 	private String actionsPerformed;
@@ -27,8 +28,7 @@ public class Player extends Observable {
 	private int availableReinforceArmies;
 	private ArrayList<String> currentCardList;
 	private ArrayList<String> conqueredCountries;
-	private boolean allOutAttackPerformed;
-	private String strategy;
+	private boolean allOutAttackPerformed;	
 
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -79,6 +79,14 @@ public class Player extends Observable {
 
 	public void setContinentsCountryList(HashMap<String, ArrayList<String>> continentsCountryList) {
 		this.continentsCountryList = continentsCountryList;
+	}
+
+	public String getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(String strategy) {
+		this.strategy = strategy;
 	}
 
 	public String getGameState() {
@@ -211,13 +219,5 @@ public class Player extends Observable {
 
 	public void setAllOutPerformed(boolean allOutPerformed) {
 		this.allOutAttackPerformed = allOutPerformed;
-	}
-
-	public String getStrategy() {
-		return strategy;
-	}
-
-	public void setStrategy(String strategy) {
-		this.strategy = strategy;
 	}
 }
