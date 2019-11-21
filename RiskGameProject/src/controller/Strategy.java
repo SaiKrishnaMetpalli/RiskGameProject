@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import model.GameMap;
 import model.Player;
@@ -6,5 +6,6 @@ import model.PlayersList;
 
 public interface Strategy {
 
-	String executeBehaviour(GameMap gm , Player p , PlayersList pl);
+	String executeStrategy(GameMap gm , PlayersList pl , Player player);
+		
 }

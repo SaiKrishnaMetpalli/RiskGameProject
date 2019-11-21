@@ -3,16 +3,21 @@ package controller;
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
-import view.Strategy;
 
-public class StrategyController implements Strategy{
+public class StrategyController{
 	
-	public String executeBehaviour(GameMap gm, Player p, PlayersList pl) {
-
-		
-		
-		return null;
+	private Strategy strategy;
+	
+	public void setStrategy(Strategy strategy)
+	{
+		this.strategy = strategy;
 	}
-
+	
+	public String executeBehaviour(GameMap gm , PlayersList pl, Player player )
+	{
+	
+		return this.strategy.executeStrategy(gm, pl, player);
+		
+	}
 	
 }

@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import controller.CheaterStrategy;
+import controller.CommonController;
+import controller.MapSelectionController;
+import controller.PlayerController;
+import controller.PlayerSelectionController;
+import controller.StrategyController;
 import model.Continents;
 import model.Countries;
 import model.GameMap;
@@ -14,12 +20,6 @@ import model.GameStateBuilder;
 import model.GameStateScenario;
 import model.Player;
 import model.PlayersList;
-
-import controller.CommonController;
-import controller.MapSelectionController;
-import controller.PlayerController;
-import controller.PlayerSelectionController;
-
 import util.CONSTANTS;
 
 /**
@@ -51,6 +51,8 @@ public class CommandLine {
 	PlayerWorldDominationView pwdv;
 	CardExchangeView cev;
 	GameState gs;
+	StrategyController behaviour;
+
 
 	/**
 	 * Default constructor To create the variable objects
@@ -76,6 +78,8 @@ public class CommandLine {
 		pv = new PhaseView();
 		pwdv = new PlayerWorldDominationView();
 		cev = new CardExchangeView();
+		behaviour = new StrategyController();
+
 		p.attach(pv);
 		pl.attach(pwdv);
 		pl.attach(cev);
@@ -592,6 +596,8 @@ public class CommandLine {
 						p.setActionsPerformed("");
 						p.setCurrentPlayerTurn(playersSetup.get(0));
 						p.setGameState("REINFORCE");
+						executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+
 						addToCommands = true;
 					} else {
 						System.out.println("\nCannot place army as players are not assigned to countries");
@@ -1287,5 +1293,31 @@ public class CommandLine {
 		p.setConqueredCountries(new ArrayList<String>());
 		p.setAllOutPerformed(false);
 	}
+	public String executeBehaviour(String strategyName) {
 
+		String result = null;
+		switch (strategyName) {
+
+		/*
+		 * case AGGRESSIVE: behavior = new AI_Aggressive(this, ref_game); break; case
+		 * BENEVOLENT: behavior = new AI_Benevolent(this, ref_game); break; case RANDOM:
+		 * behavior = new AI_Random(this, ref_game); break;
+		 */
+		case "Cheater":
+			behaviour.setStrategy(new CheaterStrategy());
+			result = behaviour.executeBehaviour(gm, pl, p);
+			break;
+		/*
+		 * case "human": behaviour = new StrategyController(); behaviour.setStrategy(new
+		 * HumanStrategy()); result = behaviour.executeBehaviour(gm, pl, player); break;
+		 */
+		case "Human":
+			commandLine();
+			break;
+
+		default:
+			break;
+		}
+		return null;
+	}
 }

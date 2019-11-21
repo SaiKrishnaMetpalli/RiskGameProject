@@ -31,6 +31,21 @@ public class CommonController {
 	}
 
 	/**
+	 * This Method return the Country Name from its number
+	 * 
+	 * @param countries contains list of countries
+	 * @param countryNum is the country number
+	 * @return country name
+	 * @author Ashish
+	 */
+	public String getCountryNameByNum(HashMap<Integer, Countries> countries, int countryNum)
+	{
+		Countries cou = countries.get(countryNum);
+		
+		return cou.getCountryName();
+		
+	}
+	/**
 	 * takes Continent value from countries hashmap from that value find continent
 	 * object from continents hashmap Uses getCountryByNam method This method is
 	 * used in calculateReinforceArmy
