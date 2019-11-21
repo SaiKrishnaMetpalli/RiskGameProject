@@ -11,7 +11,7 @@ public abstract class GameStateBuilder {
 		this.gameState = gameState;
 	}
 	
-	abstract void buildGameMap(GameMap gm);	
-	abstract void buildPlayersList(PlayersList pl);	
-	abstract void buildPlayer(Player p);	
+	public abstract void buildGameMap(GameMap gm);	
+	public abstract void buildPlayersList(PlayersList pl);	
+	public abstract void buildPlayer(Player p);	
 }

@@ -231,7 +231,7 @@ public class MapSelectionController {
 
 	/**
 	 * 
-	 * /** This method is used for adding the countries value
+	 * This method is used for adding the countries value
 	 * 
 	 * @param countryName   this variable contains name of the country to be added
 	 * @param continentName this variable contains name of the continent to which
