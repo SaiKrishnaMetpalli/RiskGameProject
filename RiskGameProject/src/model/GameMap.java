@@ -11,6 +11,8 @@ public class GameMap {
 	private HashMap<Integer, Countries> countries;
 	private HashMap<Integer, ArrayList<Integer>> boundries;
 	private ArrayList<String> totalCardsList;
+	private ArrayList<String> playersSetup;
+	private HashMap<String, String> playersWithStrategies;
 
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -20,6 +22,8 @@ public class GameMap {
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
 		totalCardsList = new ArrayList<String>();
+		playersSetup = new ArrayList<String>();
+		playersWithStrategies = new HashMap<String, String>();
 	}
 
 	public HashMap<Integer, Continents> getContinents() {
@@ -52,5 +56,21 @@ public class GameMap {
 
 	public void setTotalCardsList(ArrayList<String> totalCardsList) {
 		this.totalCardsList = totalCardsList;
+	}
+
+	public ArrayList<String> getPlayersSetup() {
+		return playersSetup;
+	}
+
+	public void setPlayersSetup(ArrayList<String> playersSetup) {
+		this.playersSetup = playersSetup;
+	}
+
+	public HashMap<String, String> getPlayersWithStrategies() {
+		return playersWithStrategies;
+	}
+
+	public void setPlayersWithStrategies(HashMap<String, String> playersWithStrategies) {
+		this.playersWithStrategies = playersWithStrategies;
 	}
 }

@@ -34,9 +34,7 @@ public class CommandLine {
 
 	boolean addToCommands;
 	ArrayList<String> inputCommandsList;
-
-	ArrayList<String> playersSetup;
-	HashMap<String, String> playersWithStrategies;
+	
 	CONSTANTS cons;
 	String actions;
 
@@ -62,9 +60,7 @@ public class CommandLine {
 	public CommandLine() {
 		sc = new Scanner(System.in);
 		inputCommandsList = new ArrayList<String>();
-
-		playersSetup = new ArrayList<String>();
-		playersWithStrategies = new HashMap<String, String>();
+		
 		cons = new CONSTANTS();
 		actions = "";
 
@@ -270,9 +266,9 @@ public class CommandLine {
 						if (result) {
 							try {
 								GameStateBuilder gsb=new GameStateScenario();
-								//gsb.buildGameMap(gm);
-								//gsb.buildPlayersList(pl);
-								//gsb.buildPlayer(p);
+								gsb.buildGameMap(gm);
+								gsb.buildPlayersList(pl);
+								gsb.buildPlayer(p);
 								gs=gsb.getGameState();
 								msc.saveGameFile(gs, inputCommand[1]);
 								System.out.println("\nGame saved successfully");
@@ -476,7 +472,7 @@ public class CommandLine {
 							int i = 1;
 							while (i < inputCommand.length) {
 								if (inputCommand[i].equals("-add") && (i + 2 < inputCommand.length)) {
-									result = psc.addPlayer(playersWithStrategies, playersSetup, inputCommand[i + 1],
+									result = psc.addPlayer(gm.getPlayersWithStrategies(), gm.getPlayersSetup(), inputCommand[i + 1],
 											inputCommand[i + 2]);
 									if (result.equals("Success")) {
 										System.out.println("\n" + inputCommand[i + 1] + " player added successfully");
@@ -487,7 +483,7 @@ public class CommandLine {
 									}
 									i = i + 3;
 								} else if (inputCommand[i].equals("-remove") && (i + 1 < inputCommand.length)) {
-									result = psc.removePlayer(playersWithStrategies, playersSetup, inputCommand[i + 1]);
+									result = psc.removePlayer(gm.getPlayersWithStrategies(), gm.getPlayersSetup(), inputCommand[i + 1]);
 									if (result.equals("Success")) {
 										System.out.println("\n" + inputCommand[i + 1] + " player removed successfully");
 										addToCommands = true;
@@ -518,21 +514,21 @@ public class CommandLine {
 			case "populatecountries":
 				if (p.getGameState().equals("STARTUP")) {
 					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
-							&& (gm.getBoundries().size() > 0) && (playersSetup.size() > 0)) {
-						if (playersSetup.size() == 1) {
+							&& (gm.getBoundries().size() > 0) && (gm.getPlayersSetup().size() > 0)) {
+						if (gm.getPlayersSetup().size() == 1) {
 							System.out.println("\nPlayers should be more than 1 to play the game");
 							addToCommands = false;
 						} else {
-							if (playersSetup.size() > gm.getCountries().size()) {
+							if (gm.getPlayersSetup().size() > gm.getCountries().size()) {
 								System.out
 										.println("\nCannot populate countries as players are more than countires size");
 								addToCommands = false;
 							} else {
 								pl.getListOfPlayers().clear();
-								result = psc.assignRandomCountries(playersSetup, playersWithStrategies,
+								result = psc.assignRandomCountries(gm.getPlayersSetup(), gm.getPlayersWithStrategies(),
 										gm.getCountries(), pl.getListOfPlayers());
 								if (result.equals("Success")) {
-									p.setCurrentPlayerTurn(playersSetup.get(0));
+									p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
 									System.out.println("Players assigned to countries");
 									addToCommands = true;
 								}
@@ -559,7 +555,7 @@ public class CommandLine {
 						if (pl.getListOfPlayers().size() > 0) {
 							if (checkPlayersTurn(inputCommand[1])) {
 								result = psc.placeArmy(gm.getCountries(), pl.getListOfPlayers(), inputCommand[1],
-										cons.NO_PLAYER_ARMIES.get(playersSetup.size()));
+										cons.NO_PLAYER_ARMIES.get(gm.getPlayersSetup().size()));
 								setPlayerTurn();
 								System.out.println("\n" + " " + result);
 								addToCommands = true;
@@ -588,13 +584,13 @@ public class CommandLine {
 					if (pl.getListOfPlayers().size() > 0) {
 						if (checkArmiesPlaced()) {
 							result = psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
-									cons.NO_PLAYER_ARMIES.get(playersSetup.size()));
+									cons.NO_PLAYER_ARMIES.get(gm.getPlayersSetup().size()));
 							System.out.println("\nArmies are placed successfully");
 						} else {
 							System.out.println("\nArmies are already placed for the player");
 						}
 						p.setActionsPerformed("");
-						p.setCurrentPlayerTurn(playersSetup.get(0));
+						p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
 						p.setGameState("REINFORCE");
 						executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 
@@ -1201,7 +1197,7 @@ public class CommandLine {
 	public boolean checkArmiesPlaced() {
 		boolean flag = false;
 		int playerArmiesCount = 0;
-		int totalArmiesCount = cons.NO_PLAYER_ARMIES.get(playersSetup.size());
+		int totalArmiesCount = cons.NO_PLAYER_ARMIES.get(gm.getPlayersSetup().size());
 		for (String str : pl.getListOfPlayers().keySet()) {
 			Player p = pl.getListOfPlayers().get(str);
 			playerArmiesCount = psc.totalArmyCountPlayer(p);
@@ -1265,10 +1261,10 @@ public class CommandLine {
 	 * @author Sai Krishna
 	 */
 	private void setPlayerTurn() {
-		if ((playersSetup.indexOf(p.getCurrentPlayerTurn())) + 1 < playersSetup.size()) {
-			p.setCurrentPlayerTurn(playersSetup.get((playersSetup.indexOf(p.getCurrentPlayerTurn())) + 1));
+		if ((gm.getPlayersSetup().indexOf(p.getCurrentPlayerTurn())) + 1 < gm.getPlayersSetup().size()) {
+			p.setCurrentPlayerTurn(gm.getPlayersSetup().get((gm.getPlayersSetup().indexOf(p.getCurrentPlayerTurn())) + 1));
 		} else {
-			p.setCurrentPlayerTurn(playersSetup.get(0));
+			p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
 		}
 	}
 
