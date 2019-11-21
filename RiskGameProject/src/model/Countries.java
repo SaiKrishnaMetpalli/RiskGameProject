@@ -28,6 +28,7 @@ public class Countries {
 		this.countryContinentNum = countryContinentNum;
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
+		this.ownerName="";
 	}
 
 	public String getCountryName() {

@@ -9,6 +9,9 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 import model.GameMap;
+import model.GameState;
+import model.GameStateBuilder;
+import model.GameStateScenario;
 import model.Player;
 import model.PlayersList;
 
@@ -47,6 +50,7 @@ public class CommandLine {
 	PhaseView pv;
 	PlayerWorldDominationView pwdv;
 	CardExchangeView cev;
+	GameState gs;
 
 	/**
 	 * Default constructor To create the variable objects
@@ -254,6 +258,70 @@ public class CommandLine {
 				viewMap();
 				commandLine();
 				break;
+			case "savegame":
+				if (inputCommand.length == 2) {
+					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
+							&& (gm.getBoundries().size() > 0)) {
+						boolean result = msc.isConnectedMap(gm.getBoundries());
+						if (result) {
+							try {
+								GameStateBuilder gsb=new GameStateScenario();
+								//gsb.buildGameMap(gm);
+								//gsb.buildPlayersList(pl);
+								//gsb.buildPlayer(p);
+								gs=gsb.getGameState();
+								msc.saveGameFile(gs, inputCommand[1]);
+								System.out.println("\nGame saved successfully");
+								addToCommands = true;
+							} catch (Exception ex) {
+								System.out.println("\nSome error has occurred. Please try again");
+								addToCommands = false;
+							}
+						} else {
+							System.out.println("\nGame cannot be saved as map is not connected");
+							addToCommands = false;
+						}
+					} else {
+						System.out.println("\nMap has not been loaded. Please load the file and save");
+						addToCommands = false;
+					}
+				} else {
+					System.out.println("\nsavemap command format is incorrect");
+					addToCommands = false;
+				}				
+				
+				commandLine();
+				break;
+			case "loadgame":
+				if (inputCommand.length == 2) {
+					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
+							&& (gm.getBoundries().size() > 0)) {
+						boolean result = msc.isConnectedMap(gm.getBoundries());
+						if (result) {
+							try {
+								msc.writeGameMapFile(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
+										inputCommand[1]);
+								System.out.println("\nMap file saved successfully");
+								addToCommands = true;
+							} catch (Exception ex) {
+								System.out.println("\nSome error has occurred. Please try again");
+								addToCommands = false;
+							}
+						} else {
+							System.out.println("\nFile cannot be saved as map is not connected");
+							addToCommands = false;
+						}
+					} else {
+						System.out.println("\nMap has not been loaded. Please load the file and save");
+						addToCommands = false;
+					}
+				} else {
+					System.out.println("\nsavemap command format is incorrect");
+					addToCommands = false;
+				}
+				
+				commandLine();
+				break;
 			case "savemap":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
@@ -278,6 +346,9 @@ public class CommandLine {
 							System.out.println("\nMap has not been loaded. Please load the file and save");
 							addToCommands = false;
 						}
+					} else {
+						System.out.println("\nsavemap command format is incorrect");
+						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nsavemap command cannot be performed in " + p.getGameState() + " phase");

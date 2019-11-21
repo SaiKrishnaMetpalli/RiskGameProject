@@ -14,6 +14,10 @@ import java.util.Scanner;
 
 import model.Continents;
 import model.Countries;
+import model.GameMap;
+import model.GameState;
+import model.Player;
+import model.PlayersList;
 
 /**
  * All the map operations are performed in this controller
@@ -548,6 +552,120 @@ public class MapSelectionController {
 
 		}
 
+	}
+
+	public void saveGameFile(GameState gs, String fileName) throws IOException {
+		GameMap gm = gs.getGameMap();
+		PlayersList pl = gs.getPlayersList();
+		Player p = gs.getPlayer();
+
+		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
+		File mapfile = new File(createPath);
+		FileWriter fw = new FileWriter(mapfile, false);
+		BufferedWriter bw = new BufferedWriter(fw);
+		mapfile.createNewFile();
+
+		bw.write("[continents]");
+		bw.newLine();
+		for (Integer i : gm.getContinents().keySet()) {
+			Continents c = gm.getContinents().get(i);
+			bw.write(i + " " + c.getContinentName() + " " + c.getcontinentControlValue());
+			bw.newLine();
+		}
+
+		bw.write("\n");
+		bw.write("[countries]");
+		bw.newLine();
+		for (Integer i : gm.getCountries().keySet()) {
+			Countries c1 = gm.getCountries().get(i);
+			bw.write(i + " " + c1.getCountryName() + " " + c1.getCountryContinentNum() + " " + c1.getOwnerName());
+			bw.newLine();
+		}
+
+		bw.write("\n");
+		bw.write("[borders]");
+		bw.newLine();
+		for (Integer s : gm.getBoundries().keySet()) {
+			ArrayList<Integer> tempal = new ArrayList<Integer>();
+			String adjacency = "";
+			tempal = gm.getBoundries().get(s);
+			for (Integer s1 : tempal) {
+				adjacency += s1 + " ";
+			}
+			bw.write(s + " " + adjacency.trim());
+			bw.newLine();
+		}
+		bw.write("\n");
+		bw.write("[players]");
+		bw.newLine();
+		if (pl.getListOfPlayers().size() > 0) {
+			for (String playerName : pl.getListOfPlayers().keySet()) {
+				Player playerDetails = pl.getListOfPlayers().get(playerName);
+				String ownedCountries = "";
+				String ownedArmies = "";
+				for (String countryName : playerDetails.getOwnedCountriesArmiesList().keySet()) {
+					ownedCountries += countryName + ",";
+					ownedArmies += playerDetails.getOwnedCountriesArmiesList().get(countryName) + ",";
+				}
+				ownedCountries = ownedCountries.substring(0, ownedCountries.length() - 1);
+				ownedArmies = ownedArmies.substring(0, ownedArmies.length() - 1);
+				if (playerDetails.getCurrentCardList().size() > 0) {
+					String cardsList = "";
+					for (String cardName : playerDetails.getCurrentCardList()) {
+						cardsList += cardName + ",";
+					}
+					cardsList = cardsList.substring(0, cardsList.length() - 1);
+					bw.write(playerName + " " + playerDetails.getStrategy() + " " + ownedCountries + " " + ownedArmies
+							+ "" + cardsList);
+				} else {
+					bw.write(playerName + " " + playerDetails.getStrategy() + " " + ownedCountries + " " + ownedArmies);
+				}
+				bw.newLine();
+			}
+
+			bw.write("\n");
+			bw.write("[turnInformation]");
+			bw.newLine();
+			bw.write(p.getGameState());
+			bw.newLine();
+			if (p.getGameState().equals("REINFORCE")) {
+				// write turn information
+				bw.write(p.getCurrentPlayerTurn());
+				bw.newLine();
+				bw.write(p.getAvailableReinforceArmies() + " " + p.getCardReward() + " " + p.getCardBonusArmy());
+				bw.newLine();
+			} else if (p.getGameState().equals("ATTACK") || p.getGameState().equals("FORTIFY")) {
+				bw.write(p.getCurrentPlayerTurn());
+				bw.newLine();
+				bw.write(p.getAvailableReinforceArmies() + " " + p.getCardReward() + " " + p.getCardBonusArmy());
+				bw.newLine();
+				if(p.getAttackerDice().size()>0) {
+					String attackerDice="";
+					for(Integer diceNum:p.getAttackerDice()) {
+						attackerDice+=diceNum+",";
+					}
+					attackerDice=attackerDice.substring(0,attackerDice.length()-1);
+					if (p.getConqueredCountries().size() > 0) {
+						String conqueredCountries = "";
+						for (String conqCon : p.getConqueredCountries()) {
+							conqueredCountries += conqCon + ",";
+						}
+						conqueredCountries = conqueredCountries.substring(0, conqueredCountries.length() - 1);
+						bw.write(p.getAttackerName() + " " + p.getAttackerCountry() + " " + p.getAttackerDice() + " "
+								+ p.getDiceRolled() + " " + conqueredCountries);
+					} else {
+						bw.write(p.getAttackerName() + " " + p.getAttackerCountry() + " " + p.getAttackerDice() + " "
+								+ p.getDiceRolled());
+					}
+				}
+				
+				bw.newLine();
+				bw.write(p.getDefenderName() + " " + p.getDefenderCountry() + " " + p.getDefenderDice());
+
+			}
+		}
+
+		bw.close();
 	}
 
 }
