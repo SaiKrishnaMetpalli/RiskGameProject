@@ -1293,6 +1293,12 @@ public class CommandLine {
 		p.setConqueredCountries(new ArrayList<String>());
 		p.setAllOutPerformed(false);
 	}
+	/**
+	 * This Method determines the behaviour of a player and perform its moves
+	 * @param strategyName the name of the strategy
+	 * @return success if strategy executed successfully
+	 * @author Ashish Chaudhary
+	 */
 	public String executeBehaviour(String strategyName) {
 
 		String result = null;
@@ -1306,6 +1312,12 @@ public class CommandLine {
 		case "Cheater":
 			behaviour.setStrategy(new CheaterStrategy());
 			result = behaviour.executeBehaviour(gm, pl, p);
+			if(result.equals("Success")) {
+				clearPlayerObject();
+				setPlayerTurn();
+				p.setGameState("REINFORCE");
+			}
+			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 			break;
 		/*
 		 * case "human": behaviour = new StrategyController(); behaviour.setStrategy(new

@@ -12,9 +12,9 @@ public class CheaterStrategy implements Strategy {
 
 	CommonController cc;
 	PlayerController pc;
-	ArrayList<Integer> attackerCountryList = new ArrayList<Integer>();
-	ArrayList<Integer> neighbouringList = new ArrayList<Integer>();
-	
+	ArrayList<Integer> attackerCountryList;
+	ArrayList<Integer> neighbouringList;
+
 	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 
@@ -22,7 +22,7 @@ public class CheaterStrategy implements Strategy {
 		attack(gm, pl, player);
 		fortify(gm, pl, player);
 
-		return null;
+		return "Success";
 	}
 
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
@@ -40,38 +40,36 @@ public class CheaterStrategy implements Strategy {
 
 	private void attack(GameMap gm, PlayersList pl, Player player) {
 
+		attackerCountryList = new ArrayList<Integer>();
+		neighbouringList = new ArrayList<Integer>();
+
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
-			//player.setAttackerCountry(country);
+			// player.setAttackerCountry(country);
 			int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), country);
 			attackerCountryList.add(attackerCountryNum);
 		}
-		for(int i = 0 ; i < attackerCountryList.size() ; i++)
-		{
+		for (int i = 0; i < attackerCountryList.size(); i++) {
 			neighbouringList = gm.getBoundries().get(attackerCountryList.get(i));
-			
-			for(int x = 0 ; x < neighbouringList.size() ; x++)
-			{
-				if(attackerCountryList.contains(neighbouringList.get(x)))
-				{
+
+			for (int x = 0; x < neighbouringList.size(); x++) {
+				if (attackerCountryList.contains(neighbouringList.get(x))) {
 					continue;
-				}
-				else
-				{
+				} else {
 					player.setAttackerCountry(cc.getCountryNameByNum(gm.getCountries(), attackerCountryList.get(i)));
 					String defenderCountryName = cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x));
 					player.setDefenderCountry(defenderCountryName);
-					
+
 					Countries c = gm.getCountries().get(x);
 					player.setDefenderName(c.getOwnerName());
-					
-					
-					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry() , defenderCountryName , pl.getListOfPlayers().get(player.getAttackerName())
-							, gm.getCountries() , player , pl.getListOfPlayers().get(player.getDefenderName()));
-					
+
+					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
+							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
+							pl.getListOfPlayers().get(player.getDefenderName()));
+
 					if (allOutAttacked.contains("Won")) {
-						String armyMoved = pc.movingArmyToConqueredCountry(
-								player.getDiceRolled(), pl.getListOfPlayers(), player, gm);
+						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
+								pl.getListOfPlayers(), player, gm);
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
 							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
@@ -80,8 +78,7 @@ public class CheaterStrategy implements Strategy {
 						}
 					}
 				}
-				
-				
+
 			}
 		}
 		player.setGameState("FORTIFY");
@@ -89,6 +86,38 @@ public class CheaterStrategy implements Strategy {
 
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 
+		attackerCountryList = new ArrayList<Integer>();
+		neighbouringList = new ArrayList<Integer>();
+		
+		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
+
+			// player.setAttackerCountry(country);
+			int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), country);
+			attackerCountryList.add(attackerCountryNum);
+		}
+		for (int i = 0; i < attackerCountryList.size(); i++) {
+			neighbouringList = gm.getBoundries().get(attackerCountryList.get(i));
+
+			for (int x = 0; x < neighbouringList.size(); x++) {
+				
+				if (attackerCountryList.contains(neighbouringList.get(x))) {
+					continue;
+				}
+				else
+				{
+					String countryToFortify = cc.getCountryNameByNum(gm.getCountries(), attackerCountryList.get(i));
+					
+					Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
+
+					HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
+					
+					playerCountriesArmies.put(countryToFortify, playerCountriesArmies.get(countryToFortify) * 2);
+					break;
+				}
+				
+				
+			}
+		}		
 	}
 
 }
