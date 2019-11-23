@@ -238,6 +238,7 @@ public class MapSelectionController {
 	 *                      country is added
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
+	 * @author garimadawar
 	 */
 	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String countryName, String continentName) {
@@ -294,6 +295,7 @@ public class MapSelectionController {
 	 * @param countries   this variable contains the continents list
 	 * @param boundries   this variable contains the boundries list
 	 * @param countryName this variable contains the country to be removed
+	 * @author garimadawar
 	 */
 	public String removeCountry(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName) {
@@ -339,6 +341,7 @@ public class MapSelectionController {
 	 *                             country
 	 * @param countries            this variable contains the countries list
 	 * @param boundries            this variable contains the boundries list
+	 * @author garimadawar
 	 */
 	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
@@ -397,6 +400,7 @@ public class MapSelectionController {
 	 *                             from neighbour
 	 * @param countryName          this variable is the name of the country which
 	 *                             contains neighbor country name
+	 * @author garimadawar
 	 */
 	public String removeNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
@@ -498,6 +502,7 @@ public class MapSelectionController {
 	 * 
 	 * @param boundries This variable contains the adjacency list of countries
 	 * @return it returns true if map is connected; otherwise false
+	 * @author garimadawar
 	 */
 	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries) {
 		map = boundries;
@@ -516,6 +521,7 @@ public class MapSelectionController {
 	 * This method is used for traversing the map
 	 * 
 	 * @param vertex this variable contains one of the vertex of map
+	 * @author garimadawar
 	 */
 	public void mapTraversal(int vertex) {
 		count++;
