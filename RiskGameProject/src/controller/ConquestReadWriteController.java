@@ -13,10 +13,7 @@ import model.Countries;
 
 
 public class ConquestReadWriteController {
-
-	ArrayList<Integer> list;
-	MapFormatValidation mapValidate = new MapFormatValidation();
-	boolean flag = false;
+	
 	String continentsStarted, countriesStarted,country;
 	String[] continentsDetails, countriesDetails;
 	CommonController cc = new CommonController();
@@ -76,9 +73,9 @@ public class ConquestReadWriteController {
 
 		}
 		 for(int i : boundaryNames.keySet()) {
-			 ArrayList<String> list = boundaryNames.get(i);
+			 ArrayList<String> boulist = boundaryNames.get(i);
 			 ArrayList<Integer> listNum = new ArrayList<Integer>();
-			 for(String s : list) {
+			 for(String s : boulist) {
 				 listNum.add(cc.getCountryNumberByName(countries, s));
 			 }
 			 boundries.put(i,listNum);
@@ -113,9 +110,9 @@ public class ConquestReadWriteController {
 			String s1 = c1.getCountryName() + ","+ c1.getxCoordinate() + "," + c1.getyCoordinate()+ ","
 					+ cc.getContinentByCountryName(continents, countries, c1.getCountryName())+",";
 			String s2="";
-			ArrayList<String> list = boundaryNames.get(i);
-			for (String s : list) {
-				if(s.equals(list.get(list.size()-1))) {
+			ArrayList<String> blist = boundaryNames.get(i);
+			for (String s : blist) {
+				if(s.equals(blist.get(blist.size()-1))) {
 					s2+=s;
 				}else s2+=s+",";
 				

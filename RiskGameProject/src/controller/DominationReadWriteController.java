@@ -1,5 +1,4 @@
 package controller;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +13,6 @@ import model.Countries;
 
 public class DominationReadWriteController {
 	ArrayList<Integer> list;
-	MapFormatValidation mapValidate = new MapFormatValidation();
-	boolean flag = false;
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
 	String[] continentsDetails, countriesDetails, boundriesDetails;
 
