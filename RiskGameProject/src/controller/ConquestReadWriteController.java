@@ -1,5 +1,4 @@
 package controller;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -111,8 +110,8 @@ public class ConquestReadWriteController {
 		bw.newLine();
 		for (Integer i : countries.keySet()) {
 			Countries c1 = countries.get(i);
-			String s1 = c1.getCountryName() + "," +"," + c1.getxCoordinate() + ","
-					+ c1.getyCoordinate()+ ","+cc.getContinentByCountryName(continents, countries, c1.getCountryName())+"";
+			String s1 = c1.getCountryName() + ","+ c1.getxCoordinate() + "," + c1.getyCoordinate()+ ","
+					+ cc.getContinentByCountryName(continents, countries, c1.getCountryName())+",";
 			String s2="";
 			ArrayList<String> list = boundaryNames.get(i);
 			for (String s : list) {
