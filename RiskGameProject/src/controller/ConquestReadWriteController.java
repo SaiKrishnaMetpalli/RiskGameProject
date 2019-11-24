@@ -18,9 +18,10 @@ public class ConquestReadWriteController {
 	ArrayList<Integer> list;
 	MapFormatValidation mapValidate = new MapFormatValidation();
 	boolean flag = false;
-	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
-	String[] continentsDetails, countriesDetails, boundriesDetails;
+	String continentsStarted, countriesStarted,country;
+	String[] continentsDetails, countriesDetails;
 	CommonController cc = new CommonController();
+	HashMap<Integer, ArrayList<String>> boundaryNames = new HashMap<Integer, ArrayList<String>>();
 	
 	public void conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
@@ -28,7 +29,6 @@ public class ConquestReadWriteController {
 		String readPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
 		File file = new File(readPath);
 		Scanner sc = new Scanner(file);
-		HashMap<Integer, ArrayList<String>> boundaryNames = new HashMap<Integer, ArrayList<String>>();
 		while (sc.hasNext()) {
 			String continent = sc.nextLine();
 			if (continent.equals("[Continents]")) {
@@ -67,7 +67,7 @@ public class ConquestReadWriteController {
 						countriesDetails[1], countriesDetails[2]);
 				countries.put(countriesCount, c2);
 				ArrayList<String> temp = new ArrayList<String>();
-				for(int i =4; i <= countriesDetails.length; i++) {
+				for(int i =4; i <countriesDetails.length; i++) {
 					temp.add(countriesDetails[i]);
 				}
 				boundaryNames.put(countriesCount,temp);
@@ -95,43 +95,36 @@ public class ConquestReadWriteController {
 		FileWriter fw = new FileWriter(mapfile, false);
 		BufferedWriter bw = new BufferedWriter(fw);
 		mapfile.createNewFile();
-		bw.write("name " + mapFile + " Map");
+		bw.write("[Map]");
 		bw.write("\n");
 		bw.write("\n");
-		bw.write("[files]");
-		bw.write("\n");
-		bw.write("\n");
-		bw.write("[continents]");
+		bw.write("[Continents]");
 		bw.newLine();
 		for (Integer i : continents.keySet()) {
 			Continents c = continents.get(i);
-			bw.write(c.getContinentName() + " " + c.getcontinentControlValue() + " " + c.getColour());
+			bw.write(c.getContinentName() + "=" + c.getcontinentControlValue());
 			bw.newLine();
 		}
 
 		bw.write("\n");
-		bw.write("[countries]");
+		bw.write("[Territories]");
 		bw.newLine();
 		for (Integer i : countries.keySet()) {
 			Countries c1 = countries.get(i);
-			bw.write(i + " " + c1.getCountryName() + " " + c1.getCountryContinentNum() + " " + c1.getxCoordinate() + " "
-					+ c1.getyCoordinate());
+			String s1 = c1.getCountryName() + "," +"," + c1.getxCoordinate() + ","
+					+ c1.getyCoordinate()+ ","+cc.getContinentByCountryName(continents, countries, c1.getCountryName())+"";
+			String s2="";
+			ArrayList<String> list = boundaryNames.get(i);
+			for (String s : list) {
+				if(s.equals(list.get(list.size()-1))) {
+					s2+=s;
+				}else s2+=s+",";
+				
+			}
+			bw.write(s1+s2);
 			bw.newLine();
 		}
 
-		bw.write("\n");
-		bw.write("[borders]");
-		bw.newLine();
-		for (Integer s : boundries.keySet()) {
-			ArrayList<Integer> tempal = new ArrayList<Integer>();
-			String adjacency = "";
-			tempal = boundries.get(s);
-			for (Integer s1 : tempal) {
-				adjacency += s1 + " ";
-			}
-			bw.write(s + " " + adjacency.trim());
-			bw.newLine();
-		}
 		bw.write("\n");
 
 		bw.close();
