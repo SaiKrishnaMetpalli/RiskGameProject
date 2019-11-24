@@ -63,6 +63,17 @@ public class CommonController {
 		int n = c1.getCountryContinentNum();
 		return continents.get(n);
 	}
+	
+	public int getContinentNum(HashMap<Integer, Continents> continents, String continentName) {
+		
+		for (int i : continents.keySet()) {
+			if(continents.get(i).getContinentName().equals(continentName)) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
 
 	/**
 	 * creates a new hashmap of continents with its country list This method is used
