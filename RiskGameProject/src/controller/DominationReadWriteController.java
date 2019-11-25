@@ -16,7 +16,7 @@ public class DominationReadWriteController {
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
 	String[] continentsDetails, countriesDetails, boundriesDetails;
 
-	public void conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+	public void dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
 		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
 		File file = new File(filePath);

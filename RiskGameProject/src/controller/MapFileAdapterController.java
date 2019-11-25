@@ -16,7 +16,7 @@ public class MapFileAdapterController extends DominationReadWriteController {
 		this.crw =crw;
 	}
 	
-	public void conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+	public void dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
 		
 		crw.conquestMapReading(continents, countries, boundries, fileName);
