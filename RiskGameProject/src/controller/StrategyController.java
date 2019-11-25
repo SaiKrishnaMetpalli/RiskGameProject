@@ -18,15 +18,8 @@ public class StrategyController{
 	}
 	
 	public String executeBehaviour(GameMap gm , PlayersList pl, Player player )
-	{
-	
-		return this.strategy.executeStrategy(gm, pl, player);
-		
-	}
-	
-	
-		
-		
+	{	
+		return this.strategy.executeStrategy(gm, pl, player);		
 	}
 
 }
