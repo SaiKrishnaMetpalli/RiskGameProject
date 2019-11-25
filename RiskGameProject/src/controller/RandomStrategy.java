@@ -2,12 +2,16 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
 
+/**
+ * This Class is for Random Strategy for player Behavior
+ * 
+ * @author Ashish Chaudhary
+ *
+ */
 public class RandomStrategy implements Strategy {
 
 	CommonController cc;
@@ -17,6 +21,16 @@ public class RandomStrategy implements Strategy {
 	ArrayList<Integer> neighbouringList;
 	ArrayList<String> countriesOwned;
 
+	/**
+	 * Method overrides the Strategy Pattern Execute method
+	 * 
+	 * @return Success if all operation are performed
+	 * @author Ashish Chaudhary
+	 * @param gm     it is the gameMap
+	 * @param pl     contains the hashmap of player object
+	 * @param player contains the player object
+	 */
+	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 
 		reinforce(gm, pl, player);
@@ -26,6 +40,14 @@ public class RandomStrategy implements Strategy {
 		return "Success";
 	}
 
+	/**
+	 * Method is used to perform reinforce of Random behavior player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 */
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
 
 		player.setCardReward(cc.exchangeCardForStrategy(pl, player));
@@ -43,30 +65,38 @@ public class RandomStrategy implements Strategy {
 		player.setAvailableReinforceArmies(
 				pc.calculateReinforceArmy(countryReward, continetReward, player.getCardReward()));
 
-		
-		  while (player.getAvailableReinforceArmies() != 0) {
-		  
-		  int randomNumber = randomArmyToReinforceGenerator(player);
-		  
-		  pc.placeReinforceArmy(randomCountry, randomNumber, gm.getCountries(),
-		  pl.getListOfPlayers(), gm.getContinents(), player);
-		  
-		  // check return of placereinforcearmy method
-		  
-		  Collections.shuffle(countriesOwned); randomCountry = countriesOwned.get(0);
-		  
-		  player.setAvailableReinforceArmies(player.getAvailableReinforceArmies() -
-		  randomNumber);
-		  
-		  }
-		 
+		while (player.getAvailableReinforceArmies() != 0) {
+
+			int randomNumber = randomArmyToReinforceGenerator(player);
+
+			pc.placeReinforceArmy(randomCountry, randomNumber, gm.getCountries(), pl.getListOfPlayers(),
+					gm.getContinents(), player);
+
+			// check return of placereinforcearmy method
+
+			Collections.shuffle(countriesOwned);
+			randomCountry = countriesOwned.get(0);
+
+			player.setAvailableReinforceArmies(player.getAvailableReinforceArmies() - randomNumber);
+
+		}
+
 		// check if it is a tournament
 
 		player.setCardReward(0);
 		player.setGameState("ATTACK");
 
 	}
-	
+
+	/**
+	 * method performs the attack of the Random Behavior player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 * 
+	 */
 	private void attack(GameMap gm, PlayersList pl, Player player) {
 
 		neighbouringList = new ArrayList<Integer>();
@@ -159,46 +189,42 @@ public class RandomStrategy implements Strategy {
 		player.setGameState("FORTIFY");
 	}
 
+	
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 
 		Collections.shuffle(countriesOwned);
 		String randomFromCountry = countriesOwned.get(0);
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
-		while(true)
-		{
-		int fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+		while (true) {
+			int fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
 
-		while (!(fromCountryArmy != 1)) {
-			if (fromCountryArmy == 1) {
+			while (!(fromCountryArmy != 1)) {
+				if (fromCountryArmy == 1) {
 
-				Collections.shuffle(countriesOwned);
-				randomFromCountry = countriesOwned.get(0);
-				fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+					Collections.shuffle(countriesOwned);
+					randomFromCountry = countriesOwned.get(0);
+					fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+				}
 			}
+
+			int armyToMove = fromCountryArmy - 1;
+
+			String randomToCountry = countriesOwned.get(1);
+
+			String fortifyResult = pc.fortify(pl.getListOfPlayers(), randomFromCountry, randomToCountry, armyToMove,
+					gm.getCountries(), gm.getBoundries());
+			if (fortifyResult.contains("Player does not own the path")) {
+				continue;
+			} else
+				break;
 		}
 
-		int armyToMove = fromCountryArmy - 1;
-
-		String randomToCountry = countriesOwned.get(1);
-
-		String fortifyResult = pc.fortify(pl.getListOfPlayers(), randomFromCountry, randomToCountry, armyToMove,
-				gm.getCountries(), gm.getBoundries());
-		if(fortifyResult.contains("Player does not own the path"))
-		{
-			continue;
-		}
-		else
-			break;
-		}
-		
-	//	clearPlayerObject();
-	//	setPlayerTurn();
+		// clearPlayerObject();
+		// setPlayerTurn();
 		player.setGameState("REINFORCE");
 	}
 
-	
-	
 	public int randomArmyToReinforceGenerator(Player player) {
 		double random = Math.random();
 		random = random * player.getAvailableReinforceArmies() + 1;
@@ -216,6 +242,4 @@ public class RandomStrategy implements Strategy {
 
 	}
 
-	
-	
 }
