@@ -1,7 +1,7 @@
 package model;
 
 /**
- * This File contains the Continents information
+ * This class contains the Continents information
  * 
  */
 
