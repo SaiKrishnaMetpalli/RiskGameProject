@@ -39,7 +39,7 @@ public class ConquestReadWriteController {
 			if (continentsStarted.length() > 0) {
 
 				continentsDetails = continentsStarted.split("=");
-				Continents c1 = new Continents(continentsDetails[0], continentsDetails[1], null);
+				Continents c1 = new Continents(continentsDetails[0], continentsDetails[1], "null");
 				continents.put(continentsCount, c1);
 			} else
 				break;
@@ -110,13 +110,11 @@ public class ConquestReadWriteController {
 			String s1 = c1.getCountryName() + ","+ c1.getxCoordinate() + "," + c1.getyCoordinate()+ ","
 					+ cc.getContinentByCountryName(continents, countries, c1.getCountryName())+",";
 			String s2="";
-			ArrayList<String> blist = boundaryNames.get(i);
-			for (String s : blist) {
-				if(s.equals(blist.get(blist.size()-1))) {
-					s2+=s;
-				}else s2+=s+",";
-				
+			ArrayList<Integer> blist=boundries.get(i);
+			for(int bi : blist) {
+				s2+=cc.getCountryNameByNum(countries, bi)+",";
 			}
+			s2=s2.substring(0, blist.size()-1);
 			bw.write(s1+s2);
 			bw.newLine();
 		}
