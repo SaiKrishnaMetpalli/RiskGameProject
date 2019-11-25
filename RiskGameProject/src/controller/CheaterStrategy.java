@@ -45,6 +45,7 @@ public class CheaterStrategy implements Strategy {
 	 * @param gm     is the game map containing all info about game
 	 * @param pl     contains all information about player
 	 * @param player it is the player object
+	 * @author Ashish Chaudhary
 	 */
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
 
@@ -59,6 +60,15 @@ public class CheaterStrategy implements Strategy {
 		player.setGameState("ATTACK");
 	}
 
+	/**
+	 * method performs the attack of the cheater player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 * 
+	 */
 	private void attack(GameMap gm, PlayersList pl, Player player) {
 
 		attackerCountryList = new ArrayList<Integer>();
@@ -111,6 +121,15 @@ public class CheaterStrategy implements Strategy {
 		player.setGameState("FORTIFY");
 	}
 
+	/**
+	 * method performs the fortification for the cheater player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 * 
+	 */
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 
 		attackerCountryList = new ArrayList<Integer>();
