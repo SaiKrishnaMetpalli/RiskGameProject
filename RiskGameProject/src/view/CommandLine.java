@@ -302,13 +302,18 @@ public class CommandLine {
 								gm=gs.getGameMap();
 								pl=gs.getPlayersList();
 								p=gs.getPlayer();
+								System.out.println("\nGame loaded successfully");
+								actions+="\nGame loaded successfully";
 								//after loading to implement some logic
-								if(p.getGameState().equals("REINFORCE")) {
+								if(p.getGameState().equals("REINFORCE")) {								
+									
 									
 								} else if(p.getGameState().equals("ATTACK")) {
 									
 								}
-								System.out.println("\nGame loaded successfully");
+								p.setActionsPerformed(actions);
+								p.notifyToObserver();
+								pl.notifyToObserver(p);
 							} else {
 								System.out.println("\nUnable to loadgame. Please try again later");
 							}
@@ -437,6 +442,7 @@ public class CommandLine {
 										addGameCards();
 										p.setContinentsCountryList(
 												cc.getContinentsCountryList(gm.getContinents(), gm.getCountries()));
+										p.setTotalCountries(gm.getCountries().size());
 									} else {
 										System.out.println("\nMap is not connected");
 									}
@@ -594,6 +600,8 @@ public class CommandLine {
 						p.setActionsPerformed("");
 						p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
 						p.setGameState("REINFORCE");
+						p.notifyToObserver();
+						pl.notifyToObserver(p);
 						executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 
 						addToCommands = true;
