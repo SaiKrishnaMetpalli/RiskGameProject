@@ -18,10 +18,10 @@ public class RandomStrategy implements Strategy {
 	ArrayList<String> countriesOwned;
 
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
-		// TODO Auto-generated method stub
+
 		reinforce(gm, pl, player);
-	//	attack(gm, pl, player);
-	//	fortify(gm, pl, player);
+		attack(gm, pl, player);
+		fortify(gm, pl, player);
 
 		return "Success";
 	}
