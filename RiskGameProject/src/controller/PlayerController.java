@@ -737,7 +737,7 @@ public class PlayerController {
 	}
 
 	/**
-	 * mehtod is used to check whether the player won the game
+	 * method is used to check whether the player won the game
 	 * 
 	 * @param attackerPlayerData contains the attacker's data
 	 * @return true if player conquer all countries else false

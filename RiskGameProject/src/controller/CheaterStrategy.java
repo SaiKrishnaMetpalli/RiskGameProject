@@ -78,7 +78,10 @@ public class CheaterStrategy implements Strategy {
 					
 							
 							// sai will use variable if it is tournament to put in table.
-							
+							// attackmove check
+						}else {
+							String movingArmyResult = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
+									pl.getListOfPlayers(), player, gm);
 						}
 					}
 				}
@@ -122,6 +125,9 @@ public class CheaterStrategy implements Strategy {
 				
 			}
 		}		
+		
+		
+		
 	}
 
 }
