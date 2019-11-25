@@ -9,14 +9,31 @@ import model.Countries;
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
-
-public class AggressiveStrategy implements Strategy {
+ 
+/**
+ * This Class is for Aggressive Strategy for player Behavior
+ * 
+ * @author garimadawar
+ *
+ */
+    public class AggressiveStrategy implements Strategy {
 	PlayerController pc = new PlayerController();
 	CommonController cc = new CommonController();
 	GameMap gm = new GameMap();
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
+    
+	
 
+	/**
+	 * Method overrides the Strategy Pattern Execute method
+	 * 
+	 * @return Success if all operations are performed
+	 * @author garimadawar
+	 * @param gm     it is the gameMap
+	 * @param pl     contains the hashMap of player object
+	 * @param player contains the player object
+	 */
 	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 		// TODO Auto-generated method stub
@@ -26,7 +43,15 @@ public class AggressiveStrategy implements Strategy {
 
 		return "Success";
 	}
-
+    
+	/**
+	 * Method is used to perform reinforce of Random behavior player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author garimadawar
+	 */
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
@@ -50,7 +75,16 @@ public class AggressiveStrategy implements Strategy {
 
 		player.setGameState("ATTACK");
 	}
-
+    
+	/**
+	 * method performs the attack of the Random Behavior player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author garimadawar
+	 * 
+	 */
 	private void attack(GameMap gm, PlayersList pl, Player player) {
         
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
@@ -106,7 +140,16 @@ public class AggressiveStrategy implements Strategy {
 			}
 		}
 	}
-
+    
+	/**
+	 * method performs the fortification of the random player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author garimadawar
+	 * 
+	 */
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
