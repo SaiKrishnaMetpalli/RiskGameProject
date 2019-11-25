@@ -8,6 +8,11 @@ import model.GameMap;
 import model.Player;
 import model.PlayersList;
 
+/**
+ * This Class implements the Strategy Pattern for Cheater behaviour
+ * 
+ * @author Ashish Chaudhary
+ */
 public class CheaterStrategy implements Strategy {
 
 	CommonController cc;
@@ -15,6 +20,15 @@ public class CheaterStrategy implements Strategy {
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
 
+	/**
+	 * Method overrides the Strategy Pattern Execute method
+	 * 
+	 * @return Success if all operation are performed
+	 * @author Ashish Chaudhary
+	 * @param gm     it is the gameMap
+	 * @param pl     contains the hashmap of player object
+	 * @param player contains the player object
+	 */
 	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 
@@ -25,6 +39,14 @@ public class CheaterStrategy implements Strategy {
 		return "Success";
 	}
 
+	/**
+	 * Method is used to perform reinforce of Cheater behavior player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 */
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
@@ -38,6 +60,15 @@ public class CheaterStrategy implements Strategy {
 		player.setGameState("ATTACK");
 	}
 
+	/**
+	 * method performs the attack of the cheater player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 * 
+	 */
 	private void attack(GameMap gm, PlayersList pl, Player player) {
 
 		attackerCountryList = new ArrayList<Integer>();
@@ -75,11 +106,10 @@ public class CheaterStrategy implements Strategy {
 							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
 							System.out.println("\nThe game is ended");
 							System.exit(0);
-					
-							
+
 							// sai will use variable if it is tournament to put in table.
 							// attackmove check
-						}else {
+						} else {
 							String movingArmyResult = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
 									pl.getListOfPlayers(), player, gm);
 						}
@@ -91,11 +121,20 @@ public class CheaterStrategy implements Strategy {
 		player.setGameState("FORTIFY");
 	}
 
+	/**
+	 * method performs the fortification for the cheater player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 * 
+	 */
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 
 		attackerCountryList = new ArrayList<Integer>();
 		neighbouringList = new ArrayList<Integer>();
-		
+
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
 			// player.setAttackerCountry(country);
@@ -106,28 +145,23 @@ public class CheaterStrategy implements Strategy {
 			neighbouringList = gm.getBoundries().get(attackerCountryList.get(i));
 
 			for (int x = 0; x < neighbouringList.size(); x++) {
-				
+
 				if (attackerCountryList.contains(neighbouringList.get(x))) {
 					continue;
-				}
-				else
-				{
+				} else {
 					String countryToFortify = cc.getCountryNameByNum(gm.getCountries(), attackerCountryList.get(i));
-					
+
 					Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
 					HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
-					
+
 					playerCountriesArmies.put(countryToFortify, playerCountriesArmies.get(countryToFortify) * 2);
 					break;
 				}
-				
-				
+
 			}
-		}		
-		
-		
-		
+		}
+
 	}
 
 }
