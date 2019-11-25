@@ -115,6 +115,6 @@ public class Countries {
 	 * @param ownerName
 	 */
 	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
+		this.ownerName = ownerName; 
 	}
 }
