@@ -159,6 +159,44 @@ public class RandomStrategy implements Strategy {
 		player.setGameState("FORTIFY");
 	}
 
+	private void fortify(GameMap gm, PlayersList pl, Player player) {
+
+		Collections.shuffle(countriesOwned);
+		String randomFromCountry = countriesOwned.get(0);
+
+		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
+		while(true)
+		{
+		int fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+
+		while (!(fromCountryArmy != 1)) {
+			if (fromCountryArmy == 1) {
+
+				Collections.shuffle(countriesOwned);
+				randomFromCountry = countriesOwned.get(0);
+				fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+			}
+		}
+
+		int armyToMove = fromCountryArmy - 1;
+
+		String randomToCountry = countriesOwned.get(1);
+
+		String fortifyResult = pc.fortify(pl.getListOfPlayers(), randomFromCountry, randomToCountry, armyToMove,
+				gm.getCountries(), gm.getBoundries());
+		if(fortifyResult.contains("Player does not own the path"))
+		{
+			continue;
+		}
+		else
+			break;
+		}
+		
+	//	clearPlayerObject();
+	//	setPlayerTurn();
+		player.setGameState("REINFORCE");
+	}
+
 	
 	
 	public int randomArmyToReinforceGenerator(Player player) {
