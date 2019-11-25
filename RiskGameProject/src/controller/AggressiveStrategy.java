@@ -52,19 +52,28 @@ public class AggressiveStrategy implements Strategy {
 	}
 
 	private void attack(GameMap gm, PlayersList pl, Player player) {
-
+        
+		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
+		HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
+		String strongCountry = "";
+		int max = Collections.max(playerCountriesArmies.values());
+		for (String c : playerCountriesArmies.keySet()) {
+			if (playerCountriesArmies.get(c).equals(max)) {
+				strongCountry = c;
+				break;
+			}
+		}
+		
 		attackerCountryList = new ArrayList<Integer>();
 		neighbouringList = new ArrayList<Integer>();
-        
-		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
-			int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), country);
-			attackerCountryList.add(attackerCountryNum);
-		}
+		int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), strongCountry);
+		attackerCountryList.add(attackerCountryNum);
+	
 		
 		for (int i = 0; i < attackerCountryList.size(); i++) {
 			neighbouringList = gm.getBoundries().get(attackerCountryList.get(i));
 
-			for (int x = 0; x < neighbouringList.size(); x++) {
+	    for (int x = 0; x < neighbouringList.size(); x++) {
 				if (attackerCountryList.contains(neighbouringList.get(x))) {
 					continue;
 				} else {
@@ -78,6 +87,20 @@ public class AggressiveStrategy implements Strategy {
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
 							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
 							pl.getListOfPlayers().get(player.getDefenderName()));
+					
+					if (allOutAttacked.contains("Won")) {
+						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
+								pl.getListOfPlayers(), player, gm);
+						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
+						if (checkAllCountriesOwned) {
+							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
+							System.out.println("\nThe game is ended");
+							System.exit(0);
+
+						} else {
+				     pc.movingArmyToConqueredCountry(player.getDiceRolled(),pl.getListOfPlayers(), player, gm);
+						}
+					}
 
 				}
 			}
