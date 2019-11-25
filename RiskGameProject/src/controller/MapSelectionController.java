@@ -29,8 +29,8 @@ public class MapSelectionController {
 	ArrayList<Integer> list;
 	MapFormatValidation mapValidate = new MapFormatValidation();
 	boolean flag = false;
-	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
-	String[] continentsDetails, countriesDetails, boundriesDetails;
+	String continentsStarted, countriesStarted, boundriesStarted, boundry, country, cardsStarted;
+	String[] continentsDetails, countriesDetails, boundriesDetails, cardDetails, playersDetails;
 
 	// These two variables are used for map connected and traversal
 	private ArrayList<Integer> marked;
@@ -47,6 +47,7 @@ public class MapSelectionController {
 	 * @param fileName   it is map file which is read
 	 * @return success if map is loaded successfully else failure
 	 * @throws FileNotFoundException
+	 * @author Ashish Chaudhary
 	 */
 
 	public String gameMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
@@ -152,6 +153,7 @@ public class MapSelectionController {
 	 *                              be added
 	 * @param continentControlValue this variable contains value of the control
 	 *                              value to be added
+	 * @author Garima
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
@@ -181,6 +183,7 @@ public class MapSelectionController {
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
 	 * @param boundries     this variable contains the boundries list
+	 * @author Garima
 	 */
 	public String removeContinent(HashMap<Integer, Continents> continents,
 			HashMap<Integer, ArrayList<Integer>> boundries, HashMap<Integer, Countries> countries,
@@ -238,7 +241,7 @@ public class MapSelectionController {
 	 *                      country is added
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
-	 * @author garimadawar
+	 * @author Garima
 	 */
 	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String countryName, String continentName) {
@@ -295,7 +298,7 @@ public class MapSelectionController {
 	 * @param countries   this variable contains the continents list
 	 * @param boundries   this variable contains the boundries list
 	 * @param countryName this variable contains the country to be removed
-	 * @author garimadawar
+	 * @author Garima
 	 */
 	public String removeCountry(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName) {
@@ -341,7 +344,7 @@ public class MapSelectionController {
 	 *                             country
 	 * @param countries            this variable contains the countries list
 	 * @param boundries            this variable contains the boundries list
-	 * @author garimadawar
+	 * @author Garima
 	 */
 	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
@@ -400,7 +403,7 @@ public class MapSelectionController {
 	 *                             from neighbour
 	 * @param countryName          this variable is the name of the country which
 	 *                             contains neighbor country name
-	 * @author garimadawar
+	 * @author Garima
 	 */
 	public String removeNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
@@ -446,6 +449,7 @@ public class MapSelectionController {
 	 * 
 	 * @param takes the data structure from and file name
 	 * @throws IOException as creating file
+	 * @author Sakib
 	 */
 	public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
@@ -502,7 +506,7 @@ public class MapSelectionController {
 	 * 
 	 * @param boundries This variable contains the adjacency list of countries
 	 * @return it returns true if map is connected; otherwise false
-	 * @author garimadawar
+	 * @author Sai Krishna
 	 */
 	public boolean isConnectedMap(HashMap<Integer, ArrayList<Integer>> boundries) {
 		map = boundries;
@@ -521,7 +525,7 @@ public class MapSelectionController {
 	 * This method is used for traversing the map
 	 * 
 	 * @param vertex this variable contains one of the vertex of map
-	 * @author garimadawar
+	 * @author Sai Krishna
 	 */
 	public void mapTraversal(int vertex) {
 		count++;
@@ -539,6 +543,7 @@ public class MapSelectionController {
 	 * 
 	 * @param v this variable contains vertex of the map
 	 * @return this returns array list of neighbors if present; otherwise null
+	 * @author Sai Krishna
 	 */
 	public ArrayList<Integer> getNeighbours(int v) {
 		return new ArrayList<Integer>(map.get(v));
@@ -548,6 +553,7 @@ public class MapSelectionController {
 	 * This method creates empty file
 	 * 
 	 * @param fileName this variable contains the filename to be created
+	 * @author Sai Krishna
 	 */
 	public void createEmptyFile(String fileName) {
 		try {
@@ -560,6 +566,14 @@ public class MapSelectionController {
 
 	}
 
+	/**
+	 * This method save the state of the game
+	 * 
+	 * @param gs       this variable contains the game state information
+	 * @param fileName this variable contains the filename to be stored
+	 * @throws IOException throws error on file exceptions
+	 * @author Sai Krishna
+	 */
 	public void saveGameFile(GameState gs, String fileName) throws IOException {
 		GameMap gm = gs.getGameMap();
 		PlayersList pl = gs.getPlayersList();
@@ -571,6 +585,7 @@ public class MapSelectionController {
 		BufferedWriter bw = new BufferedWriter(fw);
 		mapfile.createNewFile();
 
+		// writing continents to the file
 		bw.write("[continents]");
 		bw.newLine();
 		for (Integer i : gm.getContinents().keySet()) {
@@ -579,6 +594,7 @@ public class MapSelectionController {
 			bw.newLine();
 		}
 
+		// writing countries to the file
 		bw.write("\n");
 		bw.write("[countries]");
 		bw.newLine();
@@ -588,6 +604,7 @@ public class MapSelectionController {
 			bw.newLine();
 		}
 
+		// writing borders to the file
 		bw.write("\n");
 		bw.write("[borders]");
 		bw.newLine();
@@ -601,10 +618,31 @@ public class MapSelectionController {
 			bw.write(s + " " + adjacency.trim());
 			bw.newLine();
 		}
+
+		// writing the total cards list to the file
 		bw.write("\n");
-		bw.write("[players]");
+		bw.write("[totalCardsList]");
 		bw.newLine();
+		if (gm.getTotalCardsList().size() > 0) {
+			String cardsList = "";
+			for (String cardName : gm.getTotalCardsList()) {
+				cardsList += cardName + ",";
+			}
+			cardsList = cardsList.substring(0, cardsList.length() - 1);
+			bw.write(cardsList);
+		} else {
+			bw.write(0);
+		}
+		bw.newLine();
+
+		// checking if the players are present or not
 		if (pl.getListOfPlayers().size() > 0) {
+
+			// writing the players info to the file
+			bw.write("\n");
+			bw.write("[players]");
+			bw.newLine();
+
 			for (String playerName : pl.getListOfPlayers().keySet()) {
 				Player playerDetails = pl.getListOfPlayers().get(playerName);
 				String ownedCountries = "";
@@ -628,50 +666,325 @@ public class MapSelectionController {
 				}
 				bw.newLine();
 			}
+		} else if (gm.getPlayersWithStrategies().size() > 0) {
 
 			bw.write("\n");
-			bw.write("[turnInformation]");
+			bw.write("[players]");
 			bw.newLine();
-			bw.write(p.getGameState());
+
+			for (String playerName : gm.getPlayersWithStrategies().keySet()) {
+				bw.write(playerName + " " + gm.getPlayersWithStrategies().get(playerName));
+				bw.newLine();
+			}
+		}
+
+		// writing the turn information to the file
+		bw.write("\n");
+		bw.write("[turnInformation]");
+		bw.newLine();
+		bw.write(p.getGameState());
+		bw.newLine();
+
+		// checking for the state of the game to write the required properties to the
+		// file
+		if (p.getGameState().equals("REINFORCE")) {
+			bw.write(p.getCurrentPlayerTurn());
 			bw.newLine();
-			if (p.getGameState().equals("REINFORCE")) {
-				// write turn information
-				bw.write(p.getCurrentPlayerTurn());
-				bw.newLine();
-				bw.write(p.getAvailableReinforceArmies() + " " + p.getCardReward() + " " + p.getCardBonusArmy());
-				bw.newLine();
-			} else if (p.getGameState().equals("ATTACK") || p.getGameState().equals("FORTIFY")) {
-				bw.write(p.getCurrentPlayerTurn());
-				bw.newLine();
-				bw.write(p.getAvailableReinforceArmies() + " " + p.getCardReward() + " " + p.getCardBonusArmy());
-				bw.newLine();
-				if(p.getAttackerDice().size()>0) {
-					String attackerDice="";
-					for(Integer diceNum:p.getAttackerDice()) {
-						attackerDice+=diceNum+",";
+			bw.write(p.getAvailableReinforceArmies() + " " + p.getCardReward() + " " + p.getCardBonusArmy());
+			bw.newLine();
+		} else if (p.getGameState().equals("ATTACK") || p.getGameState().equals("FORTIFY")) {
+			bw.write(p.getCurrentPlayerTurn());
+			bw.newLine();
+			bw.write(p.getAvailableReinforceArmies() + " " + p.getCardReward() + " " + p.getCardBonusArmy());
+			bw.newLine();
+			if (!p.getAttackerName().equals("")) {
+				if (p.getAttackerDice().size() > 0) {
+					String attackerDice = "";
+					for (Integer diceNum : p.getAttackerDice()) {
+						attackerDice += diceNum + ",";
 					}
-					attackerDice=attackerDice.substring(0,attackerDice.length()-1);
+					attackerDice = attackerDice.substring(0, attackerDice.length() - 1);
 					if (p.getConqueredCountries().size() > 0) {
 						String conqueredCountries = "";
 						for (String conqCon : p.getConqueredCountries()) {
 							conqueredCountries += conqCon + ",";
 						}
 						conqueredCountries = conqueredCountries.substring(0, conqueredCountries.length() - 1);
-						bw.write(p.getAttackerName() + " " + p.getAttackerCountry() + " " + p.getAttackerDice() + " "
+						bw.write(p.getAttackerName() + " " + p.getAttackerCountry() + " " + attackerDice + " "
 								+ p.getDiceRolled() + " " + conqueredCountries);
 					} else {
-						bw.write(p.getAttackerName() + " " + p.getAttackerCountry() + " " + p.getAttackerDice() + " "
+						bw.write(p.getAttackerName() + " " + p.getAttackerCountry() + " " + attackerDice + " "
 								+ p.getDiceRolled());
 					}
+				} else {
+					bw.write(p.getAttackerName() + " " + p.getAttackerCountry());
 				}
-				
 				bw.newLine();
-				bw.write(p.getDefenderName() + " " + p.getDefenderCountry() + " " + p.getDefenderDice());
-
 			}
+
+			if (!p.getDefenderName().equals("")) {
+				if (p.getDefenderDice().size() > 0) {
+					String defenderDice = "";
+					for (Integer diceNum : p.getDefenderDice()) {
+						defenderDice += diceNum + ",";
+					}
+					defenderDice = defenderDice.substring(0, defenderDice.length() - 1);
+					bw.write(p.getDefenderName() + " " + p.getDefenderCountry() + " " + defenderDice);
+				} else {
+					bw.write(p.getDefenderName() + " " + p.getDefenderCountry());
+				}
+				bw.newLine();
+			}
+
 		}
 
 		bw.close();
+	}
+
+	/**
+	 * This method loads the game from the file
+	 * 
+	 * @param gm       this variable contains the info about the game map
+	 * @param pl       this variable contains the info about all the players
+	 * @param p        this variable contains the info about the turn
+	 * @param fileName this variable contains the filename to read from
+	 * @return returns success if read successfully else failure
+	 * @throws FileNotFoundException throws error on file exceptions
+	 * @author Sai Krishna
+	 */
+	public String loadGameReading(GameMap gm, PlayersList pl, Player p, String fileName) throws FileNotFoundException {
+		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
+		File file = new File(filePath);
+		Scanner textScanner = new Scanner(file);
+
+		try {
+
+			// getting the continents from the file
+			while (textScanner.hasNext()) {
+				String continent = textScanner.nextLine();
+				if (continent.equals("[continents]")) {
+					break;
+				}
+			}
+
+			while (textScanner.hasNext()) {
+				continentsStarted = textScanner.nextLine();
+				if (continentsStarted.length() > 0) {
+					continentsDetails = continentsStarted.split(" ");
+					Continents c1 = new Continents(continentsDetails[1], continentsDetails[2], "0");
+					gm.getContinents().put(Integer.parseInt(continentsDetails[0]), c1);
+				} else
+					break;
+			}
+
+			// getting the countries from the file
+			while (textScanner.hasNext()) {
+				country = textScanner.nextLine();
+				if (!country.equals("[countries]")) {
+					continue;
+				} else
+					break;
+			}
+
+			while (textScanner.hasNext()) {
+				countriesStarted = textScanner.nextLine();
+				if (countriesStarted.length() > 0) {
+					countriesDetails = countriesStarted.split(" ");
+					Countries c2;
+					if (countriesDetails.length == 4) {
+						c2 = new Countries(countriesDetails[1], Integer.parseInt(countriesDetails[2]), "0", "0");
+						c2.setOwnerName(countriesDetails[3]);
+					} else {
+						c2 = new Countries(countriesDetails[1], Integer.parseInt(countriesDetails[2]), "0", "0");
+					}
+					gm.getCountries().put(Integer.parseInt(countriesDetails[0]), c2);
+				} else
+					break;
+			}
+
+			// getting the borders from the file
+			while (textScanner.hasNext()) {
+				boundry = textScanner.nextLine();
+				if (!boundry.equals("[borders]")) {
+					continue;
+				} else
+					break;
+			}
+
+			while (textScanner.hasNext()) {
+				boundriesStarted = textScanner.nextLine();
+				if (boundriesStarted.length() > 0) {
+					boundriesDetails = boundriesStarted.split(" ");
+					list = new ArrayList<Integer>();
+					for (int i = 1; i < boundriesDetails.length; i++) {
+						list.add(Integer.parseInt(boundriesDetails[i]));
+					}
+					gm.getBoundries().put(Integer.parseInt(boundriesDetails[0]), list);
+				} else
+					break;
+			}
+
+			// getting the cards list from the file
+			while (textScanner.hasNext()) {
+				String cardList = textScanner.nextLine();
+				if (!cardList.equals("[totalCardsList]")) {
+					continue;
+				} else
+					break;
+			}
+
+			while (textScanner.hasNext()) {
+				cardsStarted = textScanner.nextLine();
+				if (cardsStarted.length() > 0) {
+					if (cardsStarted.equals("0")) {
+						gm.setTotalCardsList(new ArrayList<String>());
+					} else {
+						cardDetails = cardsStarted.split(",");
+						ArrayList<String> cardsList = new ArrayList<String>();
+						for (String cardName : cardDetails) {
+							cardsList.add(cardName);
+						}
+						gm.setTotalCardsList(cardsList);
+					}
+				} else
+					break;
+			}
+
+			// getting the players info if present in the file
+			String headingName = "";
+			while (textScanner.hasNext()) {
+				headingName = textScanner.nextLine();
+				if (!(headingName.equals("[players]") || headingName.equals("[turnInformation]"))) {
+					continue;
+				} else
+					break;
+			}
+
+			// writing to the model class, the player info based on the properties info
+			// available
+			if (headingName.equals("[players]")) {
+				while (textScanner.hasNext()) {
+					String playersStarted = textScanner.nextLine();
+					if (playersStarted.length() > 0) {
+						playersDetails = playersStarted.split(" ");
+						gm.getPlayersSetup().add(playersDetails[0]);
+						gm.getPlayersWithStrategies().put(playersDetails[0], playersDetails[1]);
+						if (playersDetails.length == 4) {
+							String[] ownedCountries = playersDetails[2].split(",");
+							String[] ownedArmies = playersDetails[3].split(",");
+							Player player = new Player();
+							player.setStrategy(playersDetails[1]);
+							for (int i = 0; i < ownedCountries.length; i++) {
+								player.getOwnedCountriesList().add(ownedCountries[i]);
+								player.getOwnedCountriesArmiesList().put(ownedCountries[i],
+										Integer.parseInt(ownedArmies[i]));
+							}
+							pl.getListOfPlayers().put(playersDetails[0], player);
+						} else if (playersDetails.length == 5) {
+							String[] ownedCountries = playersDetails[2].split(",");
+							String[] ownedArmies = playersDetails[3].split(",");
+							Player player = new Player();
+							player.setStrategy(playersDetails[1]);
+							for (int i = 0; i < ownedCountries.length; i++) {
+								player.getOwnedCountriesList().add(ownedCountries[i]);
+								player.getOwnedCountriesArmiesList().put(ownedCountries[i],
+										Integer.parseInt(ownedArmies[i]));
+							}
+							String[] playercardsList = playersDetails[4].split(",");
+							ArrayList<String> cardsList = new ArrayList<String>();
+							for (String cardName : playercardsList) {
+								cardsList.add(cardName);
+							}
+							p.setCurrentCardList(cardsList);
+							pl.getListOfPlayers().put(playersDetails[0], player);
+						}
+					} else
+						break;
+				}
+
+				// getting the turn info from the file
+				while (textScanner.hasNext()) {
+					String turnInfo = textScanner.nextLine();
+					if (!turnInfo.equals("[turnInformation]")) {
+						continue;
+					} else
+						break;
+				}
+
+				// writing to the required properties based on the info available
+				while (textScanner.hasNext()) {
+					p.setGameState(textScanner.nextLine());
+					p.setCurrentPlayerTurn(textScanner.nextLine());
+					if (p.getGameState().equals("REINFORCE")) {
+						String[] headerReinforceDetails = textScanner.nextLine().split(" ");
+						p.setAvailableReinforceArmies(Integer.parseInt(headerReinforceDetails[0]));
+						p.setCardReward(Integer.parseInt(headerReinforceDetails[1]));
+						p.setCardBonusArmy(Integer.parseInt(headerReinforceDetails[2]));
+					} else if (p.getGameState().equals("ATTACK") || p.getGameState().equals("FORTIFY")) {
+						String[] headerReinforceDetails = textScanner.nextLine().split(" ");
+						p.setAvailableReinforceArmies(Integer.parseInt(headerReinforceDetails[0]));
+						p.setCardReward(Integer.parseInt(headerReinforceDetails[1]));
+						p.setCardBonusArmy(Integer.parseInt(headerReinforceDetails[2]));
+
+						if (textScanner.hasNext()) {
+							String[] attackInfoDetails = textScanner.nextLine().split(" ");
+							if (attackInfoDetails.length == 4) {
+								p.setAttackerName(attackInfoDetails[0]);
+								p.setAttackerCountry(attackInfoDetails[1]);
+								ArrayList<Integer> attackerDice = new ArrayList<Integer>();
+								String[] attackerDiceInfo = attackInfoDetails[2].split(",");
+								for (String diceInfo : attackerDiceInfo) {
+									attackerDice.add(Integer.parseInt(diceInfo));
+								}
+								p.setAttackerDice(attackerDice);
+								p.setDiceRolled(Integer.parseInt(attackInfoDetails[3]));
+
+							} else if (attackInfoDetails.length == 5) {
+								p.setAttackerName(attackInfoDetails[0]);
+								p.setAttackerCountry(attackInfoDetails[1]);
+								ArrayList<Integer> attackerDice = new ArrayList<Integer>();
+								String[] attackerDiceInfo = attackInfoDetails[2].split(",");
+								for (String diceInfo : attackerDiceInfo) {
+									attackerDice.add(Integer.parseInt(diceInfo));
+								}
+								p.setAttackerDice(attackerDice);
+								p.setDiceRolled(Integer.parseInt(attackInfoDetails[3]));
+								ArrayList<String> conqueredList = new ArrayList<String>();
+								String[] conqueredInfo;
+								if (attackInfoDetails[4].contains(",")) {
+									conqueredInfo = attackInfoDetails[4].split(",");
+								} else {
+									conqueredInfo = new String[1];
+									conqueredInfo[0] = attackInfoDetails[4];
+								}
+								for (String conqName : conqueredInfo) {
+									conqueredList.add(conqName);
+								}
+								p.setConqueredCountries(conqueredList);
+							}
+						}
+
+						if (textScanner.hasNext()) {
+							String[] defenderInfoDetails = textScanner.nextLine().split(" ");
+							p.setDefenderName(defenderInfoDetails[0]);
+							p.setDefenderCountry(defenderInfoDetails[1]);
+						}
+					}
+				}
+
+			} else {
+				while (textScanner.hasNext()) {
+					p.setGameState(textScanner.nextLine());
+				}
+			}
+
+			textScanner.close();
+			return "Success";
+		} catch (Exception ex) {
+			textScanner.close();
+			return "Failure";
+		}
+
 	}
 
 }

@@ -6,6 +6,12 @@ public class GameState {
 	private PlayersList playersList;
 	private Player player;
 	
+	public GameState() {
+		gameMap=new GameMap();
+		playersList=new PlayersList();
+		player=new Player();
+	}
+	
 	public GameMap getGameMap() {
 		return gameMap;
 	}

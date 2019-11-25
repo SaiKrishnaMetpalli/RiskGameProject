@@ -28,7 +28,7 @@ public class Player extends Observable {
 	private int availableReinforceArmies;
 	private ArrayList<String> currentCardList;
 	private ArrayList<String> conqueredCountries;
-	private boolean allOutAttackPerformed;	
+	private boolean allOutAttackPerformed;
 
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -38,15 +38,20 @@ public class Player extends Observable {
 		ownedArmiesList = new ArrayList<Integer>();
 		ownedCountriesArmiesList = new HashMap<String, Integer>();
 		gameState = "STARTUP";
+		currentPlayerTurn = "";
+		attackerName = "";
+		defenderName = "";
+		attackerCountry = "";
+		defenderCountry = "";
 		attackerDice = new ArrayList<Integer>();
 		defenderDice = new ArrayList<Integer>();
-		currentPlayerTurn = "";
+		diceRolled=0;
 		cardBonusArmy = 0;
 		cardReward = 0;
 		availableReinforceArmies = 0;
-		currentCardList = new ArrayList<String>();
-		setAllOutPerformed(false);
+		currentCardList = new ArrayList<String>();		
 		conqueredCountries = new ArrayList<String>();
+		setAllOutPerformed(false);
 	}
 
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {

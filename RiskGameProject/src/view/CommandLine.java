@@ -103,11 +103,11 @@ public class CommandLine {
 									result = msc.addContinent(gm.getContinents(), inputCommand[i + 1],
 											inputCommand[i + 2]);
 									if (result.contains("success")) {
-										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										System.out.println("\n" + inputCommand[i + 1] + " " + result);
 										addToCommands = true;
 									} else {
 										System.out.println(
-												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+												"\n" + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
 										addToCommands = false;
 									}
 									i = i + 3;
@@ -117,10 +117,10 @@ public class CommandLine {
 									result = msc.removeContinent(gm.getContinents(), gm.getBoundries(),
 											gm.getCountries(), inputCommand[i + 1]);
 									if (result.contains("success")) {
-										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										System.out.println("\n" + inputCommand[i + 1] + " " + result);
 										addToCommands = true;
 									} else {
-										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										System.out.println("\n" + inputCommand[i + 1] + " " + result);
 										addToCommands = false;
 									}
 									i = i + 2;
@@ -158,11 +158,11 @@ public class CommandLine {
 									result = msc.addCountry(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
 											inputCommand[i + 1], inputCommand[i + 2]);
 									if (result.contains("success")) {
-										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										System.out.println("\n" + inputCommand[i + 1] + " " + result);
 										addToCommands = true;
 									} else {
 										System.out.println(
-												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+												"\n" + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
 										addToCommands = false;
 									}
 									i = i + 3;
@@ -170,10 +170,10 @@ public class CommandLine {
 									result = msc.removeCountry(gm.getCountries(), gm.getBoundries(),
 											inputCommand[i + 1]);
 									if (result.contains("success")) {
-										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										System.out.println("\n" + inputCommand[i + 1] + " " + result);
 										addToCommands = true;
 									} else {
-										System.out.println("\n " + inputCommand[i + 1] + " " + result);
+										System.out.println("\n" + inputCommand[i + 1] + " " + result);
 										addToCommands = false;
 									}
 									i = i + 2;
@@ -210,11 +210,11 @@ public class CommandLine {
 									if (result.contains("success")) {
 										String result2 = msc.addNeighbour(gm.getCountries(), gm.getBoundries(),
 												inputCommand[i + 2], inputCommand[i + 1]);
-										System.out.println("\n " + inputCommand[i + 2] + " " + result);
+										System.out.println("\n" + inputCommand[i + 2] + " " + result);
 										addToCommands = true;
 									} else {
 										System.out.println(
-												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+												"\n" + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
 										addToCommands = false;
 									}
 									i = i + 3;
@@ -224,11 +224,11 @@ public class CommandLine {
 									if (result.contains("success")) {
 										String result2 = msc.removeNeighbour(gm.getCountries(), gm.getBoundries(),
 												inputCommand[i + 2], inputCommand[i + 1]);
-										System.out.println("\n " + inputCommand[i + 2] + " " + result);
+										System.out.println("\n" + inputCommand[i + 2] + " " + result);
 										addToCommands = true;
 									} else {
 										System.out.println(
-												"\n " + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
+												"\n" + inputCommand[i + 1] + " " + inputCommand[i + 2] + " " + result);
 										addToCommands = false;
 									}
 									i = i + 3;
@@ -266,58 +266,60 @@ public class CommandLine {
 						if (result) {
 							try {
 								GameStateBuilder gsb=new GameStateScenario();
+								gs=new GameState();
+								gsb.setGameState(gs);
 								gsb.buildGameMap(gm);
 								gsb.buildPlayersList(pl);
 								gsb.buildPlayer(p);
 								gs=gsb.getGameState();
 								msc.saveGameFile(gs, inputCommand[1]);
-								System.out.println("\nGame saved successfully");
-								addToCommands = true;
+								System.out.println("\nGame saved successfully");								
 							} catch (Exception ex) {
-								System.out.println("\nSome error has occurred. Please try again");
-								addToCommands = false;
+								System.out.println("\nSome error has occurred. Please try again");								
 							}
 						} else {
 							System.out.println("\nGame cannot be saved as map is not connected");
-							addToCommands = false;
 						}
 					} else {
 						System.out.println("\nMap has not been loaded. Please load the file and save");
-						addToCommands = false;
 					}
 				} else {
 					System.out.println("\nsavemap command format is incorrect");
-					addToCommands = false;
 				}				
 				
 				commandLine();
 				break;
 			case "loadgame":
 				if (inputCommand.length == 2) {
-					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
-							&& (gm.getBoundries().size() > 0)) {
-						boolean result = msc.isConnectedMap(gm.getBoundries());
-						if (result) {
-							try {
-								msc.writeGameMapFile(gm.getContinents(), gm.getCountries(), gm.getBoundries(),
-										inputCommand[1]);
-								System.out.println("\nMap file saved successfully");
-								addToCommands = true;
-							} catch (Exception ex) {
-								System.out.println("\nSome error has occurred. Please try again");
-								addToCommands = false;
+					if (checkFileExist(inputCommand[1])) {
+						try {
+							gs=new GameState();
+							result=msc.loadGameReading(gs.getGameMap(),gs.getPlayersList(),gs.getPlayer(),inputCommand[1]);
+							if(result.contains("Success")) {
+								GameStateBuilder gsb=new GameStateScenario();
+								gsb.setGameState(gs);
+								gs=gsb.getGameState();
+								gm=gs.getGameMap();
+								pl=gs.getPlayersList();
+								p=gs.getPlayer();
+								//after loading to implement some logic
+								if(p.getGameState().equals("REINFORCE")) {
+									
+								} else if(p.getGameState().equals("ATTACK")) {
+									
+								}
+								System.out.println("\nGame loaded successfully");
+							} else {
+								System.out.println("\nUnable to loadgame. Please try again later");
 							}
-						} else {
-							System.out.println("\nFile cannot be saved as map is not connected");
-							addToCommands = false;
+						} catch(Exception ex) {
+							System.out.println("\nError Occurred. Please try again later");
 						}
 					} else {
-						System.out.println("\nMap has not been loaded. Please load the file and save");
-						addToCommands = false;
+						System.out.println("\n" + inputCommand[1] + " file does not exist");
 					}
 				} else {
-					System.out.println("\nsavemap command format is incorrect");
-					addToCommands = false;
+					System.out.println("\nloadgame command format is incorrect");
 				}
 				
 				commandLine();
@@ -699,6 +701,7 @@ public class CommandLine {
 									if (result.contains("success")) {
 										if (p.getAvailableReinforceArmies() == 0) {
 											actions = "";
+											p.setCardReward(0);
 											p.setGameState("ATTACK");
 										} else {
 											System.out.println("\nPlease place the remaining "
@@ -1155,10 +1158,23 @@ public class CommandLine {
 					System.out.println();
 				}
 			}
-			addToCommands = true;
+			
+			if(!(pl.getListOfPlayers().size()>0)) {
+				if(gm.getPlayersWithStrategies().size()>0) {
+					System.out.println();
+					System.out.format("%-30s|%-30s", "PlayerName","PlayerStrategy");
+					System.out.println();
+					for (int dashes = 0; dashes < 60; dashes++)
+						System.out.print("_");
+					System.out.println();
+					for(String playersName:gm.getPlayersWithStrategies().keySet()) {
+						System.out.format("%-30s|%-30s", playersName,gm.getPlayersWithStrategies().get(playersName));
+						System.out.println();
+					}
+				}
+			}
 		} else {
-			System.out.println("\nUnable to view the map as map is not loaded");
-			addToCommands = false;
+			System.out.println("\nUnable to view the map as map is not loaded");			
 		}
 	}
 
