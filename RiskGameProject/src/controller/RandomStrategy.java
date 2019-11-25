@@ -43,21 +43,23 @@ public class RandomStrategy implements Strategy {
 		player.setAvailableReinforceArmies(
 				pc.calculateReinforceArmy(countryReward, continetReward, player.getCardReward()));
 
-		while (player.getAvailableReinforceArmies() != 0) {
-
-			int randomNumber = randomArmyToReinforceGenerator(player);
-
-			pc.placeReinforceArmy(randomCountry, randomNumber, gm.getCountries(), pl.getListOfPlayers(),
-					gm.getContinents(), player);
-
-			// check return of placereinforcearmy method
-
-			Collections.shuffle(countriesOwned);
-			randomCountry = countriesOwned.get(0);
-
-			player.setAvailableReinforceArmies(player.getAvailableReinforceArmies() - randomNumber);
-
-		}
+		/*
+		 * while (player.getAvailableReinforceArmies() != 0) {
+		 * 
+		 * int randomNumber = randomArmyToReinforceGenerator(player);
+		 * 
+		 * pc.placeReinforceArmy(randomCountry, randomNumber, gm.getCountries(),
+		 * pl.getListOfPlayers(), gm.getContinents(), player);
+		 * 
+		 * // check return of placereinforcearmy method
+		 * 
+		 * Collections.shuffle(countriesOwned); randomCountry = countriesOwned.get(0);
+		 * 
+		 * player.setAvailableReinforceArmies(player.getAvailableReinforceArmies() -
+		 * randomNumber);
+		 * 
+		 * }
+		 */
 		// check if it is a tournament
 
 		player.setCardReward(0);
@@ -67,20 +69,4 @@ public class RandomStrategy implements Strategy {
 
 	
 	
-	public int randomArmyToReinforceGenerator(Player player) {
-		double random = Math.random();
-		random = random * player.getAvailableReinforceArmies() + 1;
-		int randomNumber = (int) random;
-		return randomNumber;
-
-	}
-
-	private int randomNumberOfAttack(int totalArmiesOwnedByDefender) {
-
-		double random = Math.random();
-		random = random * totalArmiesOwnedByDefender + 1;
-		int randomNumber = (int) random;
-		return randomNumber;
-
-	}
 }
