@@ -78,7 +78,7 @@ public class Countries {
 	/**
 	 * The function get the x coordinate
 	 * @return This returns the x coordinate
-	 * @author Garima
+	 * @author garimadawar
 	 */
 	public String getxCoordinate() {
 		return xCoordinate;
@@ -87,7 +87,7 @@ public class Countries {
 	/**
 	 * The function set the x coordinate
 	 * @param xCoordinate
-	 * @author Garima
+	 * @author garimadawar
 	 */
 	public void setX_Coordinate(String xCoordinate) {
 		this.xCoordinate = xCoordinate;
@@ -105,7 +105,7 @@ public class Countries {
 	/**
 	 * The function set the y coordinate
 	 * @param yCoordinate
-	 * @author Garima
+	 * @author garimadawar
 	 */
 	public void setyCoordinate(String yCoordinate) {
 		this.yCoordinate = yCoordinate;
