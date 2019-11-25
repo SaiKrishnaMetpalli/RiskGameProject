@@ -189,7 +189,15 @@ public class RandomStrategy implements Strategy {
 		player.setGameState("FORTIFY");
 	}
 
-	
+	/**
+	 * method performs the fortification of the random player
+	 * 
+	 * @param gm     is the game map containing all info about game
+	 * @param pl     contains all information about player
+	 * @param player it is the player object
+	 * @author Ashish Chaudhary
+	 * 
+	 */
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 
 		Collections.shuffle(countriesOwned);
@@ -225,6 +233,13 @@ public class RandomStrategy implements Strategy {
 		player.setGameState("REINFORCE");
 	}
 
+	/**
+	 * Mehtod is used to generate random number to reinforce the country
+	 * 
+	 * @param player contains the player object
+	 * @return random number generated
+	 * @author Ashish Chaudhary
+	 */
 	public int randomArmyToReinforceGenerator(Player player) {
 		double random = Math.random();
 		random = random * player.getAvailableReinforceArmies() + 1;
@@ -233,6 +248,13 @@ public class RandomStrategy implements Strategy {
 
 	}
 
+	/**
+	 * Method is used to generate random number to attack
+	 * 
+	 * @param totalArmiesOwnedByDefender it is the total armies owned by defender
+	 * @return random number generated
+	 * @author Ashish Chaudhary
+	 */
 	private int randomNumberOfAttack(int totalArmiesOwnedByDefender) {
 
 		double random = Math.random();
