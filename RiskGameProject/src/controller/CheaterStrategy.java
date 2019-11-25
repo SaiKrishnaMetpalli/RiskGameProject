@@ -75,6 +75,10 @@ public class CheaterStrategy implements Strategy {
 							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
 							System.out.println("\nThe game is ended");
 							System.exit(0);
+					
+							
+							// sai will use variable if it is tournament to put in table.
+							
 						}
 					}
 				}

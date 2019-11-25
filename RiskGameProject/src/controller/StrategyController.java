@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
@@ -7,6 +10,7 @@ import model.PlayersList;
 public class StrategyController{
 	
 	private Strategy strategy;
+	
 	
 	public void setStrategy(Strategy strategy)
 	{
@@ -20,4 +24,9 @@ public class StrategyController{
 		
 	}
 	
+	
+		
+		
+	}
+
 }

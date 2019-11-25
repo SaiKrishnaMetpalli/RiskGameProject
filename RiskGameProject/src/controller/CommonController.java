@@ -1,10 +1,13 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import model.Continents;
 import model.Countries;
+import model.Player;
+import model.PlayersList;
 
 /**
  * This class contains the common methods which can be used in multiple
@@ -145,5 +148,23 @@ public class CommonController {
 		}
 		return 0;
 	}
+	
+	public int exchangeCardForStrategy(PlayersList pl,Player player)
+	{
+		ArrayList<String> exchangeCardList = new ArrayList<>();
+	
+		 Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
+		 
+		 exchangeCardList = playerData.getCurrentCardList();
+		 ArrayList<String> infantry = new ArrayList<>(Arrays.asList("INFANTRY","INFANTRY","INFANTRY"));
+		 ArrayList<String> cavalry = new ArrayList<>(Arrays.asList("CAVALRY","CAVALRY","CAVALRY"));
+		 ArrayList<String> artillery = new ArrayList<>(Arrays.asList("ARTILLERY","ARTILLERY","ARTILLERY"));
+		 if(exchangeCardList.containsAll(infantry) || exchangeCardList.containsAll(cavalry) || exchangeCardList.containsAll(artillery))
+		 {
+			 player.setCardBonusArmy(player.getCardBonusArmy() + 5);
+			 return player.getCardBonusArmy();
+		 }
+		 else return 0;
+	}	
 
 }
