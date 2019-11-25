@@ -12,6 +12,7 @@ public class Player extends Observable {
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
 	private HashMap<String, ArrayList<String>> continentsCountryList;
+	private int totalCountries;
 	private String strategy;
 	private String gameState;
 	private String currentPlayerTurn;
@@ -37,6 +38,8 @@ public class Player extends Observable {
 		ownedCountriesList = new ArrayList<String>();
 		ownedArmiesList = new ArrayList<Integer>();
 		ownedCountriesArmiesList = new HashMap<String, Integer>();
+		continentsCountryList=new HashMap<String, ArrayList<String>>();
+		totalCountries=0;
 		gameState = "STARTUP";
 		currentPlayerTurn = "";
 		attackerName = "";
@@ -84,6 +87,14 @@ public class Player extends Observable {
 
 	public void setContinentsCountryList(HashMap<String, ArrayList<String>> continentsCountryList) {
 		this.continentsCountryList = continentsCountryList;
+	}
+
+	public int getTotalCountries() {
+		return totalCountries;
+	}
+
+	public void setTotalCountries(int totalCountries) {
+		this.totalCountries = totalCountries;
 	}
 
 	public String getStrategy() {

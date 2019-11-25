@@ -57,22 +57,20 @@ public class PlayerWorldDominationView implements Observer {
 				double percMapPlayer = 0.0;
 				String continentsControlled = "";
 				ArrayList<String> countriesList = pl.getListOfPlayers().get(playerName).getOwnedCountriesList();
-				HashMap<String, Integer> countiresArmiesList = pl.getListOfPlayers().get(playerName)
-						.getOwnedCountriesArmiesList();
-				for (String countryName : countiresArmiesList.keySet()) {
-					totalArmiesPlayer += countiresArmiesList.get(countryName);
-				}
-				percMapPlayer = ((double) totalArmiesPlayer / (double) totalArmies) * 100;				
+				
+				percMapPlayer = ((double) countriesList.size()
+						/ (double) p.getTotalCountries()) * 100;
+				
 				for (String continentName : p.getContinentsCountryList().keySet()) {
-					int count=0;
-					for(String conCountryName:p.getContinentsCountryList().get(continentName)) {
-						for(String playerCountryName:countriesList) {
-							if(playerCountryName.equals(conCountryName)) {
+					int count = 0;
+					for (String conCountryName : p.getContinentsCountryList().get(continentName)) {
+						for (String playerCountryName : countriesList) {
+							if (playerCountryName.equals(conCountryName)) {
 								count++;
 							}
 						}
 					}
-					if (count==p.getContinentsCountryList().get(continentName).size()) {
+					if (count == p.getContinentsCountryList().get(continentName).size()) {
 						continentsControlled += continentName;
 					}
 				}
