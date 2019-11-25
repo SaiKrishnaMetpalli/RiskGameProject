@@ -103,7 +103,7 @@ public class Countries {
 	}
 	
 	/**
-	 * The function get the owner name
+	 * This function get the owner name
 	 * @return This returns the owner name
 	 */
 	public String getOwnerName() {
