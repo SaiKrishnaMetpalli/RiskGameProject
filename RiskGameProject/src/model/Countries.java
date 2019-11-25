@@ -28,6 +28,7 @@ public class Countries {
 	 * @param countryContinentNum this variable contains continent number
 	 * @param xCoordinate         this variable contains x coordinate number
 	 * @param yCoordinate         this variable contains y coordinate number
+	 * @author Sai Krishna
 	 */
 	public Countries(String countryName, Integer countryContinentNum, String xCoordinate, String yCoordinate) {
 
@@ -41,6 +42,7 @@ public class Countries {
 	/**
 	 * The function get the country name
 	 * @return This returns the country name
+	 * @author Ashish
 	 */
 	public String getCountryName() {
 		return countryName;
@@ -49,6 +51,7 @@ public class Countries {
 	/**
 	 * The function set the country name
 	 * @param countryName
+	 * @author Ashish
 	 */
 	public void setCountry_Name(String countryName) {
 		this.countryName = countryName;
@@ -57,6 +60,7 @@ public class Countries {
 	/**
 	 * The function get the country continent number
 	 * @return This returns the country continent number
+	 * @author sakib
 	 */
 	public Integer getCountryContinentNum() {
 		return countryContinentNum;
@@ -65,6 +69,7 @@ public class Countries {
 	/**
 	 * The function set the country continent number
 	 * @param countryContinentNum
+	 * @author sakib
 	 */
 	public void setCountry_Continent_Num(Integer countryContinentNum) {
 		this.countryContinentNum = countryContinentNum;
@@ -73,6 +78,7 @@ public class Countries {
 	/**
 	 * The function get the x coordinate
 	 * @return This returns the x coordinate
+	 * @author Garima
 	 */
 	public String getxCoordinate() {
 		return xCoordinate;
@@ -81,6 +87,7 @@ public class Countries {
 	/**
 	 * The function set the x coordinate
 	 * @param xCoordinate
+	 * @author Garima
 	 */
 	public void setX_Coordinate(String xCoordinate) {
 		this.xCoordinate = xCoordinate;
@@ -89,6 +96,7 @@ public class Countries {
 	/**
 	 * The function get the y coordinate
 	 * @return This returns the y coordinate
+	 * @author Garima
 	 */
 	public String getyCoordinate() {
 		return yCoordinate;
@@ -97,6 +105,7 @@ public class Countries {
 	/**
 	 * The function set the y coordinate
 	 * @param yCoordinate
+	 * @author Garima
 	 */
 	public void setyCoordinate(String yCoordinate) {
 		this.yCoordinate = yCoordinate;
@@ -105,6 +114,7 @@ public class Countries {
 	/**
 	 * This function get the owner name
 	 * @return This returns the owner name
+	 * @author Gagan Jaswal
 	 */
 	public String getOwnerName() {
 		return ownerName;
@@ -113,6 +123,7 @@ public class Countries {
 	/**
 	 * The function set the owner name
 	 * @param ownerName
+	 * @author Gagan Jaswal
 	 */
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName; 

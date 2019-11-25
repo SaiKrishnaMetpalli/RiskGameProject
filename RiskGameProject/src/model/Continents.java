@@ -19,6 +19,7 @@ public class Continents {
 	 * @param continentName
 	 * @param continentControlValue
 	 * @param colour
+	 * @author Sai Krishna
 	 */
 	public Continents(String continentName, String continentControlValue, String colour) {
 		this.continentControlValue = continentControlValue;
@@ -29,6 +30,7 @@ public class Continents {
 	/**
 	 * This function get the continent control value
 	 * @return This returns continent control value
+	 * @author Sai Krishna
 	 */
 	public String getcontinentControlValue() {
 		return continentControlValue;
@@ -37,6 +39,7 @@ public class Continents {
 	/**
 	 * 	This function set the continent control value
 	 *	@param continentControlValue
+	 *	@author Sai Krishna
 	 */
 	public void setcontinentControlValue(String continentControlValue) {
 		this.continentControlValue = continentControlValue;
@@ -45,6 +48,7 @@ public class Continents {
 	/**
 	 * This function get the continent colour
 	 * @return This returns the continent colour
+	 * @author Gagan Jaswal
 	 */
 	public String getColour() {
 		return continentColour;
@@ -53,6 +57,7 @@ public class Continents {
 	/**
 	 * This function set the continent colour
 	 * @param colour
+	 * @author Gagan Jaswal
 	 */
 	public void setColour(String colour) {
 		this.continentColour = colour;
@@ -61,6 +66,7 @@ public class Continents {
 	/**
 	 * This function get the continent name
 	 * @return This returns the continent name
+	 * @author Ashish
 	 */
 	public String getContinentName() {
 		return continentName;
@@ -69,6 +75,7 @@ public class Continents {
 	/**
 	 * This function set the continent name
 	 * @param continentName
+	 * @author Ashish
 	 */
 	public void setContinent_Name(String continentName) {
 		this.continentName = continentName;
