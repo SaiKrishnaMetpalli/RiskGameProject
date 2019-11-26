@@ -110,11 +110,13 @@ public class AggressiveStrategy implements Strategy {
 					player.setDefenderCountry(cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x)));
 					player.setDefenderName(
 							cc.findPlayerNameFromCountry(gm.getCountries(), player.getDefenderCountry()));
-
+					
+					player.setAttackerName(player.getCurrentPlayerTurn());
+					
 					Player attackerPlayerData = pl.getListOfPlayers().get(player.getAttackerName());
 					Player defenderPlayerData = pl.getListOfPlayers().get(player.getDefenderName());
 
-					String attack = pc.allOutAttackedPhase(strongCountry, player.getDefenderCountry(),
+					String attack = pc.allOutAttackedPhase(player.getAttackerCountry(), player.getDefenderCountry(),
 							attackerPlayerData, gm.getCountries(), player, defenderPlayerData);
 
 					if (attack.contains("Won")) {
@@ -141,7 +143,7 @@ public class AggressiveStrategy implements Strategy {
 	 * @param gm     is the game map containing all info about game
 	 * @param pl     contains all information about player
 	 * @param player it is the player object
-	 * @author garima dawar
+	 * @author garimadawar
 	 * 
 	 */
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
