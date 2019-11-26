@@ -278,7 +278,7 @@ public class PlayerController {
 	 * This method is used for adding the game cards to attacker
 	 * 
 	 * @param attackerPlayerData this variable contains the attacker player data
-	 * @param player             this variable contains the current turn of player
+	 * @param player             this variable contains the current turn of the player
 	 *                           data
 	 * @param gm                 this variable contains the game map data
 	 * @author Sai Krishna
