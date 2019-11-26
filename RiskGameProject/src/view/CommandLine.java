@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import controller.AggressiveStrategy;
+import controller.BenevolentStrategy;
 import controller.CheaterStrategy;
 import controller.CommonController;
 import controller.MapSelectionController;
@@ -86,8 +88,9 @@ public class CommandLine {
 	 * functionality
 	 * 
 	 * @author Sai Krishna
+	 * @throws InterruptedException 
 	 */
-	public void commandLine() {
+	public void commandLine() throws InterruptedException {
 		System.out.println("\nEnter the commands");
 		input = sc.nextLine();
 		String[] inputCommand = input.split(" ");
@@ -1318,17 +1321,44 @@ public class CommandLine {
 	 * @param strategyName the name of the strategy
 	 * @return success if strategy executed successfully
 	 * @author Ashish Chaudhary
+	 * @throws InterruptedException 
 	 */
-	public String executeBehaviour(String strategyName) {
+	public String executeBehaviour(String strategyName) throws InterruptedException {
 
 		String result = null;
 		switch (strategyName) {
 
 		/*
-		 * case AGGRESSIVE: behavior = new AI_Aggressive(this, ref_game); break; case
+		 *  behavior = new AI_Aggressive(this, ref_game); break; case
 		 * BENEVOLENT: behavior = new AI_Benevolent(this, ref_game); break; case RANDOM:
 		 * behavior = new AI_Random(this, ref_game); break;
 		 */
+		case "Benevolent":
+			behaviour.setStrategy(new BenevolentStrategy());
+			result = behaviour.executeBehaviour(gm, pl, p);
+			if(result.equals("Success")) {
+				clearPlayerObject();
+				setPlayerTurn();
+				p.setGameState("REINFORCE");
+			}
+			p.notifyToObserver();
+			pl.notifyToObserver(p);
+			Thread.sleep(1000);
+			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+			break;
+		case "Aggressive":
+			behaviour.setStrategy(new AggressiveStrategy());
+			result = behaviour.executeBehaviour(gm, pl, p);
+			if(result.equals("Success")) {
+				clearPlayerObject();
+				setPlayerTurn();
+				p.setGameState("REINFORCE");
+			}
+			p.notifyToObserver();
+			pl.notifyToObserver(p);
+			Thread.sleep(1000);
+			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+			break;
 		case "Cheater":
 			behaviour.setStrategy(new CheaterStrategy());
 			result = behaviour.executeBehaviour(gm, pl, p);
@@ -1337,6 +1367,9 @@ public class CommandLine {
 				setPlayerTurn();
 				p.setGameState("REINFORCE");
 			}
+			p.notifyToObserver();
+			pl.notifyToObserver(p);
+			Thread.sleep(1000);
 			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 			break;
 		/*

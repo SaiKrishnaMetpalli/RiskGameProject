@@ -115,7 +115,7 @@ import model.PlayersList;
 					String defenderCountryName = cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x));
 					player.setDefenderCountry(defenderCountryName);
 
-					Countries c = gm.getCountries().get(x);
+					Countries c = gm.getCountries().get(neighbouringList.get(x));
 					player.setDefenderName(c.getOwnerName());
 
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
