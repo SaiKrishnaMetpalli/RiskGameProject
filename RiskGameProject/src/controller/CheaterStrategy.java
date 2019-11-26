@@ -15,8 +15,8 @@ import model.PlayersList;
  */
 public class CheaterStrategy implements Strategy {
 
-	CommonController cc;
-	PlayerController pc;
+	CommonController cc=new CommonController();
+	PlayerController pc=new PlayerController();
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
 
@@ -33,7 +33,10 @@ public class CheaterStrategy implements Strategy {
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 
 		reinforce(gm, pl, player);
-		attack(gm, pl, player);
+		String attackResult = attack(gm, pl, player);
+		if(attackResult.equals("Won")) {
+			return "Won";
+		}
 		fortify(gm, pl, player);
 
 		return "Success";
@@ -69,11 +72,13 @@ public class CheaterStrategy implements Strategy {
 	 * @author Ashish Chaudhary
 	 * 
 	 */
-	private void attack(GameMap gm, PlayersList pl, Player player) {
+	private String attack(GameMap gm, PlayersList pl, Player player) {
 
 		attackerCountryList = new ArrayList<Integer>();
 		neighbouringList = new ArrayList<Integer>();
 
+
+		
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
 			// player.setAttackerCountry(country);
@@ -88,12 +93,15 @@ public class CheaterStrategy implements Strategy {
 					continue;
 				} else {
 					player.setAttackerCountry(cc.getCountryNameByNum(gm.getCountries(), attackerCountryList.get(i)));
+					player.setAttackerName(player.getCurrentPlayerTurn());
 					String defenderCountryName = cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x));
 					player.setDefenderCountry(defenderCountryName);
 
-					Countries c = gm.getCountries().get(x);
+					Countries c = gm.getCountries().get(neighbouringList.get(x));
 					player.setDefenderName(c.getOwnerName());
 
+					
+					
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
 							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
 							pl.getListOfPlayers().get(player.getDefenderName()));
@@ -103,22 +111,15 @@ public class CheaterStrategy implements Strategy {
 								pl.getListOfPlayers(), player, gm);
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
-							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
-							System.out.println("\nThe game is ended");
-							System.exit(0);
-
-							// sai will use variable if it is tournament to put in table.
-							// attackmove check
-						} else {
-							String movingArmyResult = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
-									pl.getListOfPlayers(), player, gm);
+							return "Won";						
 						}
-					}
+					}					
 				}
 
 			}
 		}
 		player.setGameState("FORTIFY");
+		return "";
 	}
 
 	/**

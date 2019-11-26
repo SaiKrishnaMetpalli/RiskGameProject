@@ -1454,6 +1454,19 @@ public class CommandLine {
 		 * BENEVOLENT: behavior = new AI_Benevolent(this, ref_game); break; case RANDOM:
 		 * behavior = new AI_Random(this, ref_game); break;
 		 */
+		case "Random":
+			behaviour.setStrategy(new BenevolentStrategy());
+			result = behaviour.executeBehaviour(gm, pl, p);
+			if(result.equals("Success")) {
+				clearPlayerObject();
+				setPlayerTurn();
+				p.setGameState("REINFORCE");
+			}
+			p.notifyToObserver();
+			pl.notifyToObserver(p);
+			Thread.sleep(1000);
+			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+			break;
 		case "Benevolent":
 			behaviour.setStrategy(new BenevolentStrategy());
 			result = behaviour.executeBehaviour(gm, pl, p);

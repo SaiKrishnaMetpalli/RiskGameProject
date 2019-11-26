@@ -14,12 +14,12 @@ import model.PlayersList;
  */
 public class RandomStrategy implements Strategy {
 
-	CommonController cc;
-	PlayerController pc;
+	CommonController cc = new CommonController();
+	PlayerController pc = new PlayerController();
 
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
-	ArrayList<String> countriesOwned;
+	ArrayList<String> countriesOwned=new ArrayList<String>();
 
 	/**
 	 * Method overrides the Strategy Pattern Execute method
@@ -72,7 +72,7 @@ public class RandomStrategy implements Strategy {
 			pc.placeReinforceArmy(randomCountry, randomNumber, gm.getCountries(), pl.getListOfPlayers(),
 					gm.getContinents(), player);
 
-			// check return of placereinforcearmy method
+			// check return of place reinforcearmy method
 
 			Collections.shuffle(countriesOwned);
 			randomCountry = countriesOwned.get(0);
