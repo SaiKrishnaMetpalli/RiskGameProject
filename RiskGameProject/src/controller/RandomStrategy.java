@@ -19,7 +19,7 @@ public class RandomStrategy implements Strategy {
 
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
-	ArrayList<String> countriesOwned=new ArrayList<String>();
+	ArrayList<String> countriesOwned = new ArrayList<String>();
 
 	/**
 	 * Method overrides the Strategy Pattern Execute method
@@ -34,7 +34,11 @@ public class RandomStrategy implements Strategy {
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 
 		reinforce(gm, pl, player);
+		player.notifyToObserver();
+		pl.notifyToObserver(player);
 		attack(gm, pl, player);
+		player.notifyToObserver();
+		pl.notifyToObserver(player);
 		fortify(gm, pl, player);
 
 		return "Success";
@@ -65,7 +69,7 @@ public class RandomStrategy implements Strategy {
 		player.setAvailableReinforceArmies(
 				pc.calculateReinforceArmy(countryReward, continetReward, player.getCardReward()));
 
-		while (player.getAvailableReinforceArmies() != 0) {
+		while (player.getAvailableReinforceArmies() > 0) {
 
 			int randomNumber = randomArmyToReinforceGenerator(player);
 
@@ -76,8 +80,6 @@ public class RandomStrategy implements Strategy {
 
 			Collections.shuffle(countriesOwned);
 			randomCountry = countriesOwned.get(0);
-
-			player.setAvailableReinforceArmies(player.getAvailableReinforceArmies() - randomNumber);
 
 		}
 
@@ -109,7 +111,6 @@ public class RandomStrategy implements Strategy {
 
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
-			// player.setAttackerCountry(country);
 			int countriesOwnedNumbers = cc.getCountryNumberByName(gm.getCountries(), country);
 			attackerCountryList.add(countriesOwnedNumbers);
 		}
@@ -122,68 +123,82 @@ public class RandomStrategy implements Strategy {
 				continue;
 			}
 		}
-		Collections.shuffle(neighbouringList);
+		if (neighbouringList.size() > 0) {
+			Collections.shuffle(neighbouringList);
 
-		player.setAttackerCountry(randomCountry);
-		player.setDefenderCountry(cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(0)));
-		String defenderPlayer = cc.findPlayerNameFromCountry(gm.getCountries(), player.getDefenderCountry());
+			player.setAttackerCountry(randomCountry);
+			player.setDefenderCountry(cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(0)));
+			String defenderPlayer = cc.findPlayerNameFromCountry(gm.getCountries(), player.getDefenderCountry());
 
-		Player playerData = pl.getListOfPlayers().get(defenderPlayer);
+			player.setDefenderName(defenderPlayer);
+			player.setAttackerName(player.getCurrentPlayerTurn());
 
-		int totalArmiesOwnedByDefender = playerData.getOwnedCountriesArmiesList().get(player.getDefenderCountry());
+			Player defenderPlayerData = pl.getListOfPlayers().get(defenderPlayer);
+			Player attackerPlayerData = pl.getListOfPlayers().get(player.getAttackerName());
 
-		int numberOfAttackToBeDone = randomNumberOfAttack(totalArmiesOwnedByDefender);
+			int totalArmiesOwnedByDefender = defenderPlayerData.getOwnedCountriesArmiesList()
+					.get(player.getDefenderCountry());
 
-		while (numberOfAttackToBeDone != 0) {
+			int numberOfAttackToBeDone = randomNumberOfAttack(totalArmiesOwnedByDefender);
 
-			totalArmiesOwnedByDefender = playerData.getOwnedCountriesArmiesList().get(player.getDefenderCountry());
+			while (numberOfAttackToBeDone != 0) {
 
-			int totalArmiesownedByAttacker = playerData.getOwnedCountriesArmiesList().get(player.getAttackerCountry());
+				totalArmiesOwnedByDefender = defenderPlayerData.getOwnedCountriesArmiesList()
+						.get(player.getDefenderCountry());
 
-			int attackerDiceToRoll = 0;
+				int totalArmiesownedByAttacker = attackerPlayerData.getOwnedCountriesArmiesList()
+						.get(player.getAttackerCountry());
 
-			if (totalArmiesownedByAttacker > 3) {
-				attackerDiceToRoll = 3;
-			} else if (totalArmiesownedByAttacker == 3) {
-				attackerDiceToRoll = 2;
-			} else if (totalArmiesownedByAttacker == 2) {
-				attackerDiceToRoll = 1;
-			} else
-				break; // TODO: check at first loop ,if attacker army = 1 , then return
+				int attackerDiceToRoll = 0;
 
-			player.setDiceRolled(attackerDiceToRoll);
+				if (totalArmiesownedByAttacker > 3) {
+					attackerDiceToRoll = 3;
+				} else if (totalArmiesownedByAttacker == 3) {
+					attackerDiceToRoll = 2;
+				} else if (totalArmiesownedByAttacker == 2) {
+					attackerDiceToRoll = 1;
+				} else
+					break; // TODO: check at first loop ,if attacker army = 1 , then return
 
-			String attackSet = pc.attackPhase(player.getAttackerCountry(), player.getDefenderCountry(),
-					attackerDiceToRoll, player);
+				player.setDiceRolled(attackerDiceToRoll);
 
-			int defenderDiceToRoll = 0;
+				String attackSet = pc.attackPhase(player.getAttackerCountry(), player.getDefenderCountry(),
+						attackerDiceToRoll, player);
 
-			if (totalArmiesOwnedByDefender > 1) {
-				defenderDiceToRoll = 2; // TODO: check at first loop , if defender army = 1 , then return
-			} else if (totalArmiesOwnedByDefender == 1)
-				defenderDiceToRoll = 1;
-			else
-				break;
+				int defenderDiceToRoll = 0;
 
-			boolean defendSet = pc.defendPhaseDiceRoll(player.getDefenderCountry(), defenderDiceToRoll, player);
-
-			String warStarted = pc.defendingTheBase(player, pl);
-
-			if (warStarted.contains("Won")) {
-
-				boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
-
-				if (checkAllCountriesOwned) {
-					System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
-					System.out.println("\nThe game is ended");
-					System.exit(0); // TODO : avoid system.exit if tournament mode
+				if (player.getAttackerDice().size() == 1) {
+					defenderDiceToRoll = 1;
 				} else {
-					String movingArmyResult = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
-							pl.getListOfPlayers(), player, gm);
+					if (totalArmiesOwnedByDefender > 1) {
+						defenderDiceToRoll = 2;
+					} else if (totalArmiesOwnedByDefender == 1) {
+						defenderDiceToRoll = 1;
+					} else
+						break;
 				}
-			}
 
-			numberOfAttackToBeDone--;
+				boolean defendSet = pc.defendPhaseDiceRoll(player.getDefenderCountry(), defenderDiceToRoll, player);
+
+				String warStarted = pc.defendingTheBase(player, pl);
+
+				if (warStarted.contains("Won")) {
+
+					boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
+
+					if (checkAllCountriesOwned) {
+						System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
+						System.out.println("\nThe game is ended");
+						System.exit(0); // TODO : avoid system.exit if tournament mode
+					} else {
+						String movingArmyResult = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
+								pl.getListOfPlayers(), player, gm);
+						break;
+					}
+				}
+
+				numberOfAttackToBeDone--;
+			}
 		}
 
 		player.setGameState("FORTIFY");
@@ -201,36 +216,34 @@ public class RandomStrategy implements Strategy {
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
 
 		Collections.shuffle(countriesOwned);
-		String randomFromCountry = countriesOwned.get(0);
+		String randomToCountry = countriesOwned.get(0);
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
-		while (true) {
-			int fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
 
-			while (!(fromCountryArmy != 1)) {
-				if (fromCountryArmy == 1) {
-
-					Collections.shuffle(countriesOwned);
-					randomFromCountry = countriesOwned.get(0);
-					fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+		String randomFromCountry = "";
+		for (String fromCountry : playerData.getOwnedCountriesArmiesList().keySet()) {
+			if (!fromCountry.equals(randomToCountry)) {
+				pc.checkOwnPath(gm.getBoundries(), cc.getCountryNumberByName(gm.getCountries(), fromCountry),
+						cc.getCountryNumberByName(gm.getCountries(), randomToCountry));
+				if (pc.ownedPath) {
+					randomFromCountry = fromCountry;
+					break;
 				}
 			}
-
-			int armyToMove = fromCountryArmy - 1;
-
-			String randomToCountry = countriesOwned.get(1);
-
-			String fortifyResult = pc.fortify(pl.getListOfPlayers(), randomFromCountry, randomToCountry, armyToMove,
-					gm.getCountries(), gm.getBoundries());
-			if (fortifyResult.contains("Player does not own the path")) {
-				continue;
-			} else if(fortifyResult.contains("Foritified successfully"))
-				break;
 		}
+		if (!randomFromCountry.equals("")) {
 
-		// clearPlayerObject();
-		// setPlayerTurn();
-		player.setGameState("REINFORCE");
+			int fromCountryArmy = playerData.getOwnedCountriesArmiesList().get(randomFromCountry);
+
+			int randomArmyNumber = randomNumberToFortify(fromCountryArmy - 1);
+
+			String fortifyResult = pc.fortify(pl.getListOfPlayers(), randomFromCountry, randomToCountry,
+					randomArmyNumber, gm.getCountries(), gm.getBoundries());
+			if (player.getConqueredCountries().size() > 0) {
+				pc.addGameCardsToAttacker(
+						pl.getListOfPlayers().get(player.getAttackerName()), player, gm);
+			}
+		}
 	}
 
 	/**
@@ -259,6 +272,15 @@ public class RandomStrategy implements Strategy {
 
 		double random = Math.random();
 		random = random * totalArmiesOwnedByDefender + 1;
+		int randomNumber = (int) random;
+		return randomNumber;
+
+	}
+
+	private int randomNumberToFortify(int fromCountryArmy) {
+
+		double random = Math.random();
+		random = random * fromCountryArmy + 1;
 		int randomNumber = (int) random;
 		return randomNumber;
 
