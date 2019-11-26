@@ -110,8 +110,11 @@ public class PlayerController {
 			return 0;
 		}
 	}
-///missing java doc
+
 	/**
+	 * @param countryReward it contains the country reward
+	 * @param continentReward it contains the continent reward
+	 * @param cardReward it contains the card reward
 	 * @return returns the total reinforce army for country reward, continent reward
 	 *         and card reward
 	 * @author sakib
@@ -298,7 +301,7 @@ public class PlayerController {
 	 * @param countryList     is the total country list
 	 * @param boundries       contains information about neighboring countries
 	 * @return true if defender country is the adjacent country
-	 * @author Ashish Chaudhary
+	 * @author garimadawar
 	 */
 	public boolean validateDefenderCountry(String attackerCountry, String defenderCountry,
 			HashMap<Integer, Countries> countryList, HashMap<Integer, ArrayList<Integer>> boundries,
@@ -351,7 +354,7 @@ public class PlayerController {
 	 * @param numberOnDice      is the number of dice used for attacking
 	 * @param player            contains the current player's turn data
 	 * @return ready after placing army
-	 * @author Ashish Chaudhary
+	 * @author ashish
 	 */
 	public String attackPhase(String attackerCountry, String defenderCountry, Integer numberOnDice, Player player) {
 
@@ -381,7 +384,7 @@ public class PlayerController {
 	 * @param defenderPlayerData it contains defender player data
 	 * @return won if attacker wins else army having less then 1 for attacker
 	 *         message
-	 * @author Ashish Chaudhary
+	 * @author ashish
 	 */
 	public String allOutAttackedPhase(String attackerCountry, String defenderCountry, Player attackerPlayerData,
 			HashMap<Integer, Countries> countryList, Player player, Player defenderPlayerData) {
@@ -452,7 +455,7 @@ public class PlayerController {
 	 * @param attackerPlayerName  is the name of the attacker
 	 * @param attackerCountryname is the name of attacking country
 	 * @return number of attacker army left
-	 * @author Ashish Chaudhary
+	 * @author garimadawar
 	 */
 	public int allOutDefend(String defenderPlayerName, String defenderCountry, Integer attackerArmy,
 			HashMap<Integer, Countries> countryList, Player defenderPlayerData, Player player,
