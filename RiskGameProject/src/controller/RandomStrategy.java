@@ -224,7 +224,7 @@ public class RandomStrategy implements Strategy {
 					gm.getCountries(), gm.getBoundries());
 			if (fortifyResult.contains("Player does not own the path")) {
 				continue;
-			} else
+			} else if(fortifyResult.contains("Foritified successfully"))
 				break;
 		}
 

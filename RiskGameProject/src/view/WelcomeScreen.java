@@ -9,8 +9,9 @@ public class WelcomeScreen {
 
 	/**
 	 * This method is used for displaying the Welcome Screen
+	 * @throws InterruptedException 
 	 */
-	public void welcomeGameDisplay() {
+	public void welcomeGameDisplay() throws InterruptedException {
 		System.out.println();
 		System.out.println("\nWelcome to Risk Game");
 		System.out.println("\n1.New Game");

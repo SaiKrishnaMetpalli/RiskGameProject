@@ -12,6 +12,10 @@ import model.PlayersList;
  
 /**
  * This Class is for Aggressive Strategy for player Behavior
+ * An aggressive computer player strategy that focuses on attack (reinforces its
+ * strongest country, then always attack with it until it cannot attack anymore,
+ * then fortifies in order to maximize aggregation of forces in one country).
+ *
  * 
  * @author garimadawar
  *
@@ -29,10 +33,10 @@ import model.PlayersList;
 	 * Method overrides the Strategy Pattern Execute method
 	 * 
 	 * @return Success if all operations are performed
-	 * @author garimadawar
 	 * @param gm     it is the gameMap
 	 * @param pl     contains the hashMap of player object
 	 * @param player contains the player object
+	 * @author garimadawar
 	 */
 	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
@@ -115,7 +119,7 @@ import model.PlayersList;
 					String defenderCountryName = cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x));
 					player.setDefenderCountry(defenderCountryName);
 
-					Countries c = gm.getCountries().get(x);
+					Countries c = gm.getCountries().get(neighbouringList.get(x));
 					player.setDefenderName(c.getOwnerName());
 
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
