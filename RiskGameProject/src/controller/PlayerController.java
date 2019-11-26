@@ -285,9 +285,13 @@ public class PlayerController {
 	 */
 	public void addGameCardsToAttacker(Player attackerPlayerData, Player player, GameMap gm) {
 		for (String countryName : player.getConqueredCountries()) {
-			Collections.shuffle(gm.getTotalCardsList());
-			attackerPlayerData.getCurrentCardList().add(countryName + "-" + gm.getTotalCardsList().get(0));
-			gm.getTotalCardsList().remove(0);
+			if(gm.getTotalCardsList().size()>0) {
+				Collections.shuffle(gm.getTotalCardsList());
+				attackerPlayerData.getCurrentCardList().add(countryName + "-" + gm.getTotalCardsList().get(0));
+				gm.getTotalCardsList().remove(0);
+			} else {
+				break;
+			}			
 		}
 
 	}
