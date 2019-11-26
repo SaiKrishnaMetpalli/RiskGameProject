@@ -45,6 +45,7 @@ public class CommandLine {
 
 	CONSTANTS cons;
 	String actions;
+	String gameMode;
 
 	GameMap gm;
 	Player p;
@@ -75,6 +76,7 @@ public class CommandLine {
 
 		cons = new CONSTANTS();
 		actions = "";
+		gameMode="Single";
 
 		gm = new GameMap();
 		p = new Player();
@@ -415,6 +417,7 @@ public class CommandLine {
 										}
 										// Running the game in tournament mode
 										if (flagProceed) {
+											gameMode="Tournament";
 											for (String mapFileName : listOfMapFiles) {
 												int countGames = numberOfGames;
 												while (countGames != 0) {
@@ -644,8 +647,8 @@ public class CommandLine {
 								System.out.println("\nError Occurred. Please try again");
 							}
 						} else {
-							System.out
-									.println("\n" + inputCommand[1] + " file does not exist. Please create a new map");
+							System.out.println("\n" + inputCommand[1]
+									+ " Map does not exist. Empty file Created.Please start adding map elements");
 							msc.createEmptyFile(inputCommand[1]);
 						}
 						addToCommands = true;
