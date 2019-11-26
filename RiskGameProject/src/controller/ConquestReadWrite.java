@@ -24,18 +24,18 @@ public class ConquestReadWrite {
 
 		String readPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
 		File file = new File(readPath);
-		Scanner sc = new Scanner(file);
-		while (sc.hasNext()) {
-			String continent = sc.nextLine();
+		Scanner textScanner = new Scanner(file);
+		while (textScanner.hasNext()) {
+			String continent = textScanner.nextLine();
 			if (continent.equals("[Continents]")) {
 				break;
 			}
 
 		}
 		int continentsCount = 0;
-		while (sc.hasNext()) {
+		while (textScanner.hasNext()) {
 			continentsCount++;
-			continentsStarted = sc.nextLine();
+			continentsStarted = textScanner.nextLine();
 			if (continentsStarted.length() > 0) {
 
 				continentsDetails = continentsStarted.split("=");
@@ -44,29 +44,28 @@ public class ConquestReadWrite {
 			} else
 				break;
 		}
-		while (sc.hasNext()) {
-			country = sc.nextLine();
+		while (textScanner.hasNext()) {
+			country = textScanner.nextLine();
 			if (!country.equals("[Territories]")) {
 				continue;
 			} else
 				break;
 		}
 		int countriesCount = 0;
-		while (sc.hasNext()) {
+		while (textScanner.hasNext()) {
 			countriesCount++;
-			countriesStarted = sc.nextLine();
+			countriesStarted = textScanner.nextLine();
 
 			if (countriesStarted.length() > 0) {
-
 				countriesDetails = countriesStarted.split(",");
 				Countries c2 = new Countries(countriesDetails[0], cc.getContinentNum(continents, countriesDetails[3]),
 						countriesDetails[1], countriesDetails[2]);
 				countries.put(countriesCount, c2);
-				ArrayList<String> temp = new ArrayList<String>();
+				ArrayList<String> bouNameList = new ArrayList<String>();
 				for (int i = 4; i < countriesDetails.length; i++) {
-					temp.add(countriesDetails[i]);
+					bouNameList.add(countriesDetails[i]);
 				}
-				boundaryNames.put(countriesCount, temp);
+				boundaryNames.put(countriesCount, bouNameList);
 
 			} else
 				break;
@@ -80,7 +79,7 @@ public class ConquestReadWrite {
 			}
 			boundries.put(i, listNum);
 		}
-		sc.close();
+		textScanner.close();
 		return "Success";
 	}
 
@@ -108,20 +107,21 @@ public class ConquestReadWrite {
 		bw.newLine();
 		for (Integer i : countries.keySet()) {
 			Countries c1 = countries.get(i);
-			String s1 = c1.getCountryName() + "," + c1.getxCoordinate() + "," + c1.getyCoordinate() + ","
+			String territoryStrOne = c1.getCountryName() + "," + c1.getxCoordinate() + "," + c1.getyCoordinate() + ","
 					+ cc.getContinentByCountryName(continents, countries, c1.getCountryName()).getContinentName() + ",";
-			String s2 = "";
+			String territoryStrTwo = "";
 			ArrayList<Integer> blist = boundries.get(i);
 			for (int bi : blist) {
-				s2 += cc.getCountryNameByNum(countries, bi) + ",";
+				territoryStrTwo += cc.getCountryNameByNum(countries, bi) + ",";
 			}
-			s2 = s2.substring(0, s2.length() - 1);
-			bw.write(s1 + s2);
+			territoryStrTwo = territoryStrTwo.substring(0, territoryStrTwo.length() - 1);
+			bw.write(territoryStrOne + territoryStrTwo);
 			bw.newLine();
 		}
 
 		bw.write("\n");
 
+		
 		bw.close();
 		return "Success";
 	}

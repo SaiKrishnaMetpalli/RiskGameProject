@@ -17,7 +17,6 @@ public class CommonController {
 
 	/**
 	 * This method will return country object for a specific country name
-	 * 
 	 * @param countries   takes hashmap of countries populated from map file
 	 * @param countryName takes country name string
 	 * @return country object
@@ -66,6 +65,13 @@ public class CommonController {
 		int n = c1.getCountryContinentNum();
 		return continents.get(n);
 	}
+	/**
+	 * Provides continent key from continent hashmap by its name
+	 * @param continents
+	 * @param continentName
+	 * @return continent number key
+	 * @author sakib
+	 */
 	
 	public int getContinentNum(HashMap<Integer, Continents> continents, String continentName) {
 		
