@@ -12,11 +12,32 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 
+/**
+ * This class contains read/wirte methods for domination files
+ * @author sakib
+ *
+ */
 public class DominationReadWrite {
-	ArrayList<Integer> list;
+	/**
+	 * variables to store lines of text files
+	 */
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
+	
+	/**
+	 * strings arrays to store the split lines
+	 */
 	String[] continentsDetails, countriesDetails, boundriesDetails;
-
+	
+	/**
+	 * This method will read a domination map file and store extracted information in respective hashmaps
+	 * @param continents
+	 * @param countries
+	 * @param boundries
+	 * @param fileName
+	 * @return success or failure message 
+	 * @throws FileNotFoundException
+	 * @author sakib
+	 */
 	public String dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
 
@@ -83,7 +104,7 @@ public class DominationReadWrite {
 			boundriesStarted = textScanner.nextLine();
 			if (boundriesStarted.length() > 0) {
 				boundriesDetails = boundriesStarted.split(" ");
-				list = new ArrayList<Integer>();
+				ArrayList<Integer> list = new ArrayList<Integer>();
 
 				for (int i = 1; i < boundriesDetails.length; i++) {
 					list.add(Integer.parseInt(boundriesDetails[i]));
@@ -96,7 +117,17 @@ public class DominationReadWrite {
 		textScanner.close();
 		return "Success";
 	}
-
+	
+	/**
+	 * This method will write a domination map file from informations in respective hashmaps 
+	 * @param continents
+	 * @param countries
+	 * @param boundries
+	 * @param mapFile
+	 * @return success and failure message 
+	 * @throws IOException
+	 * @author sakib
+	 */
 	public String writeDominationMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 
