@@ -13,6 +13,8 @@ public class GameMap {
 	private ArrayList<String> totalCardsList;
 	private ArrayList<String> playersSetup;
 	private HashMap<String, String> playersWithStrategies;
+	private String fileType;
+	private String gameMode;
 
 	/**
 	 * @Default Constructor This method initiates the variables
@@ -24,6 +26,8 @@ public class GameMap {
 		totalCardsList = new ArrayList<String>();
 		playersSetup = new ArrayList<String>();
 		playersWithStrategies = new HashMap<String, String>();
+		fileType="Domination";
+		gameMode="Single";
 	}
 
 	public HashMap<Integer, Continents> getContinents() {
@@ -72,5 +76,21 @@ public class GameMap {
 
 	public void setPlayersWithStrategies(HashMap<String, String> playersWithStrategies) {
 		this.playersWithStrategies = playersWithStrategies;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getGameMode() {
+		return gameMode;
+	}
+
+	public void setGameMode(String gameMode) {
+		this.gameMode = gameMode;
 	}
 }
