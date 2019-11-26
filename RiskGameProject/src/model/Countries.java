@@ -96,7 +96,7 @@ public class Countries {
 	/**
 	 * The function get the y coordinate
 	 * @return This returns the y coordinate
-	 * @author Garima
+	 * @author garimadawar
 	 */
 	public String getyCoordinate() {
 		return yCoordinate;
