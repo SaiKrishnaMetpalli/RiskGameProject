@@ -157,8 +157,7 @@ public class CommonController {
 	
 	public int exchangeCardForStrategy(PlayersList pl,Player player)
 	{
-		ArrayList<String> exchangeCardList = new ArrayList<>();
-	
+		ArrayList<String> exchangeCardList;	
 		 Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 		 
 		 exchangeCardList = playerData.getCurrentCardList();
@@ -168,8 +167,10 @@ public class CommonController {
 		 if(exchangeCardList.containsAll(infantry) || exchangeCardList.containsAll(cavalry) || exchangeCardList.containsAll(artillery))
 		 {
 			 player.setCardBonusArmy(player.getCardBonusArmy() + 5);
+			 exchangeCardList.remove("INFANTRY")
 			 return player.getCardBonusArmy();
 		 }
+		 
 		 else return 0;
 	}	
 
