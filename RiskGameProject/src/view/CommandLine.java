@@ -1317,7 +1317,7 @@ public class CommandLine {
 		p.setAllOutPerformed(false);
 	}
 	/**
-	 * This Method determines the behaviour of a player and perform its moves
+	 * This Method determines the behavior of a player and perform its moves
 	 * @param strategyName the name of the strategy
 	 * @return success if strategy executed successfully
 	 * @author Ashish Chaudhary
@@ -1372,10 +1372,7 @@ public class CommandLine {
 			Thread.sleep(1000);
 			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 			break;
-		/*
-		 * case "human": behaviour = new StrategyController(); behaviour.setStrategy(new
-		 * HumanStrategy()); result = behaviour.executeBehaviour(gm, pl, player); break;
-		 */
+		
 		case "Human":
 			commandLine();
 			break;
