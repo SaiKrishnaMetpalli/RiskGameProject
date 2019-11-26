@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,17 +12,16 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 
+public class ConquestReadWrite {
 
-public class ConquestReadWriteController {
-	
-	String continentsStarted, countriesStarted,country;
+	String continentsStarted, countriesStarted, country;
 	String[] continentsDetails, countriesDetails;
 	CommonController cc = new CommonController();
 	HashMap<Integer, ArrayList<String>> boundaryNames = new HashMap<Integer, ArrayList<String>>();
-	
-	public void conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+
+	public String conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
-		
+
 		String readPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
 		File file = new File(readPath);
 		Scanner sc = new Scanner(file);
@@ -63,27 +63,28 @@ public class ConquestReadWriteController {
 						countriesDetails[1], countriesDetails[2]);
 				countries.put(countriesCount, c2);
 				ArrayList<String> temp = new ArrayList<String>();
-				for(int i =4; i <countriesDetails.length; i++) {
+				for (int i = 4; i < countriesDetails.length; i++) {
 					temp.add(countriesDetails[i]);
 				}
-				boundaryNames.put(countriesCount,temp);
-				
+				boundaryNames.put(countriesCount, temp);
+
 			} else
 				break;
 
 		}
-		 for(int i : boundaryNames.keySet()) {
-			 ArrayList<String> boulist = boundaryNames.get(i);
-			 ArrayList<Integer> listNum = new ArrayList<Integer>();
-			 for(String s : boulist) {
-				 listNum.add(cc.getCountryNumberByName(countries, s));
-			 }
-			 boundries.put(i,listNum);
-		 }
+		for (int i : boundaryNames.keySet()) {
+			ArrayList<String> boulist = boundaryNames.get(i);
+			ArrayList<Integer> listNum = new ArrayList<Integer>();
+			for (String s : boulist) {
+				listNum.add(cc.getCountryNumberByName(countries, s));
+			}
+			boundries.put(i, listNum);
+		}
 		sc.close();
+		return "Success";
 	}
 
-	public void writeConquestMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+	public String writeConquestMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 
 		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + mapFile;
@@ -107,20 +108,21 @@ public class ConquestReadWriteController {
 		bw.newLine();
 		for (Integer i : countries.keySet()) {
 			Countries c1 = countries.get(i);
-			String s1 = c1.getCountryName() + ","+ c1.getxCoordinate() + "," + c1.getyCoordinate()+ ","
-					+ cc.getContinentByCountryName(continents, countries, c1.getCountryName())+",";
-			String s2="";
-			ArrayList<Integer> blist=boundries.get(i);
-			for(int bi : blist) {
-				s2+=cc.getCountryNameByNum(countries, bi)+",";
+			String s1 = c1.getCountryName() + "," + c1.getxCoordinate() + "," + c1.getyCoordinate() + ","
+					+ cc.getContinentByCountryName(continents, countries, c1.getCountryName()).getContinentName() + ",";
+			String s2 = "";
+			ArrayList<Integer> blist = boundries.get(i);
+			for (int bi : blist) {
+				s2 += cc.getCountryNameByNum(countries, bi) + ",";
 			}
-			s2=s2.substring(0, blist.size()-1);
-			bw.write(s1+s2);
+			s2 = s2.substring(0, s2.length() - 1);
+			bw.write(s1 + s2);
 			bw.newLine();
 		}
 
 		bw.write("\n");
 
 		bw.close();
+		return "Success";
 	}
 }

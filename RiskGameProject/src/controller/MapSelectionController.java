@@ -660,7 +660,7 @@ public class MapSelectionController {
 					}
 					cardsList = cardsList.substring(0, cardsList.length() - 1);
 					bw.write(playerName + " " + playerDetails.getStrategy() + " " + ownedCountries + " " + ownedArmies
-							+ "" + cardsList);
+							+ " " + cardsList);
 				} else {
 					bw.write(playerName + " " + playerDetails.getStrategy() + " " + ownedCountries + " " + ownedArmies);
 				}
@@ -801,6 +801,8 @@ public class MapSelectionController {
 				} else
 					break;
 			}
+			
+			p.setTotalCountries(gm.getCountries().size());
 
 			// getting the borders from the file
 			while (textScanner.hasNext()) {

@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,93 +12,92 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 
-public class DominationReadWriteController {
+public class DominationReadWrite {
 	ArrayList<Integer> list;
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
 	String[] continentsDetails, countriesDetails, boundriesDetails;
 
-	public void dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+	public String dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
+
 		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
 		File file = new File(filePath);
 		Scanner textScanner = new Scanner(file);
 
+		while (textScanner.hasNext()) {
+			String continent = textScanner.nextLine();
+			if (continent.equals("[continents]")) {
+				break;
+			}
 
-				while (textScanner.hasNext()) {
-					String continent = textScanner.nextLine();
-					if (continent.equals("[continents]")) {
-						break;
-					}
+		}
+		int continentsCount = 0;
+		while (textScanner.hasNext()) {
+			continentsCount++;
+			continentsStarted = textScanner.nextLine();
+			if (continentsStarted.length() > 0) {
 
+				continentsDetails = continentsStarted.split(" ");
+				Continents c1 = new Continents(continentsDetails[0], continentsDetails[1], continentsDetails[2]);
+
+				continents.put(continentsCount, c1);
+			} else
+				break;
+		}
+
+		while (textScanner.hasNext()) {
+
+			country = textScanner.nextLine();
+			if (!country.equals("[countries]")) {
+				continue;
+			} else
+				break;
+		}
+
+		while (textScanner.hasNext()) {
+
+			countriesStarted = textScanner.nextLine();
+
+			if (countriesStarted.length() > 0) {
+
+				countriesDetails = countriesStarted.split(" ");
+				Countries c2 = new Countries(countriesDetails[1], Integer.parseInt(countriesDetails[2]),
+						countriesDetails[3], countriesDetails[4]);
+
+				countries.put(Integer.parseInt(countriesDetails[0]), c2);
+			} else
+				break;
+
+		}
+
+		while (textScanner.hasNext()) {
+
+			boundry = textScanner.nextLine();
+			if (!boundry.equals("[borders]")) {
+				continue;
+			} else
+				break;
+		}
+
+		while (textScanner.hasNext()) {
+			boundriesStarted = textScanner.nextLine();
+			if (boundriesStarted.length() > 0) {
+				boundriesDetails = boundriesStarted.split(" ");
+				list = new ArrayList<Integer>();
+
+				for (int i = 1; i < boundriesDetails.length; i++) {
+					list.add(Integer.parseInt(boundriesDetails[i]));
 				}
-				int continentsCount = 0;
-				while (textScanner.hasNext()) {
-					continentsCount++;
-					continentsStarted = textScanner.nextLine();
-					if (continentsStarted.length() > 0) {
 
-						continentsDetails = continentsStarted.split(" ");
-						Continents c1 = new Continents(continentsDetails[0], continentsDetails[1],
-								continentsDetails[2]);
+				boundries.put(Integer.parseInt(boundriesDetails[0]), list);
+			} else
+				break;
+		}
+		textScanner.close();
+		return "Success";
+	}
 
-						continents.put(continentsCount, c1);
-					} else
-						break;
-				}
-
-				while (textScanner.hasNext()) {
-
-					country = textScanner.nextLine();
-					if (!country.equals("[countries]")) {
-						continue;
-					} else
-						break;
-				}
-
-				while (textScanner.hasNext()) {
-
-					countriesStarted = textScanner.nextLine();
-
-					if (countriesStarted.length() > 0) {
-
-						countriesDetails = countriesStarted.split(" ");
-						Countries c2 = new Countries(countriesDetails[1], Integer.parseInt(countriesDetails[2]),
-								countriesDetails[3], countriesDetails[4]);
-
-						countries.put(Integer.parseInt(countriesDetails[0]), c2);
-					} else
-						break;
-
-				}
-
-				while (textScanner.hasNext()) {
-
-					boundry = textScanner.nextLine();
-					if (!boundry.equals("[borders]")) {
-						continue;
-					} else
-						break;
-				}
-
-				while (textScanner.hasNext()) {
-					boundriesStarted = textScanner.nextLine();
-					if (boundriesStarted.length() > 0) {
-						boundriesDetails = boundriesStarted.split(" ");
-						list = new ArrayList<Integer>();
-
-						for (int i = 1; i < boundriesDetails.length; i++) {
-							list.add(Integer.parseInt(boundriesDetails[i]));
-						}
-
-						boundries.put(Integer.parseInt(boundriesDetails[0]), list);
-					} else
-						break;
-				}
-				textScanner.close();
-
-			} 
-		
-	public void writeDominationMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
+	public String writeDominationMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 
 		String createPath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + mapFile;
@@ -145,5 +145,6 @@ public class DominationReadWriteController {
 		bw.write("\n");
 
 		bw.close();
+		return "Success";
 	}
 }
