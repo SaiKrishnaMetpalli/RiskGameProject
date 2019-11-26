@@ -29,7 +29,7 @@ public class GameMap {
 
 	/**
 	 * @Default Constructor This method initiates the variables
-	 * 
+	 * @author Sai Krishna
 	 */
 	public GameMap() {
 		continents = new HashMap<Integer, Continents>();
@@ -45,6 +45,7 @@ public class GameMap {
 	/**
 	 * This function get the continents
 	 * @return This returns the continents
+	 * @author Ashish
 	 */
 	public HashMap<Integer, Continents> getContinents() {
 		return continents;
@@ -53,6 +54,7 @@ public class GameMap {
 	/**
 	 * This function set the continents
 	 * @param continents
+	 * @author Ashish
 	 */
 	public void setContinents(HashMap<Integer, Continents> continents) {
 		this.continents = continents;
@@ -61,6 +63,7 @@ public class GameMap {
 	/**
 	 * This function get the countries
 	 * @return This returns the countries
+	 * @author sakib
 	 */
 	public HashMap<Integer, Countries> getCountries() {
 		return countries;
@@ -69,6 +72,7 @@ public class GameMap {
 	/**
 	 * This function set the countries
 	 * @param countries
+	 * @author sakib
 	 */
 	public void setCountries(HashMap<Integer, Countries> countries) {
 		this.countries = countries;
@@ -77,6 +81,7 @@ public class GameMap {
 	/**
 	 * This function get the boundries
 	 * @return This returns the boundries
+	 * @author Gagan Jaswal
 	 */
 	public HashMap<Integer, ArrayList<Integer>> getBoundries() {
 		return boundries;
@@ -85,6 +90,7 @@ public class GameMap {
 	/**
 	 * This function set the boundries
 	 * @param boundries
+	 * @author Gagan Jaswal
 	 */
 	public void setBoundries(HashMap<Integer, ArrayList<Integer>> boundries) {
 		this.boundries = boundries;
@@ -93,6 +99,7 @@ public class GameMap {
 	/**
 	 * This function get the total cards list
 	 * @return This returns the total cards list
+	 * @author garimadawar
 	 */
 	public ArrayList<String> getTotalCardsList() {
 		return totalCardsList;
@@ -101,6 +108,7 @@ public class GameMap {
 	/**
 	 * This function set the total cards list
 	 * @param totalCardsList
+	 * @author garimadawar
 	 */
 	public void setTotalCardsList(ArrayList<String> totalCardsList) {
 		this.totalCardsList = totalCardsList;
@@ -109,6 +117,7 @@ public class GameMap {
 	/**
 	 * This function get the player setup
 	 * @return This returns the player with strategies
+	 * @author Sai Krishna
 	 */
 	public ArrayList<String> getPlayersSetup() {
 		return playersSetup;
@@ -117,6 +126,7 @@ public class GameMap {
 	/**
 	 * This function set the player setup
 	 * @param playersSetup
+	 * @author Sai Krishna
 	 */
 	public void setPlayersSetup(ArrayList<String> playersSetup) {
 		this.playersSetup = playersSetup;
@@ -125,6 +135,7 @@ public class GameMap {
 	/**
 	 * This function get the player with strategies
 	 * @return This returns the player with strategies
+	 * @author Gagan Jaswal
 	 */
 	public HashMap<String, String> getPlayersWithStrategies() {
 		return playersWithStrategies;
@@ -133,6 +144,7 @@ public class GameMap {
 	/**
 	 * This function set the player with strategies
 	 * @param playersWithStrategies
+	 * @author Gagan Jaswal
 	 */
 	public void setPlayersWithStrategies(HashMap<String, String> playersWithStrategies) {
 		this.playersWithStrategies = playersWithStrategies;
@@ -141,6 +153,7 @@ public class GameMap {
 	/**
 	 * This function get the file type
 	 * @return This returns the file type
+	 * @author garimadawar
 	 */
 	public String getFileType() {
 		return fileType;
@@ -149,6 +162,7 @@ public class GameMap {
 	/**
 	 * This function set the file type
 	 * @param fileType
+	 * @author garimadawar
 	 */
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
@@ -156,7 +170,8 @@ public class GameMap {
 	
 	/**
 	 * This function get the game mode
-	 * @return This returns the gane mode
+	 * @return This returns the game mode
+	 * @author Ashish
 	 */
 	public String getGameMode() {
 		return gameMode;
@@ -165,6 +180,7 @@ public class GameMap {
 	/**
 	 * This function set the game mode
 	 * @param gameMode
+	 * @author Ashish
 	 */
 	public void setGameMode(String gameMode) {
 		this.gameMode = gameMode;
