@@ -433,7 +433,7 @@ public class CommandLine {
 														drw = new DominationReadWrite();
 														crw = new ConquestReadWrite();
 														String filePath = Paths.get("").toAbsolutePath().toString()
-																+ "\\src\\resource\\" + inputCommand[1];
+																+ "\\src\\resource\\" + mapFileName;
 														File file = new File(filePath);
 														Scanner textScanner = new Scanner(file);
 														if (textScanner.hasNext()) {
@@ -448,11 +448,11 @@ public class CommandLine {
 															drw = new MapFileAdapter(crw);
 															result = drw.dominationMapReading(gm.getContinents(),
 																	gm.getCountries(), gm.getBoundries(),
-																	inputCommand[1]);
+																	mapFileName);
 														} else {
 															result = drw.dominationMapReading(gm.getContinents(),
 																	gm.getCountries(), gm.getBoundries(),
-																	inputCommand[1]);
+																	mapFileName);
 														}
 
 														if (result.equals("Success")) {
@@ -479,8 +479,7 @@ public class CommandLine {
 																System.out
 																		.println("\nPlayers are assigned to countries");
 																psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
-																		cons.NO_PLAYER_ARMIES
-																				.get(gm.getPlayersSetup().size()));
+																		cons.NO_PLAYER_ARMIES.get(gm.getPlayersSetup().size()));
 																System.out.println("\nArmies are placed successfully");
 																p.setActionsPerformed("");
 																p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
@@ -495,12 +494,18 @@ public class CommandLine {
 																					.getStrategy());
 																	if (resultStrategy.contains("Won")) {
 																		t.getGameResults().put("Game" + cGame,
-																				pl.getListOfPlayers()
-																						.get(p.getCurrentPlayerTurn())
-																						.getStrategy());
+																				p.getCurrentPlayerTurn() + "-"
+																						+ pl.getListOfPlayers().get(p
+																								.getCurrentPlayerTurn())
+																								.getStrategy());
+																		tournamentDetails.put(mapFileName, t);
 																		break;
 																	}
 																	countTurns--;
+																	if(countTurns==0) {
+																		t.getGameResults().put("Game"+cGame, "Draw");
+																		tournamentDetails.put(mapFileName, t);
+																	}
 																}
 																tournamentDetails.put(mapFileName, t);
 
@@ -527,6 +532,9 @@ public class CommandLine {
 													countGames--;
 												}
 											}
+											// Printing the tournament result;
+											printTournamentResults();
+											System.exit(0);
 										} else {
 											System.out.println(
 													"\nThe number of turns input is not valid; Please reenter the tournament command");
@@ -1398,13 +1406,13 @@ public class CommandLine {
 
 		if (gm.getContinents().size() > 0) {
 			if (gm.getCountries().size() > 0) {
-				ArrayList<Integer> continentsList=new ArrayList<Integer>();
+				ArrayList<Integer> continentsList = new ArrayList<Integer>();
 				for (int i : gm.getCountries().keySet()) {
 					neighbours = "";
 					Countries objCou = gm.getCountries().get(i);
 					countryName = objCou.getCountryName();
 					playerName = objCou.getOwnerName();
-					if(!continentsList.contains(objCou.getCountryContinentNum())) {
+					if (!continentsList.contains(objCou.getCountryContinentNum())) {
 						continentsList.add(objCou.getCountryContinentNum());
 					}
 					for (int j : gm.getContinents().keySet()) {
@@ -1450,17 +1458,17 @@ public class CommandLine {
 						System.out.println();
 					}
 				}
-				
-				if(gm.getContinents().size()!=continentsList.size()) {
-					
+
+				if (gm.getContinents().size() != continentsList.size()) {
+
 					System.out.format("%-30s", "ContinentName");
 					System.out.println();
 					for (int dashes = 0; dashes < 30; dashes++)
 						System.out.print("_");
 					System.out.println();
-					
-					for(int cont:gm.getContinents().keySet()) {
-						if(!continentsList.contains(cont)) {
+
+					for (int cont : gm.getContinents().keySet()) {
+						if (!continentsList.contains(cont)) {
 							Continents objCont = gm.getContinents().get(cont);
 							continentName = objCont.getContinentName();
 							System.out.format("%-30s", continentName);
@@ -1730,5 +1738,38 @@ public class CommandLine {
 			break;
 		}
 		return null;
+	}
+
+	private boolean checkTournamentCommandFormat() {
+		return true;
+	}
+
+	/**
+	 * This method is used for printing the tournament result
+	 */
+	private void printTournamentResults() {
+		int cGames=0;
+		for(String fileName:tournamentDetails.keySet()) {
+			System.out.println();
+			System.out.format("%-30s", "fileName");
+			for(String gameName:tournamentDetails.get(fileName).getGameResults().keySet()) {				
+				System.out.format("|%-30s", gameName);
+				cGames++;
+			}
+			System.out.println();
+			for (int dashes = 0; dashes < 60+cGames; dashes++)
+				System.out.print("_");
+			System.out.println();
+			break;
+		}
+		
+		for(String fileName:tournamentDetails.keySet()) {
+			System.out.format("%-30s", fileName);
+			for(String gameName:tournamentDetails.get(fileName).getGameResults().keySet()) {
+				System.out.format("|%-30s", tournamentDetails.get(fileName).getGameResults().get(gameName));
+			}
+			System.out.println();
+		}
+		
 	}
 }
