@@ -190,5 +190,26 @@ public class TestReinforcement {
 		currentCardList.addAll(Arrays.asList("a", "b", "a"));
 		assertEquals(playerController.exchangeCard(1, 2, 3, currentCardList, playerDetails.get(player)), 0);
 	}
+   
+	/**
+	 * tests for place army method
+	 * 
+	 * @author garimadawar
+	 */
+    @Test
+    public void testPlaceArmySuccess() {
+    	String result = psc.placeArmy(gm.getCountries(), playerDetails, "Quebec",1);
+    	assertEquals("Success",result);
+    }
 
+	/**
+	 * tests for place army method
+	 * 
+	 * @author garimadawar
+	 */
+    @Test
+    public void testPlaceArmyFailure() {
+    	String result = psc.placeArmy(gm.getCountries(), playerDetails,"Quebec", 4);
+    	assertEquals("Armies cannot be placed for this country as the player is outreached armies",result);
+    }
 }
