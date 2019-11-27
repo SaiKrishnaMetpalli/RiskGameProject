@@ -55,7 +55,7 @@ public class TestLoadGame {
 	
 	@Test
 	public void testLoadGameSuccess() throws FileNotFoundException {
-		assertEquals("Failure",msc.loadGameReading(gm, pl, p, fileName));
+		assertEquals("Success",msc.loadGameReading(gm, pl, p, fileName));
 	}
 	
 	

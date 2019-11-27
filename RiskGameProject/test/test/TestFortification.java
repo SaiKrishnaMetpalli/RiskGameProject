@@ -96,7 +96,6 @@ public class TestFortification {
 		armyToPlace = pOb.getOwnedCountriesArmiesList().get(fromCountry) - 1;
 		String result = playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace,gm.getCountries(),gm.getBoundries());
 		assertEquals("Player does not own the path", result);
-		//assertEquals("Country does not exists. Please add the Country first", re);
 	}
 
 }
