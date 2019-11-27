@@ -464,8 +464,8 @@ public class CommandLine {
 																p.setContinentsCountryList(cc.getContinentsCountryList(
 																		gm.getContinents(), gm.getCountries()));
 																p.setTotalCountries(gm.getCountries().size());
-																for (String playerStrategyName : listOfStrategies) {
-																	int cStrategy = 1;
+																int cStrategy = 1;
+																for (String playerStrategyName : listOfStrategies) {																	
 																	// players adding
 																	psc.addPlayer(gm.getPlayersWithStrategies(),
 																			gm.getPlayersSetup(), "Player" + cStrategy,
