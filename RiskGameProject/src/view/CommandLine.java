@@ -421,8 +421,8 @@ public class CommandLine {
 											gameMode = "Tournament";
 											for (String mapFileName : listOfMapFiles) {
 												int countGames = numberOfGames;
-												while (countGames != 0) {
-													int cGame = 1;
+												int cGame = 1;
+												while (countGames != 0) {													
 													try {
 														gm = new GameMap();
 														pl = new PlayersList();
@@ -447,12 +447,10 @@ public class CommandLine {
 														if (gm.getFileType().equals("Conquest")) {
 															drw = new MapFileAdapter(crw);
 															result = drw.dominationMapReading(gm.getContinents(),
-																	gm.getCountries(), gm.getBoundries(),
-																	mapFileName);
+																	gm.getCountries(), gm.getBoundries(), mapFileName);
 														} else {
 															result = drw.dominationMapReading(gm.getContinents(),
-																	gm.getCountries(), gm.getBoundries(),
-																	mapFileName);
+																	gm.getCountries(), gm.getBoundries(), mapFileName);
 														}
 
 														if (result.equals("Success")) {
@@ -465,7 +463,7 @@ public class CommandLine {
 																		gm.getContinents(), gm.getCountries()));
 																p.setTotalCountries(gm.getCountries().size());
 																int cStrategy = 1;
-																for (String playerStrategyName : listOfStrategies) {																	
+																for (String playerStrategyName : listOfStrategies) {
 																	// players adding
 																	psc.addPlayer(gm.getPlayersWithStrategies(),
 																			gm.getPlayersSetup(), "Player" + cStrategy,
@@ -479,7 +477,8 @@ public class CommandLine {
 																System.out
 																		.println("\nPlayers are assigned to countries");
 																psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
-																		cons.NO_PLAYER_ARMIES.get(gm.getPlayersSetup().size()));
+																		cons.NO_PLAYER_ARMIES
+																				.get(gm.getPlayersSetup().size()));
 																System.out.println("\nArmies are placed successfully");
 																p.setActionsPerformed("");
 																p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
@@ -502,8 +501,8 @@ public class CommandLine {
 																		break;
 																	}
 																	countTurns--;
-																	if(countTurns==0) {
-																		t.getGameResults().put("Game"+cGame, "Draw");
+																	if (countTurns == 0) {
+																		t.getGameResults().put("Game" + cGame, "Draw");
 																		tournamentDetails.put(mapFileName, t);
 																	}
 																}
@@ -1265,9 +1264,9 @@ public class CommandLine {
 							} else {
 								System.out
 										.println("\nNum of army move has to be greater or equal to dice Rolled to win "
-												+ "& attacker should have atleast one army left in his own country");
+												+ "& attacker should have atleast one army left in his own country or attackmove is already performed");
 								actions += "\nNum of army move has to be greater or equal to dice Rolled to win "
-										+ "& attacker should have atleast one army left in his own country";
+										+ "& attacker should have atleast one army left in his own country or attackmove is already performed";
 								addToCommands = false;
 							}
 
@@ -1279,13 +1278,13 @@ public class CommandLine {
 							addToCommands = false;
 						}
 					} else {
-						System.out.println("\ndefend command format is incorrect");
-						actions += "\ndefend command format is incorrect";
+						System.out.println("\nattackmove command format is incorrect");
+						actions += "\nattackmove command format is incorrect";
 						addToCommands = false;
 					}
 				} else {
-					System.out.println("\ndefend command cannot be performed in " + p.getGameState() + " phase");
-					actions += "\ndefend command cannot be performed in " + p.getGameState() + " phase";
+					System.out.println("\nattackmove command cannot be performed in " + p.getGameState() + " phase");
+					actions += "\nattackmove command cannot be performed in " + p.getGameState() + " phase";
 					addToCommands = false;
 				}
 
@@ -1692,15 +1691,18 @@ public class CommandLine {
 		case "Benevolent":
 			behaviour.setStrategy(new BenevolentStrategy());
 			result = behaviour.executeBehaviour(gm, pl, p);
-			if (result.equals("Success")) {
-				clearPlayerObject();
-				setPlayerTurn();
-				p.setGameState("REINFORCE");
-			}
+			clearPlayerObject();
+			setPlayerTurn();
+			p.setGameState("REINFORCE");
 			p.notifyToObserver();
 			pl.notifyToObserver(p);
 			Thread.sleep(1000);
-			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+			if (gameMode.equals("Tournament")) {
+				return "Success";
+			} else {
+				executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+			}		
+			
 			break;
 		case "Aggressive":
 			behaviour.setStrategy(new AggressiveStrategy());
@@ -1782,28 +1784,28 @@ public class CommandLine {
 	 * This method is used for printing the tournament result
 	 */
 	private void printTournamentResults() {
-		int cGames=0;
-		for(String fileName:tournamentDetails.keySet()) {
+		int cGames = 0;
+		for (String fileName : tournamentDetails.keySet()) {
 			System.out.println();
 			System.out.format("%-30s", "fileName");
-			for(String gameName:tournamentDetails.get(fileName).getGameResults().keySet()) {				
+			for (String gameName : tournamentDetails.get(fileName).getGameResults().keySet()) {
 				System.out.format("|%-30s", gameName);
 				cGames++;
 			}
 			System.out.println();
-			for (int dashes = 0; dashes < 60+cGames; dashes++)
+			for (int dashes = 0; dashes < 30 + (cGames*30); dashes++)
 				System.out.print("_");
 			System.out.println();
 			break;
 		}
-		
-		for(String fileName:tournamentDetails.keySet()) {
+
+		for (String fileName : tournamentDetails.keySet()) {
 			System.out.format("%-30s", fileName);
-			for(String gameName:tournamentDetails.get(fileName).getGameResults().keySet()) {
+			for (String gameName : tournamentDetails.get(fileName).getGameResults().keySet()) {
 				System.out.format("|%-30s", tournamentDetails.get(fileName).getGameResults().get(gameName));
 			}
 			System.out.println();
 		}
-		
+
 	}
 }

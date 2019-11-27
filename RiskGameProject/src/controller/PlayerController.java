@@ -69,16 +69,16 @@ public class PlayerController {
 		HashMap<String, ArrayList<String>> listmap = cc.getContinentsCountryList(continents, countries);
 		Continents cont = cc.getContinentByCountryName(continents, countries, countryName);
 		ArrayList<String> continentsCountryList = listmap.get(cont.getContinentName());
-		
-		int count=0;
-		for(String conCountryName:continentsCountryList) {
-			for(String playerCountryName:player.getOwnedCountriesList()) {
-				if(playerCountryName.equals(conCountryName)) {
+
+		int count = 0;
+		for (String conCountryName : continentsCountryList) {
+			for (String playerCountryName : player.getOwnedCountriesList()) {
+				if (playerCountryName.equals(conCountryName)) {
 					count++;
 				}
 			}
 		}
-		if (count==continentsCountryList.size()) {
+		if (count == continentsCountryList.size()) {
 			continentReward = Integer.parseInt(cont.getcontinentControlValue());
 		}
 		return continentReward;
@@ -112,9 +112,9 @@ public class PlayerController {
 	}
 
 	/**
-	 * @param countryReward it contains the country reward
+	 * @param countryReward   it contains the country reward
 	 * @param continentReward it contains the continent reward
-	 * @param cardReward it contains the card reward
+	 * @param cardReward      it contains the card reward
 	 * @return returns the total reinforce army for country reward, continent reward
 	 *         and card reward
 	 * @author sakib
@@ -278,20 +278,20 @@ public class PlayerController {
 	 * This method is used for adding the game cards to attacker
 	 * 
 	 * @param attackerPlayerData this variable contains the attacker player data
-	 * @param player             this variable contains the current turn of the player
-	 *                           data
+	 * @param player             this variable contains the current turn of the
+	 *                           player data
 	 * @param gm                 this variable contains the game map data
 	 * @author Sai Krishna
 	 */
 	public void addGameCardsToAttacker(Player attackerPlayerData, Player player, GameMap gm) {
 		for (String countryName : player.getConqueredCountries()) {
-			if(gm.getTotalCardsList().size()>0) {
+			if (gm.getTotalCardsList().size() > 0) {
 				Collections.shuffle(gm.getTotalCardsList());
 				attackerPlayerData.getCurrentCardList().add(countryName + " - " + gm.getTotalCardsList().get(0));
 				gm.getTotalCardsList().remove(0);
 			} else {
 				break;
-			}			
+			}
 		}
 
 	}
@@ -773,14 +773,12 @@ public class PlayerController {
 	public boolean isvalidAttackMove(int armyMove, int diceRolled, ArrayList<String> conqueredCountriesList,
 			Player player, int attackerArmy) {
 
-		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry())
+		if (armyMove >= diceRolled && conqueredCountriesList.contains(player.getDefenderCountry()) && diceRolled>0
 				&& armyMove < attackerArmy) {
 			return true;
 		} else
 			return false;
 
 	}
-
-	
 
 }
