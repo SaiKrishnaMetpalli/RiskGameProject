@@ -12,13 +12,26 @@ import java.util.Scanner;
 import model.Continents;
 import model.Countries;
 
+/**
+ * This class contains conquest read write attributes
+ */
 public class ConquestReadWrite {
 
 	String continentsStarted, countriesStarted, country;
 	String[] continentsDetails, countriesDetails;
 	CommonController cc = new CommonController();
 	HashMap<Integer, ArrayList<String>> boundaryNames = new HashMap<Integer, ArrayList<String>>();
-
+	
+	/**
+	 * This function is used for conquest map reading
+	 * @param continents  it contains the continents
+	 * @param countries it contauins the countries
+	 * @param boundries  it contains the boundries
+	 * @param fileName  it contains the file name
+	 * @return  it returns string message
+	 * @throws FileNotFoundException
+	 * @author sakib
+	 */
 	public String conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String fileName) throws FileNotFoundException {
 
@@ -82,7 +95,17 @@ public class ConquestReadWrite {
 		textScanner.close();
 		return "Success";
 	}
-
+	
+	/**
+	 * This function contains write conquest map file attributes
+	 * @param continents  it contains the continents
+	 * @param countries  it contains the countries
+	 * @param boundries  it contains the boundries
+	 * @param mapFile  it contains the map file
+	 * @return  it returns the string message
+	 * @throws IOException\
+	 * @author sakib
+	 */
 	public String writeConquestMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
 

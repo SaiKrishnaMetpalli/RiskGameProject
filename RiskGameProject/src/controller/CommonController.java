@@ -157,7 +157,14 @@ public class CommonController {
 		}
 		return 0;
 	}
-
+	
+	/**
+	 * This function is for exchaging card for strategy
+	 * @param pl  it contains the playerlist
+	 * @param player  it contains the player
+	 * @return  it returns the integer value
+	 * @author Ashish
+	 */
 	public int exchangeCardForStrategy(PlayersList pl, Player player) {
 		ArrayList<String> exchangeCardList;
 		ArrayList<String> cardsListWithoutCountry = new ArrayList<>();
@@ -260,6 +267,13 @@ public class CommonController {
 		}
 	}
 	
+	/**
+	 * This function contains the observer views
+	 * @param actions  it contains the actions to be taken
+	 * @param pl  it contains the player list
+	 * @param player  it contains the player
+	 * @author Sai Krishna
+	 */
 	public void observerViews(String actions,PlayersList pl, Player player) {
 		player.setActionsPerformed(player.getActionsPerformed()+actions);
 		player.notifyToObserver();
