@@ -61,7 +61,7 @@ public class RandomStrategy implements Strategy {
 		exchangeCardList = playerData.getCurrentCardList();
 		
 		while (exchangeCardList.size() >= 5) {
-			player.setCardReward(cc.exchangeCardForStrategy(pl, player));
+			player.setCardReward(player.getCardReward()+cc.exchangeCardForStrategy(pl, player));
 		}
 	
 		countriesOwned = playerData.getOwnedCountriesList();

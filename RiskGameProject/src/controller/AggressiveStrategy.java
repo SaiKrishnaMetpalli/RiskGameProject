@@ -27,6 +27,7 @@ public class AggressiveStrategy implements Strategy {
 
 	ArrayList<Integer> neighbouringList;
 	String strongCountry = "";
+	ArrayList<String> exchangeCardList;
 
 	/**
 	 * Method overrides the Strategy Pattern Execute method
@@ -63,6 +64,9 @@ public class AggressiveStrategy implements Strategy {
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
+		exchangeCardList = playerData.getCurrentCardList();
+
+		
 		HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
 		int max = Collections.max(playerCountriesArmies.values());
 		for (String c : playerCountriesArmies.keySet()) {
@@ -74,8 +78,10 @@ public class AggressiveStrategy implements Strategy {
 		int countryReward = pc.calculateOwnedCountryReward(playerData);
 		int continentReward = pc.calculateContinentReward(playerData, gm.getContinents(), gm.getCountries(),
 				strongCountry);
-		int cardReward = cc.exchangeCardForStrategy(pl, player);
-		int numOfArmiesToPlace = pc.calculateReinforceArmy(countryReward, continentReward, cardReward);
+		while (exchangeCardList.size() >= 5) {
+			player.setCardReward(player.getCardReward()+cc.exchangeCardForStrategy(pl, player));
+		}
+		int numOfArmiesToPlace = pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
 		int strongCountryArmies = playerData.getOwnedCountriesArmiesList().get(strongCountry);
 		playerData.getOwnedCountriesArmiesList().put(strongCountry, strongCountryArmies + numOfArmiesToPlace);
 

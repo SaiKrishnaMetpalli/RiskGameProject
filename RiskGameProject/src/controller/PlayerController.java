@@ -651,6 +651,8 @@ public class PlayerController {
 
 		if (defenderData.getOwnedCountriesArmiesList().size() <= 0) {
 			playerData.remove(player.getDefenderName());
+			gm.getPlayersSetup().remove(player.getDefenderName());
+			gm.getPlayersWithStrategies().remove(player.getDefenderName());
 		}
 
 		Player attackerData = playerData.get(player.getAttackerName());

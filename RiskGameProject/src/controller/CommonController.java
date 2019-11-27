@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import model.Continents;
 import model.Countries;
@@ -182,10 +183,11 @@ public class CommonController {
 		if (cardsListWithoutCountry.containsAll(infantry)) {
 			count = 0;
 			cardReward = player.getCardBonusArmy() + 5;
-			for (String cardName : exchangeCardList) {
+			Iterator<String> iter=exchangeCardList.iterator();
+			while (iter.hasNext()) {
 				if (count != 3) {
-					if (cardName.contains("INFANTRY")) {
-						exchangeCardList.remove(cardName);
+					if (iter.next().contains("INFANTRY")) {
+						iter.remove();
 						count++;
 					}
 				} else {
@@ -198,10 +200,11 @@ public class CommonController {
 		} else if (cardsListWithoutCountry.containsAll(cavalry)) {
 			count = 0;
 			cardReward = player.getCardBonusArmy() + 5;
-			for (String cardName : exchangeCardList) {
+			Iterator<String> iter=exchangeCardList.iterator();
+			while (iter.hasNext()) {
 				if (count != 3) {
-					if (cardName.contains("CAVALRY")) {
-						exchangeCardList.remove(cardName);
+					if (iter.next().contains("CAVALRY")) {
+						iter.remove();
 						count++;
 					}
 				} else {
@@ -213,10 +216,11 @@ public class CommonController {
 		} else if (cardsListWithoutCountry.containsAll(artillery)) {
 			count = 0;
 			cardReward = player.getCardBonusArmy() + 5;
-			for (String cardName : exchangeCardList) {
+			Iterator<String> iter=exchangeCardList.iterator();
+			while (iter.hasNext()) {
 				if (count != 3) {
-					if (cardName.contains("ARTILLERY")) {
-						exchangeCardList.remove(cardName);
+					if (iter.next().contains("ARTILLERY")) {
+						iter.remove();
 						count++;
 					}
 				} else {
@@ -229,19 +233,20 @@ public class CommonController {
 			count = 0;
 			boolean infantryCard = false, cavalryCard = false, artilleryCard = false;
 			cardReward = player.getCardBonusArmy() + 5;
-			for (String cardName : exchangeCardList) {
+			Iterator<String> iter=exchangeCardList.iterator();
+			while (iter.hasNext()) {
 				if (count != 3) {
-					if (cardName.contains("INFANTRY") && !infantryCard) {
+					if (iter.next().contains("INFANTRY") && !infantryCard) {
 						infantryCard = true;
-						exchangeCardList.remove(cardName);
+						iter.remove();
 					}
-					if (cardName.contains("CAVALRY") && !cavalryCard) {
+					if (iter.next().contains("CAVALRY") && !cavalryCard) {
 						cavalryCard = true;
-						exchangeCardList.remove(cardName);
+						iter.remove();
 					}
-					if (cardName.contains("ARTILLERY") && !artilleryCard) {
+					if (iter.next().contains("ARTILLERY") && !artilleryCard) {
 						artilleryCard = true;
-						exchangeCardList.remove(cardName);
+						iter.remove();
 					}
 					count++;
 				} else {

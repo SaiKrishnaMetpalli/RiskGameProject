@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ public class BenevolentStrategy implements Strategy {
 
 	PlayerController pc = new PlayerController();
 	CommonController cc = new CommonController();
+	ArrayList<String> exchangeCardList;
 
 	/**
 	 * this mehtods executes phases of the game according to benevolent behaviour
@@ -44,6 +46,8 @@ public class BenevolentStrategy implements Strategy {
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
+		exchangeCardList = playerData.getCurrentCardList();
+
 		HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
 		int min = Collections.min(playerCountriesArmies.values());
 		String weakCountryName = "";
@@ -56,9 +60,11 @@ public class BenevolentStrategy implements Strategy {
 		int countryReward = pc.calculateOwnedCountryReward(pl.getListOfPlayers().get(player.getCurrentPlayerTurn()));
 		int continentReward = pc.calculateContinentReward(pl.getListOfPlayers().get(player.getCurrentPlayerTurn()),
 				gm.getContinents(), gm.getCountries(), weakCountryName);
-		int cardReward = cc.exchangeCardForStrategy(pl, player);
-		int numOfArmiesToPlace = pc.calculateReinforceArmy(countryReward, continentReward, cardReward);
-		pc.calculateReinforceArmy(countryReward, continentReward, cardReward);
+		while (exchangeCardList.size() >= 5) {
+			player.setCardReward(player.getCardReward() + cc.exchangeCardForStrategy(pl, player));
+		}
+		int numOfArmiesToPlace = pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
+		pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
 		// pc.placeReinforceArmy(weakCountryName, numOfArmiesToPlace, gm.getCountries(),
 		// pl.getListOfPlayers(), gm.getContinents(), player);
 		int weakCountryArmy = playerData.getOwnedCountriesArmiesList().get(weakCountryName);
