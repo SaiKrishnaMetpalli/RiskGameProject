@@ -50,7 +50,7 @@ public class Countries {
 	
 	/**
 	 * The function set the country name
-	 * @param countryName
+	 * @param countryName  it contains the country name
 	 * @author Ashish
 	 */
 	public void setCountry_Name(String countryName) {
@@ -68,7 +68,7 @@ public class Countries {
 	
 	/**
 	 * The function set the country continent number
-	 * @param countryContinentNum
+	 * @param countryContinentNum   it contains the country continent number
 	 * @author sakib
 	 */
 	public void setCountry_Continent_Num(Integer countryContinentNum) {
@@ -86,7 +86,7 @@ public class Countries {
 	
 	/**
 	 * The function set the x coordinate
-	 * @param xCoordinate
+	 * @param xCoordinate  it contains the xcoordinate
 	 * @author garimadawar
 	 */
 	public void setX_Coordinate(String xCoordinate) {
@@ -104,7 +104,7 @@ public class Countries {
 	
 	/**
 	 * The function set the y coordinate
-	 * @param yCoordinate
+	 * @param yCoordinate   it contains the ycoordinate
 	 * @author garimadawar
 	 */
 	public void setyCoordinate(String yCoordinate) {
@@ -122,7 +122,7 @@ public class Countries {
 	
 	/**
 	 * The function set the owner name
-	 * @param ownerName
+	 * @param ownerName  it contains the owner name
 	 * @author Gagan Jaswal
 	 */
 	public void setOwnerName(String ownerName) {
