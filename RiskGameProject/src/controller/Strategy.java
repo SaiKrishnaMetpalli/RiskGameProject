@@ -12,9 +12,10 @@ public interface Strategy {
      * @param gm this contains the game map
      * @param pl this contains the list of players
      * @param player this contains player data
-     * @return String 
+     * @return String result from a particular strategy pattern
      * @author garimadawar
+     * @throws InterruptedException 
      */
-	String executeStrategy(GameMap gm , PlayersList pl , Player player);
+	String executeStrategy(GameMap gm , PlayersList pl , Player player) throws InterruptedException;
 		
 }
