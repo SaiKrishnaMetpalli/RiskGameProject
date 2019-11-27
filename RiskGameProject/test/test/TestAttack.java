@@ -14,7 +14,7 @@ import controller.CommonController;
 import controller.MapSelectionController;
 import controller.PlayerController;
 import controller.PlayerSelectionController;
-
+import model.Continents;
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
@@ -33,6 +33,8 @@ public class TestAttack {
 	CONSTANTS con;
 	GameMap gm;
 	HashMap<String, Player> playerDetails;
+	HashMap<Integer, Continents> continents;
+	String continentName;
 	ArrayList<String> listOfPlayers;
 	HashMap<String,String> playersWithStrategies;
 	String fileName;
@@ -62,6 +64,7 @@ public class TestAttack {
 		playersWithStrategies.put("garima","Random");
 		playerDetails = new HashMap<String, Player>();
 		fileName = "risk.map";
+		continents = gm.getContinents();
 		msc.gameMapReading(gm.getContinents(), gm.getCountries(), gm.getBoundries(), fileName);
 		psc.assignRandomCountries(listOfPlayers,playersWithStrategies, gm.getCountries(), playerDetails);
 		psc.placeAll(gm.getCountries(), playerDetails, CONSTANTS.NO_PLAYER_ARMIES.get(3));
@@ -73,6 +76,7 @@ public class TestAttack {
 		playersList.put("b", new Player());
 		pl.setListOfPlayers(playersList);
 		p.setConqueredCountries(new ArrayList<String>(Arrays.asList("India", "Japan", "Quebec")));
+		
 
 	}
 
@@ -216,5 +220,16 @@ public class TestAttack {
 	@Test
 	public void testCheckGameEnd() {
 		assertFalse(playerController.checkGameEnd(pl));
+	}
+	/**
+	 * Method is used to test get continent num 
+	 * 
+	 * @author garimadawar
+	 */
+	@Test
+	public void testgetContinentNum() {
+	int result=cc.getContinentNum(continents, "India");
+	assertEquals(0, result);
+	
 	}
 }
