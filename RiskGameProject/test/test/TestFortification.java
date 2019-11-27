@@ -85,5 +85,18 @@ public class TestFortification {
 		assertEquals(playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace, gm.getCountries(),
 				gm.getBoundries()), "Player does not own the path");
 	}
+	
+	/**
+	 * This method is used for testing the fortify method
+	 */
+	@Test
+	public void testFortify() {
+		fromCountry = playerOwnedCountries.get(1);
+		toCountry = playerOwnedCountries.get(2);
+		armyToPlace = pOb.getOwnedCountriesArmiesList().get(fromCountry) - 1;
+		String result = playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace,gm.getCountries(),gm.getBoundries());
+		assertEquals("Player does not own the path", result);
+		//assertEquals("Country does not exists. Please add the Country first", re);
+	}
 
 }
