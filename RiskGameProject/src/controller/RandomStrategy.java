@@ -281,7 +281,14 @@ public class RandomStrategy implements Strategy {
 		return randomNumber;
 
 	}
-
+	
+	/**
+	 * Method is used to generate random number to fortify
+	 * 
+	 * @param fromCountryArmy   it is the country army
+	 * @return random number generated
+	 * @author Ashish Chaudhary
+	 */
 	private int randomNumberToFortify(int fromCountryArmy) {
 
 		double random = Math.random();

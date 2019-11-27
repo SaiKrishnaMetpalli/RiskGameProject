@@ -71,6 +71,7 @@ public class CheaterStrategy implements Strategy {
 	 * @param gm     is the game map containing all info about game
 	 * @param pl     contains all information about player
 	 * @param player it is the player object
+	 * @return  it returns a empty string
 	 * @author Ashish Chaudhary
 	 * 
 	 */

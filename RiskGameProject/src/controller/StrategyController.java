@@ -22,7 +22,8 @@ public class StrategyController{
 	
 	/**
 	 * This method is used to set the strategy
-	 * @param strategy
+	 * @param strategy  it represents the strategy
+	 * @author garimadawar
 	 */
 	public void setStrategy(Strategy strategy)
 	{
@@ -30,7 +31,9 @@ public class StrategyController{
 	}
 	/**
 	 * This method is used to execute the strategy
-	 * @param strategy
+	 * @param gm  it contains the game map
+	 * @param  pl  it contains player list
+	 * @param player  it contains the player
 	 */
 	public String executeBehaviour(GameMap gm , PlayersList pl, Player player )
 	{	

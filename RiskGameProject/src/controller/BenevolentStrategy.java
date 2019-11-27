@@ -22,7 +22,7 @@ public class BenevolentStrategy implements Strategy {
 
 	/**
 	 * this mehtods executes phases of the game according to benevolent behaviour
-	 * 
+	 * @return  it is returning a success string
 	 * @author sakib
 	 */
 	@Override

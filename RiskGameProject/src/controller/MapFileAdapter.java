@@ -19,7 +19,7 @@ public class MapFileAdapter extends DominationReadWrite {
 	
 	/**
 	 * Constructor of adapter class with adaptee class object as parameter
-	 * @param crw
+	 * @param crw  it means conquest read write
 	 */
 	public MapFileAdapter(ConquestReadWrite crw) {
 		this.crw =crw;
@@ -27,6 +27,10 @@ public class MapFileAdapter extends DominationReadWrite {
 	
 	/**
 	 * Overrides domination map reading method with conquest map reading capabilities
+	 * @param continents  it contains the continents
+	 * @param countries  it contains the countries
+	 * @param  boundries  it contains the boundries
+	 * @param  fileName it contains the file name
 	 * @author sakib
 	 */
 	public String dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
@@ -37,6 +41,10 @@ public class MapFileAdapter extends DominationReadWrite {
 	
 	/**
 	 * Overrides domination map writing method with conquest map writing capabilities
+	 * @param continents  it contains the continents
+	 * @param countries  it contains the countries
+	 * @param  boundries  it contains the boundries
+	 * @param  mapFile it contains the map file
 	 * @author sakib
 	 */
 	public String writeDominationMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,

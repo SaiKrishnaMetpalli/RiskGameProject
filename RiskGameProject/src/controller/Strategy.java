@@ -13,6 +13,7 @@ public interface Strategy {
      * @param pl this contains the list of players
      * @param player this contains player data
      * @return String 
+     * @author garimadawar
      */
 	String executeStrategy(GameMap gm , PlayersList pl , Player player);
 		

@@ -16,6 +16,7 @@ public class MapFormatValidation {
 	 * @param file it is the file which is checked for validation
 	 * @return flag which is true if map format is valid otherwise false
 	 * @throws FileNotFoundException
+	 * @author Ashish
 	 */
 	public boolean validateFile(File file) throws FileNotFoundException {
 

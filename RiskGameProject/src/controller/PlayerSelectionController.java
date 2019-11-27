@@ -21,6 +21,7 @@ public class PlayerSelectionController {
 	 * @param countries             is used update information in country data
 	 * @param playerDetails         is user to update information on player data
 	 * @return success if random assignment is done otherwise null
+	 * @author Ashish
 	 */
 	public String assignRandomCountries(ArrayList<String> playersSetup, HashMap<String, String> playersWithStrategies,
 			HashMap<Integer, Countries> countries, HashMap<String, Player> playerDetails) {
@@ -70,6 +71,7 @@ public class PlayerSelectionController {
 	 * @param countries   contains the list of countries data
 	 * @param playerName  contains the name of player
 	 * @param countryName contains the name of country
+	 * @author Ashish
 	 */
 	public void iterateCountriesName(HashMap<Integer, Countries> countries, String playerName, String countryName) {
 
@@ -135,6 +137,7 @@ public class PlayerSelectionController {
 	 *                         army is added
 	 * @param totalArmiesCount this variable contains total armies for a player
 	 * @return this returns the success/failure message to user
+	 * @author Ashish
 	 */
 	public String placeArmy(HashMap<Integer, Countries> countries, HashMap<String, Player> playerDetails,
 			String countryName, int totalArmiesCount) {
@@ -167,6 +170,7 @@ public class PlayerSelectionController {
 	 * @param playerDetails    this variable contains the player details
 	 * @param totalArmiesCount this variable contains total armies for a player
 	 * @return this returns the success/failure message to user
+	 * @author Ashish
 	 */
 	public String placeAll(HashMap<Integer, Countries> countries, HashMap<String, Player> playerDetails,
 			int totalArmiesCount) {
@@ -197,6 +201,7 @@ public class PlayerSelectionController {
 	 * 
 	 * @param p this is the player object which contains a single player details
 	 * @return this returns count of armies of player
+	 * @author garimadawar
 	 */
 	public int totalArmyCountPlayer(Player p) {
 		int count = 0;

@@ -153,7 +153,8 @@ public class MapSelectionController {
 	 *                              be added
 	 * @param continentControlValue this variable contains value of the control
 	 *                              value to be added
-	 * @author Garima
+	 * @return  it returns a string message
+	 * @author garimadawar
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
 			String continentControlValue) {
@@ -183,7 +184,8 @@ public class MapSelectionController {
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
 	 * @param boundries     this variable contains the boundries list
-	 * @author Garima
+	 * @return  it returns messages
+	 * @author garimadawar
 	 */
 	public String removeContinent(HashMap<Integer, Continents> continents,
 			HashMap<Integer, ArrayList<Integer>> boundries, HashMap<Integer, Countries> countries,
@@ -241,7 +243,8 @@ public class MapSelectionController {
 	 *                      country is added
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
-	 * @author Garima
+	 * @return  it returns string messages
+	 * @author garimadawar
 	 */
 	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String countryName, String continentName) {
@@ -298,7 +301,8 @@ public class MapSelectionController {
 	 * @param countries   this variable contains the continents list
 	 * @param boundries   this variable contains the boundries list
 	 * @param countryName this variable contains the country to be removed
-	 * @author Garima
+	 * @return it returns string messages
+	 * @author garimadawar
 	 */
 	public String removeCountry(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName) {
@@ -344,7 +348,8 @@ public class MapSelectionController {
 	 *                             country
 	 * @param countries            this variable contains the countries list
 	 * @param boundries            this variable contains the boundries list
-	 * @author Garima
+	 * @return  it return string messages
+	 * @author garimadawar
 	 */
 	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
@@ -403,7 +408,8 @@ public class MapSelectionController {
 	 *                             from neighbour
 	 * @param countryName          this variable is the name of the country which
 	 *                             contains neighbor country name
-	 * @author Garima
+	 * @return  it returns string message                            
+	 * @author garimadawar
 	 */
 	public String removeNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
 			String countryName, String neighbourCountryName) {
@@ -449,7 +455,7 @@ public class MapSelectionController {
 	 * 
 	 * @param takes the data structure from and file name
 	 * @throws IOException as creating file
-	 * @author Sakib
+	 * @author sakib
 	 */
 	public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
 			HashMap<Integer, ArrayList<Integer>> boundries, String mapFile) throws IOException {
@@ -572,6 +578,7 @@ public class MapSelectionController {
 	 * @param gs       this variable contains the game state information
 	 * @param fileName this variable contains the filename to be stored
 	 * @throws IOException throws error on file exceptions
+	 * @return  it returns success message
 	 * @author Sai Krishna
 	 */
 	public String saveGameFile(GameState gs, String fileName) throws IOException {
