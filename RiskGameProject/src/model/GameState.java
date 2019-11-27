@@ -35,7 +35,7 @@ public class GameState {
 	
 	/**
 	 * This function set the game map
-	 * @param gameMap
+	 * @param gameMap  it contains the game map
 	 * @return Sai Krishna
 	 */
 	public void setGameMap(GameMap gameMap) {
@@ -53,7 +53,7 @@ public class GameState {
 	
 	/**
 	 * This function set the player list
-	 * @param playersList
+	 * @param playersList  it contains the player list
 	 * @author sakib
 	 */
 	public void setPlayersList(PlayersList playersList) {
@@ -71,7 +71,7 @@ public class GameState {
 	
 	/**
 	 * This function set the player
-	 * @param player
+	 * @param player  it contains the player
 	 * @author Ashish
 	 */
 	public void setPlayer(Player player) {
