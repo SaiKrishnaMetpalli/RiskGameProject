@@ -184,131 +184,258 @@ public class Player extends Observable {
 	public String getGameState() {
 		return gameState;
 	}
-
+	
+	/**
+	 * This function set the game state
+	 * @param gameState   it contains the game state
+	 */
 	public void setGameState(String gameState) {
 		this.gameState = gameState;
 	}
-
+	
+	/**
+	 * This function get the current player turn
+	 * @return This returns the current player turn
+	 */
 	public String getCurrentPlayerTurn() {
 		return currentPlayerTurn;
 	}
-
+	
+	/**
+	 * This function set the current player turn
+	 * @param currentPlayerTurn   it contains the current player turn
+	 */
 	public void setCurrentPlayerTurn(String currentPlayerTurn) {
 		this.currentPlayerTurn = currentPlayerTurn;
 	}
-
+	
+	/**
+	 * This function get the actions performed
+	 * @return  This returns the actions performed
+	 */
 	public String getActionsPerformed() {
 		return actionsPerformed;
 	}
-
+	
+	/**
+	 * This function set the actions performed
+	 * @param actionsPerformed  it contains the actions performed
+	 */
 	public void setActionsPerformed(String actionsPerformed) {
 		this.actionsPerformed = actionsPerformed;
 	}
-
+	
+	/**
+	 * This function get the attacker name
+	 * @return  This returns the attacker name
+	 */
 	public String getAttackerName() {
 		return attackerName;
 	}
-
+	
+	/**
+	 * This function set the attacker name
+	 * @param attackerName  it contains the attacker name
+	 */
 	public void setAttackerName(String attackerName) {
 		this.attackerName = attackerName;
 	}
-
+	
+	/**
+	 * This function get the defender name
+	 * @return  This returns the defender name
+	 */
 	public String getDefenderName() {
 		return defenderName;
 	}
-
+	
+	/**
+	 * This function set the defender name
+	 * @param defenderName  it contains the defender name
+	 */
 	public void setDefenderName(String defenderName) {
 		this.defenderName = defenderName;
 	}
-
+	
+	/**
+	 * This function get the attacker country
+	 * @return  This returns the attacker country
+	 */
 	public String getAttackerCountry() {
 		return attackerCountry;
 	}
-
+	
+	/**
+	 * This function set the attacker country
+	 * @param attackerCountry  it contains the attacker country
+	 */
 	public void setAttackerCountry(String attackerCountry) {
 		this.attackerCountry = attackerCountry;
 	}
-
+	
+	/**
+	 * This function get the defender country
+	 * @return  This returns the defender country
+	 */
 	public String getDefenderCountry() {
 		return defenderCountry;
 	}
-
+	
+	/**
+	 * This function set the defender country
+	 * @param defenderCountry  it contains the defender country
+	 */
 	public void setDefenderCountry(String defenderCountry) {
 		this.defenderCountry = defenderCountry;
 	}
-
+	
+	/**
+	 * This function get the attacker dice
+	 * @return This returns tha attacker dice
+	 */
 	public ArrayList<Integer> getAttackerDice() {
 		return attackerDice;
 	}
-
+	
+	/**
+	 * This function set the attacker dice
+	 * @param attackerDice  it contains the attacker dice
+	 */
 	public void setAttackerDice(ArrayList<Integer> attackerDice) {
 		this.attackerDice = attackerDice;
 	}
-
+	
+	/**
+	 * This function get the defender dice
+	 * @return  This returns the defender dice
+	 */
 	public ArrayList<Integer> getDefenderDice() {
 		return defenderDice;
 	}
-
+	
+	/**
+	 * This function set the defender dice
+	 * @param defenderDice  it contains the defender dice
+	 */
 	public void setDefenderDice(ArrayList<Integer> defenderDice) {
 		this.defenderDice = defenderDice;
 	}
-
+	
+	/**
+	 * This function get the dice rolled
+	 * @return  This returns the dice rolled
+	 */
 	public int getDiceRolled() {
 		return diceRolled;
 	}
-
+	
+	/**
+	 * This function set the dice rolled
+	 * @param diceRolled  it contains the dice rolled
+	 */
 	public void setDiceRolled(Integer diceRolled) {
 		this.diceRolled = diceRolled;
 	}
-
+	
+	/**
+	 * This function notify the observer
+	 */
 	public void notifyToObserver() {
 		notifyObservers(this, this);
 	}
-
+	
+	/**
+	 * This function get the card bonus army
+	 * @return  This returns the card bonus army
+	 */
 	public int getCardBonusArmy() {
 		return cardBonusArmy;
 	}
-
+	
+	/**
+	 * This function set the card bonus army
+	 * @param cardBonusArmy  it contains the card bonus army
+	 */
 	public void setCardBonusArmy(int cardBonusArmy) {
 		this.cardBonusArmy = cardBonusArmy;
 	}
-
+	
+	/**
+	 * This function get the card reward
+	 * @return This returns the card reward
+	 */
 	public int getCardReward() {
 		return cardReward;
 	}
-
+	
+	/**
+	 * This function set the card reward
+	 * @param cardReward  it contains the card reward
+	 */
 	public void setCardReward(int cardReward) {
 		this.cardReward = cardReward;
 	}
-
+	
+	/**
+	 * This function get the available reinforce armies
+	 * @return  This returns the available reinforce armies
+	 */
 	public int getAvailableReinforceArmies() {
 		return availableReinforceArmies;
 	}
-
+	
+	/**
+	 * This function set the available reinforce armies
+	 * @param availableArmies  it contains the available reinforce armies
+	 */
 	public void setAvailableReinforceArmies(int availableArmies) {
 		this.availableReinforceArmies = availableArmies;
 	}
-
+	
+	/**
+	 * This function get the current card list
+	 * @return  This returns the current card list
+	 */
 	public ArrayList<String> getCurrentCardList() {
 		return currentCardList;
 	}
-
+	
+	/**
+	 * This function set the current card list
+	 * @param currentCardList it contains the current card list
+	 */
 	public void setCurrentCardList(ArrayList<String> currentCardList) {
 		this.currentCardList = currentCardList;
 	}
-
+	
+	/**
+	 * This function get the conquered countries
+	 * @return This returns the conquered countries
+	 */
 	public ArrayList<String> getConqueredCountries() {
 		return conqueredCountries;
 	}
-
+	
+	/**
+	 * This function set the conquered countries
+	 * @param conqueredCountries it contains the conquered countries
+	 */
 	public void setConqueredCountries(ArrayList<String> conqueredCountries) {
 		this.conqueredCountries = conqueredCountries;
 	}
-
+	
+	/**
+	 * This function contains the all out performed
+	 * @return This returns the all out performed
+	 */
 	public boolean isAllOutPerformed() {
 		return allOutAttackPerformed;
 	}
-
+	
+	/**
+	 * This function set the all out performed
+	 * @param allOutPerformed  it contains the all out performed
+	 */
 	public void setAllOutPerformed(boolean allOutPerformed) {
 		this.allOutAttackPerformed = allOutPerformed;
 	}
