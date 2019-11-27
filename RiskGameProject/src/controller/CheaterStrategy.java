@@ -38,7 +38,6 @@ public class CheaterStrategy implements Strategy {
 			return "Won";
 		}
 		fortify(gm, pl, player);
-
 		return "Success";
 	}
 
@@ -58,9 +57,12 @@ public class CheaterStrategy implements Strategy {
 		for (String country : playerCountriesArmies.keySet()) {
 			playerCountriesArmies.put(country, playerCountriesArmies.get(country) * 2);
 		}
+		observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
 		player.setCardReward(0);
 		player.setAvailableReinforceArmies(0);
+		player.setActionsPerformed("");
 		player.setGameState("ATTACK");
+		observerViews("", pl, player);
 	}
 
 	/**
@@ -76,8 +78,6 @@ public class CheaterStrategy implements Strategy {
 
 		attackerCountryList = new ArrayList<Integer>();
 		neighbouringList = new ArrayList<Integer>();
-
-
 		
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
@@ -98,17 +98,17 @@ public class CheaterStrategy implements Strategy {
 					player.setDefenderCountry(defenderCountryName);
 
 					Countries c = gm.getCountries().get(neighbouringList.get(x));
-					player.setDefenderName(c.getOwnerName());
-
-					
+					player.setDefenderName(c.getOwnerName());					
 					
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
 							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
 							pl.getListOfPlayers().get(player.getDefenderName()));
+					observerViews("\n"+allOutAttacked, pl, player);
 
 					if (allOutAttacked.contains("Won")) {
 						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
 								pl.getListOfPlayers(), player, gm);
+						observerViews("\n"+armyMoved, pl, player);
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
 							return "Won";						
@@ -118,7 +118,9 @@ public class CheaterStrategy implements Strategy {
 
 			}
 		}
+		player.setActionsPerformed("");
 		player.setGameState("FORTIFY");
+		observerViews("", pl, player);
 		return "";
 	}
 
@@ -162,7 +164,14 @@ public class CheaterStrategy implements Strategy {
 
 			}
 		}
+		observerViews("\nFortification has done for all the countries", pl, player);
 
+	}
+	
+	private void observerViews(String actions,PlayersList pl, Player player) {
+		player.setActionsPerformed(player.getActionsPerformed()+actions);
+		player.notifyToObserver();
+		pl.notifyToObserver(player);		
 	}
 
 }

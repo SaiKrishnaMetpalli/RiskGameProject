@@ -1662,18 +1662,36 @@ public class CommandLine {
 			break;
 		case "Cheater":
 			behaviour.setStrategy(new CheaterStrategy());
-			result = behaviour.executeBehaviour(gm, pl, p);
-			if (result.equals("Success")) {
-				clearPlayerObject();
-				setPlayerTurn();
-				p.setGameState("REINFORCE");
-			}
-			p.notifyToObserver();
-			pl.notifyToObserver(p);
-			Thread.sleep(1000);
-			executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+			result = behaviour.executeBehaviour(gm, pl, p);			
+			
+			if(gameMode.equals("Tournament")) {				
+				if (result.equals("Won")) {
+					return "Won";
+				} else {
+					clearPlayerObject();
+					setPlayerTurn();
+					p.setGameState("REINFORCE");
+					p.notifyToObserver();
+					pl.notifyToObserver(p);
+					return "Success";
+				}
+			} else {
+				if (result.equals("Won")) {
+					System.out.println("\n" + p.getAttackerName() + " won the Risk Game");
+					System.out.println("\nThe game is ended");
+					System.exit(0);
+				} else {
+					clearPlayerObject();
+					setPlayerTurn();
+					p.setGameState("REINFORCE");
+					p.notifyToObserver();
+					pl.notifyToObserver(p);
+					Thread.sleep(1000);
+					executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
+				}
+			}		
+			
 			break;
-
 		case "Human":
 			commandLine();
 			break;
