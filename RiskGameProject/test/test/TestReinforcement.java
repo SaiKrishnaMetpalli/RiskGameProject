@@ -1,6 +1,8 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import model.Player;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -76,6 +78,16 @@ public class TestReinforcement {
 	@Test
 	public void testCalculateOwnedCountryReward() {
 		assertEquals(playerController.calculateOwnedCountryReward(playerDetails.get(player)), 4);
+	}
+	
+	/**
+	 * testing the reinforcement country reward failure
+	 * 
+	 * @author sakib
+	 */
+	@Test
+	public void testCalculateOwnedCountryRewardFail() {
+		assertNotEquals(playerController.calculateOwnedCountryReward(playerDetails.get(player)), 3);
 	}
 
 	/**
