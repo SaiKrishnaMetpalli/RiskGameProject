@@ -21,7 +21,7 @@ public abstract class GameStateBuilder {
 	
 	/**
 	 * This function set the game state
-	 * @param gameState
+	 * @param gameState  it contains the game state
 	 * @author Gagan Jaswal
 	 */
 	public void setGameState(GameState gameState) {
@@ -30,21 +30,21 @@ public abstract class GameStateBuilder {
 	
 	/**
 	 * This is an abstract method for setting the game map
-	 * @param gm
+	 * @param gm   it contains the game map
 	 * @author sakib
 	 */
 	public abstract void buildGameMap(GameMap gm);	
 	
 	/**
 	 * This is an abstract method for player list
-	 * @param pl
+	 * @param pl  it contains the player list
 	 * @author Ashish
 	 */
 	public abstract void buildPlayersList(PlayersList pl);
 	
 	/**
 	 * This is an abstract method for player
-	 * @param p
+	 * @param p  it contains the player
 	 * @author Gagan Jaswal
 	 */
 	public abstract void buildPlayer(Player p);	
