@@ -16,9 +16,9 @@ public class Continents {
 
 	/**
 	 * @Default Constructor
-	 * @param continentName
-	 * @param continentControlValue
-	 * @param colour
+	 * @param continentName  it contains the continent name
+	 * @param continentControlValue  it contains the continent control value
+	 * @param colour it contains the colour
 	 * @author Sai Krishna
 	 */
 	public Continents(String continentName, String continentControlValue, String colour) {
@@ -38,7 +38,7 @@ public class Continents {
 	
 	/**
 	 * 	This function set the continent control value
-	 *	@param continentControlValue
+	 *	@param continentControlValue  it contains the continent control value
 	 *	@author Sai Krishna
 	 */
 	public void setcontinentControlValue(String continentControlValue) {
@@ -56,7 +56,7 @@ public class Continents {
 	
 	/**
 	 * This function set the continent colour
-	 * @param colour
+	 * @param colour  it contains the colour
 	 * @author Gagan Jaswal
 	 */
 	public void setColour(String colour) {
@@ -74,7 +74,7 @@ public class Continents {
 	
 	/**
 	 * This function set the continent name
-	 * @param continentName
+	 * @param continentName  it contains the continent name
 	 * @author Ashish
 	 */
 	public void setContinent_Name(String continentName) {
