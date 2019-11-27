@@ -57,12 +57,12 @@ public class CheaterStrategy implements Strategy {
 		for (String country : playerCountriesArmies.keySet()) {
 			playerCountriesArmies.put(country, playerCountriesArmies.get(country) * 2);
 		}
-		observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
+		cc.observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
 		player.setCardReward(0);
 		player.setAvailableReinforceArmies(0);
 		player.setActionsPerformed("");
 		player.setGameState("ATTACK");
-		observerViews("", pl, player);
+		cc.observerViews("", pl, player);
 	}
 
 	/**
@@ -103,12 +103,12 @@ public class CheaterStrategy implements Strategy {
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
 							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
 							pl.getListOfPlayers().get(player.getDefenderName()));
-					observerViews("\n"+allOutAttacked, pl, player);
+					cc.observerViews("\n"+allOutAttacked, pl, player);
 
 					if (allOutAttacked.contains("Won")) {
 						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
 								pl.getListOfPlayers(), player, gm);
-						observerViews("\n"+armyMoved, pl, player);
+						cc.observerViews("\n"+armyMoved, pl, player);
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
 							return "Won";						
@@ -120,7 +120,7 @@ public class CheaterStrategy implements Strategy {
 		}
 		player.setActionsPerformed("");
 		player.setGameState("FORTIFY");
-		observerViews("", pl, player);
+		cc.observerViews("", pl, player);
 		return "";
 	}
 
@@ -164,14 +164,8 @@ public class CheaterStrategy implements Strategy {
 
 			}
 		}
-		observerViews("\nFortification has done for all the countries", pl, player);
+		cc.observerViews("\nFortification has done for all the countries", pl, player);
 
-	}
-	
-	private void observerViews(String actions,PlayersList pl, Player player) {
-		player.setActionsPerformed(player.getActionsPerformed()+actions);
-		player.notifyToObserver();
-		pl.notifyToObserver(player);		
-	}
+	}	
 
 }

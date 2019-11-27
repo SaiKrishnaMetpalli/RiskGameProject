@@ -259,5 +259,11 @@ public class CommonController {
 			return 0;
 		}
 	}
+	
+	public void observerViews(String actions,PlayersList pl, Player player) {
+		player.setActionsPerformed(player.getActionsPerformed()+actions);
+		player.notifyToObserver();
+		pl.notifyToObserver(player);		
+	}
 
 }
