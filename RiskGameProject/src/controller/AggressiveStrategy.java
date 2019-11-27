@@ -9,25 +9,24 @@ import model.Countries;
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
- 
+
 /**
- * This Class is for Aggressive Strategy for player Behavior
- * An aggressive computer player strategy that focuses on attack (reinforces its
- * strongest country, then always attack with it until it cannot attack anymore,
- * then fortifies in order to maximize aggregation of forces in one country).
+ * This Class is for Aggressive Strategy for player Behavior An aggressive
+ * computer player strategy that focuses on attack (reinforces its strongest
+ * country, then always attack with it until it cannot attack anymore, then
+ * fortifies in order to maximize aggregation of forces in one country).
  *
  * 
  * @author garimadawar
  *
  */
-    public class AggressiveStrategy implements Strategy {
+public class AggressiveStrategy implements Strategy {
 	PlayerController pc = new PlayerController();
 	CommonController cc = new CommonController();
 	GameMap gm = new GameMap();
-	ArrayList<Integer> attackerCountryList;
+
 	ArrayList<Integer> neighbouringList;
-    
-	
+	String strongCountry = "";
 
 	/**
 	 * Method overrides the Strategy Pattern Execute method
@@ -40,14 +39,18 @@ import model.PlayersList;
 	 */
 	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
-		// TODO Auto-generated method stub
+
 		reinforce(gm, pl, player);
+		player.notifyToObserver();
+		pl.notifyToObserver(player);
 		attack(gm, pl, player);
+		player.notifyToObserver();
+		pl.notifyToObserver(player);
 		fortify(gm, pl, player);
 
 		return "Success";
 	}
-    
+
 	/**
 	 * Method is used to perform reinforce of Random behavior player
 	 * 
@@ -61,7 +64,6 @@ import model.PlayersList;
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
 		HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
-		String strongCountry = "";
 		int max = Collections.max(playerCountriesArmies.values());
 		for (String c : playerCountriesArmies.keySet()) {
 			if (playerCountriesArmies.get(c).equals(max)) {
@@ -79,7 +81,7 @@ import model.PlayersList;
 
 		player.setGameState("ATTACK");
 	}
-    
+
 	/**
 	 * method performs the attack of the Random Behavior player
 	 * 
@@ -89,62 +91,52 @@ import model.PlayersList;
 	 * @author garimadawar
 	 * 
 	 */
-	private void attack(GameMap gm, PlayersList pl, Player player) {
-        
+	private String attack(GameMap gm, PlayersList pl, Player player) {
+
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 		HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
-		String strongCountry = "";
-		int max = Collections.max(playerCountriesArmies.values());
-		for (String c : playerCountriesArmies.keySet()) {
-			if (playerCountriesArmies.get(c).equals(max)) {
-				strongCountry = c;
-				break;
-			}
-		}
-		
-		attackerCountryList = new ArrayList<Integer>();
+
 		neighbouringList = new ArrayList<Integer>();
 		int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), strongCountry);
-		attackerCountryList.add(attackerCountryNum);
-	
-		
-		for (int i = 0; i < attackerCountryList.size(); i++) {
-			neighbouringList = gm.getBoundries().get(attackerCountryList.get(i));
 
-	    for (int x = 0; x < neighbouringList.size(); x++) {
-				if (attackerCountryList.contains(neighbouringList.get(x))) {
+		neighbouringList = gm.getBoundries().get(attackerCountryNum);
+		if (neighbouringList.size() > 0) {
+
+			for (int x = 0; x < neighbouringList.size(); x++) {
+				if (attackerCountryNum == neighbouringList.get(x)) {
 					continue;
 				} else {
-					player.setAttackerCountry(cc.getCountryNameByNum(gm.getCountries(), attackerCountryList.get(i)));
-					String defenderCountryName = cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x));
-					player.setDefenderCountry(defenderCountryName);
-
-					Countries c = gm.getCountries().get(neighbouringList.get(x));
-					player.setDefenderName(c.getOwnerName());
-
-					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
-							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
-							pl.getListOfPlayers().get(player.getDefenderName()));
+					player.setAttackerCountry(strongCountry);
+					player.setDefenderCountry(cc.getCountryNameByNum(gm.getCountries(), neighbouringList.get(x)));
+					player.setDefenderName(
+							cc.findPlayerNameFromCountry(gm.getCountries(), player.getDefenderCountry()));
 					
-					if (allOutAttacked.contains("Won")) {
-						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
-								pl.getListOfPlayers(), player, gm);
+					player.setAttackerName(player.getCurrentPlayerTurn());
+					
+					Player attackerPlayerData = pl.getListOfPlayers().get(player.getAttackerName());
+					Player defenderPlayerData = pl.getListOfPlayers().get(player.getDefenderName());
+
+					String attack = pc.allOutAttackedPhase(player.getAttackerCountry(), player.getDefenderCountry(),
+							attackerPlayerData, gm.getCountries(), player, defenderPlayerData);
+
+					if (attack.contains("Won")) {
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
 							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
 							System.out.println("\nThe game is ended");
 							System.exit(0);
-
 						} else {
-				     pc.movingArmyToConqueredCountry(player.getDiceRolled(),pl.getListOfPlayers(), player, gm);
+							String moveArmy = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
+									pl.getListOfPlayers(), player, gm);
+							break;
 						}
 					}
-
 				}
 			}
 		}
+		return "";
 	}
-    
+
 	/**
 	 * method performs the fortification of the random player
 	 * 
@@ -161,23 +153,26 @@ import model.PlayersList;
 		String fromCountry = "";
 		String toCountry = "";
 		int max = Collections.max(playerCountriesArmies.values());
-		for (String c : playerCountriesArmies.keySet()) {
-			if (playerCountriesArmies.get(c).equals(max)) {
-				fromCountry = c;
+		for (String country : playerCountriesArmies.keySet()) {
+			if (playerCountriesArmies.get(country).equals(max)) {
+				fromCountry = country;
 			}
 		}
 		int armyToPlace = 0;
 
-		for (String s : playerCountriesArmies.keySet()) {
+		for (String country : playerCountriesArmies.keySet()) {
 			pc.checkOwnPath(gm.getBoundries(), cc.getCountryNumberByName(gm.getCountries(), fromCountry),
-					cc.getCountryNumberByName(gm.getCountries(), toCountry));
+					cc.getCountryNumberByName(gm.getCountries(), country));
 			if (pc.ownedPath) {
-				toCountry = s;
-				armyToPlace = playerCountriesArmies.get(toCountry);
+				toCountry = country;
+				armyToPlace = playerCountriesArmies.get(toCountry) - 1;
 				break;
 			}
 		}
-		
+		player.setAttackerName(player.getCurrentPlayerTurn());
 		pc.fortify(pl.getListOfPlayers(), fromCountry, toCountry, armyToPlace, gm.getCountries(), gm.getBoundries());
+		if (player.getConqueredCountries().size() > 0) {
+			pc.addGameCardsToAttacker(pl.getListOfPlayers().get(player.getAttackerName()), player, gm);
+		}
 	}
 }
