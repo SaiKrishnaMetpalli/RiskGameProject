@@ -51,7 +51,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the continents
-	 * @param continents
+	 * @param continents  it contains the continents
 	 * @author Ashish
 	 */
 	public void setContinents(HashMap<Integer, Continents> continents) {
@@ -69,7 +69,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the countries
-	 * @param countries
+	 * @param countries  it contains the countries
 	 * @author sakib
 	 */
 	public void setCountries(HashMap<Integer, Countries> countries) {
@@ -87,7 +87,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the boundries
-	 * @param boundries
+	 * @param boundries  it contain the boundries
 	 * @author Gagan Jaswal
 	 */
 	public void setBoundries(HashMap<Integer, ArrayList<Integer>> boundries) {
@@ -105,7 +105,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the total cards list
-	 * @param totalCardsList
+	 * @param totalCardsList  it contains the total cards list
 	 * @author garimadawar
 	 */
 	public void setTotalCardsList(ArrayList<String> totalCardsList) {
@@ -123,7 +123,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the player setup
-	 * @param playersSetup
+	 * @param playersSetup  it contains the player setup
 	 * @author Sai Krishna
 	 */
 	public void setPlayersSetup(ArrayList<String> playersSetup) {
@@ -141,7 +141,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the player with strategies
-	 * @param playersWithStrategies
+	 * @param playersWithStrategies  it contains the player with strategies
 	 * @author Gagan Jaswal
 	 */
 	public void setPlayersWithStrategies(HashMap<String, String> playersWithStrategies) {
@@ -159,7 +159,7 @@ public class GameMap {
 	
 	/**
 	 * This function set the file type
-	 * @param fileType
+	 * @param fileType  it contains the file type
 	 * @author garimadawar
 	 */
 	public void setFileType(String fileType) {
