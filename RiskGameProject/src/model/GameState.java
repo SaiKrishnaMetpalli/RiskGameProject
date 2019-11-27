@@ -27,6 +27,7 @@ public class GameState {
 	/**
 	 * This function get ths game map
 	 * @return This returns the game map
+	 * @author Sai Krishna
 	 */
 	public GameMap getGameMap() {
 		return gameMap;
@@ -35,6 +36,7 @@ public class GameState {
 	/**
 	 * This function set the game map
 	 * @param gameMap
+	 * @return Sai Krishna
 	 */
 	public void setGameMap(GameMap gameMap) {
 		this.gameMap = gameMap;
@@ -43,6 +45,7 @@ public class GameState {
 	/**
 	 * This function get the player list
 	 * @return This returns the player list
+	 * @author sakib
 	 */
 	public PlayersList getPlayersList() {
 		return playersList;
@@ -51,6 +54,7 @@ public class GameState {
 	/**
 	 * This function set the player list
 	 * @param playersList
+	 * @author sakib
 	 */
 	public void setPlayersList(PlayersList playersList) {
 		this.playersList = playersList;
@@ -59,6 +63,7 @@ public class GameState {
 	/**
 	 * This function get the player
 	 * @return This returns the player
+	 * @author Ashish
 	 */
 	public Player getPlayer() {
 		return player;
@@ -67,6 +72,7 @@ public class GameState {
 	/**
 	 * This function set the player
 	 * @param player
+	 * @author Ashish
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
