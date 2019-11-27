@@ -37,9 +37,9 @@ public class BenevolentStrategy implements Strategy {
 	/**
 	 * implement benevolent reinforcement strategies
 	 * 
-	 * @param gm
-	 * @param pl
-	 * @param player
+	 * @param gm gamemap object
+	 * @param pl plyerlist object
+	 * @param player player object
 	 * @author sakib
 	 */
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
@@ -67,28 +67,32 @@ public class BenevolentStrategy implements Strategy {
 		pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
 		int weakCountryArmy = playerData.getOwnedCountriesArmiesList().get(weakCountryName);
 		playerData.getOwnedCountriesArmiesList().put(weakCountryName, weakCountryArmy + numOfArmiesToPlace);
+		cc.observerViews("\nReinforcement is performed for the weakest countries", pl, player);
+		player.setCardReward(0);
+		player.setAvailableReinforceArmies(0);
+		player.setActionsPerformed("");
 		player.setGameState("ATTACK");
+		cc.observerViews("", pl, player);
 	}
 
 	/**
 	 * implement benevolent attack strategies
-	 * 
-	 * @param gm
-	 * @param pl
-	 * @param player
+	 * @param gm gamemap object
+	 * @param pl plyerlist object
+	 * @param player player object
 	 * @author sakib
 	 */
 	private void attack(GameMap gm, PlayersList pl, Player player) {
-		//observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
+		cc.observerViews("\nNo Attack is performed", pl, player);
 		player.setGameState("FORTIFY");
+		cc.observerViews("", pl, player);
 	}
 
 	/**
 	 * implement benevolent fortify strategies
-	 * 
-	 * @param gm
-	 * @param pl
-	 * @param player
+	 * @param gm gamemap object
+	 * @param pl plyerlist object
+	 * @param player player object
 	 * @author sakib
 	 */
 	private void fortify(GameMap gm, PlayersList pl, Player player) {
@@ -120,8 +124,9 @@ public class BenevolentStrategy implements Strategy {
 		if (!fromCountry.equals("")) {
 			pc.fortify(pl.getListOfPlayers(), fromCountry, toCountry, armyToPlace, gm.getCountries(),
 					gm.getBoundries());
+			cc.observerViews("\nFortification is performed for the weakest countries", pl, player);
 		}
-
+		
 	}
 
 }
