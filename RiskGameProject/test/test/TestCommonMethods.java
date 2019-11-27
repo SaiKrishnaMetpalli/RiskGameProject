@@ -50,10 +50,29 @@ public class TestCommonMethods {
 	public void TestGetContinentNumberfromName() {
 		assertEquals(cc.getContinentNum(continents, "Oceania"),6);
 	}
+	@Test
+	public void TestGetContinentNumberfromNameFail() {
+		assertNotEquals(cc.getContinentNum(continents, "Oceania"),4);
+	}
 	
 	@Test
 	public void TestGetCountryNumberfromName() {
 		assertEquals(cc.getCountryNumberByName(countries, "Japan"),37);
+	}
+	
+	@Test
+	public void TestGetCountryNumberfromNameFail() {
+		assertNotEquals(cc.getCountryNumberByName(countries, "Japan"),3);
+	}
+	
+	@Test
+	public void TestGetCountryNameByNum() {
+		assertEquals(cc.getCountryNameByNum(countries, 37),"Japan");
+	}
+
+	@Test
+	public void TestGetCountryNameByNumFail() {
+		assertNotEquals(cc.getCountryNameByNum(countries, 37),"Canada");
 	}
 
 }
