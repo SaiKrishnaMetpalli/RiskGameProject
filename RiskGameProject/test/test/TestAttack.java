@@ -208,7 +208,11 @@ public class TestAttack {
 		p.setDefenderCountry("Canada");
 		assertFalse(playerController.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 3));
 	}
-
+	/**
+	 * Method is used to test game end 
+	 * 
+	 * @author Ashish Chaudhary
+	 */
 	@Test
 	public void testCheckGameEnd() {
 		assertFalse(playerController.checkGameEnd(pl));
