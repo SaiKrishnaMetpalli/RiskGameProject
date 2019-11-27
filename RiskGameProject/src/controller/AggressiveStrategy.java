@@ -42,13 +42,11 @@ public class AggressiveStrategy implements Strategy {
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
 
 		reinforce(gm, pl, player);
-		player.notifyToObserver();
-		pl.notifyToObserver(player);
-		attack(gm, pl, player);
-		player.notifyToObserver();
-		pl.notifyToObserver(player);
+		String attackResult = attack(gm, pl, player);
+		if(attackResult.equals("Won")) {
+			return "Won";
+		}
 		fortify(gm, pl, player);
-
 		return "Success";
 	}
 
@@ -63,10 +61,7 @@ public class AggressiveStrategy implements Strategy {
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
 
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
-
 		exchangeCardList = playerData.getCurrentCardList();
-
-		
 		HashMap<String, Integer> playerCountriesArmies = playerData.getOwnedCountriesArmiesList();
 		int max = Collections.max(playerCountriesArmies.values());
 		for (String c : playerCountriesArmies.keySet()) {
@@ -84,8 +79,11 @@ public class AggressiveStrategy implements Strategy {
 		int numOfArmiesToPlace = pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
 		int strongCountryArmies = playerData.getOwnedCountriesArmiesList().get(strongCountry);
 		playerData.getOwnedCountriesArmiesList().put(strongCountry, strongCountryArmies + numOfArmiesToPlace);
-
+        
+		cc.observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
+		player.setActionsPerformed("");
 		player.setGameState("ATTACK");
+		cc.observerViews("", pl, player);
 	}
 
 	/**
@@ -124,22 +122,22 @@ public class AggressiveStrategy implements Strategy {
 
 					String attack = pc.allOutAttackedPhase(player.getAttackerCountry(), player.getDefenderCountry(),
 							attackerPlayerData, gm.getCountries(), player, defenderPlayerData);
-
+					cc.observerViews("\n"+attack, pl, player);
 					if (attack.contains("Won")) {
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
-							System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
-							System.out.println("\nThe game is ended");
-							System.exit(0);
-						} else {
 							String moveArmy = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
 									pl.getListOfPlayers(), player, gm);
+							cc.observerViews("\n"+moveArmy, pl, player);
 							break;
 						}
 					}
 				}
 			}
 		}
+		player.setActionsPerformed("");
+		player.setGameState("FORTIFY");
+		cc.observerViews("", pl, player);
 		return "";
 	}
 
@@ -179,6 +177,10 @@ public class AggressiveStrategy implements Strategy {
 		pc.fortify(pl.getListOfPlayers(), fromCountry, toCountry, armyToPlace, gm.getCountries(), gm.getBoundries());
 		if (player.getConqueredCountries().size() > 0) {
 			pc.addGameCardsToAttacker(pl.getListOfPlayers().get(player.getAttackerName()), player, gm);
+			cc.observerViews("Game cards added for attacker", pl, playerData);
 		}
+		cc.observerViews("\nFortification has done for all the countries", pl, player);
 	}
-}
+	
+}	
+
