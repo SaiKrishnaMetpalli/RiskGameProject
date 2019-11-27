@@ -153,7 +153,7 @@ public class MapSelectionController {
 	 *                              be added
 	 * @param continentControlValue this variable contains value of the control
 	 *                              value to be added
-	 * @return  it returns a string message
+	 * @return it returns a string message
 	 * @author garimadawar
 	 */
 	public String addContinent(HashMap<Integer, Continents> continents, String continentName,
@@ -184,7 +184,7 @@ public class MapSelectionController {
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
 	 * @param boundries     this variable contains the boundries list
-	 * @return  it returns messages
+	 * @return it returns messages
 	 * @author garimadawar
 	 */
 	public String removeContinent(HashMap<Integer, Continents> continents,
@@ -243,7 +243,7 @@ public class MapSelectionController {
 	 *                      country is added
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
-	 * @return  it returns string messages
+	 * @return it returns string messages
 	 * @author garimadawar
 	 */
 	public String addCountry(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
@@ -348,7 +348,7 @@ public class MapSelectionController {
 	 *                             country
 	 * @param countries            this variable contains the countries list
 	 * @param boundries            this variable contains the boundries list
-	 * @return  it return string messages
+	 * @return it return string messages
 	 * @author garimadawar
 	 */
 	public String addNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
@@ -408,7 +408,7 @@ public class MapSelectionController {
 	 *                             from neighbour
 	 * @param countryName          this variable is the name of the country which
 	 *                             contains neighbor country name
-	 * @return  it returns string message                            
+	 * @return it returns string message
 	 * @author garimadawar
 	 */
 	public String removeNeighbour(HashMap<Integer, Countries> countries, HashMap<Integer, ArrayList<Integer>> boundries,
@@ -508,6 +508,33 @@ public class MapSelectionController {
 	}
 
 	/**
+	 * This method checks the continents and country validation for connection of
+	 * map
+	 * 
+	 * @param continents this variable contains the list of continents
+	 * @param countries  this variable contains the list of countries
+	 * @return true if contientNum in countries are equal with continents
+	 *         object;else false
+	 * @author Sai Krishna
+	 */
+	public boolean checkContinentsCountriesValidation(HashMap<Integer, Continents> continents,
+			HashMap<Integer, Countries> countries) {
+		ArrayList<Integer> continentsList = new ArrayList<Integer>();
+		for (Integer countryNum : countries.keySet()) {
+			Countries countryObject = countries.get(countryNum);
+			if (!continentsList.contains(countryObject.getCountryContinentNum())) {
+				continentsList.add(countryObject.getCountryContinentNum());
+			}
+		}
+		if (continentsList.size() == continents.size()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	/**
 	 * This method is used for checking map connectivity
 	 * 
 	 * @param boundries This variable contains the adjacency list of countries
@@ -578,7 +605,7 @@ public class MapSelectionController {
 	 * @param gs       this variable contains the game state information
 	 * @param fileName this variable contains the filename to be stored
 	 * @throws IOException throws error on file exceptions
-	 * @return  it returns success message
+	 * @return it returns success message
 	 * @author Sai Krishna
 	 */
 	public String saveGameFile(GameState gs, String fileName) throws IOException {
@@ -809,7 +836,7 @@ public class MapSelectionController {
 				} else
 					break;
 			}
-			
+
 			p.setTotalCountries(gm.getCountries().size());
 
 			// getting the borders from the file
@@ -923,7 +950,7 @@ public class MapSelectionController {
 
 				// writing to the required properties based on the info available
 				while (textScanner.hasNext()) {
-					p.setGameState(textScanner.nextLine());					
+					p.setGameState(textScanner.nextLine());
 					if (p.getGameState().equals("REINFORCE")) {
 						p.setCurrentPlayerTurn(textScanner.nextLine());
 						String[] headerReinforceDetails = textScanner.nextLine().split(" ");

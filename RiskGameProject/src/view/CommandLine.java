@@ -196,6 +196,7 @@ public class CommandLine {
 								} else {
 									System.out.println("\neditcountry command format is incorrect");
 									addToCommands = false;
+									break;
 								}
 							}
 						} else {
@@ -561,23 +562,28 @@ public class CommandLine {
 					if (inputCommand.length == 2) {
 						if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
 								&& (gm.getBoundries().size() > 0)) {
-							boolean result = msc.isConnectedMap(gm.getBoundries());
-							if (result) {
-								try {
-									drw = new DominationReadWrite();
-									crw = new ConquestReadWrite();
-									if (gm.getFileType().equals("Conquest")) {
-										drw = new MapFileAdapter(crw);
-										drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
-												gm.getBoundries(), inputCommand[1]);
-									} else {
-										drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
-												gm.getBoundries(), inputCommand[1]);
+							if (msc.checkContinentsCountriesValidation(gm.getContinents(), gm.getCountries())) {
+								boolean result = msc.isConnectedMap(gm.getBoundries());
+								if (result) {
+									try {
+										drw = new DominationReadWrite();
+										crw = new ConquestReadWrite();
+										if (gm.getFileType().equals("Conquest")) {
+											drw = new MapFileAdapter(crw);
+											drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
+													gm.getBoundries(), inputCommand[1]);
+										} else {
+											drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
+													gm.getBoundries(), inputCommand[1]);
+										}
+										System.out.println("\nMap file saved successfully");
+										addToCommands = true;
+									} catch (Exception ex) {
+										System.out.println("\nSome error has occurred. Please try again");
+										addToCommands = false;
 									}
-									System.out.println("\nMap file saved successfully");
-									addToCommands = true;
-								} catch (Exception ex) {
-									System.out.println("\nSome error has occurred. Please try again");
+								} else {
+									System.out.println("\nFile cannot be saved as map is not connected");
 									addToCommands = false;
 								}
 							} else {
@@ -664,12 +670,17 @@ public class CommandLine {
 			case "validatemap":
 				if (p.getGameState().equals("STARTUP")) {
 					if (gm.getBoundries().size() > 0) {
-						boolean result = msc.isConnectedMap(gm.getBoundries());
-						if (result) {
-							System.out.println("\nMap is connected");
+						if (msc.checkContinentsCountriesValidation(gm.getContinents(), gm.getCountries())) {
+							boolean result = msc.isConnectedMap(gm.getBoundries());
+							if (result) {
+								System.out.println("\nMap is connected");
+							} else {
+								System.out.println("\nMap is not connected");
+							}
 						} else {
-							System.out.println("\nMap is not connected");
+							System.out.println("\nMap is not connected as there is one continent with no country");
 						}
+
 					} else {
 						System.out.println("\nMap has not been loaded. Please load the map and validate");
 						addToCommands = false;
@@ -1387,11 +1398,15 @@ public class CommandLine {
 
 		if (gm.getContinents().size() > 0) {
 			if (gm.getCountries().size() > 0) {
+				ArrayList<Integer> continentsList=new ArrayList<Integer>();
 				for (int i : gm.getCountries().keySet()) {
 					neighbours = "";
 					Countries objCou = gm.getCountries().get(i);
 					countryName = objCou.getCountryName();
 					playerName = objCou.getOwnerName();
+					if(!continentsList.contains(objCou.getCountryContinentNum())) {
+						continentsList.add(objCou.getCountryContinentNum());
+					}
 					for (int j : gm.getContinents().keySet()) {
 						if (objCou.getCountryContinentNum() == j) {
 							Continents objCont = gm.getContinents().get(j);
@@ -1433,6 +1448,24 @@ public class CommandLine {
 						}
 						System.out.format("%-30s|%-30s|%-30s", countryName, continentName, neighbours);
 						System.out.println();
+					}
+				}
+				
+				if(gm.getContinents().size()!=continentsList.size()) {
+					
+					System.out.format("%-30s", "ContinentName");
+					System.out.println();
+					for (int dashes = 0; dashes < 30; dashes++)
+						System.out.print("_");
+					System.out.println();
+					
+					for(int cont:gm.getContinents().keySet()) {
+						if(!continentsList.contains(cont)) {
+							Continents objCont = gm.getContinents().get(cont);
+							continentName = objCont.getContinentName();
+							System.out.format("%-30s", continentName);
+							System.out.println();
+						}
 					}
 				}
 			} else {
