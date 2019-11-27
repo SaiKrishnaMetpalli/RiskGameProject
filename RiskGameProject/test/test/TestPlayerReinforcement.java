@@ -23,7 +23,7 @@ import util.CONSTANTS;
  * This class is used for testing the reinforcement methods
  * 
  */
-public class TestReinforcement {
+public class TestPlayerReinforcement {
 
 	PlayerController playerController;
 	MapSelectionController msc;

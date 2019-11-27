@@ -20,7 +20,7 @@ import util.CONSTANTS;
 /**
  * This class is used for testing fortification methods
  */
-public class TestFortification {
+public class TestPlayerFortification {
 
 	MapSelectionController msc;
 	PlayerSelectionController psc;
