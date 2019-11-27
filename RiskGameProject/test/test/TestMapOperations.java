@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +13,16 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import controller.ConquestReadWrite;
+import controller.DominationReadWrite;
 import controller.MapFormatValidation;
 import controller.MapSelectionController;
 import model.Continents;
 import model.Countries;
+import model.GameMap;
+import model.GameState;
+import model.Player;
+import model.PlayersList;
 
 /**
  * This class is used for testing map methods
@@ -24,40 +31,127 @@ public class TestMapOperations {
 
 	MapSelectionController msc;
 	MapFormatValidation mfv;
+	ConquestReadWrite crw;
+	DominationReadWrite drw;
 	HashMap<Integer, Continents> continents;
 	HashMap<Integer, Countries> countries;
 	HashMap<Integer, ArrayList<Integer>> boundries;
-	String fileName;
+	String domFile;
+	String conFile;
+	String saveFile;
 	boolean flag;
+	GameMap gm;
+	PlayersList pl;
+	Player p;
+	GameState gs;
 
 	/**
 	 * This method is used for initial setting up scenarios for each test case
 	 * method
-	 * @author garimadawar
+	 * @author sakib
 	 */
 	@Before
 	public void setUp() {
 		msc = new MapSelectionController();
 		mfv = new MapFormatValidation();
+		crw = new ConquestReadWrite();
+		drw = new DominationReadWrite();
 		continents = new HashMap<Integer, Continents>();
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
-		fileName = "world.map";
+		domFile = "world.map";
+		conFile = "ABC_Map.map";
 		flag = false;
+		saveFile = "testSaveGame.map";
+		gm = new GameMap();
+		pl = new PlayersList();
+		p = new Player();
+		mfv = new MapFormatValidation();
+		flag = false;
+		gs = new GameState();
 	}
 
 	/**
+	 * test case for loading saved game
+	 * @author sakib
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	public void testLoadGameSuccess() throws FileNotFoundException {
+		assertEquals("Success",msc.loadGameReading(gm, pl, p, saveFile));
+	}
+	/**
+	 * test case for saving a current game
+	 * @throws FileNotFoundException
+	 * @author sakib
+	 */
+	@Test
+	public void testSaveGameSuccess() throws IOException {
+		assertEquals("Success",msc.saveGameFile(gs, saveFile));
+	}
+	
+
+	/**
 	 * This method is used for testing the game map load
-	 * @author garimadawar
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void fileLoadTest() throws FileNotFoundException {
 
-		String result = msc.gameMapReading(continents, countries, boundries, fileName);
+		String result = msc.gameMapReading(continents, countries, boundries, domFile);
 		assertEquals("Success", result);
 	}
 
+	/**
+	 * This method is used for testing the conquest map reading
+	 * 
+	 * @throws FileNotFoundException
+	 * @author sakib
+	 */
+	@Test
+	public void TestConquestRead() throws FileNotFoundException {
+
+		String result = crw.conquestMapReading(continents, countries, boundries, conFile);
+		assertEquals("Success", result);
+	}
+	
+	/**
+	 * This method is used for testing the conquest map writing
+	 * @throws IOException 
+	 * @author sakib
+	 */
+	@Test
+	public void TestConquestWrite() throws IOException {
+
+		String result = crw.writeConquestMapFile(continents, countries, boundries, "test.map");
+		assertEquals("Success", result);
+	}
+	
+	/**
+	 * This method is used for testing the conquest map reading
+	 * 
+	 * @throws FileNotFoundException
+	 * @author sakib
+	 */
+	@Test
+	public void TestDominationReadTest() throws FileNotFoundException {
+
+		String result = drw.dominationMapReading(continents, countries, boundries, domFile);
+		assertEquals("Success", result);
+	}
+	
+	/**
+	 * This method is used for testing the conquest map writing
+	 * @throws IOException 
+	 * @author sakib
+	 */
+	@Test
+	public void TestDominationWrite() throws IOException {
+
+		String result = drw.writeDominationMapFile(continents, countries, boundries,"test.map");
+		assertEquals("Success", result);
+	}
 	/**
 	 * This method is used for checking whether map is connected or not
 	 * @author garimadawar
@@ -65,7 +159,7 @@ public class TestMapOperations {
 	 */
 	@Test
 	public void isConnectedMapTest() throws FileNotFoundException {
-		msc.gameMapReading(continents, countries, boundries, fileName);
+		msc.gameMapReading(continents, countries, boundries, domFile);
 		flag = msc.isConnectedMap(boundries);
 		assertTrue(flag);
 	}
@@ -77,7 +171,7 @@ public class TestMapOperations {
 	 */
 	@Test
 	public void validateFileFormatTest() throws FileNotFoundException {
-		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
+		String filePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + domFile;
 		File file = new File(filePath);
 
 		flag = mfv.validateFile(file);
@@ -144,7 +238,8 @@ public class TestMapOperations {
 	@Test
 	public void addNeighbourTestSuccess() throws FileNotFoundException {
 		fileLoadTest();
-		String result = msc.addNeighbour(countries, boundries, "Ontario", "Peru");String re = msc.addNeighbour(countries, boundries, "Argentina", "Peruu");
+		String result = msc.addNeighbour(countries, boundries, "Ontario", "Peru");
+		String re = msc.addNeighbour(countries, boundries, "Argentina", "Peruu");
 		assertEquals("Neighbour country is added successfully", result);
 		}
     

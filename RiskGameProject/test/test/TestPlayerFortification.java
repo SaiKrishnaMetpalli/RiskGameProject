@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import controller.CommonController;
 import controller.MapSelectionController;
 import controller.PlayerController;
 import controller.PlayerSelectionController;
@@ -20,11 +21,12 @@ import util.CONSTANTS;
 /**
  * This class is used for testing fortification methods
  */
-public class TestFortification {
+public class TestPlayerFortification {
 
 	MapSelectionController msc;
 	PlayerSelectionController psc;
 	PlayerController playerController;
+	CommonController cc;
 	CONSTANTS con;
 	GameMap gm;
 	HashMap<String, Player> playerDetails;
@@ -48,6 +50,7 @@ public class TestFortification {
 		msc = new MapSelectionController();
 		psc = new PlayerSelectionController();
 		playerController = new PlayerController();
+		cc = new CommonController();
 		gm = new GameMap();
 		listOfPlayers = new ArrayList<String>(Arrays.asList("sakib", "sai", "garima"));
 		playersWithStrategies=new HashMap<String, String>();
@@ -80,7 +83,8 @@ public class TestFortification {
 	@Test
 	public void testPlayerDontOwnPath() {
 		fromCountry = playerOwnedCountries.get(0);
-		toCountry = playerOwnedCountries.get(2);
+		toCountry = playerOwnedCountries.get(playerOwnedCountries.size()-1);
+		
 		armyToPlace = pOb.getOwnedCountriesArmiesList().get(fromCountry) - 1;
 		assertEquals(playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace, gm.getCountries(),
 				gm.getBoundries()), "Player does not own the path");
@@ -92,10 +96,10 @@ public class TestFortification {
 	@Test
 	public void testFortify() {
 		fromCountry = playerOwnedCountries.get(1);
-		toCountry = playerOwnedCountries.get(2);
+		toCountry = playerOwnedCountries.get(1);
 		armyToPlace = pOb.getOwnedCountriesArmiesList().get(fromCountry) - 1;
 		String result = playerController.fortify(playerDetails, fromCountry, toCountry, armyToPlace,gm.getCountries(),gm.getBoundries());
-		assertEquals("Player does not own the path", result);
+		assertEquals("Foritified successfully", result);
 	}
 
 }

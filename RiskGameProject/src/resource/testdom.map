@@ -1,0 +1,22 @@
+name testdom.map Map
+
+[files]
+
+[continents]
+A 3 Null
+B 2 Null
+
+[countries]
+1 A1 1 0 0
+2 A2 1 0 0
+3 A3 1 0 0
+4 B4 2 0 0
+5 B5 2 0 0
+
+[borders]
+1 2 3
+2 4 5
+3 1 5
+4 2 5
+5 2 3 4
+

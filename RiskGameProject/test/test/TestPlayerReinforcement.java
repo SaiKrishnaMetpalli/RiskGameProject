@@ -23,7 +23,7 @@ import util.CONSTANTS;
  * This class is used for testing the reinforcement methods
  * 
  */
-public class TestReinforcement {
+public class TestPlayerReinforcement {
 
 	PlayerController playerController;
 	MapSelectionController msc;
@@ -198,8 +198,8 @@ public class TestReinforcement {
 	 */
     @Test
     public void testPlaceArmySuccess() {
-    	String result = psc.placeArmy(gm.getCountries(), playerDetails, "Quebec",1);
-    	assertEquals("Success",result);
+    	String result = psc.placeArmy(gm.getCountries(), playerDetails, "Quebec",40);
+    	assertEquals("Army is placed successfully",result);
     }
 
 	/**
@@ -209,6 +209,7 @@ public class TestReinforcement {
 	 */
     @Test
     public void testPlaceArmyFailure() {
+    	
     	String result = psc.placeArmy(gm.getCountries(), playerDetails,"Quebec", 4);
     	assertEquals("Armies cannot be placed for this country as the player is outreached armies",result);
     }
