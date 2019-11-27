@@ -84,6 +84,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the owned countries armies list
 	 * @return This returns the owned countries armies list
+	 * @author Sai Krishna
 	 */
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
 		return ownedCountriesArmiesList;
@@ -92,6 +93,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the owned countries armies list
 	 * @param ownedCountriesArmiesList  it contains the owned countries armies list
+	 * @author Sai Krishna
 	 */
 	public void setOwnedCountriesArmiesList(HashMap<String, Integer> ownedCountriesArmiesList) {
 		this.ownedCountriesArmiesList = ownedCountriesArmiesList;
@@ -100,6 +102,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the countries list
 	 * @return This returns the countries list
+	 * @author Ashish
 	 */
 	public ArrayList<String> getOwnedCountriesList() {
 		return ownedCountriesList;
@@ -108,6 +111,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the owned countries list
 	 * @param ownedCountriesList  it contains the owned countries list
+	 * @author Ashish
 	 */
 	public void setOwnedCountriesList(ArrayList<String> ownedCountriesList) {
 		this.ownedCountriesList = ownedCountriesList;
@@ -116,6 +120,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the owned armies list
 	 * @return This returns the owned armies list
+	 * @author Gagan Jaswal
 	 */
 	public ArrayList<Integer> getOwnedArmiesList() {
 		return ownedArmiesList;
@@ -124,6 +129,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the owned armies list
 	 * @param ownedArmiesList  it contains the owned armies list
+	 * @author Gagan Jaswal
 	 */
 	public void setOwnedArmiesList(ArrayList<Integer> ownedArmiesList) {
 		this.ownedArmiesList = ownedArmiesList;
@@ -132,6 +138,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the continent country list
 	 * @return This returns the continent country list
+	 * @author garimadawar
 	 */
 	public HashMap<String, ArrayList<String>> getContinentsCountryList() {
 		return continentsCountryList;
@@ -140,6 +147,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the continents country list
 	 * @param continentsCountryList  it contains the continents country list
+	 * @author garimadawar
 	 */
 	public void setContinentsCountryList(HashMap<String, ArrayList<String>> continentsCountryList) {
 		this.continentsCountryList = continentsCountryList;
@@ -148,6 +156,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the total countries 
 	 * @return  it returns the total countries
+	 * @author sakib
 	 */
 	public int getTotalCountries() {
 		return totalCountries;
@@ -156,6 +165,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the total countries
 	 * @param totalCountries  it contains the total countries
+	 * @author sakib
 	 */
 	public void setTotalCountries(int totalCountries) {
 		this.totalCountries = totalCountries;
@@ -164,6 +174,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the strategy
 	 * @return This returns the strategy
+	 * @author Sai Krishna
 	 */
 	public String getStrategy() {
 		return strategy;
@@ -172,6 +183,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the strategy
 	 * @param strategy  it contains the strategy
+	 * @author Sai Krishna
 	 */
 	public void setStrategy(String strategy) {
 		this.strategy = strategy;
@@ -180,6 +192,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the game state
 	 * @return This returns the game state
+	 * @author Ashish
 	 */
 	public String getGameState() {
 		return gameState;
@@ -188,6 +201,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the game state
 	 * @param gameState   it contains the game state
+	 * @author Ashish
 	 */
 	public void setGameState(String gameState) {
 		this.gameState = gameState;
@@ -196,6 +210,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the current player turn
 	 * @return This returns the current player turn
+	 * @author Gagan Jaswal
 	 */
 	public String getCurrentPlayerTurn() {
 		return currentPlayerTurn;
@@ -204,6 +219,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the current player turn
 	 * @param currentPlayerTurn   it contains the current player turn
+	 * @author Gagan Jaswal
 	 */
 	public void setCurrentPlayerTurn(String currentPlayerTurn) {
 		this.currentPlayerTurn = currentPlayerTurn;
@@ -212,6 +228,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the actions performed
 	 * @return  This returns the actions performed
+	 * @author sakib
 	 */
 	public String getActionsPerformed() {
 		return actionsPerformed;
@@ -220,6 +237,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the actions performed
 	 * @param actionsPerformed  it contains the actions performed
+	 * @author sakib
 	 */
 	public void setActionsPerformed(String actionsPerformed) {
 		this.actionsPerformed = actionsPerformed;
@@ -228,6 +246,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the attacker name
 	 * @return  This returns the attacker name
+	 * @author garimadawar
 	 */
 	public String getAttackerName() {
 		return attackerName;
@@ -236,6 +255,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the attacker name
 	 * @param attackerName  it contains the attacker name
+	 * @author garimadawar
 	 */
 	public void setAttackerName(String attackerName) {
 		this.attackerName = attackerName;
@@ -244,6 +264,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the defender name
 	 * @return  This returns the defender name
+	 * @author Ashish
 	 */
 	public String getDefenderName() {
 		return defenderName;
@@ -252,6 +273,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the defender name
 	 * @param defenderName  it contains the defender name
+	 * @author Ashish
 	 */
 	public void setDefenderName(String defenderName) {
 		this.defenderName = defenderName;
@@ -260,6 +282,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the attacker country
 	 * @return  This returns the attacker country
+	 * @author sakib
 	 */
 	public String getAttackerCountry() {
 		return attackerCountry;
@@ -268,6 +291,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the attacker country
 	 * @param attackerCountry  it contains the attacker country
+	 * @author sakib
 	 */
 	public void setAttackerCountry(String attackerCountry) {
 		this.attackerCountry = attackerCountry;
@@ -276,6 +300,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the defender country
 	 * @return  This returns the defender country
+	 * @author garimadawar
 	 */
 	public String getDefenderCountry() {
 		return defenderCountry;
@@ -284,6 +309,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the defender country
 	 * @param defenderCountry  it contains the defender country
+	 * @author garimadawar
 	 */
 	public void setDefenderCountry(String defenderCountry) {
 		this.defenderCountry = defenderCountry;
@@ -292,6 +318,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the attacker dice
 	 * @return This returns tha attacker dice
+	 * @author Gagan Jaswal
 	 */
 	public ArrayList<Integer> getAttackerDice() {
 		return attackerDice;
@@ -300,6 +327,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the attacker dice
 	 * @param attackerDice  it contains the attacker dice
+	 * @author Gagan Jaswal
 	 */
 	public void setAttackerDice(ArrayList<Integer> attackerDice) {
 		this.attackerDice = attackerDice;
@@ -308,6 +336,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the defender dice
 	 * @return  This returns the defender dice
+	 * @author Sai Krishna
 	 */
 	public ArrayList<Integer> getDefenderDice() {
 		return defenderDice;
@@ -316,6 +345,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the defender dice
 	 * @param defenderDice  it contains the defender dice
+	 * @author Sai Krishna
 	 */
 	public void setDefenderDice(ArrayList<Integer> defenderDice) {
 		this.defenderDice = defenderDice;
@@ -324,6 +354,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the dice rolled
 	 * @return  This returns the dice rolled
+	 * @author Ashish
 	 */
 	public int getDiceRolled() {
 		return diceRolled;
@@ -332,6 +363,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the dice rolled
 	 * @param diceRolled  it contains the dice rolled
+	 * @author Ashish
 	 */
 	public void setDiceRolled(Integer diceRolled) {
 		this.diceRolled = diceRolled;
@@ -339,6 +371,7 @@ public class Player extends Observable {
 	
 	/**
 	 * This function notify the observer
+	 * @author Sai Krishna
 	 */
 	public void notifyToObserver() {
 		notifyObservers(this, this);
@@ -347,6 +380,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the card bonus army
 	 * @return  This returns the card bonus army
+	 * @author Sai Krishna
 	 */
 	public int getCardBonusArmy() {
 		return cardBonusArmy;
@@ -355,6 +389,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the card bonus army
 	 * @param cardBonusArmy  it contains the card bonus army
+	 * @author Gagan Jaswal
 	 */
 	public void setCardBonusArmy(int cardBonusArmy) {
 		this.cardBonusArmy = cardBonusArmy;
@@ -363,6 +398,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the card reward
 	 * @return This returns the card reward
+	 * @author Ashish
 	 */
 	public int getCardReward() {
 		return cardReward;
@@ -371,6 +407,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the card reward
 	 * @param cardReward  it contains the card reward
+	 * @author garimadawar
 	 */
 	public void setCardReward(int cardReward) {
 		this.cardReward = cardReward;
@@ -379,6 +416,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the available reinforce armies
 	 * @return  This returns the available reinforce armies
+	 * @author garimadawar
 	 */
 	public int getAvailableReinforceArmies() {
 		return availableReinforceArmies;
@@ -387,6 +425,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the available reinforce armies
 	 * @param availableArmies  it contains the available reinforce armies
+	 * @author Sai Krishna
 	 */
 	public void setAvailableReinforceArmies(int availableArmies) {
 		this.availableReinforceArmies = availableArmies;
@@ -395,6 +434,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the current card list
 	 * @return  This returns the current card list
+	 * @author Sai Krishna
 	 */
 	public ArrayList<String> getCurrentCardList() {
 		return currentCardList;
@@ -403,6 +443,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the current card list
 	 * @param currentCardList it contains the current card list
+	 * @author Gagan Jaswal
 	 */
 	public void setCurrentCardList(ArrayList<String> currentCardList) {
 		this.currentCardList = currentCardList;
@@ -411,6 +452,7 @@ public class Player extends Observable {
 	/**
 	 * This function get the conquered countries
 	 * @return This returns the conquered countries
+	 * @author sakib
 	 */
 	public ArrayList<String> getConqueredCountries() {
 		return conqueredCountries;
@@ -419,6 +461,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the conquered countries
 	 * @param conqueredCountries it contains the conquered countries
+	 * @author sakib
 	 */
 	public void setConqueredCountries(ArrayList<String> conqueredCountries) {
 		this.conqueredCountries = conqueredCountries;
@@ -427,6 +470,7 @@ public class Player extends Observable {
 	/**
 	 * This function contains the all out performed
 	 * @return This returns the all out performed
+	 * @author Sai Krishna
 	 */
 	public boolean isAllOutPerformed() {
 		return allOutAttackPerformed;
@@ -435,6 +479,7 @@ public class Player extends Observable {
 	/**
 	 * This function set the all out performed
 	 * @param allOutPerformed  it contains the all out performed
+	 * @author Ashish
 	 */
 	public void setAllOutPerformed(boolean allOutPerformed) {
 		this.allOutAttackPerformed = allOutPerformed;
