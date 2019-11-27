@@ -124,12 +124,12 @@ public class AggressiveStrategy implements Strategy {
 							attackerPlayerData, gm.getCountries(), player, defenderPlayerData);
 					cc.observerViews("\n"+attack, pl, player);
 					if (attack.contains("Won")) {
+						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
+								pl.getListOfPlayers(), player, gm);
+						cc.observerViews("\n"+armyMoved, pl, player);
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
-							String moveArmy = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
-									pl.getListOfPlayers(), player, gm);
-							cc.observerViews("\n"+moveArmy, pl, player);
-							break;
+							return "Won";						
 						}
 					}
 				}

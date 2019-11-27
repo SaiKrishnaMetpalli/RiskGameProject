@@ -34,8 +34,9 @@ public class StrategyController{
 	 * @param gm  it contains the game map
 	 * @param  pl  it contains player list
 	 * @param player  it contains the player
+	 * @throws InterruptedException 
 	 */
-	public String executeBehaviour(GameMap gm , PlayersList pl, Player player )
+	public String executeBehaviour(GameMap gm , PlayersList pl, Player player ) throws InterruptedException
 	{	
 		return this.strategy.executeStrategy(gm, pl, player);		
 	}
