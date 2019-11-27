@@ -13,7 +13,8 @@ public class Tournament {
 	private HashMap<String,String> gameResults;
 	
 	/**
-	 * This function contauns the game results
+	 * @Default Constructor
+	 * @author Sai Krishna
 	 */
 	public Tournament() {
 		gameResults=new HashMap<String, String>();
@@ -22,6 +23,7 @@ public class Tournament {
 	/**
 	 * This function get the game results
 	 * @return This returns the game results
+	 * @author Ashish
 	 */
 	public HashMap<String, String> getGameResults() {
 		return gameResults;
@@ -30,6 +32,7 @@ public class Tournament {
 	/**
 	 * This function set the game results
 	 * @param gameResults   it contains the game results
+	 * @author sakib
 	 */
 	public void setGameResults(HashMap<String, String> gameResults) {
 		this.gameResults = gameResults;
