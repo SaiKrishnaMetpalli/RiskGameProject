@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import model.GameMap;
 import model.Player;
 import model.PlayersList;
@@ -20,6 +21,7 @@ public class RandomStrategy implements Strategy {
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
 	ArrayList<String> countriesOwned = new ArrayList<String>();
+	ArrayList<String> exchangeCardList;
 
 	/**
 	 * Method overrides the Strategy Pattern Execute method
@@ -54,10 +56,14 @@ public class RandomStrategy implements Strategy {
 	 */
 	private void reinforce(GameMap gm, PlayersList pl, Player player) {
 
-		player.setCardReward(cc.exchangeCardForStrategy(pl, player));
-
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
+		exchangeCardList = playerData.getCurrentCardList();
+		
+		while (exchangeCardList.size() >= 5) {
+			player.setCardReward(cc.exchangeCardForStrategy(pl, player));
+		}
+	
 		countriesOwned = playerData.getOwnedCountriesList();
 
 		Collections.shuffle(countriesOwned);
@@ -240,8 +246,7 @@ public class RandomStrategy implements Strategy {
 			String fortifyResult = pc.fortify(pl.getListOfPlayers(), randomFromCountry, randomToCountry,
 					randomArmyNumber, gm.getCountries(), gm.getBoundries());
 			if (player.getConqueredCountries().size() > 0) {
-				pc.addGameCardsToAttacker(
-						pl.getListOfPlayers().get(player.getAttackerName()), player, gm);
+				pc.addGameCardsToAttacker(pl.getListOfPlayers().get(player.getAttackerName()), player, gm);
 			}
 		}
 	}
@@ -276,13 +281,7 @@ public class RandomStrategy implements Strategy {
 		return randomNumber;
 
 	}
-	/**
-	 * Method is used to generate random number to fortify
-	 * 
-	 * @param fromCountryArmy it is the total armies owned by defender
-	 * @return random number generated
-	 * @author Ashish Chaudhary
-	 */
+
 	private int randomNumberToFortify(int fromCountryArmy) {
 
 		double random = Math.random();

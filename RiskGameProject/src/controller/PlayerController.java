@@ -287,7 +287,7 @@ public class PlayerController {
 		for (String countryName : player.getConqueredCountries()) {
 			if(gm.getTotalCardsList().size()>0) {
 				Collections.shuffle(gm.getTotalCardsList());
-				attackerPlayerData.getCurrentCardList().add(countryName + "-" + gm.getTotalCardsList().get(0));
+				attackerPlayerData.getCurrentCardList().add(countryName + " - " + gm.getTotalCardsList().get(0));
 				gm.getTotalCardsList().remove(0);
 			} else {
 				break;

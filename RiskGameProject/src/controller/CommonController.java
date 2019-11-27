@@ -17,6 +17,7 @@ public class CommonController {
 
 	/**
 	 * This method will return country object for a specific country name
+	 * 
 	 * @param countries   takes hashmap of countries populated from map file
 	 * @param countryName takes country name string
 	 * @return country object
@@ -35,18 +36,18 @@ public class CommonController {
 	/**
 	 * This Method return the Country Name from its number
 	 * 
-	 * @param countries contains list of countries
+	 * @param countries  contains list of countries
 	 * @param countryNum is the country number
 	 * @return country name
 	 * @author Ashish
 	 */
-	public String getCountryNameByNum(HashMap<Integer, Countries> countries, int countryNum)
-	{
+	public String getCountryNameByNum(HashMap<Integer, Countries> countries, int countryNum) {
 		Countries cou = countries.get(countryNum);
-		
+
 		return cou.getCountryName();
-		
+
 	}
+
 	/**
 	 * takes Continent value from countries hashmap from that value find continent
 	 * object from continents hashmap Uses getCountryByNam method This method is
@@ -65,24 +66,25 @@ public class CommonController {
 		int n = c1.getCountryContinentNum();
 		return continents.get(n);
 	}
+
 	/**
 	 * Provides continent key from continent hashmap by its name
+	 * 
 	 * @param continents
 	 * @param continentName
 	 * @return continent number key
 	 * @author sakib
 	 */
-	
+
 	public int getContinentNum(HashMap<Integer, Continents> continents, String continentName) {
-		
+
 		for (int i : continents.keySet()) {
-			if(continents.get(i).getContinentName().equals(continentName)) {
+			if (continents.get(i).getContinentName().equals(continentName)) {
 				return i;
 			}
 		}
 		return 0;
 	}
-	
 
 	/**
 	 * creates a new hashmap of continents with its country list This method is used
@@ -154,24 +156,103 @@ public class CommonController {
 		}
 		return 0;
 	}
-	
-	public int exchangeCardForStrategy(PlayersList pl,Player player)
-	{
-		ArrayList<String> exchangeCardList;	
-		 Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
-		 
-		 exchangeCardList = playerData.getCurrentCardList();
-		 ArrayList<String> infantry = new ArrayList<>(Arrays.asList("INFANTRY","INFANTRY","INFANTRY"));
-		 ArrayList<String> cavalry = new ArrayList<>(Arrays.asList("CAVALRY","CAVALRY","CAVALRY"));
-		 ArrayList<String> artillery = new ArrayList<>(Arrays.asList("ARTILLERY","ARTILLERY","ARTILLERY"));
-		 if(exchangeCardList.containsAll(infantry) || exchangeCardList.containsAll(cavalry) || exchangeCardList.containsAll(artillery))
-		 {
-			 player.setCardBonusArmy(player.getCardBonusArmy() + 5);
-			 exchangeCardList.remove("INFANTRY");
-			 return player.getCardBonusArmy();
-		 }
-		 
-		 else return 0;
-	}	
+
+	public int exchangeCardForStrategy(PlayersList pl, Player player) {
+		ArrayList<String> exchangeCardList;
+		ArrayList<String> cardsListWithoutCountry = new ArrayList<>();
+		ArrayList<String> infantry = new ArrayList<>(Arrays.asList("INFANTRY", "INFANTRY", "INFANTRY"));
+		ArrayList<String> cavalry = new ArrayList<>(Arrays.asList("CAVALRY", "CAVALRY", "CAVALRY"));
+		ArrayList<String> artillery = new ArrayList<>(Arrays.asList("ARTILLERY", "ARTILLERY", "ARTILLERY"));
+		ArrayList<String> different = new ArrayList<>(Arrays.asList("INFANTRY", "CAVALRY", "ARTILLERY"));
+
+		int count = 0;
+		int cardReward = 0;
+
+		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
+
+		exchangeCardList = playerData.getCurrentCardList();
+
+		for (int x = 0; x < exchangeCardList.size(); x++) {
+			String countryWithCard = exchangeCardList.get(x);
+			String[] card = countryWithCard.split(" ");
+			cardsListWithoutCountry.add(card[2]);
+
+		}
+
+		if (cardsListWithoutCountry.containsAll(infantry)) {
+			count = 0;
+			cardReward = player.getCardBonusArmy() + 5;
+			for (String cardName : exchangeCardList) {
+				if (count != 3) {
+					if (cardName.contains("INFANTRY")) {
+						exchangeCardList.remove(cardName);
+						count++;
+					}
+				} else {
+					break;
+				}
+
+			}
+			return cardReward;
+
+		} else if (cardsListWithoutCountry.containsAll(cavalry)) {
+			count = 0;
+			cardReward = player.getCardBonusArmy() + 5;
+			for (String cardName : exchangeCardList) {
+				if (count != 3) {
+					if (cardName.contains("CAVALRY")) {
+						exchangeCardList.remove(cardName);
+						count++;
+					}
+				} else {
+					break;
+				}
+
+			}
+			return cardReward;
+		} else if (cardsListWithoutCountry.containsAll(artillery)) {
+			count = 0;
+			cardReward = player.getCardBonusArmy() + 5;
+			for (String cardName : exchangeCardList) {
+				if (count != 3) {
+					if (cardName.contains("ARTILLERY")) {
+						exchangeCardList.remove(cardName);
+						count++;
+					}
+				} else {
+					break;
+				}
+
+			}
+			return cardReward;
+		} else if (cardsListWithoutCountry.containsAll(different)) {
+			count = 0;
+			boolean infantryCard = false, cavalryCard = false, artilleryCard = false;
+			cardReward = player.getCardBonusArmy() + 5;
+			for (String cardName : exchangeCardList) {
+				if (count != 3) {
+					if (cardName.contains("INFANTRY") && !infantryCard) {
+						infantryCard = true;
+						exchangeCardList.remove(cardName);
+					}
+					if (cardName.contains("CAVALRY") && !cavalryCard) {
+						cavalryCard = true;
+						exchangeCardList.remove(cardName);
+					}
+					if (cardName.contains("ARTILLERY") && !artilleryCard) {
+						artilleryCard = true;
+						exchangeCardList.remove(cardName);
+					}
+					count++;
+				} else {
+					break;
+				}
+
+			}
+			return cardReward;
+		} else {
+			return 0;
+		}
+	}
 
 }
