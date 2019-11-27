@@ -13,6 +13,7 @@ import controller.PlayerSelectionController;
 
 /**
  * This class is used for testing the player methods
+ * @author garimadawar
  */
 public class TestPlayerOperations {
 	PlayerSelectionController psc;
@@ -23,6 +24,7 @@ public class TestPlayerOperations {
 	/**
 	 * This method is used for initial setting up scenarios for each test case
 	 * method
+	 * @author garimadawar
 	 */
 	@Before
 	public void setUp() {
@@ -34,6 +36,7 @@ public class TestPlayerOperations {
 
 	/**
 	 * This method is used for testing the add player scenarios
+	 * @author garimadawar
 	 */
 	@Test
 	public void addPlayerTest() {
@@ -45,6 +48,7 @@ public class TestPlayerOperations {
 
 	/**
 	 * This method is used for testing the remove player scenarios
+	 * @author garimadawar
 	 */
 	@Test
 	public void removePlayerTest() {
