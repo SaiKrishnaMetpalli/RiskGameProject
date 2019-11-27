@@ -31,16 +31,21 @@ public class RandomStrategy implements Strategy {
 	 * @param gm     it is the gameMap
 	 * @param pl     contains the hashmap of player object
 	 * @param player contains the player object
+	 * @throws InterruptedException 
 	 */
 	@Override
-	public String executeStrategy(GameMap gm, PlayersList pl, Player player) {
+	public String executeStrategy(GameMap gm, PlayersList pl, Player player) throws InterruptedException {
 
 		reinforce(gm, pl, player);
-		player.notifyToObserver();
-		pl.notifyToObserver(player);
-		attack(gm, pl, player);
-		player.notifyToObserver();
-		pl.notifyToObserver(player);
+		Thread.sleep(1000);
+
+		String attackResult = attack(gm, pl, player);
+		Thread.sleep(1000);
+
+		if (attackResult.equals("Won")) {
+			return "Won";
+		}
+		
 		fortify(gm, pl, player);
 
 		return "Success";
@@ -59,11 +64,11 @@ public class RandomStrategy implements Strategy {
 		Player playerData = pl.getListOfPlayers().get(player.getCurrentPlayerTurn());
 
 		exchangeCardList = playerData.getCurrentCardList();
-		
+
 		while (exchangeCardList.size() >= 5) {
-			player.setCardReward(player.getCardReward()+cc.exchangeCardForStrategy(pl, player));
+			player.setCardReward(player.getCardReward() + cc.exchangeCardForStrategy(pl, player));
 		}
-	
+
 		countriesOwned = playerData.getOwnedCountriesList();
 
 		Collections.shuffle(countriesOwned);
@@ -90,10 +95,12 @@ public class RandomStrategy implements Strategy {
 		}
 
 		// check if it is a tournament
-
+		cc.observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
 		player.setCardReward(0);
+		player.setAvailableReinforceArmies(0);
+		player.setActionsPerformed("");
 		player.setGameState("ATTACK");
-
+		cc.observerViews("", pl, player);
 	}
 
 	/**
@@ -103,9 +110,10 @@ public class RandomStrategy implements Strategy {
 	 * @param pl     contains all information about player
 	 * @param player it is the player object
 	 * @author Ashish Chaudhary
+	 * @return
 	 * 
 	 */
-	private void attack(GameMap gm, PlayersList pl, Player player) {
+	private String attack(GameMap gm, PlayersList pl, Player player) {
 
 		neighbouringList = new ArrayList<Integer>();
 		attackerCountryList = new ArrayList<Integer>();
@@ -188,26 +196,27 @@ public class RandomStrategy implements Strategy {
 
 				String warStarted = pc.defendingTheBase(player, pl);
 
+				cc.observerViews("\n" + warStarted, pl, player);
 				if (warStarted.contains("Won")) {
 
+					String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(), pl.getListOfPlayers(),
+							player, gm);
+					cc.observerViews("\n" + armyMoved, pl, player);
 					boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
-
 					if (checkAllCountriesOwned) {
-						System.out.println("\n" + player.getAttackerName() + " won the Risk Game");
-						System.out.println("\nThe game is ended");
-						System.exit(0); // TODO : avoid system.exit if tournament mode
-					} else {
-						String movingArmyResult = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
-								pl.getListOfPlayers(), player, gm);
-						break;
+						return "Won";
 					}
+					return "success";
 				}
-
+				player.notifyToObserver();
+				pl.notifyToObserver(player);
 				numberOfAttackToBeDone--;
 			}
 		}
-
+		player.setActionsPerformed("");
 		player.setGameState("FORTIFY");
+		cc.observerViews("", pl, player);
+		return "";
 	}
 
 	/**
@@ -249,6 +258,7 @@ public class RandomStrategy implements Strategy {
 				pc.addGameCardsToAttacker(pl.getListOfPlayers().get(player.getAttackerName()), player, gm);
 			}
 		}
+		cc.observerViews("\nFortification has done for all the countries", pl, player);
 	}
 
 	/**
@@ -281,11 +291,11 @@ public class RandomStrategy implements Strategy {
 		return randomNumber;
 
 	}
-	
+
 	/**
 	 * Method is used to generate random number to fortify
 	 * 
-	 * @param fromCountryArmy   it is the country army
+	 * @param fromCountryArmy it is the country army
 	 * @return random number generated
 	 * @author Ashish Chaudhary
 	 */

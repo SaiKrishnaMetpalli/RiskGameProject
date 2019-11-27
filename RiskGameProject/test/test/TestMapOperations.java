@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controller.ConquestReadWrite;
+import controller.DominationReadWrite;
 import controller.MapFormatValidation;
 import controller.MapSelectionController;
 import model.Continents;
@@ -31,6 +32,7 @@ public class TestMapOperations {
 	MapSelectionController msc;
 	MapFormatValidation mfv;
 	ConquestReadWrite crw;
+	DominationReadWrite drw;
 	HashMap<Integer, Continents> continents;
 	HashMap<Integer, Countries> countries;
 	HashMap<Integer, ArrayList<Integer>> boundries;
@@ -53,6 +55,7 @@ public class TestMapOperations {
 		msc = new MapSelectionController();
 		mfv = new MapFormatValidation();
 		crw = new ConquestReadWrite();
+		drw = new DominationReadWrite();
 		continents = new HashMap<Integer, Continents>();
 		countries = new HashMap<Integer, Countries>();
 		boundries = new HashMap<Integer, ArrayList<Integer>>();
@@ -104,9 +107,10 @@ public class TestMapOperations {
 	 * This method is used for testing the conquest map reading
 	 * 
 	 * @throws FileNotFoundException
+	 * @author sakib
 	 */
 	@Test
-	public void ConquestReadTest() throws FileNotFoundException {
+	public void TestConquestRead() throws FileNotFoundException {
 
 		String result = crw.conquestMapReading(continents, countries, boundries, conFile);
 		assertEquals("Success", result);
@@ -115,11 +119,37 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the conquest map writing
 	 * @throws IOException 
+	 * @author sakib
 	 */
 	@Test
-	public void ConquestWriteTest() throws IOException {
+	public void TestConquestWrite() throws IOException {
 
 		String result = crw.writeConquestMapFile(continents, countries, boundries, "test.map");
+		assertEquals("Success", result);
+	}
+	
+	/**
+	 * This method is used for testing the conquest map reading
+	 * 
+	 * @throws FileNotFoundException
+	 * @author sakib
+	 */
+	@Test
+	public void TestDominationReadTest() throws FileNotFoundException {
+
+		String result = drw.dominationMapReading(continents, countries, boundries, domFile);
+		assertEquals("Success", result);
+	}
+	
+	/**
+	 * This method is used for testing the conquest map writing
+	 * @throws IOException 
+	 * @author sakib
+	 */
+	@Test
+	public void TestDominationWrite() throws IOException {
+
+		String result = drw.writeDominationMapFile(continents, countries, boundries,"test.map");
 		assertEquals("Success", result);
 	}
 	/**
