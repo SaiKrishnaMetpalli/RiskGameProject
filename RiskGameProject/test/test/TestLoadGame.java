@@ -52,7 +52,10 @@ public class TestLoadGame {
 		flag = false;
 		gs = new GameState();
 	}
-	
+	/**
+	 * test case for loading saved game
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void testLoadGameSuccess() throws FileNotFoundException {
 		assertEquals("Success",msc.loadGameReading(gm, pl, p, fileName));

@@ -65,10 +65,9 @@ public class BenevolentStrategy implements Strategy {
 		}
 		int numOfArmiesToPlace = pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
 		pc.calculateReinforceArmy(countryReward, continentReward, player.getCardReward());
-		// pc.placeReinforceArmy(weakCountryName, numOfArmiesToPlace, gm.getCountries(),
-		// pl.getListOfPlayers(), gm.getContinents(), player);
 		int weakCountryArmy = playerData.getOwnedCountriesArmiesList().get(weakCountryName);
 		playerData.getOwnedCountriesArmiesList().put(weakCountryName, weakCountryArmy + numOfArmiesToPlace);
+		player.setGameState("ATTACK");
 	}
 
 	/**
@@ -80,6 +79,7 @@ public class BenevolentStrategy implements Strategy {
 	 * @author sakib
 	 */
 	private void attack(GameMap gm, PlayersList pl, Player player) {
+		//observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
 		player.setGameState("FORTIFY");
 	}
 

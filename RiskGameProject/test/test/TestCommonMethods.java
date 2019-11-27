@@ -18,6 +18,11 @@ import model.GameMap;
 import model.GameState;
 import model.Player;
 import model.PlayersList;
+/**
+ * test cases for common methods
+ * @author sakib
+ *
+ */
 
 public class TestCommonMethods {
 	CommonController cc;
@@ -46,30 +51,49 @@ public class TestCommonMethods {
 		cc = new CommonController();
 		
 	}
+	/**
+	 * Test success case for GetContinentNumberfromName
+	 */
 	@Test
 	public void TestGetContinentNumberfromName() {
 		assertEquals(cc.getContinentNum(continents, "Oceania"),6);
 	}
+	
+	/**
+	 * test fail case for GetContinentNumberfromName
+	 */
 	@Test
 	public void TestGetContinentNumberfromNameFail() {
 		assertNotEquals(cc.getContinentNum(continents, "Oceania"),4);
 	}
 	
+	/**
+	 * Test GetCountryNumberfromName success
+	 */
 	@Test
 	public void TestGetCountryNumberfromName() {
 		assertEquals(cc.getCountryNumberByName(countries, "Japan"),37);
 	}
 	
+	/**
+	 * Test GetCountryNumberfromName failure
+	 */
 	@Test
 	public void TestGetCountryNumberfromNameFail() {
 		assertNotEquals(cc.getCountryNumberByName(countries, "Japan"),3);
 	}
 	
+	/**
+	 * Test GetCountryNameByNum success
+	 */
 	@Test
 	public void TestGetCountryNameByNum() {
 		assertEquals(cc.getCountryNameByNum(countries, 37),"Japan");
 	}
-
+	
+	/**
+	 * Test GetCountryNameByNum failure
+	 */
 	@Test
 	public void TestGetCountryNameByNumFail() {
 		assertNotEquals(cc.getCountryNameByNum(countries, 37),"Canada");
