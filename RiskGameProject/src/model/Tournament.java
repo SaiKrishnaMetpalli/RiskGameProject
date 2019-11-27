@@ -1,28 +1,22 @@
 package model;
 
+import java.util.HashMap;
+
 public class Tournament {
 
-	private String game;
-	private String result;
+	private HashMap<String,String> gameResults;
 	
 	public Tournament() {
-		game="";
-		result="Draw";
+		gameResults=new HashMap<String, String>();
 	}
 
-	public String getGame() {
-		return game;
+	public HashMap<String, String> getGameResults() {
+		return gameResults;
 	}
 
-	public void setGame(String game) {
-		this.game = game;
+	public void setGameResults(HashMap<String, String> gameResults) {
+		this.gameResults = gameResults;
 	}
 
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
+	
 }

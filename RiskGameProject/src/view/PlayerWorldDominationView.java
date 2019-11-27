@@ -31,10 +31,9 @@ public class PlayerWorldDominationView implements Observer {
 	 * 
 	 * @param pl this variable contains all the players data
 	 * @param p  this variable contains the current turn player data
-	 * @author garimadawar
 	 */
 	private void showMessage(PlayersList pl, Player p) {
-		if (p.getGameState() != "STARTUP") {
+		if (!p.getGameState().equals("STARTUP")) {
 			for (int dashes = 0; dashes < 120; dashes++) {
 				System.out.print("_");
 			}
@@ -76,24 +75,22 @@ public class PlayerWorldDominationView implements Observer {
 						}
 					}
 					if (count == p.getContinentsCountryList().get(continentName).size()) {
-						continentsControlled += continentName;
+						continentsControlled += continentName+",";
 					}
 				}
 				if (continentsControlled.equals("")) {
 					continentsControlled = "---";
+				} else {
+					continentsControlled=continentsControlled.substring(0,continentsControlled.length()-1);
 				}
+				
 				System.out.format("%-30s|%-30d|%-30.2f|%-30s", playerName, totalArmiesPlayer, percMapPlayer,
 						continentsControlled);
 				System.out.println();
 			}
 		}
 	}
-	/**
-	 * This method gives the information about the total army of player
-	 * 
-	 * @param pl this variable contains all the players data
-	 * @author garimadawar
-	 */
+
 	private int getTotalArmiesCount(PlayersList pl) {
 		int totalArmies = 0;
 		for (String playerName : pl.getListOfPlayers().keySet()) {

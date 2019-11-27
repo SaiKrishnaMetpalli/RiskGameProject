@@ -915,14 +915,15 @@ public class MapSelectionController {
 
 				// writing to the required properties based on the info available
 				while (textScanner.hasNext()) {
-					p.setGameState(textScanner.nextLine());
-					p.setCurrentPlayerTurn(textScanner.nextLine());
+					p.setGameState(textScanner.nextLine());					
 					if (p.getGameState().equals("REINFORCE")) {
+						p.setCurrentPlayerTurn(textScanner.nextLine());
 						String[] headerReinforceDetails = textScanner.nextLine().split(" ");
 						p.setAvailableReinforceArmies(Integer.parseInt(headerReinforceDetails[0]));
 						p.setCardReward(Integer.parseInt(headerReinforceDetails[1]));
 						p.setCardBonusArmy(Integer.parseInt(headerReinforceDetails[2]));
 					} else if (p.getGameState().equals("ATTACK") || p.getGameState().equals("FORTIFY")) {
+						p.setCurrentPlayerTurn(textScanner.nextLine());
 						String[] headerReinforceDetails = textScanner.nextLine().split(" ");
 						p.setAvailableReinforceArmies(Integer.parseInt(headerReinforceDetails[0]));
 						p.setCardReward(Integer.parseInt(headerReinforceDetails[1]));

@@ -76,7 +76,7 @@ public class CommandLine {
 
 		cons = new CONSTANTS();
 		actions = "";
-		gameMode="Single";
+		gameMode = "Single";
 
 		gm = new GameMap();
 		p = new Player();
@@ -417,7 +417,7 @@ public class CommandLine {
 										}
 										// Running the game in tournament mode
 										if (flagProceed) {
-											gameMode="Tournament";
+											gameMode = "Tournament";
 											for (String mapFileName : listOfMapFiles) {
 												int countGames = numberOfGames;
 												while (countGames != 0) {
@@ -493,10 +493,10 @@ public class CommandLine {
 																					.get(p.getCurrentPlayerTurn())
 																					.getStrategy());
 																	if (resultStrategy.contains("Won")) {
-																		t.setGame("Game" + cGame);
-																		t.setResult(pl.getListOfPlayers()
-																				.get(p.getCurrentPlayerTurn())
-																				.getStrategy());
+																		t.getGameResults().put("Game" + cGame,
+																				pl.getListOfPlayers()
+																						.get(p.getCurrentPlayerTurn())
+																						.getStrategy());
 																		break;
 																	}
 																	countTurns--;
@@ -505,23 +505,20 @@ public class CommandLine {
 
 															} else {
 																System.out.println("\nMap is not connected");
-																t.setGame("Game" + cGame);
-																t.setResult("Error");
+																t.getGameResults().put("Game" + cGame, "Error");
 																tournamentDetails.put(mapFileName, t);
 																break;
 															}
 														} else {
 															System.out.println(
 																	"\nFile not uploaded. There are format issues in file. Please upload again");
-															t.setGame("Game" + cGame);
-															t.setResult("Error");
+															t.getGameResults().put("Game" + cGame, "Error");
 															tournamentDetails.put(mapFileName, t);
 															break;
 														}
 													} catch (Exception ex) {
 														System.out.println("\nError Occurred. Please try again");
-														t.setGame("Game" + cGame);
-														t.setResult("Error");
+														t.getGameResults().put("Game" + cGame, "Error");
 														tournamentDetails.put(mapFileName, t);
 														break;
 													}
@@ -1662,9 +1659,9 @@ public class CommandLine {
 			break;
 		case "Cheater":
 			behaviour.setStrategy(new CheaterStrategy());
-			result = behaviour.executeBehaviour(gm, pl, p);			
-			
-			if(gameMode.equals("Tournament")) {				
+			result = behaviour.executeBehaviour(gm, pl, p);
+
+			if (gameMode.equals("Tournament")) {
 				if (result.equals("Won")) {
 					return "Won";
 				} else {
@@ -1689,8 +1686,8 @@ public class CommandLine {
 					Thread.sleep(1000);
 					executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 				}
-			}		
-			
+			}
+
 			break;
 		case "Human":
 			commandLine();

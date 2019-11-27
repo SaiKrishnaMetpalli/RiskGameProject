@@ -27,7 +27,7 @@ public class PhaseView implements Observer {
 	 * @param p This variable contains the current turn player data
 	 */
 	private void showMessage(Player p) {
-		if (p.getGameState() != "STARTUP") {
+		if (!p.getGameState().equals("STARTUP")) {
 			for (int dashes = 0; dashes < 120; dashes++) {
 				System.out.print("_");
 			}
