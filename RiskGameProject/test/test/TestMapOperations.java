@@ -168,11 +168,21 @@ public class TestMapOperations {
 	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void removeContinentTest() throws FileNotFoundException {
+	public void removeContinentTestSuccess() throws FileNotFoundException {
+		fileLoadTest();
+		String result = msc.removeContinent(continents, boundries, countries, "Europe");
+		assertEquals("Continents and countries under continent removed successfully", result);
+	}
+	
+	/**
+	 * This method is used for testing the remove continent scenarios
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	public void removeContinentTestFailure() throws FileNotFoundException {
 		fileLoadTest();
 		String result = msc.removeContinent(continents, boundries, countries, "Asiass");
-		String re = msc.removeContinent(continents, boundries, countries, "Europe");
-		assertEquals("Continents and countries under continent removed successfully", re);
 		assertEquals("Continent does not exist", result);
 	}
 
@@ -182,12 +192,22 @@ public class TestMapOperations {
 	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void removeCountryTest() throws FileNotFoundException {
+	public void removeCountryTestSuccess() throws FileNotFoundException {
 		fileLoadTest();
 		String result = msc.removeCountry(countries, boundries, "Egypt");
-		String re = msc.removeCountry(countries, boundries, "Jappan");
 		assertEquals("Country and it's neighbours are removed successfully", result);
-		assertEquals("Country does not exists. Please add the Country first", re);
+	}
+	
+	/**
+	 * This method is used for testing the remove country scenarios
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	public void removeCountryTestFailure() throws FileNotFoundException {
+		fileLoadTest();
+		String result = msc.removeCountry(countries, boundries, "Jappan");
+		assertEquals("Country does not exists. Please add the Country first", result);
 	}
 
 	/**
@@ -196,12 +216,22 @@ public class TestMapOperations {
 	 * @throws FileNotFoundException
 	 */
 	@Test
-	public void removeNeighbourTest() throws FileNotFoundException {
+	public void removeNeighbourTestSuccess() throws FileNotFoundException {
+		fileLoadTest();
+		String result = msc.removeNeighbour(countries, boundries, "China", "India");
+		assertEquals("Neighbour country is removed successfully", result);
+	}
+	/**
+	 * This method is used for testing the remove neighbour scenarios
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	public void removeNeighbourTestFailure() throws FileNotFoundException {
 		fileLoadTest();
 		String result = msc.removeNeighbour(countries, boundries, "China", "Indiaaa");
-		String re = msc.removeNeighbour(countries, boundries, "China", "India");
 		assertEquals("Neighbour country does not exists", result);
-		assertEquals("Neighbour country is removed successfully", re);
+	
 
 	}
 }
