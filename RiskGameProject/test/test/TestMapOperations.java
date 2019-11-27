@@ -33,6 +33,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for initial setting up scenarios for each test case
 	 * method
+	 * @author garimadawar
 	 */
 	@Before
 	public void setUp() {
@@ -47,7 +48,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the game map load
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -59,7 +60,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for checking whether map is connected or not
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -71,7 +72,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the file formats of map
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -97,7 +98,7 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the add continent scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -109,7 +110,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the add country scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -124,7 +125,7 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the add country scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -137,7 +138,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the add neighbour scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -150,21 +151,18 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the add neighbour scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void addNeighbourTestFailure() throws FileNotFoundException {
-		fileLoadTest();
-		
+		fileLoadTest();	
 		String result = msc.addNeighbour(countries, boundries, "Argentina", "Peruu");
-		
 		assertEquals("Neighbour country does not exists. Please add the country and then neighbour", result);
-
 	}
 	/**
 	 * This method is used for testing the remove continent scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -176,7 +174,7 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the remove continent scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -188,7 +186,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the remove country scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -200,7 +198,7 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the remove country scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -212,7 +210,7 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the remove neighbour scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
@@ -223,7 +221,7 @@ public class TestMapOperations {
 	}
 	/**
 	 * This method is used for testing the remove neighbour scenarios
-	 * 
+	 * @author garimadawar
 	 * @throws FileNotFoundException
 	 */
 	@Test
