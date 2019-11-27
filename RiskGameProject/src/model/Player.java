@@ -7,7 +7,31 @@ import java.util.HashMap;
  * This model contains the properties of the players
  */
 public class Player extends Observable {
-
+	
+	/**
+	 * The first variable contains the owned countries list
+	 * The second variable contains the owned armies list
+	 * The third variable contains owned countries armies list
+	 * The forth variable contains the continents country list
+	 * The fifth variable contains the total countries
+	 * The sixth variable contains the strategy
+	 * The seventh variable contains the game state
+	 * The eigth varibale contains the current player turn
+	 * The ninth variable contains the actions performed
+	 * The tenth variable contains the attacker name
+	 * The eleventh variable contains the defender name
+	 * The twelth variable contains the attacker country
+	 * The thirteenth variable contains the defender country
+	 * The fourteenth variable contains the arraylist of attacker dice
+	 * The fifteenth variable contains the arraylist of defender dice
+	 * The sixteenth variable contains the dice rolled
+	 * The seventeenth variable contains the card bonus army
+	 * The eighteenth variable contains the card reward
+	 * The nighteenth variable contains the available reinforce armies
+	 * The twentieth variable contains the current card list
+	 * The twenty first variable contains the conquered countries
+	 * The twenty second variable contains the all out attack performed
+	 */
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;
 	private HashMap<String, Integer> ownedCountriesArmiesList;
@@ -56,55 +80,107 @@ public class Player extends Observable {
 		conqueredCountries = new ArrayList<String>();
 		setAllOutPerformed(false);
 	}
-
+	
+	/**
+	 * This function get the owned countries armies list
+	 * @return This returns the owned countries armies list
+	 */
 	public HashMap<String, Integer> getOwnedCountriesArmiesList() {
 		return ownedCountriesArmiesList;
 	}
-
+	
+	/**
+	 * This function set the owned countries armies list
+	 * @param ownedCountriesArmiesList  it contains the owned countries armies list
+	 */
 	public void setOwnedCountriesArmiesList(HashMap<String, Integer> ownedCountriesArmiesList) {
 		this.ownedCountriesArmiesList = ownedCountriesArmiesList;
 	}
-
+	
+	/**
+	 * This function get the countries list
+	 * @return This returns the countries list
+	 */
 	public ArrayList<String> getOwnedCountriesList() {
 		return ownedCountriesList;
 	}
-
+	
+	/**
+	 * This function set the owned countries list
+	 * @param ownedCountriesList  it contains the owned countries list
+	 */
 	public void setOwnedCountriesList(ArrayList<String> ownedCountriesList) {
 		this.ownedCountriesList = ownedCountriesList;
 	}
-
+	
+	/**
+	 * This function get the owned armies list
+	 * @return This returns the owned armies list
+	 */
 	public ArrayList<Integer> getOwnedArmiesList() {
 		return ownedArmiesList;
 	}
-
+	
+	/**
+	 * This function set the owned armies list
+	 * @param ownedArmiesList  it contains the owned armies list
+	 */
 	public void setOwnedArmiesList(ArrayList<Integer> ownedArmiesList) {
 		this.ownedArmiesList = ownedArmiesList;
 	}
-
+	
+	/**
+	 * This function get the continent country list
+	 * @return This returns the continent country list
+	 */
 	public HashMap<String, ArrayList<String>> getContinentsCountryList() {
 		return continentsCountryList;
 	}
-
+	
+	/**
+	 * This function set the continents country list
+	 * @param continentsCountryList  it contains the continents country list
+	 */
 	public void setContinentsCountryList(HashMap<String, ArrayList<String>> continentsCountryList) {
 		this.continentsCountryList = continentsCountryList;
 	}
-
+	
+	/**
+	 * This function get the total countries 
+	 * @return  it returns the total countries
+	 */
 	public int getTotalCountries() {
 		return totalCountries;
 	}
-
+	
+	/**
+	 * This function set the total countries
+	 * @param totalCountries  it contains the total countries
+	 */
 	public void setTotalCountries(int totalCountries) {
 		this.totalCountries = totalCountries;
 	}
-
+	
+	/**
+	 * This function get the strategy
+	 * @return This returns the strategy
+	 */
 	public String getStrategy() {
 		return strategy;
 	}
-
+	
+	/**
+	 * This function set the strategy
+	 * @param strategy  it contains the strategy
+	 */
 	public void setStrategy(String strategy) {
 		this.strategy = strategy;
 	}
-
+	
+	/**
+	 * This function get the game state
+	 * @return This returns the game state
+	 */
 	public String getGameState() {
 		return gameState;
 	}
