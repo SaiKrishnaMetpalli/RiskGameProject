@@ -198,8 +198,8 @@ public class TestPlayerReinforcement {
 	 */
     @Test
     public void testPlaceArmySuccess() {
-    	String result = psc.placeArmy(gm.getCountries(), playerDetails, "Quebec",1);
-    	assertEquals("Success",result);
+    	String result = psc.placeArmy(gm.getCountries(), playerDetails, "Quebec",40);
+    	assertEquals("Army is placed successfully",result);
     }
 
 	/**
@@ -209,6 +209,7 @@ public class TestPlayerReinforcement {
 	 */
     @Test
     public void testPlaceArmyFailure() {
+    	
     	String result = psc.placeArmy(gm.getCountries(), playerDetails,"Quebec", 4);
     	assertEquals("Armies cannot be placed for this country as the player is outreached armies",result);
     }
