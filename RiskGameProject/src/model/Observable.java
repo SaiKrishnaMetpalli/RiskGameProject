@@ -6,7 +6,7 @@ import java.util.List;
 import view.Observer;
 
 public class Observable {
-	
+
 	/**
 	 * This private variable contains the list of observers
 	 */
