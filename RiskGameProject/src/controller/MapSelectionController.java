@@ -574,7 +574,7 @@ public class MapSelectionController {
 	 * @throws IOException throws error on file exceptions
 	 * @author Sai Krishna
 	 */
-	public void saveGameFile(GameState gs, String fileName) throws IOException {
+	public String saveGameFile(GameState gs, String fileName) throws IOException {
 		GameMap gm = gs.getGameMap();
 		PlayersList pl = gs.getPlayersList();
 		Player p = gs.getPlayer();
@@ -739,6 +739,7 @@ public class MapSelectionController {
 		}
 
 		bw.close();
+		return "Success";
 	}
 
 	/**
