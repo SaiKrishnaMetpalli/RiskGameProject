@@ -38,6 +38,11 @@ public class TestCommonMethods {
 	GameState gs;
 	boolean flag;
 	
+	/**
+	 * This method is used for initial setting up scenarios for each test case
+	 * method
+	 * @author garimadawar
+	 */
 	@Before
 	public void setUp() throws FileNotFoundException {
 		fileName = "risk.map";
@@ -53,6 +58,7 @@ public class TestCommonMethods {
 	}
 	/**
 	 * Test success case for GetContinentNumberfromName
+	 * @author sakib
 	 */
 	@Test
 	public void TestGetContinentNumberfromName() {
@@ -61,6 +67,7 @@ public class TestCommonMethods {
 	
 	/**
 	 * test fail case for GetContinentNumberfromName
+	 * @author sakib
 	 */
 	@Test
 	public void TestGetContinentNumberfromNameFail() {
@@ -69,6 +76,7 @@ public class TestCommonMethods {
 	
 	/**
 	 * Test GetCountryNumberfromName success
+	 *  @author sakib
 	 */
 	@Test
 	public void TestGetCountryNumberfromName() {
@@ -77,6 +85,7 @@ public class TestCommonMethods {
 	
 	/**
 	 * Test GetCountryNumberfromName failure
+	 *  @author sakib
 	 */
 	@Test
 	public void TestGetCountryNumberfromNameFail() {
@@ -85,6 +94,7 @@ public class TestCommonMethods {
 	
 	/**
 	 * Test GetCountryNameByNum success
+	 *  @author sakib
 	 */
 	@Test
 	public void TestGetCountryNameByNum() {
@@ -93,6 +103,7 @@ public class TestCommonMethods {
 	
 	/**
 	 * Test GetCountryNameByNum failure
+	 *  @author sakib
 	 */
 	@Test
 	public void TestGetCountryNameByNumFail() {
