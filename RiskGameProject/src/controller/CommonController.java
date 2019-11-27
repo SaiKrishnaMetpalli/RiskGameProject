@@ -167,7 +167,7 @@ public class CommonController {
 		 if(exchangeCardList.containsAll(infantry) || exchangeCardList.containsAll(cavalry) || exchangeCardList.containsAll(artillery))
 		 {
 			 player.setCardBonusArmy(player.getCardBonusArmy() + 5);
-			 exchangeCardList.remove("INFANTRY")
+			 exchangeCardList.remove("INFANTRY");
 			 return player.getCardBonusArmy();
 		 }
 		 
