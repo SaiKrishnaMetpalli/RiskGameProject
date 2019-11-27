@@ -19,7 +19,6 @@ public class Countries {
 	private String xCoordinate;
 	private String yCoordinate;
 	private String ownerName;
-	// private int currentArmyPlaced;
 
 	/**
 	 * Default Constructor This method is used to initiate the variables

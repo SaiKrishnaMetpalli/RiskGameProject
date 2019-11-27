@@ -254,7 +254,6 @@ public class PlayerController {
 				checkOwnPath(boundaries, fromCountryNum, toCountryNum);
 
 				if (ownedPath) {
-//					ArrayList<Integer> existingArmiesList = pOb.getOwnedArmiesList();
 					int existingArmy = pOb.getOwnedCountriesArmiesList().get(fromCountry);
 					if (armyToPlace < existingArmy) {
 						int destinationArmy = pOb.getOwnedCountriesArmiesList().get(toCountry);

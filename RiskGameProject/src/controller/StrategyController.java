@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import model.GameMap;
 import model.Player;
 import model.PlayersList;

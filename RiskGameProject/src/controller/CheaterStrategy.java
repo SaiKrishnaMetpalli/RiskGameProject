@@ -82,7 +82,6 @@ public class CheaterStrategy implements Strategy {
 		
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
-			// player.setAttackerCountry(country);
 			int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), country);
 			attackerCountryList.add(attackerCountryNum);
 		}
@@ -141,7 +140,6 @@ public class CheaterStrategy implements Strategy {
 
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
-			// player.setAttackerCountry(country);
 			int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), country);
 			attackerCountryList.add(attackerCountryNum);
 		}

@@ -97,8 +97,7 @@ public class TestPlayerReinforcement {
 	 */
 	@Test
 	public void testCalculateContinentReward() {
-		// playerDetails.get(player).setOwnedCountriesList(cc.getContinentsCountryList(gm.getContinents(),
-		// gm.getCountries()).get(countryName));
+		
 		assertEquals(playerController.calculateContinentReward(playerDetails.get(player), gm.getContinents(),
 				gm.getCountries(), countryName), 0);
 	}

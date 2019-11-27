@@ -87,14 +87,11 @@ public class RandomStrategy implements Strategy {
 			pc.placeReinforceArmy(randomCountry, randomNumber, gm.getCountries(), pl.getListOfPlayers(),
 					gm.getContinents(), player);
 
-			// check return of place reinforcearmy method
-
 			Collections.shuffle(countriesOwned);
 			randomCountry = countriesOwned.get(0);
 
 		}
 
-		// check if it is a tournament
 		cc.observerViews("\nReinforcement armies are placed successfully for all countries", pl, player);
 		player.setCardReward(0);
 		player.setAvailableReinforceArmies(0);
@@ -172,7 +169,7 @@ public class RandomStrategy implements Strategy {
 				} else if (totalArmiesownedByAttacker == 2) {
 					attackerDiceToRoll = 1;
 				} else
-					break; // TODO: check at first loop ,if attacker army = 1 , then return
+					break; 
 
 				player.setDiceRolled(attackerDiceToRoll);
 

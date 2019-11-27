@@ -1653,11 +1653,6 @@ public class CommandLine {
 		String result = null;
 		switch (strategyName) {
 
-		/*
-		 * behavior = new AI_Aggressive(this, ref_game); break; case BENEVOLENT:
-		 * behavior = new AI_Benevolent(this, ref_game); break; case RANDOM: behavior =
-		 * new AI_Random(this, ref_game); break;
-		 */
 		case "Random":
 			behaviour.setStrategy(new RandomStrategy());
 			result = behaviour.executeBehaviour(gm, pl, p);

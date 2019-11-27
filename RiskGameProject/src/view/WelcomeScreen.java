@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class WelcomeScreen {
 
-	String input; // Used for storing input
+	String input; 
 	Scanner sc = new Scanner(System.in);
 
 	/**

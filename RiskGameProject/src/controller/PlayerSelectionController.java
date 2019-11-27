@@ -182,8 +182,7 @@ public class PlayerSelectionController {
 				for (String strCountry : p.getOwnedCountriesArmiesList().keySet()) {
 					int addArmies = p.getOwnedCountriesArmiesList().get(strCountry);
 					if (playerArmiesCount < totalArmiesCount) {
-						// p.getOwnedCountriesArmiesList().replaceAll((strCountry,addArmies) ->
-						// addArmies + 1);
+						
 						p.getOwnedCountriesArmiesList().put(strCountry, addArmies + 1);
 						playerArmiesCount++;
 					} else {

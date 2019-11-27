@@ -88,7 +88,7 @@ public class TestPlayerAttack {
 	@Test
 	public void testAttackPhaseSuccess() {
 		String result = playerController.attackPhase("India", "China", 3, playerDetails.get(player));
-		assertEquals("Attacker Ready and placed his army on field", result); // need to confirm from Ashish
+		assertEquals("Attacker Ready and placed his army on field", result); 
 	}
 
 	/**
