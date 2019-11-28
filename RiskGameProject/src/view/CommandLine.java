@@ -35,6 +35,32 @@ import util.CONSTANTS;
  */
 public class CommandLine {
 
+	/**
+	 * The input variable contains the command entered
+	 * The result variable contains the action performed on a particular method
+	 * The sc variable is the Scanner which takes input
+	 * The addToCommands variable contains the last entered command
+	 * The tournamentDetails variable contains the information about the tournament
+	 * The cons variable represents the class object of CONSTANTS
+	 * The actions variable stores the result of the method
+	 * The gameMode variable contains the Single or Tournament mode
+	 * The gm variable represents the class object of GameMap
+	 * The p variable represents the class object of Player
+	 * The pl variable represents the class object of PlayersList
+	 * The psc variable represents the class object of PlayerSelectionController
+	 * The msc variable represents the class object of MapSelectionController
+	 * The cc variable represents the class object of CommonController
+	 * The playerController variable represents the class object of PlayerController
+	 * The pv variable represents the class object of PhaseView
+	 * The pwdv variable represents the class object of PlayerWorldDominationView
+	 * The cev variable represents the class object of CardExchangeView
+	 * The gs variable represents the class object of GameState
+	 * The behaviour variable represents the class object of StrategyController
+	 * The drw variable represents the class object of DominationReadWrite
+	 * The crw variable represents the class object of ConquestReadWrite
+	 * The mfa variable represents the class object of MapFileAdapter
+	 * The t variable represents the class object of Tournament
+	 */
 	String input;
 	String result;
 	Scanner sc;
@@ -109,6 +135,7 @@ public class CommandLine {
 		String[] inputCommand = input.split(" ");
 		if (inputCommand.length > 0) {
 			switch (inputCommand[0]) {
+			//editcontinent operations are performed
 			case "editcontinent":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
@@ -164,6 +191,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//editcountry operations are performed	
 			case "editcountry":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
@@ -215,6 +243,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//editneighbor operations are performed
 			case "editneighbor":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap") || inputCommandsList.contains("editmap")) {
@@ -271,10 +300,12 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//showmap operations are performed
 			case "showmap":
 				viewMap();
 				commandLine();
 				break;
+			//savegame operations are performed
 			case "savegame":
 				if (inputCommand.length == 2) {
 					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
@@ -306,6 +337,7 @@ public class CommandLine {
 
 				commandLine();
 				break;
+			//loadgame operations are performed
 			case "loadgame":
 				if (inputCommand.length == 2) {
 					if (checkFileExist(inputCommand[1])) {
@@ -361,7 +393,7 @@ public class CommandLine {
 
 				commandLine();
 				break;
-
+			//tournament operations are performed
 			case "tournament":
 				if (inputCommand.length == 9) {
 					if (inputCommand[1].equals("-M") && inputCommand[3].equals("-P") && inputCommand[5].equals("-G")
@@ -422,7 +454,7 @@ public class CommandLine {
 											for (String mapFileName : listOfMapFiles) {
 												int countGames = numberOfGames;
 												int cGame = 1;
-												while (countGames != 0) {													
+												while (countGames != 0) {
 													try {
 														gm = new GameMap();
 														pl = new PlayersList();
@@ -564,6 +596,7 @@ public class CommandLine {
 
 				commandLine();
 				break;
+			//savemap operations are performed
 			case "savemap":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
@@ -613,6 +646,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//editmap operations are performed
 			case "editmap":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
@@ -674,6 +708,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//validatemap operations are performed
 			case "validatemap":
 				if (p.getGameState().equals("STARTUP")) {
 					if (gm.getBoundries().size() > 0) {
@@ -700,6 +735,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//loadmap operations are performed
 			case "loadmap":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
@@ -770,6 +806,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//gameplayer operations are performed
 			case "gameplayer":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommandsList.contains("loadmap")) {
@@ -817,6 +854,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//populatecountries operations are performed
 			case "populatecountries":
 				if (p.getGameState().equals("STARTUP")) {
 					if ((gm.getCountries().size() > 0) && (gm.getContinents().size() > 0)
@@ -855,6 +893,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//placearmy operations are performed
 			case "placearmy":
 				if (p.getGameState().equals("STARTUP")) {
 					if (inputCommand.length == 2) {
@@ -885,6 +924,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//placeall operations are performed
 			case "placeall":
 				if (p.getGameState().equals("STARTUP")) {
 					if (pl.getListOfPlayers().size() > 0) {
@@ -918,6 +958,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//exchangecards operations are performed
 			case "exchangecards":
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("REINFORCE")) {
@@ -974,7 +1015,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-
+			//reinforce operations are performed
 			case "reinforce":
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("REINFORCE")) {
@@ -1056,7 +1097,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-
+			//attack operations are performed
 			case "attack":
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("ATTACK")) {
@@ -1185,6 +1226,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//defend operations are performed
 			case "defend":
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("ATTACK")) {
@@ -1243,7 +1285,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-
+			//attackmove operations are performed
 			case "attackmove":
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("ATTACK")) {
@@ -1295,7 +1337,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
-
+			//fortify operations are performed
 			case "fortify":
 				actions = p.getActionsPerformed();
 				if (p.getGameState().equals("FORTIFY")) {
@@ -1378,6 +1420,7 @@ public class CommandLine {
 				addInputCommandList(addToCommands, inputCommand[0]);
 				commandLine();
 				break;
+			//endgame operations are performed
 			case "endgame":
 				System.out.println("\nThe game is ended");
 				System.exit(0);
@@ -1393,6 +1436,7 @@ public class CommandLine {
 
 	/**
 	 * This method is used for displaying the map
+	 * @author Sai Krishna
 	 */
 	private void viewMap() {
 		String countryName = "";
@@ -1518,6 +1562,7 @@ public class CommandLine {
 	 * @param input   this variable gives true/false for adding to inputCommandsList
 	 * @param command this variable has command name that is used for adding to
 	 *                inputCommandsList
+	 * @author Sai Krishna
 	 */
 	public void addInputCommandList(boolean input, String command) {
 		if (input) {
@@ -1530,6 +1575,7 @@ public class CommandLine {
 	 * 
 	 * @param fileName this variable gives the filename which user entered
 	 * @return returns gives true/false
+	 * @author Sai Krishna
 	 */
 	public boolean checkFileExist(String fileName) {
 		String mapFilePath = Paths.get("").toAbsolutePath().toString() + "\\src\\resource\\" + fileName;
@@ -1542,6 +1588,7 @@ public class CommandLine {
 	 * This method is used for checking if place all command need to perform or not
 	 * 
 	 * @return true if complete armies are not place; otherwise false
+	 * @author Sai Krishna
 	 */
 	public boolean checkArmiesPlaced() {
 		boolean flag = false;
@@ -1696,8 +1743,8 @@ public class CommandLine {
 				return "Success";
 			} else {
 				executeBehaviour(pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
-			}		
-			
+			}
+
 			break;
 		case "Aggressive":
 			behaviour.setStrategy(new AggressiveStrategy());
@@ -1788,7 +1835,7 @@ public class CommandLine {
 				cGames++;
 			}
 			System.out.println();
-			for (int dashes = 0; dashes < 30 + (cGames*30); dashes++)
+			for (int dashes = 0; dashes < 30 + (cGames * 30); dashes++)
 				System.out.print("_");
 			System.out.println();
 			break;

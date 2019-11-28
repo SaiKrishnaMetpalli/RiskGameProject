@@ -2,6 +2,11 @@ package view;
 
 import java.util.Scanner;
 
+/**
+ * This class is the first class to take input from user to proceed to commandline
+ * @author Sai
+ *
+ */
 public class WelcomeScreen {
 
 	String input; 

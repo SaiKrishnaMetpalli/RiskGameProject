@@ -9,25 +9,28 @@ import java.util.HashMap;
 public class Player extends Observable {
 
 	/**
-	 * The ownedCountriesList variable contains the owned countries list The
-	 * ownedArmiesList variable contains the owned armies list The
-	 * ownedCountriesArmiesList variable contains owned countries armies list The
-	 * continentsCountryList variable contains the continents country list The
-	 * totalCountries variable contains the total countries The strategy variable
-	 * contains the strategy The gameState variable contains the game state The
-	 * currentPlayerTurn variable contains the current player turn The
-	 * actionsPerformed variable contains the actions performed The attackerName
-	 * variable contains the attacker name The defenderName variable contains the
-	 * defender name The attackerCountry variable contains the attacker country The
-	 * defenderCountry variable contains the defender country The attackerDice
-	 * variable contains the arraylist of attacker dice The defenderDice variable
-	 * contains the arraylist of defender dice The diceRolled variable contains the
-	 * dice rolled The cardBonusArmy variable contains the card bonus army The
-	 * cardReward variable contains the card reward The availableReinforceArmies
-	 * variable contains the available reinforce armies The currentCardList variable
-	 * contains the current card list The conqueredCountries variable contains the
-	 * conquered countries The allOutAttackPerformed variable contains the all out
-	 * attack performed
+	 * The ownedCountriesList variable contains the owned countries list 
+	 * The ownedArmiesList variable contains the owned armies list
+	 * The ownedCountriesArmiesList variable contains owned countries armies list 
+	 * The continentsCountryList variable contains the continents country list 
+	 * The totalCountries variable contains the total countries 
+	 * The strategy variable contains the strategy 
+	 * The gameState variable contains the game state 
+	 * The currentPlayerTurn variable contains the current player turn 
+	 * The actionsPerformed variable contains the actions performed 
+	 * The attackerName variable contains the attacker name 
+	 * The defenderName variable contains the defender name 
+	 * The attackerCountry variable contains the attacker country
+	 * The defenderCountry variable contains the defender country 
+	 * The attackerDice variable contains the arraylist of attacker dice 
+	 * The defenderDice variable contains the arraylist of defender dice 
+	 * The diceRolled variable contains the dice rolled
+	 * The cardBonusArmy variable contains the card bonus army 
+	 * The cardReward variable contains the card reward 
+	 * The availableReinforceArmies variable contains the available reinforce armies 
+	 * The currentCardList variable contains the current card list 
+	 * The conqueredCountries variable contains the conquered countries 
+	 * The allOutAttackPerformed variable contains the all out attack performed
 	 */
 	private ArrayList<String> ownedCountriesList;
 	private ArrayList<Integer> ownedArmiesList;

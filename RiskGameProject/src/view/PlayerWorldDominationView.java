@@ -31,6 +31,7 @@ public class PlayerWorldDominationView implements Observer {
 	 * 
 	 * @param pl this variable contains all the players data
 	 * @param p  this variable contains the current turn player data
+	 * @author Sai Krishna
 	 */
 	private void showMessage(PlayersList pl, Player p) {
 		if (!p.getGameState().equals("STARTUP")) {
@@ -91,6 +92,12 @@ public class PlayerWorldDominationView implements Observer {
 		}
 	}
 
+	/**
+	 * This method returns the total armies for all the players
+	 * @param pl this variable contains the complete list of players
+	 * @return total count of armies
+	 * @author Sai Krishna
+	 */
 	private int getTotalArmiesCount(PlayersList pl) {
 		int totalArmies = 0;
 		for (String playerName : pl.getListOfPlayers().keySet()) {
