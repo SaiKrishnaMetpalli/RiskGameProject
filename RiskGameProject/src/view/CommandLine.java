@@ -479,12 +479,10 @@ public class CommandLine {
 										crw = new ConquestReadWrite();
 										if (gm.getFileType().equals("Conquest")) {
 											drw = new MapFileAdapter(crw);
-											drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
-													gm.getBoundries(), inputCommand[1]);
-										} else {
-											drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
-													gm.getBoundries(), inputCommand[1]);
+											
 										}
+										drw.writeDominationMapFile(gm.getContinents(), gm.getCountries(),
+												gm.getBoundries(), inputCommand[1]);
 										System.out.println("\nMap file saved successfully");
 										addToCommands = true;
 									} catch (Exception ex) {
@@ -539,13 +537,10 @@ public class CommandLine {
 								}
 
 								if (gm.getFileType().equals("Conquest")) {
-									drw = new MapFileAdapter(crw);
-									result = drw.dominationMapReading(gm.getContinents(), gm.getCountries(),
-											gm.getBoundries(), inputCommand[1]);
-								} else {
-									result = drw.dominationMapReading(gm.getContinents(), gm.getCountries(),
-											gm.getBoundries(), inputCommand[1]);
-								}
+									drw = new MapFileAdapter(crw);									
+								} 
+								result = drw.dominationMapReading(gm.getContinents(), gm.getCountries(),
+										gm.getBoundries(), inputCommand[1]);
 
 								String result = msc.gameMapReading(gm.getContinents(), gm.getCountries(),
 										gm.getBoundries(), inputCommand[1]);
@@ -628,13 +623,11 @@ public class CommandLine {
 								}
 
 								if (gm.getFileType().equals("Conquest")) {
-									drw = new MapFileAdapter(crw);
-									result = drw.dominationMapReading(gm.getContinents(), gm.getCountries(),
-											gm.getBoundries(), inputCommand[1]);
-								} else {
-									result = drw.dominationMapReading(gm.getContinents(), gm.getCountries(),
-											gm.getBoundries(), inputCommand[1]);
+									drw = new MapFileAdapter(crw);									
 								}
+								
+								result = drw.dominationMapReading(gm.getContinents(), gm.getCountries(),
+										gm.getBoundries(), inputCommand[1]);
 
 								if (result.equals("Success")) {
 									System.out.println("\nFile uploaded successfully");
