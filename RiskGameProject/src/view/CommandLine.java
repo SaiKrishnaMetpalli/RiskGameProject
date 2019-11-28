@@ -119,8 +119,7 @@ public class CommandLine {
 		pv = new PhaseView();
 		pwdv = new PlayerWorldDominationView();
 		cev = new CardExchangeView();
-		behaviour = new StrategyController();
-		t = new Tournament();
+		behaviour = new StrategyController();		
 		
 		listOfMapFiles = new ArrayList<String>();
 		listOfStrategies = new ArrayList<String>();
@@ -1783,13 +1782,14 @@ public class CommandLine {
 	private String runTournamentMode() {
 		gameMode = "Tournament";
 		for (String mapFileName : listOfMapFiles) {
+			t = new Tournament();
 			int countGames = numberOfGames;
 			int cGame = 1;
 			while (countGames != 0) {
 				try {
 					gm = new GameMap();
 					pl = new PlayersList();
-					p = new Player();
+					p = new Player();					
 					p.attach(pv);
 					pl.attach(pwdv);
 					pl.attach(cev);
