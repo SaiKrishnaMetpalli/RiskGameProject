@@ -55,6 +55,7 @@ public class TestCommonMethods {
 	/**
 	 * This method is used for initial setting up scenarios for each test case
 	 * method
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
 	 */
 	@Before

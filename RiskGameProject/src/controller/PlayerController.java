@@ -77,8 +77,7 @@ public class PlayerController {
 	 * @param continents  hashmap containing continent objects
 	 * @param countries   hashmap containing countries objects
 	 * @param countryName the country for which we need the continents and country
-	 *                    object information
-	 * @param cardReward  the reward army obtained after card exchange
+	 *                    object information	 
 	 * @return returns reward armies for continent obtained as integer
 	 * @author sakib
 	 */
@@ -323,6 +322,7 @@ public class PlayerController {
 	 * @param defenderCountry is the name of the defender country
 	 * @param countryList     is the total country list
 	 * @param boundries       contains information about neighboring countries
+	 * @param attackerOwnedCountries this contains the owned countries of attacker
 	 * @return true if defender country is the adjacent country
 	 * @author garimadawar
 	 */
@@ -373,7 +373,7 @@ public class PlayerController {
 	 * Method performs attack by attacker
 	 * 
 	 * @param attackerCountry   is the name of the attacker country
-	 * @param defenderCountryis the name of the defender country
+	 * @param defenderCountry 	is the name of the defender country
 	 * @param numberOnDice      is the number of dice used for attacking
 	 * @param player            contains the current player's turn data
 	 * @return ready after placing army
@@ -787,6 +787,7 @@ public class PlayerController {
 	 * @param diceRolled             is the last dice played to defeat country
 	 * @param conqueredCountriesList is the list of all conquered countries list
 	 * @param player                 contains the current players's turn data
+	 * @param attackerArmy			 this contains the attacker's army
 	 * @return true if army can be moved to conquered country
 	 */
 	public boolean isvalidAttackMove(int armyMove, int diceRolled, ArrayList<String> conqueredCountriesList,

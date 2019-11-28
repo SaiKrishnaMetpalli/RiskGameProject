@@ -90,7 +90,7 @@ public class TestMapOperations {
 	/**
 	 * test case for loading saved game
 	 * @author sakib
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void testLoadGameSuccess() throws FileNotFoundException {
@@ -99,7 +99,7 @@ public class TestMapOperations {
 	
 	/**
 	 * test case for saving a current game
-	 * @throws FileNotFoundException
+	 * @throws IOException this throws exception on file writing
 	 * @author sakib
 	 */
 	@Test
@@ -111,7 +111,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the game map load
 	 * 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void fileLoadTest() throws FileNotFoundException {
@@ -123,7 +123,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the conquest map reading
 	 * 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author sakib
 	 */
 	@Test
@@ -135,7 +135,7 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the conquest map writing
-	 * @throws IOException 
+	 * @throws IOException this throws exception on file writing 
 	 * @author sakib
 	 */
 	@Test
@@ -148,7 +148,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the conquest map reading
 	 * 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author sakib
 	 */
 	@Test
@@ -160,7 +160,7 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the conquest map writing
-	 * @throws IOException 
+	 * @throws IOException this throws exception on file writing 
 	 * @author sakib
 	 */
 	@Test
@@ -172,8 +172,8 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for checking whether map is connected or not
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
-	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void isConnectedMapTest() throws FileNotFoundException {
@@ -184,8 +184,9 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the file formats of map
+	 * 
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
-	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void validateFileFormatTest() throws FileNotFoundException {
@@ -199,7 +200,8 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the add continent scenarios
 	 * 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
+	 * @author garimadawar
 	 */
 	@Test
 	public void addContinentTestSuccess() throws FileNotFoundException {
@@ -210,8 +212,9 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the add continent scenarios
+	 * 
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
-	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void addContinentTestFailure() throws FileNotFoundException {
@@ -222,8 +225,9 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the add country scenarios
+	 * 
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
-	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void addCountryTestSuccess() throws FileNotFoundException {
@@ -235,8 +239,9 @@ public class TestMapOperations {
 	
 	/**
 	 * This method is used for testing the add country scenarios
+	 * 
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
-	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void addCountryTestFailure() throws FileNotFoundException {
@@ -247,8 +252,9 @@ public class TestMapOperations {
 
 	/**
 	 * This method is used for testing the add neighbour scenarios
+	 * 
+	 * @throws FileNotFoundException this throws exception if file not found
 	 * @author garimadawar
-	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void addNeighbourTestSuccess() throws FileNotFoundException {
@@ -262,7 +268,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the add neighbour scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void addNeighbourTestFailure() throws FileNotFoundException {
@@ -274,7 +280,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the remove continent scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void removeContinentTestSuccess() throws FileNotFoundException {
@@ -286,7 +292,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the remove continent scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void removeContinentTestFailure() throws FileNotFoundException {
@@ -298,7 +304,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the remove country scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void removeCountryTestSuccess() throws FileNotFoundException {
@@ -310,7 +316,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the remove country scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void removeCountryTestFailure() throws FileNotFoundException {
@@ -322,7 +328,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the remove neighbour scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void removeNeighbourTestSuccess() throws FileNotFoundException {
@@ -334,7 +340,7 @@ public class TestMapOperations {
 	/**
 	 * This method is used for testing the remove neighbour scenarios
 	 * @author garimadawar
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws exception if file not found
 	 */
 	@Test
 	public void removeNeighbourTestFailure() throws FileNotFoundException {

@@ -15,7 +15,7 @@ public interface Strategy {
      * @param player this contains player data
      * @return String result from a particular strategy pattern
      * @author garimadawar
-     * @throws InterruptedException 
+     * @throws InterruptedException this throws interrupted exception on thread sleep
      */
 	String executeStrategy(GameMap gm , PlayersList pl , Player player) throws InterruptedException;
 		

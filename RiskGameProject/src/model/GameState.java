@@ -14,8 +14,8 @@ public class GameState {
 	private PlayersList playersList;
 	private Player player;
 	
-	/**
-	 * @Default Constructor This method initiates the variables
+	/** 
+	 * This method initiates the variables
 	 * @author Sai Krishna
 	 */
 	public GameState() {
@@ -36,7 +36,7 @@ public class GameState {
 	/**
 	 * This function set the game map
 	 * @param gameMap  it contains the game map
-	 * @return Sai Krishna
+	 * @author Sai Krishna
 	 */
 	public void setGameMap(GameMap gameMap) {
 		this.gameMap = gameMap;

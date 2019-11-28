@@ -36,6 +36,7 @@ public class Observable {
 	 * This method notifies the observer that state has changed
 	 * 
 	 * @param observable this variable contains the observable object state
+	 * @param x this contains an object
 	 * @author Ashish
 	 */
 	public void notifyObservers(Observable observable, Object x) {

@@ -67,7 +67,7 @@ public class MapSelectionController {
 	 * @param boundries  contains the adjacency list of countries
 	 * @param fileName   it is map file which is read
 	 * @return success if map is loaded successfully else failure
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException throws error if file not found
 	 * @author Ashish Chaudhary
 	 */
 
@@ -264,6 +264,7 @@ public class MapSelectionController {
 	 *                      country is added
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
+	 * @param boundries		this variable contains the boundries
 	 * @return it returns string messages
 	 * @author garimadawar
 	 */
@@ -474,8 +475,11 @@ public class MapSelectionController {
 	 * method for write text file from data structure uses buffer reader and writer
 	 * to write text file stores the file in the resource folder
 	 * 
-	 * @param takes the data structure from and file name
-	 * @throws IOException as creating file
+	 * @param continents this variable is used for storing continents
+	 * @param countries this variable is used for storing countries
+	 * @param boundries this variable is used for storing boundries
+	 * @param mapFile this variable is used for storing file name 
+	 * @throws IOException throws exception in file writing
 	 * @author sakib
 	 */
 	public void writeGameMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,

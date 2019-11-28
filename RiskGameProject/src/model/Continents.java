@@ -15,7 +15,6 @@ public class Continents {
 	private String continentControlValue, continentColour, continentName;
 
 	/**
-	 * @Default Constructor
 	 * @param continentName  it contains the continent name
 	 * @param continentControlValue  it contains the continent control value
 	 * @param colour it contains the colour

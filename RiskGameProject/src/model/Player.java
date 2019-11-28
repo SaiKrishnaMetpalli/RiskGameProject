@@ -57,8 +57,8 @@ public class Player extends Observable {
 	private ArrayList<String> conqueredCountries;
 	private boolean allOutAttackPerformed;
 
-	/**
-	 * @Default Constructor This method initiates the variables
+	/** 
+	 * This method initiates the variables
 	 * @author Sai Krishna
 	 */
 	public Player() {

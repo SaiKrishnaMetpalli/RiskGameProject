@@ -42,7 +42,7 @@ public class RandomStrategy implements Strategy {
 	 * @param gm     it is the gameMap
 	 * @param pl     contains the hashmap of player object
 	 * @param player contains the player object
-	 * @throws InterruptedException 
+	 * @throws InterruptedException this throws interrupted exception on thread sleep
 	 */
 	@Override
 	public String executeStrategy(GameMap gm, PlayersList pl, Player player) throws InterruptedException {

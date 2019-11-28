@@ -25,8 +25,8 @@ public class GameMap {
 	private HashMap<String, String> playersWithStrategies;
 	private String fileType;	
 
-	/**
-	 * @Default Constructor This method initiates the variables
+	/** 
+	 * This method initiates the variables
 	 * @author Sai Krishna
 	 */
 	public GameMap() {

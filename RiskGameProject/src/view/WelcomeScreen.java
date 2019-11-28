@@ -14,7 +14,7 @@ public class WelcomeScreen {
 
 	/**
 	 * This method is used for displaying the Welcome Screen
-	 * @throws InterruptedException 
+	 * @throws InterruptedException this throws interrupted exception on thread sleep 
 	 */
 	public void welcomeGameDisplay() throws InterruptedException {
 		System.out.println();

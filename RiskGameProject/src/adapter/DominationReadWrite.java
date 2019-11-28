@@ -36,12 +36,12 @@ public class DominationReadWrite {
 	
 	/**
 	 * This method will read a domination map file and store extracted information in respective hashmaps
-	 * @param continents
-	 * @param countries
-	 * @param boundries
-	 * @param fileName
+	 * @param continents this variable is used for storing continents
+	 * @param countries this variable is used for storing countires
+	 * @param boundries this variable is used for storing boundries
+	 * @param fileName this variable is used for storing file name
 	 * @return success or failure message 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws error if file not found
 	 * @author sakib
 	 */
 	public String dominationMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
@@ -126,12 +126,12 @@ public class DominationReadWrite {
 	
 	/**
 	 * This method will write a domination map file from informations in respective hashmaps 
-	 * @param continents
-	 * @param countries
-	 * @param boundries
-	 * @param mapFile
+	 * @param continents this variable is used for storing continents
+	 * @param countries this variable is used for storing countries
+	 * @param boundries this variable is used for storing boundries
+	 * @param mapFile this variable is used for storing file name
 	 * @return success and failure message 
-	 * @throws IOException
+	 * @throws IOException throws exception in file writing
 	 * @author sakib
 	 */
 	public String writeDominationMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,

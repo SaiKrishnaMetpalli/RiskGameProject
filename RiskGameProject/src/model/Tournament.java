@@ -13,7 +13,7 @@ public class Tournament {
 	private HashMap<String, String> gameResults;
 
 	/**
-	 * @Default Constructor
+	 * This method initiates the variables
 	 * @author Sai Krishna
 	 */
 	public Tournament() {

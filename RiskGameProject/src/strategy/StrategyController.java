@@ -31,9 +31,9 @@ public class StrategyController{
 	 * @param gm  it contains the game map
 	 * @param  pl  it contains player list
 	 * @param player  it contains the player
-	 * @throws InterruptedException 
+	 * @throws InterruptedException this throws interrupted exception on thread sleep
+	 * @return calls the appropriate executeStrategy method of player 
 	 * @author garima
-	 * @return calls the appropriate executeStrategy method of player
 	 */
 	public String executeBehaviour(GameMap gm , PlayersList pl, Player player ) throws InterruptedException
 	{	
