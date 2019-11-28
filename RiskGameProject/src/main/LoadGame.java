@@ -4,6 +4,7 @@ import view.WelcomeScreen;
 
 /**
  * This class contains the Main class
+ * @author sai
  */
 public class LoadGame {
 
