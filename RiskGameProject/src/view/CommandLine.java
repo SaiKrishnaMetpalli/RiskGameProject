@@ -1692,7 +1692,7 @@ public class CommandLine {
 	 * @return true if contains the tags else false
 	 * @author Sai Krishna
 	 */
-	private boolean checkTournamentTagsFormat(String[] inputCommand) {
+	public boolean checkTournamentTagsFormat(String[] inputCommand) {
 		if(inputCommand[1].equals("-M") && inputCommand[3].equals("-P") && inputCommand[5].equals("-G")
 				&& inputCommand[7].equals("-D")) {
 			return true;
@@ -1707,7 +1707,7 @@ public class CommandLine {
 	 * @return true if added else false
 	 * @author Sai Krishna
 	 */
-	private boolean checkTournamentFileConditions(String mapFiles) {
+	public boolean checkTournamentFileConditions(String mapFiles) {
 		boolean flagFiles=true;
 		if (mapFiles.contains(",")) {
 			String[] mapFilesArray = mapFiles.split(",");
@@ -1734,7 +1734,7 @@ public class CommandLine {
 	 * @return true if added else false
 	 * @author Sai Krishna
 	 */
-	private boolean checkTournamentStrategiesConditions(String allPlayersWithStrategies) {
+	public boolean checkTournamentStrategiesConditions(String allPlayersWithStrategies) {
 		boolean FlagStrategies=true;
 		String[] strategiesList = allPlayersWithStrategies.split(",");
 		for (String strategyName : strategiesList) {
@@ -1755,7 +1755,7 @@ public class CommandLine {
 	 * @return true if satisfies range else false
 	 * @author Sai Krishna
 	 */
-	private boolean checkTournamentGamesConditions(int numberOfGames) {
+	public boolean checkTournamentGamesConditions(int numberOfGames) {
 		if (numberOfGames < 1 || numberOfGames > 5) {
 			return false;
 		} else {
@@ -1770,7 +1770,7 @@ public class CommandLine {
 	 * @return true if satisfies range else false
 	 * @author Sai Krishna
 	 */
-	private boolean checkTournamentTurnsConditions(int numberOfTurns) {
+	public boolean checkTournamentTurnsConditions(int numberOfTurns) {
 		if (numberOfTurns < 10 || numberOfTurns > 50) {			
 			return false;
 		} else {
@@ -1782,7 +1782,7 @@ public class CommandLine {
 	 * This method runs the tournament mode
 	 * @return the message on completion of tournament
 	 */
-	private String runTournamentMode() {
+	public String runTournamentMode() {
 		gameMode = "Tournament";
 		for (String mapFileName : listOfMapFiles) {
 			t = new Tournament();
@@ -1904,7 +1904,7 @@ public class CommandLine {
 	 * This method is used for printing the tournament result
 	 * @author Sai Krishna
 	 */
-	private void printTournamentResults() {
+	public void printTournamentResults() {
 		int cGames = 0;
 		for (String fileName : tournamentDetails.keySet()) {
 			System.out.println();
