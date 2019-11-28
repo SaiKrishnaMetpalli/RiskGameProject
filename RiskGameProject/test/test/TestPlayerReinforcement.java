@@ -24,7 +24,23 @@ import util.CONSTANTS;
  * 
  */
 public class TestPlayerReinforcement {
-
+	
+	/**
+	 * playerController instantiates PlayerController class
+	 * msc instantiates MapSelectionController class
+	 * psc instantiates PlayerSelectionController class
+	 * cc instantiates CommonController Class
+	 * Constant object having all constant values 
+	 * gm instantiates GameMap class
+	 * playerDetails represents hashamp with player name and object
+	 * listOfPlayers is the Arraylist of players
+	 * playersWithStrategies is a hashmap for player and their strategy
+	 * fileName reusable string variable parsed file name
+	 * countryName string variable to store countryname
+	 * Player string variable to store player name
+	 * currentCardList is arralylist containing the list a availble cards
+	 * modelP is the player object
+	 */
 	PlayerController playerController;
 	MapSelectionController msc;
 	PlayerSelectionController psc;
@@ -97,7 +113,8 @@ public class TestPlayerReinforcement {
 	 */
 	@Test
 	public void testCalculateContinentReward() {
-		
+		// playerDetails.get(player).setOwnedCountriesList(cc.getContinentsCountryList(gm.getContinents(),
+		// gm.getCountries()).get(countryName));
 		assertEquals(playerController.calculateContinentReward(playerDetails.get(player), gm.getContinents(),
 				gm.getCountries(), countryName), 0);
 	}

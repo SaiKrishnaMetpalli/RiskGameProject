@@ -28,7 +28,23 @@ import model.PlayersList;
  * This class is used for testing map methods
  */
 public class TestMapOperations {
-
+	/**
+	 * msc instantiates MapSelectionController class
+	 * mfv instantiates MapFormatValidation class
+	 * crw instantiates ConquestReadWrite class
+	 * drw instantiates DominationReadWrite class
+	 * continents represents hashamp parsed from text file
+	 * Countries represents hashamp parsed from text file
+	 * boundries represents hashamp parsed from text file
+	 * domination file string name to parsed
+	 * conquest file string name to parsed
+	 * save file string name to write saved file
+	 * flag is boolean variable used for map validation
+	 * gm instantiates GameMap class
+	 * pl instantiates PlayerList class
+	 * P represents Player class object
+	 * Gs is Gamestate object
+	 */
 	MapSelectionController msc;
 	MapFormatValidation mfv;
 	ConquestReadWrite crw;
@@ -80,6 +96,7 @@ public class TestMapOperations {
 	public void testLoadGameSuccess() throws FileNotFoundException {
 		assertEquals("Success",msc.loadGameReading(gm, pl, p, saveFile));
 	}
+	
 	/**
 	 * test case for saving a current game
 	 * @throws FileNotFoundException
@@ -152,6 +169,7 @@ public class TestMapOperations {
 		String result = drw.writeDominationMapFile(continents, countries, boundries,"test.map");
 		assertEquals("Success", result);
 	}
+	
 	/**
 	 * This method is used for checking whether map is connected or not
 	 * @author garimadawar
@@ -213,8 +231,6 @@ public class TestMapOperations {
 		String result = msc.addCountry(continents, countries, boundries, "Inde", "Asia");
 		
 		assertEquals("Country added successfully", result);
-		
-
 	}
 	
 	/**
@@ -227,7 +243,6 @@ public class TestMapOperations {
 		fileLoadTest();
 	    String result = msc.addCountry(continents, countries, boundries, "India", "Asiia");
         assertEquals("Continent does not exists. Please add the Continent first", result);
-
 	}
 
 	/**
@@ -255,6 +270,7 @@ public class TestMapOperations {
 		String result = msc.addNeighbour(countries, boundries, "Argentina", "Peruu");
 		assertEquals("Neighbour country does not exists. Please add the country and then neighbour", result);
 	}
+	
 	/**
 	 * This method is used for testing the remove continent scenarios
 	 * @author garimadawar
@@ -314,6 +330,7 @@ public class TestMapOperations {
 		String result = msc.removeNeighbour(countries, boundries, "China", "India");
 		assertEquals("Neighbour country is removed successfully", result);
 	}
+	
 	/**
 	 * This method is used for testing the remove neighbour scenarios
 	 * @author garimadawar
@@ -324,7 +341,5 @@ public class TestMapOperations {
 		fileLoadTest();
 		String result = msc.removeNeighbour(countries, boundries, "China", "Indiaaa");
 		assertEquals("Neighbour country does not exists", result);
-	
-
 	}
 }

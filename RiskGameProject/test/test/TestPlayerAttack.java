@@ -25,7 +25,26 @@ import util.CONSTANTS;
  *
  */
 public class TestPlayerAttack {
-
+	
+	/**
+	 * playerController instantiates PlayerController class
+	 * msc instantiates MapSelectionController class
+	 * psc instantiates PlayerSelectionController class
+	 * cc instantiates CommonController Class
+	 * Constant object having all constant values 
+	 * gm instantiates GameMap Class
+	 * playerDetails represents hashamp with player name and object
+	 * continents represents hashamp parsed from text file
+	 * continentName reusable variable continent name
+	 * listOfPlayers is the Arraylist of players
+	 * playersWithStrategies is a hashmap for player and their strategy
+	 * fileName reusable string variable parsed file name
+	 * countryName string variable to store countryname
+	 * player string variable to store player name
+	 * P represents Player class object
+	 * pl instantiates PlayerList class
+	 * playerList hashmap representing player name and corresponding player object
+	 */
 	PlayerController playerController;
 	MapSelectionController msc;
 	PlayerSelectionController psc;
@@ -88,7 +107,7 @@ public class TestPlayerAttack {
 	@Test
 	public void testAttackPhaseSuccess() {
 		String result = playerController.attackPhase("India", "China", 3, playerDetails.get(player));
-		assertEquals("Attacker Ready and placed his army on field", result); 
+		assertEquals("Attacker Ready and placed his army on field", result); // need to confirm from Ashish
 	}
 
 	/**
@@ -212,6 +231,7 @@ public class TestPlayerAttack {
 		p.setDefenderCountry("Canada");
 		assertFalse(playerController.isvalidAttackMove(3, 3, p.getConqueredCountries(), p, 3));
 	}
+	
 	/**
 	 * Method is used to test game end 
 	 * 
@@ -221,6 +241,7 @@ public class TestPlayerAttack {
 	public void testCheckGameEnd() {
 		assertFalse(playerController.checkGameEnd(pl));
 	}
+	
 	/**
 	 * Method is used to test get continent num 
 	 * 

@@ -16,6 +16,12 @@ import controller.PlayerSelectionController;
  * @author garimadawar
  */
 public class TestPlayerOperations {
+	/**
+	 * psc instantiates PlayerSelectionController class
+	 * listOfPlayers is the Arraylist of players
+	 * playersWithStrategies is a hashmap for player and their strategy
+	 * playerName string variable to store player name
+	 */
 	PlayerSelectionController psc;
 	ArrayList<String> listofPlayers;
 	HashMap<String, String> playersWithStrategies;

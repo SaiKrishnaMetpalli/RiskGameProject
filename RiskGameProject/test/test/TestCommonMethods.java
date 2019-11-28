@@ -25,6 +25,20 @@ import model.PlayersList;
  */
 
 public class TestCommonMethods {
+	/**
+	 * cc instantiates CommonController Class
+	 * msc instantiates MapSelectionController class
+	 * mfv instantiates MapFormatValidation class
+	 * continents represents hashamp parsed from text file
+	 * Countries represents hashamp parsed from text file
+	 * boundries represents hashamp parsed from text file
+	 * filename to parsed
+	 * gm instantiates GameMap class
+	 * pl instantiates PlayerList class
+	 * P represents Player class object
+	 * Gs is Gamestate object
+	 * flag is boolean variable used for map validation
+	 */
 	CommonController cc;
 	MapSelectionController msc;
 	MapFormatValidation mfv;
@@ -66,7 +80,7 @@ public class TestCommonMethods {
 	}
 	
 	/**
-	 * test fail case for GetContinentNumberfromName
+	 * test failure case for GetContinentNumberfromName
 	 * @author sakib
 	 */
 	@Test

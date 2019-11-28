@@ -22,7 +22,23 @@ import util.CONSTANTS;
  * This class is used for testing fortification methods
  */
 public class TestPlayerFortification {
-
+	/**
+	 * msc instantiates MapSelectionController class
+	 * psc instantiates PlayerSelectionController class
+	 * playerController instantiates PlayerController class
+	 * cc instantiates CommonController Class
+	 * Constant object having all constant values 
+	 * gm instantiates GameMap class
+	 * playerDetails represents hashamp with player name and object
+	 * listOfPlayers is the Arraylist of players
+	 * playersWithStrategies is a hashmap for player and their strategy
+	 * playerOwnedCountries is Arraylist of countries owned by player
+	 * fileName reusable string variable parsed file name
+	 * fromCountry is string variable to to store formCountry for fortification
+	 * toCountry is string variable to to store toCountry for fortification
+	 * armytoPlace is the variable to store the integer of place able army during fortification
+	 * pOb is the object of player class
+	 */
 	MapSelectionController msc;
 	PlayerSelectionController psc;
 	PlayerController playerController;
@@ -42,7 +58,6 @@ public class TestPlayerFortification {
 	/**
 	 * This method is used for initial setting up scenarios for each test case
 	 * method
-	 * 
 	 * @throws FileNotFoundException
 	 */
 	@Before
