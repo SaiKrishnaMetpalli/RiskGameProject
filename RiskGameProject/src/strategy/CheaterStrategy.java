@@ -1,8 +1,10 @@
-package controller;
+package strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import controller.CommonController;
+import controller.PlayerController;
 import model.Countries;
 import model.GameMap;
 import model.Player;

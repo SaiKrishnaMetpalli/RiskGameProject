@@ -1,6 +1,4 @@
-package view;
-
-import model.Observable;
+package observer;
 
 public interface Observer {
 	/**

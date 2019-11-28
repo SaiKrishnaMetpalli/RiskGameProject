@@ -1,8 +1,7 @@
-package view;
+package observer;
 
 import java.util.ArrayList;
 
-import model.Observable;
 import model.Player;
 import model.PlayersList;
 

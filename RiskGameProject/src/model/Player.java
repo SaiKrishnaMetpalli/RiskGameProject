@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import observer.Observable;
+
 /**
  * This model contains the properties of the players
  */

@@ -1,11 +1,10 @@
-package view;
+package observer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 import model.Countries;
-import model.Observable;
 import model.Player;
 import model.PlayersList;
 

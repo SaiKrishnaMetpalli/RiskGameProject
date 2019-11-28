@@ -6,18 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import controller.AggressiveStrategy;
-import controller.BenevolentStrategy;
-import controller.CheaterStrategy;
+import adapter.ConquestReadWrite;
+import adapter.DominationReadWrite;
+import adapter.MapFileAdapter;
 import controller.CommonController;
-import controller.ConquestReadWrite;
-import controller.DominationReadWrite;
-import controller.MapFileAdapter;
 import controller.MapSelectionController;
 import controller.PlayerController;
 import controller.PlayerSelectionController;
-import controller.RandomStrategy;
-import controller.StrategyController;
 import model.Continents;
 import model.Countries;
 import model.GameMap;
@@ -27,6 +22,14 @@ import model.GameStateScenario;
 import model.Player;
 import model.PlayersList;
 import model.Tournament;
+import observer.CardExchangeView;
+import observer.PhaseView;
+import observer.PlayerWorldDominationView;
+import strategy.AggressiveStrategy;
+import strategy.BenevolentStrategy;
+import strategy.CheaterStrategy;
+import strategy.RandomStrategy;
+import strategy.StrategyController;
 import util.CONSTANTS;
 
 /**

@@ -1,9 +1,7 @@
-package model;
+package observer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import view.Observer;
 
 public class Observable {
 

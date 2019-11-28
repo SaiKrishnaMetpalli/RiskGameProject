@@ -1,4 +1,4 @@
-package controller;
+package adapter;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import controller.CommonController;
 import model.Continents;
 import model.Countries;
 

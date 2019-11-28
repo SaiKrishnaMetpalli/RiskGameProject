@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import observer.Observable;
+
 /**
  * This class contains the player list
  */

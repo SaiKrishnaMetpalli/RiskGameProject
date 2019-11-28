@@ -1,4 +1,4 @@
-package controller;
+package strategy;
 
 import model.GameMap;
 import model.Player;

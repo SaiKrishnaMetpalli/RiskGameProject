@@ -13,8 +13,8 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.ConquestReadWrite;
-import controller.DominationReadWrite;
+import adapter.ConquestReadWrite;
+import adapter.DominationReadWrite;
 import controller.MapFormatValidation;
 import controller.MapSelectionController;
 import model.Continents;

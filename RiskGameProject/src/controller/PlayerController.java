@@ -56,7 +56,7 @@ public class PlayerController {
 	int numOfDefenderArmy = 0;
 	int attackerArmyLeft = 0;
 	ArrayList<Integer> ownedCountriesNumberList = new ArrayList<Integer>();;
-	boolean ownedPath = false;;
+	public boolean ownedPath = false;;
 	boolean marked[];
 
 	/**

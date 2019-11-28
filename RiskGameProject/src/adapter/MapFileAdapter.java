@@ -1,4 +1,4 @@
-package controller;
+package adapter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

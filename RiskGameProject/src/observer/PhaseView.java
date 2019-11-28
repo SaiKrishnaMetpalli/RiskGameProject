@@ -1,6 +1,5 @@
-package view;
+package observer;
 
-import model.Observable;
 import model.Player;
 
 /**
