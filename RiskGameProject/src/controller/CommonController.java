@@ -13,6 +13,8 @@ import model.PlayersList;
 /**
  * This class contains the common methods which can be used in multiple
  * controllers
+ * 
+ * @author sakib
  */
 public class CommonController {
 
@@ -71,8 +73,8 @@ public class CommonController {
 	/**
 	 * Provides continent key from continent hashmap by its name
 	 * 
-	 * @param continents
-	 * @param continentName
+	 * @param continents    are all the continents
+	 * @param continentName is the name of the continent
 	 * @return continent number key
 	 * @author sakib
 	 */
@@ -157,12 +159,13 @@ public class CommonController {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * This function is for exchaging card for strategy
-	 * @param pl  it contains the playerlist
-	 * @param player  it contains the player
-	 * @return  it returns the integer value
+	 * 
+	 * @param pl     it contains the playerlist
+	 * @param player it contains the player
+	 * @return it returns the integer value
 	 * @author Ashish
 	 */
 	public int exchangeCardForStrategy(PlayersList pl, Player player) {
@@ -190,7 +193,7 @@ public class CommonController {
 		if (cardsListWithoutCountry.containsAll(infantry)) {
 			count = 0;
 			cardReward = player.getCardBonusArmy() + 5;
-			Iterator<String> iter=exchangeCardList.iterator();
+			Iterator<String> iter = exchangeCardList.iterator();
 			while (iter.hasNext()) {
 				if (count != 3) {
 					if (iter.next().contains("INFANTRY")) {
@@ -207,7 +210,7 @@ public class CommonController {
 		} else if (cardsListWithoutCountry.containsAll(cavalry)) {
 			count = 0;
 			cardReward = player.getCardBonusArmy() + 5;
-			Iterator<String> iter=exchangeCardList.iterator();
+			Iterator<String> iter = exchangeCardList.iterator();
 			while (iter.hasNext()) {
 				if (count != 3) {
 					if (iter.next().contains("CAVALRY")) {
@@ -223,7 +226,7 @@ public class CommonController {
 		} else if (cardsListWithoutCountry.containsAll(artillery)) {
 			count = 0;
 			cardReward = player.getCardBonusArmy() + 5;
-			Iterator<String> iter=exchangeCardList.iterator();
+			Iterator<String> iter = exchangeCardList.iterator();
 			while (iter.hasNext()) {
 				if (count != 3) {
 					if (iter.next().contains("ARTILLERY")) {
@@ -240,7 +243,7 @@ public class CommonController {
 			count = 0;
 			boolean infantryCard = false, cavalryCard = false, artilleryCard = false;
 			cardReward = player.getCardBonusArmy() + 5;
-			Iterator<String> iter=exchangeCardList.iterator();
+			Iterator<String> iter = exchangeCardList.iterator();
 			while (iter.hasNext()) {
 				if (count != 3) {
 					if (iter.next().contains("INFANTRY") && !infantryCard) {
@@ -266,18 +269,19 @@ public class CommonController {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * This function contains the observer views
-	 * @param actions  it contains the actions to be taken
-	 * @param pl  it contains the player list
+	 * 
+	 * @param actions it contains the actions to be taken
+	 * @param pl      it contains the player list
 	 * @param player  it contains the player
 	 * @author Sai Krishna
 	 */
-	public void observerViews(String actions,PlayersList pl, Player player) {
-		player.setActionsPerformed(player.getActionsPerformed()+actions);
+	public void observerViews(String actions, PlayersList pl, Player player) {
+		player.setActionsPerformed(player.getActionsPerformed() + actions);
 		player.notifyToObserver();
-		pl.notifyToObserver(player);		
+		pl.notifyToObserver(player);
 	}
 
 }

@@ -19,7 +19,13 @@ import model.Countries;
  */
 public class DominationReadWrite {
 	/**
-	 * variables to store lines of text files
+	 *
+	 * continentsStarted is the string where continents start in the map
+	 * countriesStrated is the String where countries start in a map
+	 * boundriesStarted is the string where boundries info starts in map
+	 * boundry is the string of first boundry
+	 * country is the name of the country
+	 *
 	 */
 	String continentsStarted, countriesStarted, boundriesStarted, boundry, country;
 	

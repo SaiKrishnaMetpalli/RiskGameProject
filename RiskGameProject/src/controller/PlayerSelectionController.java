@@ -9,7 +9,7 @@ import model.Player;
 
 /**
  * This class performs all operation regarding players
- * 
+ * @author sai
  */
 public class PlayerSelectionController {
 

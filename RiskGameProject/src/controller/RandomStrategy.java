@@ -15,6 +15,15 @@ import model.PlayersList;
  */
 public class RandomStrategy implements Strategy {
 
+	/**
+	 * cc is the common controller object
+	 * pc is the player controller object
+	 * attackercountryList is the list of all the countries owned by attacker
+	 * neighbouringlist is the list of nighbouring countries to the attacker country
+	 * countriesOwned is the list of countries owned by attacker
+	 * exchangeCardList is the list of all card for exchange
+	 * 
+	 */
 	CommonController cc = new CommonController();
 	PlayerController pc = new PlayerController();
 
@@ -107,7 +116,7 @@ public class RandomStrategy implements Strategy {
 	 * @param pl     contains all information about player
 	 * @param player it is the player object
 	 * @author Ashish Chaudhary
-	 * @return
+	 * @return  success if attack finished otherwise won if all countries conquered by player
 	 * 
 	 */
 	private String attack(GameMap gm, PlayersList pl, Player player) {

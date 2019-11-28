@@ -14,9 +14,20 @@ import model.Countries;
 
 /**
  * This class contains conquest read write attributes
+ * @author Ashish Chaudhary
  */
 public class ConquestReadWrite {
 
+	/**
+	 * continentsStarted is the string where continents start in the map
+	 * countriesStrated is the String where countries start in a map
+	 * Country is the name of the country
+	 * ContinentsDetails is array of all continents
+	 * CountriesDetails is the array of all the countries
+	 * cc is the common Controller object 
+	 * boundaryNames is the collection of all countries neighbouring
+	 * 
+	 */
 	String continentsStarted, countriesStarted, country;
 	String[] continentsDetails, countriesDetails;
 	CommonController cc = new CommonController();

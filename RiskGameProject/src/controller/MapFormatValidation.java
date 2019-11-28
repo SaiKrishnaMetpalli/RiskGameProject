@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  * This class contains Map validation information
- *
+ *@author Ashish Chaudhary
  */
 public class MapFormatValidation {
 
@@ -15,7 +15,7 @@ public class MapFormatValidation {
 	 * 
 	 * @param file it is the file which is checked for validation
 	 * @return flag which is true if map format is valid otherwise false
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException is the exception when file is not found to load
 	 * @author Ashish
 	 */
 	public boolean validateFile(File file) throws FileNotFoundException {

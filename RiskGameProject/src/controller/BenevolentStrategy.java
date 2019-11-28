@@ -16,13 +16,20 @@ import model.PlayersList;
  */
 public class BenevolentStrategy implements Strategy {
 
+	/**
+	 * pc is the player controller object
+	 * cc is the common controller object
+	 * exchangeCardList is the list of all the cards for exchange
+	 * 
+	 */
 	PlayerController pc = new PlayerController();
 	CommonController cc = new CommonController();
 	ArrayList<String> exchangeCardList;
 
 	/**
 	 * this mehtods executes phases of the game according to benevolent behaviour
-	 * @return  it is returning a success string
+	 * 
+	 * @return it is returning a success string
 	 * @author sakib
 	 */
 	@Override
@@ -37,8 +44,8 @@ public class BenevolentStrategy implements Strategy {
 	/**
 	 * implement benevolent reinforcement strategies
 	 * 
-	 * @param gm gamemap object
-	 * @param pl plyerlist object
+	 * @param gm     gamemap object
+	 * @param pl     plyerlist object
 	 * @param player player object
 	 * @author sakib
 	 */
@@ -77,8 +84,9 @@ public class BenevolentStrategy implements Strategy {
 
 	/**
 	 * implement benevolent attack strategies
-	 * @param gm gamemap object
-	 * @param pl plyerlist object
+	 * 
+	 * @param gm     gamemap object
+	 * @param pl     plyerlist object
 	 * @param player player object
 	 * @author sakib
 	 */
@@ -90,8 +98,9 @@ public class BenevolentStrategy implements Strategy {
 
 	/**
 	 * implement benevolent fortify strategies
-	 * @param gm gamemap object
-	 * @param pl plyerlist object
+	 * 
+	 * @param gm     gamemap object
+	 * @param pl     plyerlist object
 	 * @param player player object
 	 * @author sakib
 	 */
@@ -126,7 +135,7 @@ public class BenevolentStrategy implements Strategy {
 					gm.getBoundries());
 			cc.observerViews("\nFortification is performed for the weakest countries", pl, player);
 		}
-		
+
 	}
 
 }

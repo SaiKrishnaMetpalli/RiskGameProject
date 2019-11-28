@@ -15,11 +15,15 @@ import model.Countries;
  */
 public class MapFileAdapter extends DominationReadWrite {
 	
+	/**
+	 * crw is the variable used to read and write file
+	 */
 	private ConquestReadWrite crw;
 	
 	/**
 	 * Constructor of adapter class with adaptee class object as parameter
 	 * @param crw  it means conquest read write
+	 * @author sakib
 	 */
 	public MapFileAdapter(ConquestReadWrite crw) {
 		this.crw =crw;

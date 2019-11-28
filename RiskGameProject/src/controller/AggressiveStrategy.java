@@ -21,6 +21,15 @@ import model.PlayersList;
  *
  */
 public class AggressiveStrategy implements Strategy {
+	
+	/**
+	 * pc is the player controller object
+	 * cc is common controller object
+	 * gm is the gameMap object
+	 * neighbouring list is the list of neighbours
+	 * strong country is the name of the strongest country
+	 * exchangeCardList is the list of all the cards for exchange 
+	 */
 	PlayerController pc = new PlayerController();
 	CommonController cc = new CommonController();
 	GameMap gm = new GameMap();

@@ -5,6 +5,7 @@ import model.Player;
 import model.PlayersList;
 /**
  * This is the strategy interface which contains execute method
+ * @author Ashish Chaudhary
  */
 public interface Strategy {
     /**

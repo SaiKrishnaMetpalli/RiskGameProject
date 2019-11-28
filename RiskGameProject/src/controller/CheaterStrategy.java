@@ -15,8 +15,15 @@ import model.PlayersList;
  */
 public class CheaterStrategy implements Strategy {
 
-	CommonController cc=new CommonController();
-	PlayerController pc=new PlayerController();
+	/**
+	 * cc is the common controller object
+	 * pc is the player controller object 
+	 * attackerCountryList is the list of the attacker Countries
+	 * neighbouring List is the list of all the neighbours 
+	 * 
+	 */
+	CommonController cc = new CommonController();
+	PlayerController pc = new PlayerController();
 	ArrayList<Integer> attackerCountryList;
 	ArrayList<Integer> neighbouringList;
 
@@ -34,7 +41,7 @@ public class CheaterStrategy implements Strategy {
 
 		reinforce(gm, pl, player);
 		String attackResult = attack(gm, pl, player);
-		if(attackResult.equals("Won")) {
+		if (attackResult.equals("Won")) {
 			return "Won";
 		}
 		fortify(gm, pl, player);
@@ -71,7 +78,7 @@ public class CheaterStrategy implements Strategy {
 	 * @param gm     is the game map containing all info about game
 	 * @param pl     contains all information about player
 	 * @param player it is the player object
-	 * @return  it returns a empty string
+	 * @return it returns a empty string
 	 * @author Ashish Chaudhary
 	 * 
 	 */
@@ -79,7 +86,7 @@ public class CheaterStrategy implements Strategy {
 
 		attackerCountryList = new ArrayList<Integer>();
 		neighbouringList = new ArrayList<Integer>();
-		
+
 		for (String country : pl.getListOfPlayers().get(player.getCurrentPlayerTurn()).getOwnedCountriesList()) {
 
 			int attackerCountryNum = cc.getCountryNumberByName(gm.getCountries(), country);
@@ -98,22 +105,22 @@ public class CheaterStrategy implements Strategy {
 					player.setDefenderCountry(defenderCountryName);
 
 					Countries c = gm.getCountries().get(neighbouringList.get(x));
-					player.setDefenderName(c.getOwnerName());					
-					
+					player.setDefenderName(c.getOwnerName());
+
 					String allOutAttacked = pc.allOutAttackedPhase(player.getAttackerCountry(), defenderCountryName,
 							pl.getListOfPlayers().get(player.getAttackerName()), gm.getCountries(), player,
 							pl.getListOfPlayers().get(player.getDefenderName()));
-					cc.observerViews("\n"+allOutAttacked, pl, player);
+					cc.observerViews("\n" + allOutAttacked, pl, player);
 
 					if (allOutAttacked.contains("Won")) {
 						String armyMoved = pc.movingArmyToConqueredCountry(player.getDiceRolled(),
 								pl.getListOfPlayers(), player, gm);
-						cc.observerViews("\n"+armyMoved, pl, player);
+						cc.observerViews("\n" + armyMoved, pl, player);
 						boolean checkAllCountriesOwned = pc.checkGameEnd(pl);
 						if (checkAllCountriesOwned) {
-							return "Won";						
+							return "Won";
 						}
-					}					
+					}
 				}
 
 			}
@@ -165,6 +172,6 @@ public class CheaterStrategy implements Strategy {
 		}
 		cc.observerViews("\nFortification has done for all the countries", pl, player);
 
-	}	
+	}
 
 }

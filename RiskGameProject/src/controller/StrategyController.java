@@ -13,7 +13,7 @@ import model.PlayersList;
 public class StrategyController{
 	
 	/**
-	 * strategy this variables contains the strategy which is to be executed
+	 * strategy variable is the refrence of the Strategy class
 	 */
 	private Strategy strategy;
 	
@@ -32,6 +32,8 @@ public class StrategyController{
 	 * @param  pl  it contains player list
 	 * @param player  it contains the player
 	 * @throws InterruptedException 
+	 * @author garima
+	 * @return calls the appropriate executeStrategy method of player
 	 */
 	public String executeBehaviour(GameMap gm , PlayersList pl, Player player ) throws InterruptedException
 	{	

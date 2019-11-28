@@ -21,6 +21,26 @@ import model.PlayersList;
  */
 public class PlayerController {
 
+	/**
+	 * cc is the common controller object
+	 * adjency list is the list of nighbouring countries
+	 * attackerarmies map is the map of armies for the attacker
+	 * defender armies map is the map of armies for defender
+	 * attacker dice number list is the list of dice rolled results
+	 * defender dice number is the list of defender dice rolled results
+	 * country list is the list of all the countries
+	 * countryarmieslist is the list of alll the list of armies for each country
+	 * armiesleftwith attacker is list of armies left with attacker
+	 * conquered countrieslist is the list of conquered countries by attacker
+	 * dicerolled result is the result of dice rolled
+	 * numberofattackerarmy is the count of attacker army
+	 * numofdefenderarmy is the countr of defender army
+	 * attackerArmyleft is the number of army left with attacker
+	 * ownedCountriesArmy is the list of countries owned stored by number
+	 * owned path is boolean value to check path between two countries
+	 * marked is the array of boolean values to check connected graph
+	 * 
+	 */
 	CommonController cc = new CommonController();
 	ArrayList<Integer> adjancyList;
 	HashMap<String, Integer> attackerArmiesMap;

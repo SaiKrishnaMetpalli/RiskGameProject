@@ -21,9 +21,30 @@ import model.PlayersList;
 
 /**
  * All the map operations are performed in this controller
+ * @author garima
  */
 public class MapSelectionController {
 
+	/**
+	 * validatescanner is the Scanner Class object 
+	 * List is used to put boundries valuues
+	 * mapvalidate is the object of mapFormatvalidation class
+	 * continentsStarted is the string where continents start in the map
+	 * countriesStrated is the String where countries start in a map
+	 * Country is the name of the country
+	 * ContinentsDetails is array of all continents
+	 * CountriesDetails is the array of all the countries
+	 * boundry is the string where boundry is found
+	 * cardsStrated is used when cards are found 
+	 * playersDetails store the player data in array of string
+	 * boundries details is used to store boundries values
+	 * marked is used to validate a country is traversed for connected graph
+	 * count maintains the count of countries traversed
+	 * map store information about the game map
+	 * coid is the continent id
+	 * cid is country id
+	 * 
+	 */
 	Scanner validateScanner;
 
 	ArrayList<Integer> list;
@@ -184,7 +205,7 @@ public class MapSelectionController {
 	 * @param continents    this variable contains the continents list
 	 * @param countries     this variable contains the countries list
 	 * @param boundries     this variable contains the boundries list
-	 * @return it returns messages
+	 * @return returns messages
 	 * @author garimadawar
 	 */
 	public String removeContinent(HashMap<Integer, Continents> continents,
