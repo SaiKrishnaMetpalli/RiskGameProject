@@ -89,6 +89,11 @@ public class CommandLine {
 	ConquestReadWrite crw;
 	MapFileAdapter mfa;
 	Tournament t;
+	
+	ArrayList<String> listOfMapFiles;
+	ArrayList<String> listOfStrategies;
+	int numberOfGames;
+	int numberOfTurns;
 
 	/**
 	 * Default constructor To create the variable objects
@@ -116,6 +121,11 @@ public class CommandLine {
 		cev = new CardExchangeView();
 		behaviour = new StrategyController();
 		t = new Tournament();
+		
+		listOfMapFiles = new ArrayList<String>();
+		listOfStrategies = new ArrayList<String>();
+		numberOfGames=0;
+		numberOfTurns=0;
 
 		p.attach(pv);
 		pl.attach(pwdv);
@@ -396,173 +406,30 @@ public class CommandLine {
 			//tournament operations are performed
 			case "tournament":
 				if (inputCommand.length == 9) {
-					if (inputCommand[1].equals("-M") && inputCommand[3].equals("-P") && inputCommand[5].equals("-G")
-							&& inputCommand[7].equals("-D")) {
-						boolean flagProceed = true;
+					if (checkTournamentTagsFormat(inputCommand)) {						
 						// Storing the map files into list
-						String mapFiles = inputCommand[2];
-						ArrayList<String> listOfMapFiles = new ArrayList<String>();
-						if (mapFiles.contains(",")) {
-							String[] mapFilesArray = mapFiles.split(",");
-							for (String fileName : mapFilesArray) {
-								if (!checkFileExist(fileName) || mapFilesArray.length < 1 || mapFilesArray.length > 5) {
-									flagProceed = false;
-									break;
-								}
-								listOfMapFiles.add(fileName);
-							}
-						} else {
-							if (checkFileExist(mapFiles)) {
-								listOfMapFiles.add(mapFiles);
-							} else {
-								flagProceed = false;
-							}
-						}
+						String mapFiles = inputCommand[2];		
 
-						if (flagProceed) {
+						if (checkTournamentFileConditions(mapFiles)) {
 							// Storing the players with strategies
 							String allPlayersWithStrategies = inputCommand[4];
-							ArrayList<String> listOfStrategies = new ArrayList<String>();
+							
 							if (allPlayersWithStrategies.contains(",")) {
-								String[] strategiesList = allPlayersWithStrategies.split(",");
-								for (String strategyName : strategiesList) {
-									if (!(strategyName.equals("Aggressive") || strategyName.equals("Benevolent")
-											|| strategyName.equals("Random") || strategyName.equals("Cheater"))
-											|| strategiesList.length < 2 || strategiesList.length > 4) {
-										flagProceed = false;
-										break;
-									}
-									listOfStrategies.add(strategyName);
-								}
-
-								if (flagProceed) {
+								
+								if (checkTournamentStrategiesConditions(allPlayersWithStrategies)) {
 									// Storing the number of games
-									int numberOfGames = Integer.parseInt(inputCommand[6]);
-									if (numberOfGames < 1 || numberOfGames > 5) {
-										flagProceed = false;
-									}
+									numberOfGames = Integer.parseInt(inputCommand[6]);								
 
-									if (flagProceed) {
+									if (checkTournamentGamesConditions(numberOfGames)) {
 										// Storing the number of turns
-										int numberOfTurns = Integer.parseInt(inputCommand[8]);
-										if (numberOfTurns < 10 || numberOfTurns > 50) {
-											flagProceed = false;
-										}
+										numberOfTurns = Integer.parseInt(inputCommand[8]);
+										
 										// Running the game in tournament mode
-										if (flagProceed) {
-											gameMode = "Tournament";
-											for (String mapFileName : listOfMapFiles) {
-												int countGames = numberOfGames;
-												int cGame = 1;
-												while (countGames != 0) {
-													try {
-														gm = new GameMap();
-														pl = new PlayersList();
-														p = new Player();
-														p.attach(pv);
-														pl.attach(pwdv);
-														pl.attach(cev);
-														drw = new DominationReadWrite();
-														crw = new ConquestReadWrite();
-														String filePath = Paths.get("").toAbsolutePath().toString()
-																+ "\\src\\resource\\" + mapFileName;
-														File file = new File(filePath);
-														Scanner textScanner = new Scanner(file);
-														if (textScanner.hasNext()) {
-															if (textScanner.nextLine().equals("[Map]")) {
-																gm.setFileType("Conquest");
-															} else {
-																gm.setFileType("Domination");
-															}
-														}
-
-														if (gm.getFileType().equals("Conquest")) {
-															drw = new MapFileAdapter(crw);
-															result = drw.dominationMapReading(gm.getContinents(),
-																	gm.getCountries(), gm.getBoundries(), mapFileName);
-														} else {
-															result = drw.dominationMapReading(gm.getContinents(),
-																	gm.getCountries(), gm.getBoundries(), mapFileName);
-														}
-
-														if (result.equals("Success")) {
-															System.out.println("\nFile uploaded successfully");
-															boolean result2 = msc.isConnectedMap(gm.getBoundries());
-															if (result2) {
-																System.out.println("\nMap is connected");
-																addGameCards();
-																p.setContinentsCountryList(cc.getContinentsCountryList(
-																		gm.getContinents(), gm.getCountries()));
-																p.setTotalCountries(gm.getCountries().size());
-																int cStrategy = 1;
-																for (String playerStrategyName : listOfStrategies) {
-																	// players adding
-																	psc.addPlayer(gm.getPlayersWithStrategies(),
-																			gm.getPlayersSetup(), "Player" + cStrategy,
-																			playerStrategyName);
-																	cStrategy++;
-																}
-																System.out.println("\nPlayers are added successfully");
-																psc.assignRandomCountries(gm.getPlayersSetup(),
-																		gm.getPlayersWithStrategies(),
-																		gm.getCountries(), pl.getListOfPlayers());
-																System.out
-																		.println("\nPlayers are assigned to countries");
-																psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
-																		cons.NO_PLAYER_ARMIES
-																				.get(gm.getPlayersSetup().size()));
-																System.out.println("\nArmies are placed successfully");
-																p.setActionsPerformed("");
-																p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
-																p.setGameState("REINFORCE");
-																p.notifyToObserver();
-																pl.notifyToObserver(p);
-																int countTurns = numberOfTurns;
-																while (countTurns != 0) {
-																	String resultStrategy = executeBehaviour(
-																			pl.getListOfPlayers()
-																					.get(p.getCurrentPlayerTurn())
-																					.getStrategy());
-																	if (resultStrategy.contains("Won")) {
-																		t.getGameResults().put("Game" + cGame,
-																				p.getCurrentPlayerTurn() + "-"
-																						+ pl.getListOfPlayers().get(p
-																								.getCurrentPlayerTurn())
-																								.getStrategy());
-																		tournamentDetails.put(mapFileName, t);
-																		break;
-																	}
-																	countTurns--;
-																	if (countTurns == 0) {
-																		t.getGameResults().put("Game" + cGame, "Draw");
-																		tournamentDetails.put(mapFileName, t);
-																	}
-																}
-																tournamentDetails.put(mapFileName, t);
-
-															} else {
-																System.out.println("\nMap is not connected");
-																t.getGameResults().put("Game" + cGame, "Error");
-																tournamentDetails.put(mapFileName, t);
-																break;
-															}
-														} else {
-															System.out.println(
-																	"\nFile not uploaded. There are format issues in file. Please upload again");
-															t.getGameResults().put("Game" + cGame, "Error");
-															tournamentDetails.put(mapFileName, t);
-															break;
-														}
-													} catch (Exception ex) {
-														System.out.println("\nError Occurred. Please try again");
-														t.getGameResults().put("Game" + cGame, "Error");
-														tournamentDetails.put(mapFileName, t);
-														break;
-													}
-													cGame++;
-													countGames--;
-												}
-											}
+										if (checkTournamentTurnsConditions(numberOfTurns)) {
+											
+											//Running the tournament
+											String tournamentResult=runTournamentMode();
+											
 											// Printing the tournament result;
 											printTournamentResults();
 											System.exit(0);
@@ -1818,12 +1685,221 @@ public class CommandLine {
 		return null;
 	}
 
-	private boolean checkTournamentCommandFormat() {
-		return true;
+	/**
+	 * This method is used for checking the tournament tags format 
+	 * @return true if contains the tags else false
+	 * @author Sai Krishna
+	 */
+	private boolean checkTournamentTagsFormat(String[] inputCommand) {
+		if(inputCommand[1].equals("-M") && inputCommand[3].equals("-P") && inputCommand[5].equals("-G")
+				&& inputCommand[7].equals("-D")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * This method checks for the file exists or not and adds to the input list 
+	 * @param mapFiles contains all the map files
+	 * @return true if added else false
+	 * @author Sai Krishna
+	 */
+	private boolean checkTournamentFileConditions(String mapFiles) {
+		boolean flagFiles=true;
+		if (mapFiles.contains(",")) {
+			String[] mapFilesArray = mapFiles.split(",");
+			for (String fileName : mapFilesArray) {
+				if (!checkFileExist(fileName) || mapFilesArray.length < 1 || mapFilesArray.length > 5) {
+					flagFiles = false;
+					break;
+				}
+				listOfMapFiles.add(fileName);
+			}
+		} else {
+			if (checkFileExist(mapFiles)) {
+				listOfMapFiles.add(mapFiles);
+			} else {
+				flagFiles = false;
+			}
+		}	
+		return flagFiles;
+	}
+
+	/**
+	 * This method checks for the strategies conditions and adds to the strategies list
+	 * @param allPlayersWithStrategies contains all the strategies
+	 * @return true if added else false
+	 * @author Sai Krishna
+	 */
+	private boolean checkTournamentStrategiesConditions(String allPlayersWithStrategies) {
+		boolean FlagStrategies=true;
+		String[] strategiesList = allPlayersWithStrategies.split(",");
+		for (String strategyName : strategiesList) {
+			if (!(strategyName.equals("Aggressive") || strategyName.equals("Benevolent")
+					|| strategyName.equals("Random") || strategyName.equals("Cheater"))
+					|| strategiesList.length < 2 || strategiesList.length > 4) {
+				FlagStrategies = false;
+				break;
+			}
+			listOfStrategies.add(strategyName);
+		}
+		return FlagStrategies;
+	}
+
+	/**
+	 * This method checks for the game conditions range
+	 * @param numberOfGames contains the number of games to be played
+	 * @return true if satisfies range else false
+	 * @author Sai Krishna
+	 */
+	private boolean checkTournamentGamesConditions(int numberOfGames) {
+		if (numberOfGames < 1 || numberOfGames > 5) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}	
+
+	/**
+	 * This method checks for the turn conditions range
+	 * @param numberOfTurns contains the number of turns to allow per game
+	 * @return true if satisfies range else false
+	 * @author Sai Krishna
+	 */
+	private boolean checkTournamentTurnsConditions(int numberOfTurns) {
+		if (numberOfTurns < 10 || numberOfTurns > 50) {			
+			return false;
+		} else {
+			return true;
+		}	
+	}
+
+	/**
+	 * This method runs the tournament mode
+	 * @return the message on completion of tournament
+	 */
+	private String runTournamentMode() {
+		gameMode = "Tournament";
+		for (String mapFileName : listOfMapFiles) {
+			int countGames = numberOfGames;
+			int cGame = 1;
+			while (countGames != 0) {
+				try {
+					gm = new GameMap();
+					pl = new PlayersList();
+					p = new Player();
+					p.attach(pv);
+					pl.attach(pwdv);
+					pl.attach(cev);
+					drw = new DominationReadWrite();
+					crw = new ConquestReadWrite();
+					String filePath = Paths.get("").toAbsolutePath().toString()
+							+ "\\src\\resource\\" + mapFileName;
+					File file = new File(filePath);
+					Scanner textScanner = new Scanner(file);
+					if (textScanner.hasNext()) {
+						if (textScanner.nextLine().equals("[Map]")) {
+							gm.setFileType("Conquest");
+						} else {
+							gm.setFileType("Domination");
+						}
+					}
+
+					if (gm.getFileType().equals("Conquest")) {
+						drw = new MapFileAdapter(crw);
+						result = drw.dominationMapReading(gm.getContinents(),
+								gm.getCountries(), gm.getBoundries(), mapFileName);
+					} else {
+						result = drw.dominationMapReading(gm.getContinents(),
+								gm.getCountries(), gm.getBoundries(), mapFileName);
+					}
+
+					if (result.equals("Success")) {
+						System.out.println("\nFile uploaded successfully");
+						boolean result2 = msc.isConnectedMap(gm.getBoundries());
+						if (result2) {
+							System.out.println("\nMap is connected");
+							addGameCards();
+							p.setContinentsCountryList(cc.getContinentsCountryList(
+									gm.getContinents(), gm.getCountries()));
+							p.setTotalCountries(gm.getCountries().size());
+							int cStrategy = 1;
+							for (String playerStrategyName : listOfStrategies) {
+								// players adding
+								psc.addPlayer(gm.getPlayersWithStrategies(),
+										gm.getPlayersSetup(), "Player" + cStrategy,
+										playerStrategyName);
+								cStrategy++;
+							}
+							System.out.println("\nPlayers are added successfully");
+							psc.assignRandomCountries(gm.getPlayersSetup(),
+									gm.getPlayersWithStrategies(),
+									gm.getCountries(), pl.getListOfPlayers());
+							System.out
+									.println("\nPlayers are assigned to countries");
+							psc.placeAll(gm.getCountries(), pl.getListOfPlayers(),
+									cons.NO_PLAYER_ARMIES
+											.get(gm.getPlayersSetup().size()));
+							System.out.println("\nArmies are placed successfully");
+							p.setActionsPerformed("");
+							p.setCurrentPlayerTurn(gm.getPlayersSetup().get(0));
+							p.setGameState("REINFORCE");
+							p.notifyToObserver();
+							pl.notifyToObserver(p);
+							int countTurns = numberOfTurns;
+							while (countTurns != 0) {
+								String resultStrategy = executeBehaviour(
+										pl.getListOfPlayers()
+												.get(p.getCurrentPlayerTurn())
+												.getStrategy());
+								if (resultStrategy.contains("Won")) {
+									t.getGameResults().put("Game" + cGame,
+											p.getCurrentPlayerTurn() + "-"
+													+ pl.getListOfPlayers().get(p
+															.getCurrentPlayerTurn())
+															.getStrategy());
+									tournamentDetails.put(mapFileName, t);
+									break;
+								}
+								countTurns--;
+								if (countTurns == 0) {
+									t.getGameResults().put("Game" + cGame, "Draw");
+									tournamentDetails.put(mapFileName, t);
+								}
+							}
+							tournamentDetails.put(mapFileName, t);
+
+						} else {
+							System.out.println("\nMap is not connected");
+							t.getGameResults().put("Game" + cGame, "Error");
+							tournamentDetails.put(mapFileName, t);
+							break;
+						}
+					} else {
+						System.out.println(
+								"\nFile not uploaded. There are format issues in file. Please upload again");
+						t.getGameResults().put("Game" + cGame, "Error");
+						tournamentDetails.put(mapFileName, t);
+						break;
+					}
+				} catch (Exception ex) {
+					System.out.println("\nError Occurred. Please try again");
+					t.getGameResults().put("Game" + cGame, "Error");
+					tournamentDetails.put(mapFileName, t);
+					break;
+				}
+				cGame++;
+				countGames--;
+			}
+		}
+		return "Success";
 	}
 
 	/**
 	 * This method is used for printing the tournament result
+	 * @author Sai Krishna
 	 */
 	private void printTournamentResults() {
 		int cGames = 0;
