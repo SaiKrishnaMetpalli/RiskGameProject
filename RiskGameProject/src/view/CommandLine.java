@@ -437,23 +437,23 @@ public class CommandLine {
 											System.exit(0);
 										} else {
 											System.out.println(
-													"\nThe number of turns input is not valid; Please reenter the tournament command");
+													"\nThe number of turns input is not valid;\nPlease reenter the tournament command");
 										}
 									} else {
 										System.out.println(
-												"\nThe number of games input is not valid; Please reenter the tournament command");
+												"\nThe number of games input is not valid;\nPlease reenter the tournament command");
 									}
 								} else {
 									System.out.println(
-											"\nStrategy is not Aggressive or Benevolent or Random or Cheater or the number of player strategies are invalid; Please reenter the tournament command");
+											"\nStrategy is not Aggressive or Benevolent or Random or Cheater or the player strategies are invalid;\nPlease reenter the tournament command");
 								}
 							} else {
 								System.out.println(
-										"\nFile not exists or the number of given files are invalid; Please reenter the tournament command");
+										"\nFile not exists or the number of given files are invalid;\nPlease reenter the tournament command");
 							}
 						} else {
 							System.out.println(
-									"\nCannot proceed with 1 player strategy; Please reenter the tournament command");
+									"\nCannot proceed with 1 player strategy;\nPlease reenter the tournament command");
 						}
 					} else {
 						System.out.println(
@@ -1730,11 +1730,27 @@ public class CommandLine {
 	 */
 	public boolean checkTournamentStrategiesConditions(String allPlayersWithStrategies) {
 		boolean FlagStrategies=true;
+		int countA=0;
+		int countB=0;
+		int countC=0;
+		int countR=0;
 		String[] strategiesList = allPlayersWithStrategies.split(",");
+		for(String strategyName:strategiesList) {
+			if(strategyName.equals("Aggressive")) {
+				countA++;				
+			} else if(strategyName.equals("Benevolent")) {
+				countB++;
+			} else if(strategyName.equals("Cheater")) {
+				countC++;
+			} else if(strategyName.equals("Random")) {
+				countR++;
+			}
+		}
+		
 		for (String strategyName : strategiesList) {
 			if (!(strategyName.equals("Aggressive") || strategyName.equals("Benevolent")
-					|| strategyName.equals("Random") || strategyName.equals("Cheater"))
-					|| strategiesList.length < 2 || strategiesList.length > 4) {
+					|| strategyName.equals("Random") || strategyName.equals("Cheater")) || strategiesList.length < 2
+					|| strategiesList.length > 4 || countA > 1 || countB > 1 || countC > 1 || countR > 1) {
 				FlagStrategies = false;
 				break;
 			}
@@ -1853,10 +1869,7 @@ public class CommandLine {
 												.getStrategy());
 								if (resultStrategy.contains("Won")) {
 									t.getGameResults().put("Game" + cGame,
-											p.getCurrentPlayerTurn() + "-"
-													+ pl.getListOfPlayers().get(p
-															.getCurrentPlayerTurn())
-															.getStrategy());
+											pl.getListOfPlayers().get(p.getCurrentPlayerTurn()).getStrategy());
 									tournamentDetails.put(mapFileName, t);
 									break;
 								}
