@@ -139,7 +139,7 @@ public class CommandLine {
 	 * functionality
 	 * 
 	 * @author Sai Krishna
-	 * @throws InterruptedException
+	 * @throws InterruptedException this throws interrupted for thread sleep
 	 */
 	public void commandLine() throws InterruptedException {
 		System.out.println("\nEnter the commands");
@@ -1555,7 +1555,7 @@ public class CommandLine {
 	 * @param strategyName the name of the strategy
 	 * @return success if strategy executed successfully
 	 * @author Ashish Chaudhary
-	 * @throws InterruptedException
+	 * @throws InterruptedException this throws interrupted for thread sleep
 	 */
 	public String executeBehaviour(String strategyName) throws InterruptedException {
 
@@ -1681,7 +1681,8 @@ public class CommandLine {
 	}
 
 	/**
-	 * This method is used for checking the tournament tags format 
+	 * This method is used for checking the tournament tags format
+	 * @param inputCommand this contains the command entered 
 	 * @return true if contains the tags else false
 	 * @author Sai Krishna
 	 */

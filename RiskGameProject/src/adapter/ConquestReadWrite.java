@@ -42,7 +42,7 @@ public class ConquestReadWrite {
 	 * @param boundries  it contains the boundries
 	 * @param fileName  it contains the file name
 	 * @return  it returns string message
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException this throws file not found error if not found
 	 * @author sakib
 	 */
 	public String conquestMapReading(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
@@ -116,7 +116,7 @@ public class ConquestReadWrite {
 	 * @param boundries  it contains the boundries
 	 * @param mapFile  it contains the map file
 	 * @return  it returns the string message
-	 * @throws IOException\
+	 * @throws IOException this throws error in file writing
 	 * @author sakib
 	 */
 	public String writeConquestMapFile(HashMap<Integer, Continents> continents, HashMap<Integer, Countries> countries,
